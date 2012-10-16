@@ -23,7 +23,7 @@ public class DmciGD extends Applet implements Runnable {
 		setBackground (Color.black);
 		
 		//Set gameState variable (currently at 2 for Demo Screen, should be changed to 0 for real game)
-		gameState = 2;
+		gameState = 3;
 	}
 	
 	//Starts thread
@@ -75,15 +75,15 @@ public class DmciGD extends Applet implements Runnable {
     //Do not clear screen in case of dialogue - Paused game should remain as background during cutscenes or dialogue)
     if(gameState == 0) {
     
-		  //Clear screen and draw Background
-		  dbg.setColor(getBackground());
-		  dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
+      //Clear screen and draw Background
+      dbg.setColor(getBackground());
+      dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
       
     }
     
     //Paint the frame to offscreen image
     dbg.setColor (getForeground()); //Debugging code (for drawing shapes such as background colours). Will later be used to render fonts.
-		paint (dbg);
+    paint (dbg);
 		
 		//Draw offscreen image
 		g.drawImage (dbImage, 0, 0, this);
@@ -95,15 +95,20 @@ public class DmciGD extends Applet implements Runnable {
 		
 		//Check for which paint method to call
 		if(gameState == -1) {
-			//Paused Game
+      //Paused Game
+      
 		} else if (gameState == 0) {
-			//Render Dialogue
+      //Dialogue boxes and Cutscenes
+      
 		} else if (gameState == 1) {
 			//Start Menu
+      
 		} else if (gameState == 2) {
 			//Gameplay Screen
+      
 		} else if (gameState == 3) {
 			//Demo or Debugging state - Remove from final game
+      
 		}
 		
 	}
