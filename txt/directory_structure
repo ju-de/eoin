@@ -2,7 +2,8 @@
 /src						Contains the project Java sourcecode.
 	/dmcigd						The main game package.
 		/core						The game's core engine
-			/interfaces					Object interfaces (Hussain you're going to have to explain why we're not just using inheritance here)
+			/interfaces					Game object interfaces (Hussain you're going to have to explain why we're not just using inheritance here)
+			/objects					Game object classes (will be further subdivided as the engine is built)
 /share						Contains the game's shared resources
 	/gfx						Contains the visual elements of the game, such as sprites and game chrome.
 	/snd						Contains the auditory elements of the game, such as background music and action sounds.
