@@ -22,8 +22,8 @@ public class DmciGD extends Applet implements Runnable {
 		//Set canvas background
 		setBackground (Color.black);
 		
-		//Set gameState variable (currently at -1 for Demo Screen, should be changed to 0 for real game)
-		gameState = -1;
+		//Set gameState variable (currently at 2 for Demo Screen, should be changed to 0 for real game)
+		gameState = 2;
 	}
 	
 	//Starts thread
@@ -47,11 +47,18 @@ public class DmciGD extends Applet implements Runnable {
 		
 		//Repaint the screen at up to 50fps
 		while (true) {
-			repaint();
+      
+      //Only update the screen if in a state of update (i.e. dialogue, menus, or gameplay)
+      if(gameState >= 0) {
+        repaint();
+      }
+      
+      //Add delay to thread update - gives breathing room for game loop
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException ex) {}
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+         
 		}
 		
 	}
@@ -63,13 +70,19 @@ public class DmciGD extends Applet implements Runnable {
 		if(dbImage == null) {
 			dbImage = createImage(this.getSize().width, this.getSize().height);
 			dbg = dbImage.getGraphics();
-		}	
-		
-		//Clear screen and draw Background
-		dbg.setColor(getBackground());
-		dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
-		
-		dbg.setColor (getForeground());
+		} 
+      
+    //Do not clear screen in case of dialogue - Paused game should remain as background during cutscenes or dialogue)
+    if(gameState == 0) {
+    
+		  //Clear screen and draw Background
+		  dbg.setColor(getBackground());
+		  dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
+      
+    }
+    
+    //Paint the frame to offscreen image
+    dbg.setColor (getForeground()); //Debugging code (for drawing shapes such as background colours). Will later be used to render fonts.
 		paint (dbg);
 		
 		//Draw offscreen image
@@ -82,11 +95,15 @@ public class DmciGD extends Applet implements Runnable {
 		
 		//Check for which paint method to call
 		if(gameState == -1) {
-			//Demo Level
+			//Paused Game
 		} else if (gameState == 0) {
-			//Start Screen
+			//Render Dialogue
 		} else if (gameState == 1) {
+			//Start Menu
+		} else if (gameState == 2) {
 			//Gameplay Screen
+		} else if (gameState == 3) {
+			//Demo or Debugging state - Remove from final game
 		}
 		
 	}
