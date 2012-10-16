@@ -1,10 +1,12 @@
-/bin			Contains the compiled class files for the project.
-/src			Contains the project Java sourcecode.
-            /dmcigd		The main game package.
-/share			Contains the game's shared resources
-           /gfx		Contains the visual elements of the game, such as sprites and cutscene animations.
-           /snd		Contains the auditory elements of the game, such as background music and action sounds.
-           /txt		Contains the textual elements of the game, such as ASCII level maps.
-/txt			Contains textfiles for the game, including all documentation.
-/lib			Contains any external libraries being used by the project.
-/misc			Contains any miscelaneous files, such as personal committer notes or school club files.
+/bin						Contains the compiled class files for the project.
+/src						Contains the project Java sourcecode.
+	/dmcigd						The main game package.
+		/core						The game's core engine
+			/interfaces					Object interfaces (Hussain you're going to have to explain why we're not just using inheritance here)
+/share						Contains the game's shared resources
+	/gfx						Contains the visual elements of the game, such as sprites and game chrome.
+	/snd						Contains the auditory elements of the game, such as background music and action sounds.
+	/txt						Contains the textual elements of the game, such as ASCII level maps.
+/txt						Contains textfiles for the game, including all documentation.
+/lib						Contains any external libraries being used by the project.
+/misc						Contains any miscellaneous files, such as personal committer notes or school club files.
