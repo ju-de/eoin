@@ -1,8 +1,6 @@
 package dmcigd.core.interfaces;
 
 public interface Vector {
-	Magnitude magnitude;
-	Direction direction;
 	Magnitude getMagnitude();
 	Boolean setMagnitude(Magnitude magnitude);
 	Direction getDirection();
