@@ -1,7 +1,7 @@
 package dmcigd.core.interfaces;
 
 public interface Direction {
-	enum CompassDirections = {
+	enum CompassDirections {
 		NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST
 	};
 	Short compassDirectionToDegrees(CompassDirection direction);

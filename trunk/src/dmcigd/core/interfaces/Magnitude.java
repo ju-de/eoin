@@ -1,7 +1,7 @@
 package dmcigd.core.interfaces;
 
 public interface Magnitude() {
-	enum Unit = {
+	enum Unit {
 		MILLISECOND, SECOND, MINUTE, HOUR,
 		MILLIMETRE, CENTIMETRE, METRE, KILOMETRE,
 		MILLIGRAM, GRAM, KILOGRAM,
