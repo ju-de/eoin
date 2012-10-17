@@ -51,17 +51,27 @@ public class DmciGD extends Applet implements Runnable {
 			
 			//Only update the screen if it is changing (i.e. change of state, dialogue, menus, or gameplay)
 			if(gameState != main.getGameState()) {
-				repaint();
+				
 				gameState = main.getGameState();
-			} else if(gameState != GameState.PAUSE && gameState != GameState.GAMEOVER) {
 				repaint();
-			}
       
-			//Only repaint after the previous frame has been painted - Reduces unnecessary calls
-			try {
-				wait();
-			} catch (InterruptedException ex) {}
-			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+				//Only repaint after the previous frame has been painted - Reduces unnecessary calls
+				try {
+					wait();
+				} catch (InterruptedException ex) {}
+				Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+				
+			} else if(gameState == GameState.DEMO || gameState == GameState.LEVEL || gameState == GameState.DIALOGUE || gameState == GameState.MENU) {
+				
+				repaint();
+      
+				//Only repaint after the previous frame has been painted and game is in a state of update - Reduces unnecessary calls
+				try {
+					wait();
+				} catch (InterruptedException ex) {}
+				Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+				
+			}
          
 		}
 		
@@ -98,17 +108,25 @@ public class DmciGD extends Applet implements Runnable {
 	public void paint(Graphics g) {
 		
 		//Check for which paint method to call
-		switch (gameState) {
+		switch(gameState) {
 			case DEMO:
 				
 				//Loop through visible objects for X axis
 				visibleObjects = main.demo.getVisibleObjects();
 
 				g.setColor(Color.red);
+				
 				for(int i = 0; i < visibleObjects.size(); i++) {
 					int x = (int) visibleObjects.get(i);
 					g.fillOval(x,10,10,10);
 				}
+				break;
+				
+			case LOADINGDEMO:
+				
+				g.setColor(Color.red);
+				g.drawString("Loading Demo Level", 40, 75);
+				
 				break;
 				
 			case LEVEL:
@@ -118,6 +136,12 @@ public class DmciGD extends Applet implements Runnable {
 				break;
 				
 			case MENU:
+				break;
+				
+			case LOADINGLEVEL:
+				break;
+				
+			case LOADING:
 				break;
 				
 			case PAUSE:
