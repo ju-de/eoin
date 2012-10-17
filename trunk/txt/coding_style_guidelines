@@ -1,0 +1,28 @@
+These are general programming style guidelines that should be followed. I won't kill you if you don't, but they're here for the sake of consistancy -- and to make me happier.
+
+      Indentation:
+
+Please indent your code, it makes things much easier to read (yes, even for me). Please use a tab character instead of a preset amount of spaces for indentation, because it allows for different spacing preferences. The general rule is that for each extra level of nesting (such as the body of a method, the statements of a conditional or a loop, or the body of a class) there should be an extra level of indentation.
+
+       Line-breaks:
+
+Only leave line breaks between first-and-second-level-nested code. That is, only between your imports and class definitions, and your methods and your member declarations. Do not leave empty lines in the middle of method bodies. This makes it easier to skim through classes and keeps method clutter to a minimum. If you feel the body of your method is getting too long without a break, either insert a comment at an appropriate location to explain the procedure going on, or try to shorten or break up your method.
+
+     Parenthesese and braces
+
+     When declaring a method, separate the opening left-brace from the method declaration with a space. Keep the opening brace on the same line as the definition, but the closing brace on a separate line. For conditionals, keep the opening brace on the same line as the conditional statement, separated with a space. For closing braces, combine the closing brace of one condition and the statement of the next statement on one line, and the final closing brace on it's own line. This applies to things like if-elseif-else blocks, as follows:
+
+if(condition a) {
+	     execute;
+} else if(condition 2) {
+  execute;
+} else if(condition 3) {
+  execute;
+} else {
+  default;
+}
+
+When it comes to parenthesese, do not put a space between the opening parenthesis and the previous statement, but put a space afterwards. This applies to conditionals, method calls, and method definitions, but not to parenthesese used for mathematical evaluation. For example:
+     if(condition) {
+not  if (condition) {
+not  if (condition){
