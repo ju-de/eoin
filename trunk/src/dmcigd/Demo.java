@@ -1,39 +1,20 @@
 package dmcigd;
 
-import java.awt.*;
+import dmcigd.core.MapLoader;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class Demo implements Runnable {
+public class Demo extends MapLoader implements Runnable {
 	
-	private int x;
-	private int speed;
-	
-	private boolean ready = false;
-	
-	//Initialize mapping variables
-	private String mapRaw;
-	private String[] map;
-	private int spawnX;
-	private int spawnY;
-	
-	//Initialize object lists
-	private ArrayList visibleObjects = new ArrayList();
-	private ArrayList visibleBlocks;
-	
-	public boolean isReady() {
-		return ready;
+	public int getDemoX() {
+		return demoX;
 	}
 	
-	public ArrayList getVisibleObjects() {
-		return visibleObjects;
+	public int getDemoY() {
+		return demoY;
 	}
 	
 	public Demo() {
-		
-		x = 1;
-		speed = 1;
-		visibleObjects.add((int) 1);
 		
 		//Initializes Thread
 		Thread th = new Thread(this);
@@ -43,60 +24,61 @@ public class Demo implements Runnable {
 	
 	public void step() {
 		
-		if(x >= 130) {
-			speed = -1;
-		}else if(x <= 0) {
-			speed = 1;
-		}
-			
-		x = x + speed;
+		demoX = demoX + demoDX;
+		demoY = demoY + demoDY;
 		
-		visibleObjects.set(0, (int) x);
+		fetchVisibleBlocks();
 		
 	}
 	
 	public void run() {
 		
-		//Load maps
-		mapRaw	= "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
-			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
-			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
-			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
-			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
-			+ "xxxxx               xxxxx\n"
-			+ "xxxxx               xxxxx\n"
-			+ "xxxxx               xxxxx\n"
-			+ "xxxxx       1       xxxxx\n"
-			+ "xxxxx    xxxxxxx    xxxxx\n"
-			+ "xxxxx               xxxxx\n"
-			+ "xxxxx               xxxxx\n"
-			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
-			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
-			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
-			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
-			+ "xxxxxxxxxxxxxxxxxxxxxxxxx";
-		
-		//Split map into useable array
-		map = mapRaw.split("\n");
-		
-		//Find spawn location
-		for(int i = 0; i < map.length; i++) {
-			if(map[i].contains("1")) {
-				spawnX = map[i].indexOf("1");
-				spawnY = i;
-			}
-		}
-		
-		System.out.println(map[spawnY].charAt(spawnX));
+		loadMap("demo");
 		
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException ex) {}
 		
-		ready = true;
+		setReady(true);
 	}
 	
 	public void keyPressed(KeyEvent e) {
-		
+		int keyCode = e.getKeyCode();
+		switch(keyCode) {
+			case KeyEvent.VK_UP:
+				demoDY = -1;
+				break;
+			case KeyEvent.VK_DOWN:
+				demoDY = 1;
+				break;
+			case KeyEvent.VK_LEFT:
+				demoDX = -1;
+				break;
+			case KeyEvent.VK_RIGHT:
+				demoDX = 1;
+				break;
+			default:
+				break;
+		}
+	}
+	
+	public void keyReleased(KeyEvent e) {
+		int keyCode = e.getKeyCode();
+		switch(keyCode) {
+			case KeyEvent.VK_UP:
+				demoDY = 0;
+				break;
+			case KeyEvent.VK_DOWN:
+				demoDY = 0;
+				break;
+			case KeyEvent.VK_LEFT:
+				demoDX = 0;
+				break;
+			case KeyEvent.VK_RIGHT:
+				demoDX = 0;
+				break;
+			default:
+				break;
+		}
 	}
 }
