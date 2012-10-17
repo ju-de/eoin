@@ -16,14 +16,13 @@ public class Main implements Runnable, KeyListener {
 	public Main() {
 		
 		//Set gameState variable (currently at 3 for Demo Screen, should be changed to 1 for real game to initiate start menu)
-		gameState = GameState.DEMO;
-		
-		//Start Demo Thread (temporary, remove when game is ready)
-		demo = new Demo();
+		gameState = GameState.LOADINGDEMO;
 		
 		//Initializes Thread
 		Thread th = new Thread(this);
 		th.start();
+		
+		demo = new Demo();
 	}
 	
 	//Passes game state to rendering thread
@@ -34,8 +33,20 @@ public class Main implements Runnable, KeyListener {
 	public void run() {
 		while(true) {
 			//Temporary game state, remove when done
-			if(gameState == GameState.DEMO) {
-				demo.step();
+			switch(gameState) {
+				case DEMO:
+					demo.step();
+					break;
+				case LOADINGDEMO:
+					
+					//Change gameState when level element is done loading
+					if(demo != null && demo.isReady()) {
+						gameState = GameState.DEMO;
+					}
+					
+					break;
+				default:
+					break;
 			}
 			try {
 				Thread.sleep(5);
