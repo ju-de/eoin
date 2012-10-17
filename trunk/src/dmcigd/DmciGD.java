@@ -1,5 +1,6 @@
 package dmcigd;
 
+import dmcigd.core.*;
 import java.applet.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class DmciGD extends Applet implements Runnable {
 	Main main = new Main();
 	
 	//Initializing gameState variable - decides which screen to paint
-	int gameState;
+	GameState gameState;
 	
 	//Initialize visible objects list
 	private ArrayList visibleObjects = new ArrayList();
@@ -52,7 +53,7 @@ public class DmciGD extends Applet implements Runnable {
 			if(gameState != main.getGameState()) {
 				repaint();
 				gameState = main.getGameState();
-			} else if(gameState >= 0) {
+			} else if(gameState != GameState.PAUSE && gameState != GameState.GAMEOVER) {
 				repaint();
 			}
       
@@ -76,7 +77,7 @@ public class DmciGD extends Applet implements Runnable {
 		} 
       
 		//Do not clear screen in case of dialogue - Paused game should remain as background during cutscenes or dialogue)
-		if(gameState != 0) {
+		if(gameState != GameState.DIALOGUE) {
 
 		  //Clear screen and draw Background
 		  dbg.setColor(getBackground());
@@ -97,29 +98,36 @@ public class DmciGD extends Applet implements Runnable {
 	public void paint(Graphics g) {
 		
 		//Check for which paint method to call
-		if(gameState == -1) {
-			//Paused Game
-      
-		} else if (gameState == 0) {
-			//Dialogue boxes and Cutscenes
-      
-		} else if (gameState == 1) {
-			//Start Menu
-      
-		} else if (gameState == 2) {
-			//Gameplay Screen
-      
-		} else if (gameState == 3) {
-			
-			//Loop through visible objects for X axis
-			
-			visibleObjects = main.demo.getVisibleObjects();
-			
-			g.setColor(Color.red);
-			for(int i = 0; i < visibleObjects.size(); i++) {
-				int x = (int) visibleObjects.get(i);
-				g.fillOval(x,10,10,10);
-			}
+		switch (gameState) {
+			case DEMO:
+				
+				//Loop through visible objects for X axis
+				visibleObjects = main.demo.getVisibleObjects();
+
+				g.setColor(Color.red);
+				for(int i = 0; i < visibleObjects.size(); i++) {
+					int x = (int) visibleObjects.get(i);
+					g.fillOval(x,10,10,10);
+				}
+				break;
+				
+			case LEVEL:
+				break;
+				
+			case DIALOGUE:
+				break;
+				
+			case MENU:
+				break;
+				
+			case PAUSE:
+				break;
+				
+			case GAMEOVER:
+				break;
+				
+			default:
+				break;
 		}
 		
 		//Syncronize Paint with Run - Ensures there is only one paint per loop iteration
