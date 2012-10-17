@@ -1,6 +1,7 @@
 package dmcigd;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Demo implements Runnable {
@@ -10,10 +11,15 @@ public class Demo implements Runnable {
 	
 	private boolean ready = false;
 	
-	private String map;
+	//Initialize mapping variables
+	private String mapRaw;
+	private String[] map;
+	private int spawnX;
+	private int spawnY;
 	
-	//Initialize visible objects list
+	//Initialize object lists
 	private ArrayList visibleObjects = new ArrayList();
+	private ArrayList visibleBlocks;
 	
 	public boolean isReady() {
 		return ready;
@@ -51,9 +57,8 @@ public class Demo implements Runnable {
 	
 	public void run() {
 		
-		map = new String();
-		
-		map	= "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
+		//Load maps
+		mapRaw	= "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
 			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
 			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
 			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
@@ -71,12 +76,27 @@ public class Demo implements Runnable {
 			+ "xxxxxxxxxxxxxxxxxxxxxxxxx\n"
 			+ "xxxxxxxxxxxxxxxxxxxxxxxxx";
 		
-		System.out.println(map);
+		//Split map into useable array
+		map = mapRaw.split("\n");
+		
+		//Find spawn location
+		for(int i = 0; i < map.length; i++) {
+			if(map[i].contains("1")) {
+				spawnX = map[i].indexOf("1");
+				spawnY = i;
+			}
+		}
+		
+		System.out.println(map[spawnY].charAt(spawnX));
 		
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException ex) {}
 		
 		ready = true;
+	}
+	
+	public void keyPressed(KeyEvent e) {
+		
 	}
 }

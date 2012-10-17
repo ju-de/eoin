@@ -58,6 +58,12 @@ public class Main implements Runnable, KeyListener {
 		//Catch core keypresses such as Pause/Unpause
 		
 		//Pass keypresses to appropriate object
+		switch(gameState) {
+			case DEMO:
+				demo.keyPressed(e);
+			default:
+				break;
+		}
 	}
 	
 	public void keyReleased(KeyEvent e) {
