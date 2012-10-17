@@ -1,6 +1,7 @@
 package dmcigd;
 
-import dmcigd.core.*;
+import dmcigd.core.GameState;
+import dmcigd.core.interfaces.*;
 import java.applet.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class DmciGD extends Applet implements Runnable {
 	GameState gameState;
 	
 	//Initialize visible objects list
-	private ArrayList visibleObjects = new ArrayList();
+	private Block[][] visibleBlocks = new Block[11][20];
 	
 	//Initialize the Double-buffering Variables
 	int appletsize_x = 640;
@@ -69,8 +70,14 @@ public class DmciGD extends Applet implements Runnable {
 				try {
 					wait();
 				} catch (InterruptedException ex) {}
-				Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 				
+			} else {
+				
+				//Wait and check again
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException ex) {}
+				Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 			}
          
 		}
@@ -79,12 +86,18 @@ public class DmciGD extends Applet implements Runnable {
 	
 	//Implements Double-Buffering
 	public void update(Graphics g) {
-		
-		//Initialize Double-Buffering
-		if(dbImage == null) {
+
+		if(dbg == null) {
+			//Initialize Double-Buffers
 			dbImage = createImage(this.getSize().width, this.getSize().height);
 			dbg = dbImage.getGraphics();
-		} 
+		}
+		
+		paint(g);
+	}
+	
+	//Calls paint methods of appropriate object
+	public void paint(Graphics g) {
       
 		//Do not clear screen in case of dialogue - Paused game should remain as background during cutscenes or dialogue)
 		if(gameState != GameState.DIALOGUE) {
@@ -94,38 +107,37 @@ public class DmciGD extends Applet implements Runnable {
 		  dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
 
 		}
-
-		//Paint the frame to offscreen image
-		dbg.setColor (getForeground()); //Debugging code (for drawing shapes such as background colours). Will later be used to render fonts.
-		paint (dbg);
-		
-		//Draw offscreen image
-		g.drawImage (dbImage, 0, 0, this);
-		
-	}
-	
-	//Calls paint methods of appropriate object
-	public void paint(Graphics g) {
 		
 		//Check for which paint method to call
 		switch(gameState) {
 			case DEMO:
-				
-				//Loop through visible objects for X axis
-				visibleObjects = main.demo.getVisibleObjects();
 
-				g.setColor(Color.red);
+				dbg.setColor(Color.red);
 				
-				for(int i = 0; i < visibleObjects.size(); i++) {
-					int x = (int) visibleObjects.get(i);
-					g.fillOval(x,10,10,10);
+				//Retrieve visibleBlocks
+				visibleBlocks = main.demo.getVisibleBlocks();
+				
+				//Loop through Y axis of visibleBlocks
+				for(int i=0; i<11; i++) {
+					
+					//Loop through X axis of visibleBlocks
+					for(int j=0; j<21; j++) {
+						
+						//Draw if object exists
+						if(visibleBlocks[i][j] != null) {
+							dbg.fillRect(j*32 - (main.demo.getDemoX() % 32), i*32 - (main.demo.getDemoY() % 32), 32, 32);
+						}
+						
+					}
+					
 				}
+				
 				break;
 				
 			case LOADINGDEMO:
 				
-				g.setColor(Color.red);
-				g.drawString("Loading Demo Level", 40, 75);
+				dbg.setColor(Color.red);
+				dbg.drawString("Loading Demo Level", 40, 75);
 				
 				break;
 				
@@ -153,6 +165,9 @@ public class DmciGD extends Applet implements Runnable {
 			default:
 				break;
 		}
+		
+		//Draw offscreen image
+		g.drawImage (dbImage, 0, 0, this);
 		
 		//Syncronize Paint with Run - Ensures there is only one paint per loop iteration
 		synchronized(this) {

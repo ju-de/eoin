@@ -1,6 +1,6 @@
 package dmcigd;
 
-import dmcigd.core.*;
+import dmcigd.core.GameState;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -67,7 +67,15 @@ public class Main implements Runnable, KeyListener {
 	}
 	
 	public void keyReleased(KeyEvent e) {
+		//Catch core keyreleases such as Pause/Unpause
 		
+		//Pass keyreleases to appropriate object
+		switch(gameState) {
+			case DEMO:
+				demo.keyReleased(e);
+			default:
+				break;
+		}
 	}
 	
 	public void keyTyped(KeyEvent e) {
