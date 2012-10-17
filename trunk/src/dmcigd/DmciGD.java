@@ -107,7 +107,7 @@ public class DmciGD extends Applet implements Runnable {
 	//Calls paint methods of appropriate object
 	public void paint(Graphics g) {
 		
-		visibleObjects = main.getVisibleObjects();
+		visibleObjects = main.demo.getVisibleObjects();
 		
 		//Check for which paint method to call
 		if(gameState == -1) {

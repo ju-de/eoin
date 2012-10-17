@@ -13,9 +13,6 @@ public class Main implements Runnable, KeyListener {
 	//Initializing gameState variable - decides which object to interact with
 	private int gameState;
 	
-	//Initialize visible objects list
-	private ArrayList visibleObjects = new ArrayList();
-	
 	public Main() {
 		
 		//Set gameState variable (currently at 3 for Demo Screen, should be changed to 1 for real game to initiate start menu)
@@ -23,7 +20,6 @@ public class Main implements Runnable, KeyListener {
 		
 		//Start Demo Thread (temporary, remove when game is ready)
 		demo = new Demo();
-		visibleObjects.add((int) 1);
 		
 		//Initializes Thread
 		Thread th = new Thread(this);
@@ -36,7 +32,11 @@ public class Main implements Runnable, KeyListener {
 	}
 	
 	public ArrayList getVisibleObjects() {
-		return visibleObjects;
+		if(gameState ==3) {
+			return demo.getVisibleObjects();
+		}else{
+			return new ArrayList();
+		}
 	}
 	
 	public void start() {
@@ -47,8 +47,12 @@ public class Main implements Runnable, KeyListener {
 		while(true) {
 			//Temporary game state, remove when done
 			if(gameState == 3) {
-				visibleObjects.set(0, (int) demo.getX());
+				demo.step();
+				System.out.println(demo.getVisibleObjects().get(0));
 			}
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException ex) {}
 		}
 	}
 	

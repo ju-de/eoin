@@ -1,37 +1,30 @@
 package dmcigd;
 
 import java.awt.*;
+import java.util.ArrayList;
 
-public class Demo implements Runnable {
+public class Demo {
 	
 	private int x;
 	
-	public int getX() {
-		return x;
+	//Initialize visible objects list
+	private ArrayList visibleObjects = new ArrayList();
+	
+	public ArrayList getVisibleObjects() {
+		return visibleObjects;
 	}
 	
 	public Demo() {
-		Thread th = new Thread(this);
-		th.start();
+		
+		x = 1;
+		visibleObjects.add((int) 1);
+		
 	}
 	
-	public void start () {
-		x = 1;
-	}
-	public void run() {
-		
-		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-		
-		while(true) {
+	public void step() {
 			
-			x++;
-
-			//Add delay to thread update - gives breathing room for game loop
-			try {
-				Thread.sleep(5);
-			} catch (InterruptedException ex) {}
-			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-		}
+		x++;
+		visibleObjects.set(0, (int) x);
 		
 	}
 }
