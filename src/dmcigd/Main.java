@@ -1,8 +1,8 @@
 package dmcigd;
 
+import dmcigd.core.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 //Catches input and manages game loop objects
 public class Main implements Runnable, KeyListener {
@@ -11,12 +11,12 @@ public class Main implements Runnable, KeyListener {
 	Demo demo;
 	
 	//Initializing gameState variable - decides which object to interact with
-	private int gameState;
+	private GameState gameState;
 	
 	public Main() {
 		
 		//Set gameState variable (currently at 3 for Demo Screen, should be changed to 1 for real game to initiate start menu)
-		gameState = 3;
+		gameState = GameState.DEMO;
 		
 		//Start Demo Thread (temporary, remove when game is ready)
 		demo = new Demo();
@@ -27,14 +27,14 @@ public class Main implements Runnable, KeyListener {
 	}
 	
 	//Passes game state to rendering thread
-	public int getGameState() {
+	public GameState getGameState() {
 		return gameState;
 	}
 	
 	public void run() {
 		while(true) {
 			//Temporary game state, remove when done
-			if(gameState == 3) {
+			if(gameState == GameState.DEMO) {
 				demo.step();
 			}
 			try {
