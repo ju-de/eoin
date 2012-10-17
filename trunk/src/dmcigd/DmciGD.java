@@ -7,20 +7,18 @@ import java.util.ArrayList;
 //Renders applet
 public class DmciGD extends Applet implements Runnable {
 	
+	//Initializes Main Thread
+	Main main = new Main();
+	
 	//Initializing gameState variable - decides which screen to paint
 	int gameState;
-	
-	//Declare applet size
-	int appletsize_x = 640;
-	int appletsize_y = 320;
-	
-	//Initializes Main Thread
-	Main main;
 	
 	//Initialize visible objects list
 	private ArrayList visibleObjects = new ArrayList();
 	
 	//Initialize the Double-buffering Variables
+	int appletsize_x = 640;
+	int appletsize_y = 320;
 	private Image dbImage;
 	private Graphics dbg;
 	
@@ -31,9 +29,7 @@ public class DmciGD extends Applet implements Runnable {
 		setBackground (Color.black);
 		
 		//Start Main Thread
-		main = new Main();
 		gameState = main.getGameState();
-			
 		addKeyListener(main);
 	}
 	
