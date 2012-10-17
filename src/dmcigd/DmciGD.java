@@ -28,8 +28,7 @@ public class DmciGD extends Applet implements Runnable {
 		//Set canvas background
 		setBackground (Color.black);
 		
-		//Start Main Thread
-		gameState = main.getGameState();
+		//Add listener to main thread
 		addKeyListener(main);
 	}
 	
@@ -42,23 +41,22 @@ public class DmciGD extends Applet implements Runnable {
 		
 	}
 	
-	//Calls game loop
+	//Repaints screen
 	public synchronized void run(){
 		
 		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
 		
-		//Repaint the screen at up to 50fps
 		while (true) {
 			
-			//Synchronize gameState variable
-			gameState = main.getGameState();
-			
-			//Only update the screen if in a state of update (i.e. dialogue, menus, or gameplay)
-			if(gameState >= 0) {
-			  repaint();
+			//Only update the screen if it is changing (i.e. change of state, dialogue, menus, or gameplay)
+			if(gameState != main.getGameState()) {
+				repaint();
+				gameState = main.getGameState();
+			} else if(gameState >= 0) {
+				repaint();
 			}
       
-			//Add delay to thread update - gives breathing room for game loop
+			//Only repaint after the previous frame has been painted - Reduces unnecessary calls
 			try {
 				wait();
 			} catch (InterruptedException ex) {}
