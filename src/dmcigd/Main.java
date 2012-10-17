@@ -31,24 +31,11 @@ public class Main implements Runnable, KeyListener {
 		return gameState;
 	}
 	
-	public ArrayList getVisibleObjects() {
-		if(gameState ==3) {
-			return demo.getVisibleObjects();
-		}else{
-			return new ArrayList();
-		}
-	}
-	
-	public void start() {
-		
-	}
-	
 	public void run() {
 		while(true) {
 			//Temporary game state, remove when done
 			if(gameState == 3) {
 				demo.step();
-				System.out.println(demo.getVisibleObjects().get(0));
 			}
 			try {
 				Thread.sleep(5);

@@ -46,11 +46,6 @@ public class DmciGD extends Applet implements Runnable {
 		
 	}
 	
-	//Stops thread
-	public void stop () {
-		
-	}
-	
 	//Calls game loop
 	public synchronized void run(){
 		
@@ -107,8 +102,6 @@ public class DmciGD extends Applet implements Runnable {
 	//Calls paint methods of appropriate object
 	public void paint(Graphics g) {
 		
-		visibleObjects = main.demo.getVisibleObjects();
-		
 		//Check for which paint method to call
 		if(gameState == -1) {
 			//Paused Game
@@ -125,6 +118,8 @@ public class DmciGD extends Applet implements Runnable {
 		} else if (gameState == 3) {
 			
 			//Loop through visible objects for X axis
+			
+			visibleObjects = main.demo.getVisibleObjects();
 			
 			g.setColor(Color.red);
 			for(int i = 0; i < visibleObjects.size(); i++) {
