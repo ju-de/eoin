@@ -4,9 +4,7 @@ import java.util.*;
 import java.io.*;
 import java.net.URL;
 
-public class MapLoader {
-	
-	private boolean ready = false;
+public class BlockLoader {
 	
 	//Initialize object lists
 	private char[][] visibleBlocks;
@@ -23,14 +21,6 @@ public class MapLoader {
 	public int demoY;
 	public int demoDX;
 	public int demoDY;
-	
-	public boolean isReady() {
-		return ready;
-	}
-	
-	public void setReady(boolean setReady) {
-		ready = setReady;
-	}
 	
 	public char[][] getVisibleBlocks() {
 		return visibleBlocks;
@@ -51,7 +41,7 @@ public class MapLoader {
 		}
 	}
 	
-	public void loadMap(String folderName) {
+	public void loadBlockMap(String folderName) {
 		
 		//Create blockMap array
 		try {

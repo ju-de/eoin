@@ -1,4 +1,4 @@
-package java.core;
+package dmcigd.core;
 
 import dmcigd.core.Game;
 import java.applet.*;

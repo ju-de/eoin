@@ -1,10 +1,16 @@
 package dmcigd;
 
-import dmcigd.core.MapLoader;
+import dmcigd.core.BlockLoader;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class Demo extends MapLoader implements Runnable {
+public class Demo extends BlockLoader implements Runnable {
+	
+	private boolean ready = false;
+	
+	public boolean isReady() {
+		return ready;
+	}
 	
 	public int getDemoX() {
 		return demoX;
@@ -33,13 +39,9 @@ public class Demo extends MapLoader implements Runnable {
 	
 	public void run() {
 		
-		loadMap("demo");
+		loadBlockMap("demo");
 		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException ex) {}
-		
-		setReady(true);
+		ready = true;
 	}
 	
 	public void keyPressed(KeyEvent e) {
