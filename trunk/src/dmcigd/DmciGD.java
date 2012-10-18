@@ -1,7 +1,6 @@
 package dmcigd;
 
 import dmcigd.core.GameState;
-import dmcigd.core.interfaces.*;
 import java.applet.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class DmciGD extends Applet implements Runnable {
 	GameState gameState;
 	
 	//Initialize visible objects list
-	private Block[][] visibleBlocks = new Block[11][20];
+	private char[][] visibleBlocks = new char[11][20];
 	
 	//Initialize the Double-buffering Variables
 	int appletsize_x = 640;
@@ -32,6 +31,10 @@ public class DmciGD extends Applet implements Runnable {
 		
 		//Add listener to main thread
 		addKeyListener(main);
+		
+		//Initialize Double-Buffers
+		dbImage = createImage(this.getSize().width, this.getSize().height);
+		dbg = dbImage.getGraphics();
 	}
 	
 	//Starts thread
@@ -59,6 +62,7 @@ public class DmciGD extends Applet implements Runnable {
 				//Only repaint after the previous frame has been painted - Reduces unnecessary calls
 				try {
 					wait();
+					Thread.sleep(5);
 				} catch (InterruptedException ex) {}
 				Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 				
@@ -69,6 +73,7 @@ public class DmciGD extends Applet implements Runnable {
 				//Only repaint after the previous frame has been painted and game is in a state of update - Reduces unnecessary calls
 				try {
 					wait();
+					Thread.sleep(5);
 				} catch (InterruptedException ex) {}
 				
 			} else {
@@ -86,12 +91,6 @@ public class DmciGD extends Applet implements Runnable {
 	
 	//Implements Double-Buffering
 	public void update(Graphics g) {
-
-		if(dbg == null) {
-			//Initialize Double-Buffers
-			dbImage = createImage(this.getSize().width, this.getSize().height);
-			dbg = dbImage.getGraphics();
-		}
 		
 		paint(g);
 	}
@@ -124,7 +123,7 @@ public class DmciGD extends Applet implements Runnable {
 					for(int j=0; j<21; j++) {
 						
 						//Draw if object exists
-						if(visibleBlocks[i][j] != null) {
+						if(visibleBlocks[i][j] == 'x') {
 							dbg.fillRect(j*32 - (main.demo.getDemoX() % 32), i*32 - (main.demo.getDemoY() % 32), 32, 32);
 						}
 						
