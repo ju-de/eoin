@@ -35,15 +35,10 @@ public class DmciGD extends Applet implements Runnable {
 		//Initialize Double-Buffers
 		dbImage = createImage(this.getSize().width, this.getSize().height);
 		dbg = dbImage.getGraphics();
-	}
-	
-	//Starts thread
-	public void start () {
 		
 		//Start new thread when applet loads
 		Thread th = new Thread(this);
 		th.start();
-		
 	}
 	
 	//Repaints screen
@@ -91,7 +86,6 @@ public class DmciGD extends Applet implements Runnable {
 	
 	//Implements Double-Buffering
 	public void update(Graphics g) {
-		
 		paint(g);
 	}
 	
