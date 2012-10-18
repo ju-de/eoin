@@ -123,11 +123,11 @@ public class MovingObject {
 						if(!isSolid(immediateBlocks[2][column])) {
 							x = x + vx;
 						} else {
-							x = ((x + vx) / 32 * 32) - width + 32;
+							x = (x / 32 * 32) - width + 32;
 						}
 					}
 				} else {
-					x = ((x + vx) / 32 * 32) - width + 32;
+					x = (x / 32 * 32) - width + 32;
 				}
 			}
 			
@@ -176,11 +176,11 @@ public class MovingObject {
 						if(!isSolid(immediateBlocks[row][2])) {
 							y = y + vy;
 						} else {
-							y = ((y + vy) / 32 * 32) - height + 32;
+							y = (y / 32 * 32) - height + 32;
 						}
 					}
 				} else {
-					y = ((y + vy) / 32 * 32) - height + 32;
+					y = (y / 32 * 32) - height + 32;
 				}
 			}
 		}else if(vy < 0) {
