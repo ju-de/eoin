@@ -116,9 +116,9 @@ public class DmciGD extends Applet implements Runnable {
 		switch(gameState) {
 			case DEMO:
 				
-				//Debugging element. Remove when block collision checks are done
-				dbg.setColor(Color.green);
-				dbg.fillRect(((main.demo.player.getX()/32)*32) - (main.demo.player.getX()) + 304,((main.demo.player.getY()/32)*32) - (main.demo.player.getY()) +144,32,32);
+				//Debugging element: highlights tile associated with player
+				//dbg.setColor(Color.green);
+				//dbg.fillRect(((main.demo.player.getX()/32)*32) - (main.demo.player.getX()) + 304,((main.demo.player.getY()/32)*32) - (main.demo.player.getY()) +144,32,32);
 
 				dbg.setColor(Color.red);
 				
@@ -138,7 +138,7 @@ public class DmciGD extends Applet implements Runnable {
 					
 				}
 				
-				dbg.fillOval(304, 144, 32, 32);
+				dbg.fillOval(304, 144, main.demo.player.getWidth(), main.demo.player.getHeight());
 				
 				
 				break;
