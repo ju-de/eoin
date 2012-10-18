@@ -1,7 +1,5 @@
 package dmcigd.core;
 
-import dmcigd.core.objects.blocks.*;
-import dmcigd.core.interfaces.*;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
@@ -11,7 +9,7 @@ public class MapLoader {
 	private boolean ready = false;
 	
 	//Initialize object lists
-	private Block[][] visibleBlocks;
+	private char[][] visibleBlocks;
 	
 	//Initialize buffered reader for maps
 	private BufferedReader br;
@@ -34,7 +32,7 @@ public class MapLoader {
 		ready = setReady;
 	}
 	
-	public Block[][] getVisibleBlocks() {
+	public char[][] getVisibleBlocks() {
 		return visibleBlocks;
 	}
 	
@@ -48,14 +46,7 @@ public class MapLoader {
 				
 				//Checks block at given displacement from character sprite
 				//REMEMBER TO REPLACE DEMO VARIABLE WITH PLAYER POSITION
-				switch (blockMap.get((demoY/32)-5+i).charAt((demoX/32)-10+j)) {
-					case 'x':
-						visibleBlocks[i][j] = new DemoBlock();
-						break;
-					default:
-						visibleBlocks[i][j] = null;
-						break;
-				}
+				visibleBlocks[i][j] = blockMap.get((demoY/32)-5+i).charAt((demoX/32)-10+j);
 			}
 		}
 	}
@@ -98,7 +89,7 @@ public class MapLoader {
 		demoX = spawnX * 32;
 		demoY = spawnY * 32;
 		
-		visibleBlocks = new Block[11][21];
+		visibleBlocks = new char[11][21];
 		
 		fetchVisibleBlocks();
 	}
