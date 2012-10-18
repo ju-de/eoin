@@ -116,7 +116,7 @@ public class MovingObject {
 				//Check if tile to the immediate right is clear
 				if(!isSolid(immediateBlocks[1][column])) {
 					//If sitting perfectly in tile, move
-					if((y - height + 32) % 32 == 0) {
+					if(y % 32 <= 32 - height) {
 						x = x + vx;
 					} else {
 						//If sitting between tiles, if tile to bottom right is also clear, move
@@ -169,7 +169,7 @@ public class MovingObject {
 				//Check if tile to the immediate bottom is clear
 				if(!isSolid(immediateBlocks[row][1])) {
 					//If sitting perfectly in tile, move
-					if((x  - width + 32) % 32 == 0) {
+					if(x % 32 <= 32 - width) {
 						y = y + vy;
 					} else {
 						//If sitting between tiles, if tile to bottom right is also clear, move
