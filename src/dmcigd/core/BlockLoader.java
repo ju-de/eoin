@@ -2,12 +2,8 @@ package dmcigd.core;
 
 import java.util.*;
 import java.io.*;
-import java.net.URL;
 
 public class BlockLoader {
-	
-	//Initialize object lists
-	private char[][] visibleBlocks;
 	
 	//Initialize buffered reader for maps
 	private BufferedReader br;
@@ -17,26 +13,52 @@ public class BlockLoader {
 	private int spawnX;
 	private int spawnY;
 	
-	public int demoX;
-	public int demoY;
-	public int demoDX;
-	public int demoDY;
+	//Initialize object lists
+	private char[][] immediateBlocks = new char[4][4];
+	private char[][] visibleBlocks = new char[12][22];
+	
+	public int getSpawnX() {
+		return spawnX;
+	}
+	
+	public int getSpawnY() {
+		return spawnY;
+	}
+	
+	public List<String> getBlockMap() {
+		return blockMap;
+	}
 	
 	public char[][] getVisibleBlocks() {
 		return visibleBlocks;
 	}
 	
-	public void fetchVisibleBlocks() {
+	public char[][] getImmediateBlocks(int x, int y) {
 		
 		//Loop through Y axis
-		for(int i=0; i<11; i++) {
+		for(int i=0; i<4; i++) {
 			
 			//Loop through X axis
-			for(int j=0; j<21; j++) {
+			for(int j=0; j<4; j++) {
 				
 				//Checks block at given displacement from character sprite
-				//REMEMBER TO REPLACE DEMO VARIABLE WITH PLAYER POSITION
-				visibleBlocks[i][j] = blockMap.get((demoY/32)-5+i).charAt((demoX/32)-10+j);
+				immediateBlocks[i][j] = blockMap.get((y/32)-1+i).charAt((x/32)-1+j);
+			}
+		}
+		
+		return immediateBlocks;
+	}
+	
+	public void fetchVisibleBlocks(int x, int y) {
+		
+		//Loop through Y axis
+		for(int i=0; i<12; i++) {
+			
+			//Loop through X axis
+			for(int j=0; j<22; j++) {
+				
+				//Checks block at given displacement from character sprite
+				visibleBlocks[i][j] = blockMap.get((y/32)-5+i).charAt((x/32)-10+j);
 			}
 		}
 	}
@@ -74,13 +96,6 @@ public class BlockLoader {
 			
 		} catch (FileNotFoundException e) {}
 		
-		//Set character position
-		//REMEMBER TO REPLACE DEMO VARIABLE WITH PLAYER POSITION
-		demoX = spawnX * 32;
-		demoY = spawnY * 32;
-		
-		visibleBlocks = new char[11][21];
-		
-		fetchVisibleBlocks();
+		fetchVisibleBlocks(spawnX * 32, spawnY * 32);
 	}
 }
