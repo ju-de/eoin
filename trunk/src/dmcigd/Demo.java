@@ -1,23 +1,17 @@
 package dmcigd;
 
-import dmcigd.core.BlockLoader;
+import dmcigd.core.*;
+import dmcigd.core.objects.player.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
-public class Demo extends BlockLoader implements Runnable {
+public class Demo implements Runnable {
 	
 	private boolean ready = false;
+	public Player player;
+	public BlockLoader blockLoader = new BlockLoader();
 	
 	public boolean isReady() {
 		return ready;
-	}
-	
-	public int getDemoX() {
-		return demoX;
-	}
-	
-	public int getDemoY() {
-		return demoY;
 	}
 	
 	public Demo() {
@@ -30,16 +24,15 @@ public class Demo extends BlockLoader implements Runnable {
 	
 	public void step() {
 		
-		demoX = demoX + demoDX;
-		demoY = demoY + demoDY;
-		
-		fetchVisibleBlocks();
+		player.step(blockLoader.getImmediateBlocks(player.getX(), player.getY()));
+		blockLoader.fetchVisibleBlocks(player.getX(), player.getY());
 		
 	}
 	
 	public void run() {
 		
-		loadBlockMap("demo");
+		blockLoader.loadBlockMap("demo");
+		player = new Player(blockLoader.getSpawnX() * 32, blockLoader.getSpawnY() * 32);
 		
 		ready = true;
 	}
@@ -48,16 +41,21 @@ public class Demo extends BlockLoader implements Runnable {
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
 			case KeyEvent.VK_UP:
-				demoDY = -1;
+				//Just testing acceleration. Replace this command later
+				player.setAX(-3);
 				break;
 			case KeyEvent.VK_DOWN:
-				demoDY = 1;
+				//Just testing acceleration. Remove this command later
+				player.setAX(3);
 				break;
 			case KeyEvent.VK_LEFT:
-				demoDX = -1;
+				player.setVX(-3);
 				break;
 			case KeyEvent.VK_RIGHT:
-				demoDX = 1;
+				player.setVX(3);
+				break;
+			case KeyEvent.VK_Z:
+				player.setVY(-3);
 				break;
 			default:
 				break;
@@ -68,16 +66,16 @@ public class Demo extends BlockLoader implements Runnable {
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
 			case KeyEvent.VK_UP:
-				demoDY = 0;
-				break;
-			case KeyEvent.VK_DOWN:
-				demoDY = 0;
+				player.setVY(2);
 				break;
 			case KeyEvent.VK_LEFT:
-				demoDX = 0;
+				player.setVX(0);
 				break;
 			case KeyEvent.VK_RIGHT:
-				demoDX = 0;
+				player.setVX(0);
+				break;
+			case KeyEvent.VK_Z:
+				player.setVY(2);
 				break;
 			default:
 				break;

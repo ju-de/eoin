@@ -1,7 +1,6 @@
 package dmcigd;
 
 import dmcigd.core.GameState;
-import java.awt.*;
 import java.awt.event.*;
 
 //Catches input and manages game loop objects
@@ -12,8 +11,10 @@ public class Main implements Runnable, KeyListener {
 	
 	//Initializing gameState variable - decides which object to interact with
 	private GameState gameState;
+	private ThreadSync threadSync;
 	
-	public Main() {
+	public Main(ThreadSync threadSync) {
+		this.threadSync = threadSync;
 		
 		//Set gameState variable (currently at 3 for Demo Screen, should be changed to 1 for real game to initiate start menu)
 		gameState = GameState.LOADINGDEMO;
@@ -32,6 +33,7 @@ public class Main implements Runnable, KeyListener {
 	
 	public void run() {
 		while(true) {
+			
 			//Temporary game state, remove when done
 			switch(gameState) {
 				case DEMO:
@@ -48,9 +50,8 @@ public class Main implements Runnable, KeyListener {
 				default:
 					break;
 			}
-			try {
-				Thread.sleep(5);
-			} catch (InterruptedException ex) {}
+			
+			threadSync.produced();
 		}
 	}
 	
