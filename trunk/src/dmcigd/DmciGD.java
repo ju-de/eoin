@@ -1,6 +1,7 @@
 package dmcigd;
 
-import dmcigd.core.GameState;
+import dmcigd.core.*;
+
 import java.applet.*;
 import java.awt.*;
 import java.util.Map;
@@ -19,6 +20,8 @@ public class DmciGD extends Applet implements Runnable {
 	//Initialize visible objects list
 	private char[][] visibleBlocks = new char[12][22];
 	private Map<String, Image> blockImageMap = new HashMap<String, Image>();
+	private int playerX;
+	private int playerY;
 	
 	//Initialize the Double-buffering Variables
 	private Image dbImage;
@@ -28,7 +31,7 @@ public class DmciGD extends Applet implements Runnable {
 	public void init() {
 		
 		//Set canvas background
-		setBackground (Color.black);
+		setBackground (new Color(200,240,255));
 		
 		//Add listener to main thread
 		addKeyListener(main);
@@ -47,6 +50,8 @@ public class DmciGD extends Applet implements Runnable {
 		
 		while (true) {
 			
+			threadSync.consume();
+			
 			switch (main.getGameState()) {
 				case DEMO:
 					
@@ -57,9 +62,13 @@ public class DmciGD extends Applet implements Runnable {
 					
 					//Retrieve necessary objects
 					gameState = GameState.DEMO;
-					visibleBlocks = main.demo.blockLoader.getVisibleBlocks();
 					
-					threadSync.consume();
+					playerX = main.demo.player.getX();
+					playerY = main.demo.player.getY();
+					
+					visibleBlocks = main.demo.blockLoader.getVisibleBlocks(playerX, playerY);
+					
+					threadSync.consumed();
 					
 					//Repaint
 					repaint();
@@ -77,7 +86,7 @@ public class DmciGD extends Applet implements Runnable {
 						
 						gameState = main.getGameState();
 						
-						threadSync.consume();
+						threadSync.consumed();
 						
 						//Update screen once
 						repaint();
@@ -88,7 +97,7 @@ public class DmciGD extends Applet implements Runnable {
 						} catch (InterruptedException ex) {}
 					} else {
 						
-						threadSync.consume();
+						threadSync.consumed();
 						
 						//If not in a state of update, wait and keep checking gameState
 						try {
@@ -140,7 +149,7 @@ public class DmciGD extends Applet implements Runnable {
 						
 						//Draw if object exists
 						if((tile = blockImageMap.get(String.valueOf(visibleBlocks[i][j]))) != null) {
-							dbg.drawImage(tile, j*32 - (main.demo.player.getX() % 32) - 16, i*32 - (main.demo.player.getY() % 32) - 16, this);
+							dbg.drawImage(tile, j*32 - (playerX % 32) - 16, i*32 - (playerY % 32) - 16, this);
 						}
 						
 					}

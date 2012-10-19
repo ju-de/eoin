@@ -62,15 +62,14 @@ public class Demo implements Runnable {
 	
 	public void step() {
 		
-		player.step(blockLoader);
-		blockLoader.fetchVisibleBlocks(player.getX(), player.getY());
+		player.step();
 		
 	}
 	
 	public void run() {
 		
 		blockLoader.loadBlockMap("demo");
-		player = new Player(blockLoader.getSpawnX() * 32, blockLoader.getSpawnY() * 32);
+		player = new Player(blockLoader.getSpawnX() * 32, blockLoader.getSpawnY() * 32, blockLoader);
 		
 		ready = true;
 	}
@@ -80,11 +79,11 @@ public class Demo implements Runnable {
 		switch(keyCode) {
 			case KeyEvent.VK_UP:
 				//Just testing acceleration. Replace this command later
-				player.setAX(-3);
+				player.setAX(0.2f);
 				break;
 			case KeyEvent.VK_DOWN:
 				//Just testing acceleration. Remove this command later
-				player.setAX(3);
+				player.setAX(-0.2f);
 				break;
 			case KeyEvent.VK_LEFT:
 				player.setVX(-3);
@@ -104,7 +103,12 @@ public class Demo implements Runnable {
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
 			case KeyEvent.VK_UP:
-				player.setVY(2);
+				player.setAX(0);
+				player.setVX(0);
+				break;
+			case KeyEvent.VK_DOWN:
+				player.setAX(0);
+				player.setVX(0);
 				break;
 			case KeyEvent.VK_LEFT:
 				player.setVX(0);

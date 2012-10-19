@@ -29,7 +29,8 @@ public class BlockLoader {
 		return blockMap;
 	}
 	
-	public char[][] getVisibleBlocks() {
+	public char[][] getVisibleBlocks(int x, int y) {
+		fetchVisibleBlocks(x, y);
 		return visibleBlocks;
 	}
 	

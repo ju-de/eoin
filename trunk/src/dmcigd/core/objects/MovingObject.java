@@ -1,87 +1,62 @@
 package dmcigd.core.objects;
 
 import dmcigd.core.*;
-import java.util.Arrays;
 
-public class MovingObject {
+public class MovingObject extends BlockCollision {
 	
 	//Initialize position properties (position, velocity, and acceleration)
 	private int x = 0;
 	private int y = 0;
-	private int vx = 0;
-	private int vy = 2;
-	private int ax = 0;
-	private int ay = 0;
-	private int height = 32;
-	private int width = 32;
+	private float vx = 0;
+	private float vy = 2;
+	private float ax = 0;
+	private float ay = 0;
+	
+	//Initialize blockLoader
+	private BlockLoader blockLoader;
 	
 	//Public getters
 	public int getX() {
 		return x;
 	}
-	
 	public int getY() {
 		return y;
 	}
-	
-	public int getVX() {
+	public float getVX() {
 		return vx;
 	}
-	
-	public int getVY() {
+	public float getVY() {
 		return vy;
-	}
-	
-	public int getHeight() {
-		return height;
-	}
-	
-	public int getWidth() {
-		return width;
 	}
 	
 	//Public setters
 	public void setX(int x) {
 		this.x = x;
 	}
-	
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-	public void setVX(int vx) {
+	public void setVX(float vx) {
 		this.vx = vx;
 	}
-	
-	public void setVY(int vy) {
+	public void setVY(float vy) {
 		this.vy = vy;
 	}
-	
-	public void setAX(int ax) {
+	public void setAX(float ax) {
 		this.ax = ax;
 	}
-	
-	public void setAY(int ay) {
+	public void setAY(float ay) {
 		this.ay = ay;
 	}
-	
-	public void setHeight(int height) {
-		this.height = height;
+	public void setBlockLoader(BlockLoader blockLoader) {
+		this.blockLoader = blockLoader;
 	}
 	
-	public void setWidth(int width) {
-		this.width = width;
+	public void accelerate(float rate, float terminal) {
+		
 	}
 	
-	private boolean isSolid(char block) {
-		if(Arrays.asList(' ', '1').contains(block)) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
-	public void move(BlockLoader blockLoader) {
+	public void move() {
 		
 		int hShift = 0;
 		char[][] immediateBlocks = blockLoader.getImmediateBlocks(x,y);
@@ -106,112 +81,185 @@ public class MovingObject {
 			ay = 0;
 		}
 		
-		if(vx > 0) {
+		if((int) vx > 0) {
 			//Move Right
-			//If not crossing a tile, move over
-			if(((x - width + 31)/32) == (x + vx - width + 31)/32) {
-				if(x / 32 * 32 != (x + vx) / 32 * 32) {
+			
+			//Compare column of right edge to column of destination's right edge
+			//If both are in the same column, there is no possibility of intersection with a block
+			if(tileCol(x, Direction.RIGHT) == tileCol(x + (int) vx, Direction.RIGHT)) {
+				
+				//If left edge crosses, account for new block position
+				if(tileCol(x, Direction.LEFT) != tileCol(x + (int) vx, Direction.LEFT)) {
 					hShift = 1;
 				}
-				x = x + vx;
+				
+				//Move the object over
+				x = x + (int) vx;
+				
 			} else {
-				//Check for case of object sitting between tiles
-				int column = 3;
-				if(x % 32 <= 32 - width) {
-					column = 2;
-				}
+				
+				//Determine the tile offset (1 or 2)
+				//Compare the column of the left edge (the center)
+				//against the right edge of the destination (the tile to be checked)
+				int col = tileCol(x + (int) vx, Direction.RIGHT) - tileCol(x, Direction.LEFT) + 1;
+				
 				//Check if tile to the immediate right is clear
-				if(!isSolid(immediateBlocks[1][column])) {
-					//If sitting perfectly in tile, move
-					if(y % 32 <= 32 - height) {
-						x = x + vx;
+				if(!isSolid(immediateBlocks[1][col])) {
+					
+					//Check if object is between two rows
+					if(!betweenRows(y)) {
+						
+						//If left edge crosses, account for new block position
+						if(tileCol(x, Direction.LEFT) != tileCol(x + (int) vx, Direction.LEFT)) {
+							hShift = 1;
+						}
+
+						
+						//Move the object over
+						x = x + (int) vx;
+						
 					} else {
-						//If sitting between tiles, if tile to bottom right is also clear, move
-						if(!isSolid(immediateBlocks[2][column])) {
-							x = x + vx;
+						
+						//Check if tile to the bottom right is clear
+						if(!isSolid(immediateBlocks[2][col])) {
+							
+							//If left edge crosses, account for new block position
+							if(tileCol(x, Direction.LEFT) != tileCol(x + (int) vx, Direction.LEFT)) {
+								hShift = 1;
+							}
+
+							//Move the object over
+							x = x + (int) vx;
+							
 						} else {
-							x = (x / 32 * 32) - width + 32;
+							
+							//Move the object to right edge of column
+							x = colEdge(x, Direction.RIGHT);
 						}
 					}
 				} else {
-					x = (x / 32 * 32) - width + 32;
+					//Move the object to right edge of column
+					x = colEdge(x, Direction.RIGHT);
 				}
 			}
 			
-		}else if(vx < 0) {
+		}else if((int) vx < 0) {
 			//Move left
-			//If not crossing a tile, move over
-			if(((x)/32) <= (x-1 + vx)/32) {
-				x = x + vx;
+			
+			//Check if object is crossing a tile
+			if(tileCol(x, Direction.LEFT) == tileCol(x + (int) vx, Direction.LEFT)) {
+				
+				//Move the object over
+				x = x + (int) vx;
+				
 			} else {
+				
 				//Check if tile to the immediate left is clear
 				if(!isSolid(immediateBlocks[1][0])) {
-					//If sitting perfectly in tile, move
-					if(y % 32 <= 32 - height) {
-						x = x + vx;
+					
+					//Check if object is between two rows
+					if(!betweenRows(y)) {
+						
+						//Account for shift in tile position
 						hShift = -1;
+
+						//Move the object over
+						x = x + (int) vx;
+						
 					} else {
-						//If sitting between tiles, if tile to bottom left is also clear, move
+						
+						//Check if tile to the bottom left is clear
 						if(!isSolid(immediateBlocks[2][0])) {
-							x = x + vx;
+							
+							//Account for shift in tile position
 							hShift = -1;
+
+							//Move the object over
+							x = x + (int) vx;
+							
 						} else {
-							x = x / 32 * 32;
+							
+							//Move the object to left edge of column
+							x = colEdge(x, Direction.LEFT);
 						}
 					}
 				} else {
-					x = x / 32 * 32;
+					
+					//Move the object to left edge of column
+					x = colEdge(x, Direction.LEFT);
 				}
 			}
 		}
 		
-		if(vy > 0) {
+		if((int) vy > 0) {
 			//Move Down
-			if(((y + height - 33)/32) == (y + vy + height - 33)/32) {
-				y = y + vy;
+			
+			//Check if object is crossing a tile
+			if(tileRow(y, Direction.DOWN) == tileRow(y + (int) vy, Direction.DOWN)) {
+
+				//Move the object over
+				y = y + (int) vy;
+				
 			} else {
-				//Check for case of object sitting between tiles
-				int row = 3;
-				if(y % 32 <= 32 - height) {
-					row = 2;
-				}
+				
+				//Determine the row offset (1 or 2)
+				int row = tileRow(y + (int) vy, Direction.DOWN) - tileRow(y, Direction.UP) + 1;
+				
 				//Check if tile to the immediate bottom is clear
 				if(!isSolid(immediateBlocks[row][1 + hShift])) {
-					//If sitting perfectly in tile, move
-					if(x % 32 <= 32 - width) {
-						y = y + vy;
+					
+					if(!betweenCols(x)) {
+						
+						//Move the object over
+						y = y + (int) vy;
+						
 					} else {
-						//If sitting between tiles, if tile to bottom right is also clear, move
+						
+						//Check the object to the bottom right is clear
 						if(!isSolid(immediateBlocks[row][2 + hShift])) {
-							y = y + vy;
+
+							//Move the object over
+							y = y + (int) vy;
+							
 						} else {
-							y = (y / 32 * 32) - height + 32;
+							//Move object to bottom row edge
+							y = rowEdge(y, Direction.DOWN);
 						}
 					}
 				} else {
-					y = (y / 32 * 32) - height + 32;
+					//Move object to bottom row edge
+					y = rowEdge(y, Direction.DOWN);
 				}
 			}
-		}else if(vy < 0) {
+		}else if((int) vy < 0) {
 			//Move Up
-			if(((y)/32) <= (y + vy)/32) {
-				y = y + vy;
+			
+			//Check if object is crossing a tile
+			if(tileRow(y, Direction.UP) == tileRow(y + (int) vy, Direction.UP)) {
+				//Move the object over
+				y = y + (int) vy;
 			} else {
+				
 				//Check if tile to the immediate top is clear
 				if(!isSolid(immediateBlocks[0][1 + hShift])) {
-					//If sitting perfectly in tile, move
-					if(x % 32 <= 32 - width) {
-						y = y + vy;
+					
+					if(!betweenCols(x)) {
+						//Move the object over
+						y = y + (int) vy;
 					} else {
-						//If sitting between tiles, if tile to top right is also clear, move
+						
+						//Check the object to the top right is clear
 						if(!isSolid(immediateBlocks[0][2 + hShift])) {
-							y = y + vy;
+							//Move the object over
+							y = y + (int) vy;
 						} else {
-							y = y / 32 * 32;
+							//Move object to bottom top edge
+							y = rowEdge(y, Direction.UP);
 						}
 					}
 				} else {
-					y = y / 32 * 32;
+					//Move object to bottom top edge
+					y = rowEdge(y, Direction.UP);
 				}
 			}
 		}
