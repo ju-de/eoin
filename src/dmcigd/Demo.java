@@ -77,13 +77,8 @@ public class Demo implements Runnable {
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
-			case KeyEvent.VK_UP:
-				//Just testing acceleration. Replace this command later
-				player.setAX(0.2f);
-				break;
 			case KeyEvent.VK_DOWN:
-				//Just testing acceleration. Remove this command later
-				player.setAX(-0.2f);
+				player.setSprint(true);
 				break;
 			case KeyEvent.VK_LEFT:
 				player.walkLeft(true);
@@ -102,13 +97,8 @@ public class Demo implements Runnable {
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
-			case KeyEvent.VK_UP:
-				player.setAX(0);
-				player.setVX(0);
-				break;
 			case KeyEvent.VK_DOWN:
-				player.setAX(0);
-				player.setVX(0);
+				player.setSprint(false);
 				break;
 			case KeyEvent.VK_LEFT:
 				player.walkLeft(false);

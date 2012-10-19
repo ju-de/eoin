@@ -55,6 +55,10 @@ public class Main implements Runnable, KeyListener {
 					break;
 			}
 			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {}
+			
 			//Tells DmciGD thread that there are new variables to grab
 			threadSync.produced();
 		}
