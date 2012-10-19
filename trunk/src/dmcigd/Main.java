@@ -35,6 +35,7 @@ public class Main implements Runnable, KeyListener {
 	public void run() {
 		while(true) {
 			
+			//Listens to DmciGD thread and waits until it finishes receiving variables
 			threadSync.produce();
 			
 			//Temporary game state, remove when done
@@ -54,6 +55,7 @@ public class Main implements Runnable, KeyListener {
 					break;
 			}
 			
+			//Tells DmciGD thread that there are new variables to grab
 			threadSync.produced();
 		}
 		

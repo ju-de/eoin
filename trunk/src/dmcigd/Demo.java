@@ -86,13 +86,13 @@ public class Demo implements Runnable {
 				player.setAX(-0.2f);
 				break;
 			case KeyEvent.VK_LEFT:
-				player.setVX(-3);
+				player.walkLeft(true);
 				break;
 			case KeyEvent.VK_RIGHT:
-				player.setVX(3);
+				player.walkRight(true);
 				break;
 			case KeyEvent.VK_Z:
-				player.setVY(-3);
+				player.jump(true);
 				break;
 			default:
 				break;
@@ -111,13 +111,13 @@ public class Demo implements Runnable {
 				player.setVX(0);
 				break;
 			case KeyEvent.VK_LEFT:
-				player.setVX(0);
+				player.walkLeft(false);
 				break;
 			case KeyEvent.VK_RIGHT:
-				player.setVX(0);
+				player.walkRight(false);
 				break;
 			case KeyEvent.VK_Z:
-				player.setVY(2);
+				player.jump(false);
 				break;
 			default:
 				break;
