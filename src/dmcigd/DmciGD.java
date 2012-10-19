@@ -50,6 +50,8 @@ public class DmciGD extends Applet implements Runnable {
 		
 		while (true) {
 			
+			//Tells Main thread to wait until finished grabbing variables
+			//Listens for when new frame is fetched
 			threadSync.consume();
 			
 			switch (main.getGameState()) {
@@ -68,6 +70,7 @@ public class DmciGD extends Applet implements Runnable {
 					
 					visibleBlocks = main.demo.blockLoader.getVisibleBlocks(playerX, playerY);
 					
+					//Tells Main thread to begin fetching next frame
 					threadSync.consumed();
 					
 					//Repaint
@@ -86,6 +89,7 @@ public class DmciGD extends Applet implements Runnable {
 						
 						gameState = main.getGameState();
 						
+						//Tells Main thread to begin fetching next frame
 						threadSync.consumed();
 						
 						//Update screen once
@@ -97,6 +101,7 @@ public class DmciGD extends Applet implements Runnable {
 						} catch (InterruptedException ex) {}
 					} else {
 						
+						//Tells Main thread to begin fetching next frame
 						threadSync.consumed();
 						
 						//If not in a state of update, wait and keep checking gameState

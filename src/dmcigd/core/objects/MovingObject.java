@@ -11,6 +11,13 @@ public class MovingObject extends BlockCollision {
 	private float vy = 2;
 	private float ax = 0;
 	private float ay = 0;
+	private float tUp = 32;
+	private float tDown = 32;
+	private float tLeft = 32;
+	private float tRight = 32;
+	
+	//Initialize hitGround and isFalling property to be passed for child manipulation
+	public boolean hitGround,isFalling;
 	
 	//Initialize blockLoader
 	private BlockLoader blockLoader;
@@ -51,12 +58,36 @@ public class MovingObject extends BlockCollision {
 	public void setBlockLoader(BlockLoader blockLoader) {
 		this.blockLoader = blockLoader;
 	}
-	
-	public void accelerate(float rate, float terminal) {
-		
+	public void setGravity() {
+		accelerate(0.5f, 5.0f, Direction.DOWN);
+	}
+	public void accelerate(float rate, float terminal, Direction direction) {
+		switch(direction) {
+			case UP:
+				ay = -rate;
+				tUp = terminal;
+				break;
+			case DOWN:
+				ay = rate;
+				tDown = terminal;
+				break;
+			case LEFT:
+				ax = -rate;
+				tLeft = terminal;
+				break;
+			case RIGHT:
+				ax = rate;
+				tRight = terminal;
+				break;
+			default:
+				break;
+		}
 	}
 	
 	public void move() {
+		
+		hitGround = false;
+		isFalling = false;
 		
 		int hShift = 0;
 		char[][] immediateBlocks = blockLoader.getImmediateBlocks(x,y);
@@ -66,19 +97,15 @@ public class MovingObject extends BlockCollision {
 		vy = vy + ay;
 		
 		//Cap all speeds at 30px per tick
-		if(vx + ax > 30) {
-			vx = 30;
-			ax = 0;
-		}else if(vx + ax < -30) {
-			vx = -30;
-			ax = 0;
+		if(vx + ax > tRight) {
+			vx = tRight;
+		}else if(vx + ax < -tLeft) {
+			vx = -tLeft;
 		}
-		if(vy + ay > 30) {
-			vy = 30;
-			ay = 0;
-		}else if(vy + ay < -30) {
-			vy = -30;
-			ay = 0;
+		if(vy + ay > tDown) {
+			vy = tDown;
+		}else if(vy + ay < -tUp) {
+			vy = -tUp;
 		}
 		
 		if((int) vx > 0) {
@@ -200,6 +227,12 @@ public class MovingObject extends BlockCollision {
 				//Move the object over
 				y = y + (int) vy;
 				
+				if(y == rowEdge(y, Direction.DOWN) && isSolid(immediateBlocks[1][1 + hShift])) {
+					hitGround = true;
+				} else {
+					isFalling = true;
+				}
+				
 			} else {
 				
 				//Determine the row offset (1 or 2)
@@ -212,6 +245,7 @@ public class MovingObject extends BlockCollision {
 						
 						//Move the object over
 						y = y + (int) vy;
+						isFalling = true;
 						
 					} else {
 						
@@ -220,15 +254,18 @@ public class MovingObject extends BlockCollision {
 
 							//Move the object over
 							y = y + (int) vy;
+							isFalling = true;
 							
 						} else {
 							//Move object to bottom row edge
 							y = rowEdge(y, Direction.DOWN);
+							hitGround = true;
 						}
 					}
 				} else {
 					//Move object to bottom row edge
 					y = rowEdge(y, Direction.DOWN);
+					hitGround = true;
 				}
 			}
 		}else if((int) vy < 0) {
