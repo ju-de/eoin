@@ -9,8 +9,10 @@ public class MovingObject extends BlockCollision {
 	private int y = 0;
 	private float vx = 0;
 	private float vy = 2;
-	private float ax = 0;
-	private float ay = 0;
+	private float aUp = 0;
+	private float aDown = 0;
+	private float aLeft = 0;
+	private float aRight = 0;
 	private float tUp = 32;
 	private float tDown = 32;
 	private float tLeft = 32;
@@ -49,34 +51,52 @@ public class MovingObject extends BlockCollision {
 	public void setVY(float vy) {
 		this.vy = vy;
 	}
-	public void setAX(float ax) {
-		this.ax = ax;
+	public void setAUp(float aUp) {
+		this.aUp = aUp;
 	}
-	public void setAY(float ay) {
-		this.ay = ay;
+	public void setADown(float aDown) {
+		this.aDown = aDown;
+	}
+	public void setALeft(float aLeft) {
+		this.aLeft = aLeft;
+	}
+	public void setARight(float aRight) {
+		this.aRight = aRight;
+	}
+	public void setTUp(float tUp) {
+		this.tUp = tUp;
+	}
+	public void setTDown(float tDown) {
+		this.tDown = tDown;
+	}
+	public void setTLeft(float tLeft) {
+		this.tLeft = tLeft;
+	}
+	public void setTRight(float tRight) {
+		this.tRight = tRight;
 	}
 	public void setBlockLoader(BlockLoader blockLoader) {
 		this.blockLoader = blockLoader;
 	}
 	public void setGravity() {
-		accelerate(0.5f, 5.0f, Direction.DOWN);
+		accelerate(0.4f, 5.0f, Direction.DOWN);
 	}
 	public void accelerate(float rate, float terminal, Direction direction) {
 		switch(direction) {
 			case UP:
-				ay = -rate;
+				aUp = rate;
 				tUp = terminal;
 				break;
 			case DOWN:
-				ay = rate;
+				aDown = rate;
 				tDown = terminal;
 				break;
 			case LEFT:
-				ax = -rate;
+				aLeft = rate;
 				tLeft = terminal;
 				break;
 			case RIGHT:
-				ax = rate;
+				aRight = rate;
 				tRight = terminal;
 				break;
 			default:
@@ -93,18 +113,18 @@ public class MovingObject extends BlockCollision {
 		char[][] immediateBlocks = blockLoader.getImmediateBlocks(x,y);
 		
 		//Calculate Acceleration
-		vx = vx + ax;
-		vy = vy + ay;
+		vx = vx + aRight - aLeft;
+		vy = vy + aDown - aUp;
 		
 		//Cap all speeds at 30px per tick
-		if(vx + ax > tRight) {
+		if(vx + aRight - aLeft > tRight) {
 			vx = tRight;
-		}else if(vx + ax < -tLeft) {
+		}else if(vx + aRight - aLeft < -tLeft) {
 			vx = -tLeft;
 		}
-		if(vy + ay > tDown) {
+		if(vy + aDown - aUp > tDown) {
 			vy = tDown;
-		}else if(vy + ay < -tUp) {
+		}else if(vy + aDown - aUp < -tUp) {
 			vy = -tUp;
 		}
 		
@@ -218,7 +238,7 @@ public class MovingObject extends BlockCollision {
 			}
 		}
 		
-		if((int) vy > 0) {
+		if((int) vy >= 0) {
 			//Move Down
 			
 			//Check if object is crossing a tile
@@ -290,6 +310,7 @@ public class MovingObject extends BlockCollision {
 							//Move the object over
 							y = y + (int) vy;
 						} else {
+							
 							//Move object to bottom top edge
 							y = rowEdge(y, Direction.UP);
 						}
@@ -299,6 +320,10 @@ public class MovingObject extends BlockCollision {
 					y = rowEdge(y, Direction.UP);
 				}
 			}
+		}
+		
+		if(hitGround) {
+			vy = 0;
 		}
 	}
 }
