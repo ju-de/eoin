@@ -3,6 +3,8 @@ package dmcigd;
 import dmcigd.core.GameState;
 import java.applet.*;
 import java.awt.*;
+import java.util.Map;
+import java.util.HashMap;
 
 //Renders applet
 public class DmciGD extends Applet implements Runnable {
@@ -16,6 +18,7 @@ public class DmciGD extends Applet implements Runnable {
 	
 	//Initialize visible objects list
 	private char[][] visibleBlocks = new char[12][22];
+	private Map<String, Image> blockImageMap = new HashMap<String, Image>();
 	
 	//Initialize the Double-buffering Variables
 	private Image dbImage;
@@ -46,6 +49,11 @@ public class DmciGD extends Applet implements Runnable {
 			
 			switch (main.getGameState()) {
 				case DEMO:
+					
+					if(gameState != GameState.DEMO) {
+						//Retrieve blockmap
+						blockImageMap = main.demo.blockImageMap;
+					}
 					
 					//Retrieve necessary objects
 					gameState = GameState.DEMO;
@@ -122,6 +130,7 @@ public class DmciGD extends Applet implements Runnable {
 
 				dbg.setColor(Color.red);
 				
+				Image tile;
 				
 				//Loop through Y axis of visibleBlocks
 				for(int i=0; i<12; i++) {
@@ -130,13 +139,14 @@ public class DmciGD extends Applet implements Runnable {
 					for(int j=0; j<22; j++) {
 						
 						//Draw if object exists
-						if(visibleBlocks[i][j] == 'x') {
-							dbg.fillRect(j*32 - (main.demo.player.getX() % 32) - 16, i*32 - (main.demo.player.getY() % 32) - 16, 32, 32);
+						if((tile = blockImageMap.get(String.valueOf(visibleBlocks[i][j]))) != null) {
+							dbg.drawImage(tile, j*32 - (main.demo.player.getX() % 32) - 16, i*32 - (main.demo.player.getY() % 32) - 16, this);
 						}
 						
 					}
 					
 				}
+				
 				
 				dbg.fillOval(304, 144, main.demo.player.getWidth(), main.demo.player.getHeight());
 				

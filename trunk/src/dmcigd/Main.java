@@ -52,6 +52,10 @@ public class Main implements Runnable, KeyListener {
 			}
 			
 			threadSync.produced();
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {}
 		}
 	}
 	

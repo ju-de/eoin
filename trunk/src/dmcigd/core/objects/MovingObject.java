@@ -1,5 +1,6 @@
 package dmcigd.core.objects;
 
+import dmcigd.core.*;
 import java.util.Arrays;
 
 public class MovingObject {
@@ -80,7 +81,10 @@ public class MovingObject {
 		}
 	}
 	
-	public void move(char[][] immediateBlocks) {
+	public void move(BlockLoader blockLoader) {
+		
+		int hShift = 0;
+		char[][] immediateBlocks = blockLoader.getImmediateBlocks(x,y);
 		
 		//Calculate Acceleration
 		vx = vx + ax;
@@ -106,6 +110,9 @@ public class MovingObject {
 			//Move Right
 			//If not crossing a tile, move over
 			if(((x - width + 31)/32) == (x + vx - width + 31)/32) {
+				if(x / 32 * 32 != (x + vx) / 32 * 32) {
+					hShift = 1;
+				}
 				x = x + vx;
 			} else {
 				//Check for case of object sitting between tiles
@@ -142,10 +149,12 @@ public class MovingObject {
 					//If sitting perfectly in tile, move
 					if(y % 32 <= 32 - height) {
 						x = x + vx;
+						hShift = -1;
 					} else {
 						//If sitting between tiles, if tile to bottom left is also clear, move
 						if(!isSolid(immediateBlocks[2][0])) {
 							x = x + vx;
+							hShift = -1;
 						} else {
 							x = x / 32 * 32;
 						}
@@ -167,13 +176,13 @@ public class MovingObject {
 					row = 2;
 				}
 				//Check if tile to the immediate bottom is clear
-				if(!isSolid(immediateBlocks[row][1])) {
+				if(!isSolid(immediateBlocks[row][1 + hShift])) {
 					//If sitting perfectly in tile, move
 					if(x % 32 <= 32 - width) {
 						y = y + vy;
 					} else {
 						//If sitting between tiles, if tile to bottom right is also clear, move
-						if(!isSolid(immediateBlocks[row][2])) {
+						if(!isSolid(immediateBlocks[row][2 + hShift])) {
 							y = y + vy;
 						} else {
 							y = (y / 32 * 32) - height + 32;
@@ -189,13 +198,13 @@ public class MovingObject {
 				y = y + vy;
 			} else {
 				//Check if tile to the immediate top is clear
-				if(!isSolid(immediateBlocks[0][1])) {
+				if(!isSolid(immediateBlocks[0][1 + hShift])) {
 					//If sitting perfectly in tile, move
 					if(x % 32 <= 32 - width) {
 						y = y + vy;
 					} else {
 						//If sitting between tiles, if tile to top right is also clear, move
-						if(!isSolid(immediateBlocks[0][2])) {
+						if(!isSolid(immediateBlocks[0][2 + hShift])) {
 							y = y + vy;
 						} else {
 							y = y / 32 * 32;
