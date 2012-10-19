@@ -1,6 +1,7 @@
 package dmcigd;
 
-import dmcigd.core.GameState;
+import dmcigd.core.*;
+
 import java.awt.event.*;
 
 //Catches input and manages game loop objects
@@ -34,6 +35,8 @@ public class Main implements Runnable, KeyListener {
 	public void run() {
 		while(true) {
 			
+			threadSync.produce();
+			
 			//Temporary game state, remove when done
 			switch(gameState) {
 				case DEMO:
@@ -53,6 +56,7 @@ public class Main implements Runnable, KeyListener {
 			
 			threadSync.produced();
 		}
+		
 	}
 	
 	public void keyPressed(KeyEvent e) {
