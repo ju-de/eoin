@@ -62,6 +62,16 @@ public class BlockMap extends BlockCollision {
 		int tile1 = tileType(immediateBlocks[row][1]);
 		int tile2 = tileType(immediateBlocks[row][2]);
 		
+		//Catch boundary case of f
+		if(direction == Direction.DOWN) {
+			if(tile1 == 2 && (row < 2 || row == 2 && betweenRows(y, height))) {
+				tile1 = 4;
+			}
+			if(tile2 == 2 && (row < 2 || row == 2 && betweenRows(y, height))) {
+				tile2 = 4;
+			}
+		}
+		
 		//If column is between columns, and other cell takes priority, return tile2
 		if(!betweenCols(x, width) || tile1 < tile2) {
 			return tile1;
