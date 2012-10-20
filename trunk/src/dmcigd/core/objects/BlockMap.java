@@ -62,8 +62,8 @@ public class BlockMap extends BlockCollision {
 		int tile1 = tileType(immediateBlocks[row][1]);
 		int tile2 = tileType(immediateBlocks[row][2]);
 		
-		//Catch boundary case of f
 		if(direction == Direction.DOWN) {
+			//Catch boundary case of falling in the middle of a platform
 			if(tile1 == 2 && (row < 2 || row == 2 && betweenRows(y, height))) {
 				tile1 = 4;
 			}
@@ -77,6 +77,41 @@ public class BlockMap extends BlockCollision {
 			return tile1;
 		} else {
 			return tile2;
+		}
+	}
+	
+	public int restingBlock(int x, int y, int width, int height) {
+		int block1;
+		int block2;
+		block1 = tileType(blockMap.get(tileRow(y+1, height, Direction.DOWN)).charAt(x/32));
+		block2 = tileType(blockMap.get(tileRow(y+1, height, Direction.DOWN)).charAt((x/32)+1));
+		
+		//Treats the top ladder block as a solid block
+		int ladderCheck1;
+		int ladderCheck2;
+		ladderCheck1 = tileType(blockMap.get(tileRow(y, height, Direction.DOWN)).charAt(x/32));
+		ladderCheck2 = tileType(blockMap.get(tileRow(y, height, Direction.DOWN)).charAt((x/32)+1));
+		
+		if(betweenCols(x, width) && block2 < block1) {
+			if(block2 == 3) {
+				if(ladderCheck1 == 3 || ladderCheck2 == 3) {
+					return 3;
+				} else {
+					return 4;
+				}
+			}else{
+				return block2;
+			}
+		} else {
+			if(block1 == 3) {
+				if(ladderCheck1 == 3 || ladderCheck2 == 3) {
+					return 3;
+				} else {
+					return 4;
+				}
+			}else{
+				return block1;
+			}
 		}
 	}
 	
