@@ -1,5 +1,6 @@
 package dmcigd;
 
+import dmcigd.core.*;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.player.*;
 import java.awt.*;
@@ -43,19 +44,34 @@ public class Demo implements Runnable {
 			blockImageMap.put("x", ImageIO.read(new File("../share/gfx/blocks/demo/normal/b1.gif")));
 			blockImageMap.put("X", ImageIO.read(new File("../share/gfx/blocks/demo/normal/b2.gif")));
 			blockImageMap.put("c", ImageIO.read(new File("../share/gfx/blocks/demo/normal/br.gif")));
-			blockImageMap.put("r", ImageIO.read(new File("../share/gfx/blocks/demo/normal/lcap.gif")));
-			blockImageMap.put("t", ImageIO.read(new File("../share/gfx/blocks/demo/normal/row1.gif")));
-			blockImageMap.put("T", ImageIO.read(new File("../share/gfx/blocks/demo/normal/row2.gif")));
-			blockImageMap.put("y", ImageIO.read(new File("../share/gfx/blocks/demo/normal/rcap.gif")));
-			blockImageMap.put("f", ImageIO.read(new File("../share/gfx/blocks/demo/normal/tcap.gif")));
-			blockImageMap.put("g", ImageIO.read(new File("../share/gfx/blocks/demo/normal/col1.gif")));
-			blockImageMap.put("G", ImageIO.read(new File("../share/gfx/blocks/demo/normal/col2.gif")));
-			blockImageMap.put("h", ImageIO.read(new File("../share/gfx/blocks/demo/normal/bcap.gif")));
+			blockImageMap.put("t", ImageIO.read(new File("../share/gfx/blocks/demo/normal/lcap.gif")));
+			blockImageMap.put("y", ImageIO.read(new File("../share/gfx/blocks/demo/normal/row1.gif")));
+			blockImageMap.put("Y", ImageIO.read(new File("../share/gfx/blocks/demo/normal/row2.gif")));
+			blockImageMap.put("u", ImageIO.read(new File("../share/gfx/blocks/demo/normal/rcap.gif")));
+			blockImageMap.put("r", ImageIO.read(new File("../share/gfx/blocks/demo/normal/tcap.gif")));
+			blockImageMap.put("f", ImageIO.read(new File("../share/gfx/blocks/demo/normal/col1.gif")));
+			blockImageMap.put("F", ImageIO.read(new File("../share/gfx/blocks/demo/normal/col2.gif")));
+			blockImageMap.put("v", ImageIO.read(new File("../share/gfx/blocks/demo/normal/bcap.gif")));
 			blockImageMap.put("s", ImageIO.read(new File("../share/gfx/blocks/demo/normal/single.gif")));
 			blockImageMap.put(".", ImageIO.read(new File("../share/gfx/blocks/demo/normal/c1.gif")));
 			blockImageMap.put(",", ImageIO.read(new File("../share/gfx/blocks/demo/normal/c2.gif")));
 			blockImageMap.put("-", ImageIO.read(new File("../share/gfx/blocks/demo/normal/c3.gif")));
 			blockImageMap.put("=", ImageIO.read(new File("../share/gfx/blocks/demo/normal/c4.gif")));
+			blockImageMap.put("g", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/lcap.gif")));
+			blockImageMap.put("h", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/row.gif")));
+			blockImageMap.put("j", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/rcap.gif")));
+			blockImageMap.put("G", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/tl.gif")));
+			blockImageMap.put("H", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/t.gif")));
+			blockImageMap.put("J", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/tr.gif")));
+			blockImageMap.put("b", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/l.gif")));
+			blockImageMap.put("n", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/c.gif")));
+			blockImageMap.put("m", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/r.gif")));
+			blockImageMap.put("B", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/bl.gif")));
+			blockImageMap.put("N", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/b.gif")));
+			blockImageMap.put("M", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/br.gif")));
+			blockImageMap.put("i", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/single.gif")));
+			blockImageMap.put("k", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/air.gif")));
+			blockImageMap.put("K", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/end.gif")));
 		} catch (IOException e) {}
 		
 	}
@@ -77,14 +93,17 @@ public class Demo implements Runnable {
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
+			case KeyEvent.VK_UP:
+				player.climbUp(true);
+				break;
 			case KeyEvent.VK_DOWN:
-				player.setSprint(true);
+				player.keyDown(true);
 				break;
 			case KeyEvent.VK_LEFT:
-				player.walkLeft(true);
+				player.walk(true, Direction.LEFT);
 				break;
 			case KeyEvent.VK_RIGHT:
-				player.walkRight(true);
+				player.walk(true, Direction.RIGHT);
 				break;
 			case KeyEvent.VK_Z:
 				player.jump(true);
@@ -97,14 +116,17 @@ public class Demo implements Runnable {
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
+			case KeyEvent.VK_UP:
+				player.climbUp(false);
+				break;
 			case KeyEvent.VK_DOWN:
-				player.setSprint(false);
+				player.keyDown(false);
 				break;
 			case KeyEvent.VK_LEFT:
-				player.walkLeft(false);
+				player.walk(false, Direction.LEFT);
 				break;
 			case KeyEvent.VK_RIGHT:
-				player.walkRight(false);
+				player.walk(false, Direction.RIGHT);
 				break;
 			case KeyEvent.VK_Z:
 				player.jump(false);
