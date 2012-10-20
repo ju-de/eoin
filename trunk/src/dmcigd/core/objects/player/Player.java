@@ -7,16 +7,29 @@ public class Player extends MovingObject {
 	
 	private int jumpState = 0;
 	private int jumpDelay = 5;
+	private int facing = 0;
 	private boolean isWalking;
 	private boolean sprint;
 	
-	public Player(int x, int  y, BlockLoader blockLoader) {
+	public Player(int x, int  y, BlockMap blockLoader) {
 		setX(x);
 		setY(y);
-		setHeight(16);
-		setWidth(16);
+		setHeight(32);
+		setWidth(20);
 		setGravity();
 		setBlockLoader(blockLoader);
+		
+		setImage("blocks/demo/playertemp.gif");
+		
+		//Spritesheet organized as follows:
+		//0: Idle Right [4]
+		//1: Idle Left [4]
+		//2: Walk Right [8]
+		//3: Walk Left [8]
+		int[] frameLimits = {2,2};
+		setFrameLimits(frameLimits);
+		
+		setSequence(0);
 	}
 	
 	//Movement commands
@@ -28,6 +41,7 @@ public class Player extends MovingObject {
 				accelerate(1.0f, 2.0f, Direction.LEFT);
 			}
 			isWalking = true;
+			facing = 1;
 		} else {
 			accelerate(0.0f, 0.0f, Direction.LEFT);
 			setVX(0);
@@ -43,6 +57,7 @@ public class Player extends MovingObject {
 				accelerate(1.0f, 2.0f, Direction.RIGHT);
 			}
 			isWalking = true;
+			facing = 0;
 		} else {
 			accelerate(0.0f, 0.0f, Direction.RIGHT);
 			setVX(0);
@@ -80,12 +95,16 @@ public class Player extends MovingObject {
 	
 	public void step() {
 		move();
-		
+		animate();
+		if(isWalking) {
+			setSequence(0+facing);
+		}else{
+			setSequence(0+facing);
+		}
 		//Reset jump counter after player hits the ground
 		if(hitGround) {
 			jumpState = 0;
 		}
-		
 		//Counts falling at terminal velocity as a jump
 		//If falling, player should not be allowed to defy physics even further and jump a second time
 		//Period of acceleration is given as a grace period to give player time to react

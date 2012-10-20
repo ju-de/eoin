@@ -2,7 +2,11 @@ package dmcigd.core.objects;
 
 import dmcigd.core.*;
 
-public class MovingObject extends BlockCollision {
+public class MovingObject extends VisibleObject {
+	
+	//Object Dimensions
+	private int height = 32;
+	private int width = 32;
 	
 	//Initialize position properties (position, velocity, and acceleration)
 	private int x = 0;
@@ -22,9 +26,15 @@ public class MovingObject extends BlockCollision {
 	public boolean hitGround,isFalling;
 	
 	//Initialize blockLoader
-	private BlockLoader blockLoader;
+	private BlockMap blockMap;
 	
 	//Public getters
+	public int getHeight() {
+		return height;
+	}
+	public int getWidth() {
+		return width;
+	}
 	public int getX() {
 		return x;
 	}
@@ -39,6 +49,12 @@ public class MovingObject extends BlockCollision {
 	}
 	
 	//Public setters
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
 	public void setX(int x) {
 		this.x = x;
 	}
@@ -75,8 +91,8 @@ public class MovingObject extends BlockCollision {
 	public void setTRight(float tRight) {
 		this.tRight = tRight;
 	}
-	public void setBlockLoader(BlockLoader blockLoader) {
-		this.blockLoader = blockLoader;
+	public void setBlockLoader(BlockMap blockMap) {
+		this.blockMap = blockMap;
 	}
 	public void setGravity() {
 		accelerate(0.4f, 5.0f, Direction.DOWN);
@@ -109,8 +125,7 @@ public class MovingObject extends BlockCollision {
 		hitGround = false;
 		isFalling = false;
 		
-		int hShift = 0;
-		char[][] immediateBlocks = blockLoader.getImmediateBlocks(x,y);
+		char[][] immediateBlocks = blockMap.getImmediateBlocks(x,y);
 		
 		//Calculate Acceleration
 		vx = vx + aRight - aLeft;
@@ -131,194 +146,73 @@ public class MovingObject extends BlockCollision {
 		if((int) vx > 0) {
 			//Move Right
 			
-			//Compare column of right edge to column of destination's right edge
-			//If both are in the same column, there is no possibility of intersection with a block
-			if(tileCol(x, Direction.RIGHT) == tileCol(x + (int) vx, Direction.RIGHT)) {
-				
-				//If left edge crosses, account for new block position
-				if(tileCol(x, Direction.LEFT) != tileCol(x + (int) vx, Direction.LEFT)) {
-					hShift = 1;
-				}
-				
-				//Move the object over
-				x = x + (int) vx;
-				
-			} else {
-				
-				//Determine the tile offset (1 or 2)
-				//Compare the column of the left edge (the center)
-				//against the right edge of the destination (the tile to be checked)
-				int col = tileCol(x + (int) vx, Direction.RIGHT) - tileCol(x, Direction.LEFT) + 1;
-				
-				//Check if tile to the immediate right is clear
-				if(!isSolid(immediateBlocks[1][col])) {
-					
-					//Check if object is between two rows
-					if(!betweenRows(y)) {
-						
-						//If left edge crosses, account for new block position
-						if(tileCol(x, Direction.LEFT) != tileCol(x + (int) vx, Direction.LEFT)) {
-							hShift = 1;
-						}
-
-						
-						//Move the object over
-						x = x + (int) vx;
-						
-					} else {
-						
-						//Check if tile to the bottom right is clear
-						if(!isSolid(immediateBlocks[2][col])) {
-							
-							//If left edge crosses, account for new block position
-							if(tileCol(x, Direction.LEFT) != tileCol(x + (int) vx, Direction.LEFT)) {
-								hShift = 1;
-							}
-
-							//Move the object over
-							x = x + (int) vx;
-							
-						} else {
-							
-							//Move the object to right edge of column
-							x = colEdge(x, Direction.RIGHT);
-						}
-					}
-				} else {
-					//Move the object to right edge of column
-					x = colEdge(x, Direction.RIGHT);
-				}
+			int blockCollisionStatus = blockMap.collidesX(x, y, (int) vx, width, height, Direction.RIGHT);
+			
+			switch(blockCollisionStatus) {
+				case 2:
+					x = x + (int) vx;
+					break;
+				case 1:
+					System.out.println("Oh dear, you are dead!");
+					break;
+				default:
+					x = blockMap.colEdge(x, width, Direction.RIGHT);
+					break;
 			}
 			
 		}else if((int) vx < 0) {
-			//Move left
+			//Move Left
 			
-			//Check if object is crossing a tile
-			if(tileCol(x, Direction.LEFT) == tileCol(x + (int) vx, Direction.LEFT)) {
-				
-				//Move the object over
-				x = x + (int) vx;
-				
-			} else {
-				
-				//Check if tile to the immediate left is clear
-				if(!isSolid(immediateBlocks[1][0])) {
-					
-					//Check if object is between two rows
-					if(!betweenRows(y)) {
-						
-						//Account for shift in tile position
-						hShift = -1;
-
-						//Move the object over
-						x = x + (int) vx;
-						
-					} else {
-						
-						//Check if tile to the bottom left is clear
-						if(!isSolid(immediateBlocks[2][0])) {
-							
-							//Account for shift in tile position
-							hShift = -1;
-
-							//Move the object over
-							x = x + (int) vx;
-							
-						} else {
-							
-							//Move the object to left edge of column
-							x = colEdge(x, Direction.LEFT);
-						}
-					}
-				} else {
-					
-					//Move the object to left edge of column
-					x = colEdge(x, Direction.LEFT);
-				}
+			int blockCollisionStatus = blockMap.collidesX(x, y, (int) vx, width, height, Direction.LEFT);
+			
+			switch(blockCollisionStatus) {
+				case 2:
+					x = x + (int) vx;
+					break;
+				case 1:
+					System.out.println("Oh dear, you are dead!");
+					break;
+				default:
+					x = blockMap.colEdge(x, width, Direction.LEFT);
+					break;
 			}
+			
 		}
 		
 		if((int) vy >= 0) {
 			//Move Down
 			
-			//Check if object is crossing a tile
-			if(tileRow(y, Direction.DOWN) == tileRow(y + (int) vy, Direction.DOWN)) {
-
-				//Move the object over
-				y = y + (int) vy;
-				
-				if(y == rowEdge(y, Direction.DOWN) && isSolid(immediateBlocks[1][1 + hShift])) {
-					hitGround = true;
-				} else {
+			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.DOWN);
+			
+			switch(blockCollisionStatus) {
+				case 2:
+					y = y + (int) vy;
 					isFalling = true;
-				}
-				
-			} else {
-				
-				//Determine the row offset (1 or 2)
-				int row = tileRow(y + (int) vy, Direction.DOWN) - tileRow(y, Direction.UP) + 1;
-				
-				//Check if tile to the immediate bottom is clear
-				if(!isSolid(immediateBlocks[row][1 + hShift])) {
-					
-					if(!betweenCols(x)) {
-						
-						//Move the object over
-						y = y + (int) vy;
-						isFalling = true;
-						
-					} else {
-						
-						//Check the object to the bottom right is clear
-						if(!isSolid(immediateBlocks[row][2 + hShift])) {
-
-							//Move the object over
-							y = y + (int) vy;
-							isFalling = true;
-							
-						} else {
-							//Move object to bottom row edge
-							y = rowEdge(y, Direction.DOWN);
-							hitGround = true;
-						}
-					}
-				} else {
-					//Move object to bottom row edge
-					y = rowEdge(y, Direction.DOWN);
+					break;
+				case 1:
+					System.out.println("Oh dear, you are dead!");
+					break;
+				default:
+					y = blockMap.rowEdge(y, height, Direction.DOWN);					hitGround = true;
 					hitGround = true;
-				}
+					break;
 			}
+			
 		}else if((int) vy < 0) {
 			//Move Up
 			
-			//Check if object is crossing a tile
-			if(tileRow(y, Direction.UP) == tileRow(y + (int) vy, Direction.UP)) {
-				//Move the object over
-				y = y + (int) vy;
-			} else {
-				
-				//Check if tile to the immediate top is clear
-				if(!isSolid(immediateBlocks[0][1 + hShift])) {
-					
-					if(!betweenCols(x)) {
-						//Move the object over
-						y = y + (int) vy;
-					} else {
-						
-						//Check the object to the top right is clear
-						if(!isSolid(immediateBlocks[0][2 + hShift])) {
-							//Move the object over
-							y = y + (int) vy;
-						} else {
-							
-							//Move object to bottom top edge
-							y = rowEdge(y, Direction.UP);
-						}
-					}
-				} else {
-					//Move object to bottom top edge
-					y = rowEdge(y, Direction.UP);
-				}
+			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.UP);
+
+			switch(blockCollisionStatus) {
+				case 2:
+					y = y + (int) vy;
+					break;
+				case 1:
+					System.out.println("Oh dear, you are dead!");
+					break;
+				default:
+					y = blockMap.rowEdge(y, height, Direction.UP);
+					break;
 			}
 		}
 		

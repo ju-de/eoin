@@ -1,9 +1,11 @@
-package dmcigd.core;
+package dmcigd.core.objects;
+
+import dmcigd.core.*;
 
 import java.util.*;
 import java.io.*;
 
-public class BlockLoader {
+public class BlockMap extends BlockCollision {
 	
 	//Initialize buffered reader for maps
 	private BufferedReader br;
@@ -27,6 +29,45 @@ public class BlockLoader {
 	
 	public List<String> getBlockMap() {
 		return blockMap;
+	}
+	
+	//Collision checks
+	public int collidesX(int x, int y, int vx, int width, int height, Direction direction) {
+		
+		char[][] immediateBlocks = getImmediateBlocks(x,y);
+		
+		//Determine which column to check (left, center, right, or two blocks to the right)
+		int col = tileCol(x + vx, width, direction) - tileCol(x, width, Direction.LEFT) + 1;
+
+		//Check immediate cells in column of travel
+		int tile1 = tileType(immediateBlocks[1][col]);
+		int tile2 = tileType(immediateBlocks[2][col]);
+		
+		//If column is between rows, and other cell takes priority, return tile2
+		if(!betweenRows(y, height) || tile1 < tile2) {
+			return tile1;
+		} else {
+			return tile2;
+		}
+		
+	}
+	public int collidesY(int x, int y, int vy, int width, int height, Direction direction) {
+		
+		char[][] immediateBlocks = getImmediateBlocks(x,y);
+		
+		//Determine which row to check (top, center, bottom, or two blocks to the bottom)
+		int row = tileRow(y + vy, height, direction) - tileRow(y, height, Direction.UP) + 1;
+		
+		//Check immediate cells in row of travel
+		int tile1 = tileType(immediateBlocks[row][1]);
+		int tile2 = tileType(immediateBlocks[row][2]);
+		
+		//If column is between columns, and other cell takes priority, return tile2
+		if(!betweenCols(x, width) || tile1 < tile2) {
+			return tile1;
+		} else {
+			return tile2;
+		}
 	}
 	
 	public char[][] getVisibleBlocks(int x, int y) {
