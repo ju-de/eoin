@@ -121,19 +121,68 @@ public class MovingObject extends VisibleObject {
 		isFalling = false;
 		
 		//Calculate Acceleration
-		vx = vx + ax;
 		vy = vy + ay;
+		vx = vx + ax;
 		
 		//Cap all speeds at 30px per tick
+		if(vy > tDown) {
+			vy = tDown;
+		}else if(vy < -tUp) {
+			vy = -tUp;
+		}
 		if(vx > tRight) {
 			vx = tRight;
 		}else if(vx < -tLeft) {
 			vx = -tLeft;
 		}
-		if(vy > tDown) {
-			vy = tDown;
-		}else if(vy < -tUp) {
-			vy = -tUp;
+		
+		if((int) vy >= 0) {
+			//Move Down
+			
+			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.DOWN);
+			
+			switch(blockCollisionStatus) {
+				case 4:
+					isFalling = true;
+					y = y + (int) vy;
+					break;
+				case 3:
+					if(isClimbing) {
+						y = y + (int) vy;
+					} else {
+						vy = 0;
+					}
+					break;
+				case 1:
+					y = blockMap.rowEdge(y, height, Direction.DOWN);
+					System.out.println("Oh dear, you are dead!");
+					break;
+				default:
+					y = blockMap.rowEdge(y, height, Direction.DOWN);
+					vy = 0;
+					break;
+			}
+			
+		}else if((int) vy < 0) {
+			//Move Up
+			
+			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.UP);
+
+			switch(blockCollisionStatus) {
+				case 3:
+					y = y + (int) vy;
+					break;
+				case 2:
+				case 4:
+					y = y + (int) vy;
+					break;
+				case 1:
+					System.out.println("Oh dear, you are dead!");
+					break;
+				default:
+					y = blockMap.rowEdge(y, height, Direction.UP);
+					break;
+			}
 		}
 		
 		if((int) vx > 0) {
@@ -143,7 +192,6 @@ public class MovingObject extends VisibleObject {
 			
 			switch(blockCollisionStatus) {
 				case 3:
-					onLadder = true;
 				case 2:
 				case 4:
 					x = x + (int) vx;
@@ -163,7 +211,6 @@ public class MovingObject extends VisibleObject {
 			
 			switch(blockCollisionStatus) {
 				case 3:
-					onLadder = true;
 				case 2:
 				case 4:
 					x = x + (int) vx;
@@ -178,62 +225,24 @@ public class MovingObject extends VisibleObject {
 			
 		}
 		
-		if((int) vy >= 0) {
-			//Move Down
-			
-			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.DOWN);
-			
-			switch(blockCollisionStatus) {
-				case 4:
-					isFalling = true;
-					onLadder = false;
-					y = y + (int) vy;
-					break;
-				case 3:
-					if(onLadder || isClimbing) {
-						onLadder = true;
-					}
-					hitGround = true;
-					if(isClimbing) {
-						y = y + (int) vy;
-					} else {
-						vy = 0;
-					}
-					break;
-				case 1:
-					y = blockMap.rowEdge(y, height, Direction.DOWN);
-					System.out.println("Oh dear, you are dead!");
-					break;
-				default:
-					onLadder = false;
-					y = blockMap.rowEdge(y, height, Direction.DOWN);
-					hitGround = true;
-					vy = 0;
-					break;
-			}
-			
-		}else if((int) vy < 0) {
-			//Move Up
-			
-			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.UP);
-
-			switch(blockCollisionStatus) {
-				case 3:
-					onLadder = true;
-					y = y + (int) vy;
-					break;
-				case 2:
-				case 4:
-					onLadder = false;
-					y = y + (int) vy;
-					break;
-				case 1:
-					System.out.println("Oh dear, you are dead!");
-					break;
-				default:
-					y = blockMap.rowEdge(y, height, Direction.UP);
-					break;
-			}
+		//Determine resting block
+		int restingBlock = blockMap.restingBlock(x,y,width,height);
+		switch(restingBlock) {
+			case 3:
+				onLadder = true;
+				hitGround = false;
+				isFalling = false;
+				break;
+			case 2:
+			case 0:
+				onLadder = false;
+				hitGround = true;
+				isFalling = false;
+				break;
+			default:
+				onLadder = false;
+				hitGround = false;
+				break;
 		}
 	}
 	

@@ -24,9 +24,9 @@ public class Player extends MovingObject {
 		//Spritesheet organized as follows:
 		//0: Idle Right [4]
 		//1: Idle Left [4]
-		//2: Walk Right [8]
-		//3: Walk Left [8]
-		int[] frameLimits = {4,4};
+		//2: On Ladder [1]
+		//3: Climbing [2]
+		int[] frameLimits = {4,4,1,2};
 		setFrameLimits(frameLimits);
 		
 		setSequence(0);
@@ -93,7 +93,7 @@ public class Player extends MovingObject {
 		animate();
 		
 		//Reset jump counter after player hits the ground
-		if(hitGround) {
+		if(hitGround || onLadder) {
 			jumpState = 0;
 		}
 		
@@ -103,9 +103,9 @@ public class Player extends MovingObject {
 			setSequence(0+facing);
 		} else if (onLadder) {
 			if(isClimbing) {
-				setSequence(0+facing);
+				setSequence(3);
 			}else {
-				setSequence(0+facing);
+				setSequence(2);
 			}
 		} else if (isWalking) {
 			setSequence(0+facing);
