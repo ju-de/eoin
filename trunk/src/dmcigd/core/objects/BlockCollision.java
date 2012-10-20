@@ -1,21 +1,27 @@
 package dmcigd.core.objects;
 
 import dmcigd.core.*;
+import java.util.*;
 import java.util.Arrays;
 
 public class BlockCollision extends VisibleObject {
+
+	public List<Character> platforms = Arrays.asList('i','o','O','p');		//Return 2
+	public List<Character> ladders = Arrays.asList('g', 'h', 'j',			//Return 3
+			'G', 'H', 'J', 'b', 'n', 'm', 'B','N', 'M', 'k', 'l', 'L');
+	public List<Character> nonsolid = Arrays.asList(' ','1');				//Return 4
 	
 	//Tile checks
 	public int tileType(char block) {
-		if(Arrays.asList('g', 'h', 'j', 'G', 'H', 'J', 'b', 'n', 'm', 'B', 'N', 'M', 'i', 'k', 'K').contains(block)) {
+		if(nonsolid.contains(block)) {
+			return 4;
+		} else if(platforms.contains(block)) {
 			return 2;
-		} else if(Arrays.asList(' ', '1', '^').contains(block)) {
-			if(block == '^') {
-				return 1;
-			}else{
-				return 3;
-			}
-		} else {
+		} else if(ladders.contains(block)) {
+			return 3;
+		} else if(block == '^') {
+			return 1;
+		}else{
 			return 0;
 		}
 	}

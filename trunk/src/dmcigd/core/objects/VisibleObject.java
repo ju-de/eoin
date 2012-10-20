@@ -1,11 +1,11 @@
 package dmcigd.core.objects;
 
 import java.awt.*;
-import java.io.*;
-
-import javax.imageio.ImageIO;
 
 public class VisibleObject {
+	
+	//Image Loader
+	Toolkit tk = Toolkit.getDefaultToolkit();
 	
 	private int sequence;
 	private float frame;
@@ -33,9 +33,7 @@ public class VisibleObject {
 		this.sequence = sequence;
 	}
 	public void setImage(String path) {
-		try {
-			spriteSheet = ImageIO.read(new File("../share/gfx/"+path));
-		} catch (IOException e) {}
+		spriteSheet = tk.getImage("../share/gfx/"+path);
 	}
 	public void setFrameLimits(int[] frameLimits) {
 		this.frameLimits = frameLimits;

@@ -7,11 +7,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.io.*;
-
-import javax.imageio.ImageIO;
 
 public class Demo implements Runnable {
+	
+	//Image Loader
+	Toolkit tk = Toolkit.getDefaultToolkit();
 	
 	private boolean ready = false;
 	public Player player;
@@ -31,48 +31,50 @@ public class Demo implements Runnable {
 		th.start();
 		
 		//Temporary measure to be abstracted later:
-		try {
-			blockImageMap.put("q", ImageIO.read(new File("../share/gfx/blocks/demo/normal/tl.gif")));
-			blockImageMap.put("w", ImageIO.read(new File("../share/gfx/blocks/demo/normal/t1.gif")));
-			blockImageMap.put("W", ImageIO.read(new File("../share/gfx/blocks/demo/normal/t2.gif")));
-			blockImageMap.put("e", ImageIO.read(new File("../share/gfx/blocks/demo/normal/tr.gif")));
-			blockImageMap.put("a", ImageIO.read(new File("../share/gfx/blocks/demo/normal/l1.gif")));
-			blockImageMap.put("A", ImageIO.read(new File("../share/gfx/blocks/demo/normal/l2.gif")));
-			blockImageMap.put("d", ImageIO.read(new File("../share/gfx/blocks/demo/normal/r1.gif")));
-			blockImageMap.put("D", ImageIO.read(new File("../share/gfx/blocks/demo/normal/r2.gif")));
-			blockImageMap.put("z", ImageIO.read(new File("../share/gfx/blocks/demo/normal/bl.gif")));
-			blockImageMap.put("x", ImageIO.read(new File("../share/gfx/blocks/demo/normal/b1.gif")));
-			blockImageMap.put("X", ImageIO.read(new File("../share/gfx/blocks/demo/normal/b2.gif")));
-			blockImageMap.put("c", ImageIO.read(new File("../share/gfx/blocks/demo/normal/br.gif")));
-			blockImageMap.put("t", ImageIO.read(new File("../share/gfx/blocks/demo/normal/lcap.gif")));
-			blockImageMap.put("y", ImageIO.read(new File("../share/gfx/blocks/demo/normal/row1.gif")));
-			blockImageMap.put("Y", ImageIO.read(new File("../share/gfx/blocks/demo/normal/row2.gif")));
-			blockImageMap.put("u", ImageIO.read(new File("../share/gfx/blocks/demo/normal/rcap.gif")));
-			blockImageMap.put("r", ImageIO.read(new File("../share/gfx/blocks/demo/normal/tcap.gif")));
-			blockImageMap.put("f", ImageIO.read(new File("../share/gfx/blocks/demo/normal/col1.gif")));
-			blockImageMap.put("F", ImageIO.read(new File("../share/gfx/blocks/demo/normal/col2.gif")));
-			blockImageMap.put("v", ImageIO.read(new File("../share/gfx/blocks/demo/normal/bcap.gif")));
-			blockImageMap.put("s", ImageIO.read(new File("../share/gfx/blocks/demo/normal/single.gif")));
-			blockImageMap.put(".", ImageIO.read(new File("../share/gfx/blocks/demo/normal/c1.gif")));
-			blockImageMap.put(",", ImageIO.read(new File("../share/gfx/blocks/demo/normal/c2.gif")));
-			blockImageMap.put("-", ImageIO.read(new File("../share/gfx/blocks/demo/normal/c3.gif")));
-			blockImageMap.put("=", ImageIO.read(new File("../share/gfx/blocks/demo/normal/c4.gif")));
-			blockImageMap.put("g", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/lcap.gif")));
-			blockImageMap.put("h", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/row.gif")));
-			blockImageMap.put("j", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/rcap.gif")));
-			blockImageMap.put("G", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/tl.gif")));
-			blockImageMap.put("H", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/t.gif")));
-			blockImageMap.put("J", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/tr.gif")));
-			blockImageMap.put("b", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/l.gif")));
-			blockImageMap.put("n", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/c.gif")));
-			blockImageMap.put("m", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/r.gif")));
-			blockImageMap.put("B", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/bl.gif")));
-			blockImageMap.put("N", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/b.gif")));
-			blockImageMap.put("M", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/br.gif")));
-			blockImageMap.put("i", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/single.gif")));
-			blockImageMap.put("k", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/air.gif")));
-			blockImageMap.put("K", ImageIO.read(new File("../share/gfx/blocks/demo/ladder/end.gif")));
-		} catch (IOException e) {}
+		blockImageMap.put("q", tk.getImage("../share/gfx/blocks/demo/normal/tl.gif"));
+		blockImageMap.put("w", tk.getImage("../share/gfx/blocks/demo/normal/t1.gif"));
+		blockImageMap.put("W", tk.getImage("../share/gfx/blocks/demo/normal/t2.gif"));
+		blockImageMap.put("e", tk.getImage("../share/gfx/blocks/demo/normal/tr.gif"));
+		blockImageMap.put("a", tk.getImage("../share/gfx/blocks/demo/normal/l1.gif"));
+		blockImageMap.put("A", tk.getImage("../share/gfx/blocks/demo/normal/l2.gif"));
+		blockImageMap.put("d", tk.getImage("../share/gfx/blocks/demo/normal/r1.gif"));
+		blockImageMap.put("D", tk.getImage("../share/gfx/blocks/demo/normal/r2.gif"));
+		blockImageMap.put("z", tk.getImage("../share/gfx/blocks/demo/normal/bl.gif"));
+		blockImageMap.put("x", tk.getImage("../share/gfx/blocks/demo/normal/b1.gif"));
+		blockImageMap.put("X", tk.getImage("../share/gfx/blocks/demo/normal/b2.gif"));
+		blockImageMap.put("c", tk.getImage("../share/gfx/blocks/demo/normal/br.gif"));
+		blockImageMap.put("t", tk.getImage("../share/gfx/blocks/demo/normal/lcap.gif"));
+		blockImageMap.put("y", tk.getImage("../share/gfx/blocks/demo/normal/row1.gif"));
+		blockImageMap.put("Y", tk.getImage("../share/gfx/blocks/demo/normal/row2.gif"));
+		blockImageMap.put("u", tk.getImage("../share/gfx/blocks/demo/normal/rcap.gif"));
+		blockImageMap.put("r", tk.getImage("../share/gfx/blocks/demo/normal/tcap.gif"));
+		blockImageMap.put("f", tk.getImage("../share/gfx/blocks/demo/normal/col1.gif"));
+		blockImageMap.put("F", tk.getImage("../share/gfx/blocks/demo/normal/col2.gif"));
+		blockImageMap.put("v", tk.getImage("../share/gfx/blocks/demo/normal/bcap.gif"));
+		blockImageMap.put("s", tk.getImage("../share/gfx/blocks/demo/normal/single.gif"));
+		blockImageMap.put(".", tk.getImage("../share/gfx/blocks/demo/normal/c1.gif"));
+		blockImageMap.put(",", tk.getImage("../share/gfx/blocks/demo/normal/c2.gif"));
+		blockImageMap.put("-", tk.getImage("../share/gfx/blocks/demo/normal/c3.gif"));
+		blockImageMap.put("=", tk.getImage("../share/gfx/blocks/demo/normal/c4.gif"));
+		blockImageMap.put("i", tk.getImage("../share/gfx/blocks/demo/normal/platformlcap.gif"));
+		blockImageMap.put("o", tk.getImage("../share/gfx/blocks/demo/normal/platformrow.gif"));
+		blockImageMap.put("p", tk.getImage("../share/gfx/blocks/demo/normal/platformrcap.gif"));
+		blockImageMap.put("O", tk.getImage("../share/gfx/blocks/demo/normal/platformsingle.gif"));
+		blockImageMap.put("g", tk.getImage("../share/gfx/blocks/demo/normal/ladder/lcap.gif"));
+		blockImageMap.put("h", tk.getImage("../share/gfx/blocks/demo/normal/ladder/row.gif"));
+		blockImageMap.put("j", tk.getImage("../share/gfx/blocks/demo/normal/ladder/rcap.gif"));
+		blockImageMap.put("G", tk.getImage("../share/gfx/blocks/demo/normal/ladder/tl.gif"));
+		blockImageMap.put("H", tk.getImage("../share/gfx/blocks/demo/normal/ladder/t.gif"));
+		blockImageMap.put("J", tk.getImage("../share/gfx/blocks/demo/normal/ladder/tr.gif"));
+		blockImageMap.put("b", tk.getImage("../share/gfx/blocks/demo/normal/ladder/l.gif"));
+		blockImageMap.put("n", tk.getImage("../share/gfx/blocks/demo/normal/ladder/c.gif"));
+		blockImageMap.put("m", tk.getImage("../share/gfx/blocks/demo/normal/ladder/r.gif"));
+		blockImageMap.put("B", tk.getImage("../share/gfx/blocks/demo/normal/ladder/bl.gif"));
+		blockImageMap.put("N", tk.getImage("../share/gfx/blocks/demo/normal/ladder/b.gif"));
+		blockImageMap.put("M", tk.getImage("../share/gfx/blocks/demo/normal/ladder/br.gif"));
+		blockImageMap.put("k", tk.getImage("../share/gfx/blocks/demo/normal/ladder/single.gif"));
+		blockImageMap.put("l", tk.getImage("../share/gfx/blocks/demo/normal/ladder/air.gif"));
+		blockImageMap.put("L", tk.getImage("../share/gfx/blocks/demo/normal/ladder/end.gif"));
 		
 	}
 	

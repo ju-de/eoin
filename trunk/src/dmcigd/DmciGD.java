@@ -161,14 +161,14 @@ public class DmciGD extends Applet implements Runnable {
 						
 						//Draw if object exists
 						if((tile = blockImageMap.get(String.valueOf(visibleBlocks[i][j]))) != null) {
-							dbg.drawImage(tile, j*32 - (playerX % 32) - 10, i*32 - (playerY % 32) - 16, this);
+							dbg.drawImage(tile, j*32 - (playerX % 32) - 10, i*32 - (playerY % 32) - 16, j*32 - (playerX % 32) + 22, i*32 - (playerY % 32) + 16, 0, 0, 16, 16, this);
 						}
 						
 					}
 					
 				}
 
-				dbg.drawImage(playerImage, 308, 144, 332, 176, playerFrame * 24, playerSequence * 32, playerFrame * 24 + 24, playerSequence * 32 + 32, this);
+				dbg.drawImage(playerImage, 308, 144, 332, 176, playerFrame * 12, playerSequence * 16, playerFrame * 12 + 12, playerSequence * 16 + 16, this);
 				
 				break;
 				

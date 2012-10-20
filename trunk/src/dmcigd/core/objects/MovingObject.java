@@ -21,7 +21,7 @@ public class MovingObject extends VisibleObject {
 	private float tRight = 32;
 	
 	//Initialize collision property to be passed for child manipulation
-	public boolean hitGround,isFalling,onLadder;
+	public boolean hitGround,isFalling,onLadder = false;
 	
 	//Initialize blockLoader
 	private BlockMap blockMap;
@@ -119,7 +119,6 @@ public class MovingObject extends VisibleObject {
 		
 		hitGround = false;
 		isFalling = false;
-		onLadder = false;
 		
 		//Calculate Acceleration
 		vx = vx + ax;
@@ -143,9 +142,10 @@ public class MovingObject extends VisibleObject {
 			int blockCollisionStatus = blockMap.collidesX(x, y, (int) vx, width, height, Direction.RIGHT);
 			
 			switch(blockCollisionStatus) {
-				case 2:
-					onLadder = true;
 				case 3:
+					onLadder = true;
+				case 2:
+				case 4:
 					x = x + (int) vx;
 					break;
 				case 1:
@@ -162,9 +162,10 @@ public class MovingObject extends VisibleObject {
 			int blockCollisionStatus = blockMap.collidesX(x, y, (int) vx, width, height, Direction.LEFT);
 			
 			switch(blockCollisionStatus) {
-				case 2:
-					onLadder = true;
 				case 3:
+					onLadder = true;
+				case 2:
+				case 4:
 					x = x + (int) vx;
 					break;
 				case 1:
@@ -183,12 +184,15 @@ public class MovingObject extends VisibleObject {
 			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.DOWN);
 			
 			switch(blockCollisionStatus) {
-				case 3:
-					y = y + (int) vy;
+				case 4:
 					isFalling = true;
+					onLadder = false;
+					y = y + (int) vy;
 					break;
-				case 2:
-					onLadder = true;
+				case 3:
+					if(onLadder || isClimbing) {
+						onLadder = true;
+					}
 					hitGround = true;
 					if(isClimbing) {
 						y = y + (int) vy;
@@ -197,9 +201,11 @@ public class MovingObject extends VisibleObject {
 					}
 					break;
 				case 1:
+					y = blockMap.rowEdge(y, height, Direction.DOWN);
 					System.out.println("Oh dear, you are dead!");
 					break;
 				default:
+					onLadder = false;
 					y = blockMap.rowEdge(y, height, Direction.DOWN);
 					hitGround = true;
 					vy = 0;
@@ -212,9 +218,13 @@ public class MovingObject extends VisibleObject {
 			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.UP);
 
 			switch(blockCollisionStatus) {
-				case 2:
-					onLadder = true;
 				case 3:
+					onLadder = true;
+					y = y + (int) vy;
+					break;
+				case 2:
+				case 4:
+					onLadder = false;
 					y = y + (int) vy;
 					break;
 				case 1:

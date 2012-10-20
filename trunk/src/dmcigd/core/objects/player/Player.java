@@ -73,14 +73,12 @@ public class Player extends MovingObject {
 	
 	public void step() {
 		if(isWalking) {
-			setSequence(0+facing);
 			if(!sprint) {
 				accelerate(1.0f, 2.0f, walking);
 			} else {
 				accelerate(1.0f, 4.0f, walking);
 			}
 		}else{
-			setSequence(0+facing);
 			accelerate(0.0f, 0.0f, Direction.RIGHT);
 			setVX(0);
 		}
@@ -93,10 +91,28 @@ public class Player extends MovingObject {
 		}
 		move(isClimbing);
 		animate();
+		
 		//Reset jump counter after player hits the ground
 		if(hitGround) {
 			jumpState = 0;
 		}
+		
+		if(isFalling) {
+			setSequence(0+facing);
+		} else if(jumpState > 0) {
+			setSequence(0+facing);
+		} else if (onLadder) {
+			if(isClimbing) {
+				setSequence(0+facing);
+			}else {
+				setSequence(0+facing);
+			}
+		} else if (isWalking) {
+			setSequence(0+facing);
+		} else {
+			setSequence(0+facing);
+		}
+		
 		//Counts falling at terminal velocity as a jump
 		//If falling, player should not be allowed to defy physics even further and jump a second time
 		//Period of acceleration is given as a grace period to give player time to react
