@@ -5,23 +5,18 @@ import java.util.Arrays;
 
 public class BlockCollision extends VisibleObject {
 	
-	//Checks
+	//Tile checks
 	public int tileType(char block) {
-		if(Arrays.asList(' ', '1', '^').contains(block)) {
+		if(Arrays.asList('g', 'h', 'j', 'G', 'H', 'J', 'b', 'n', 'm', 'B', 'N', 'M', 'i', 'k', 'K').contains(block)) {
+			return 2;
+		} else if(Arrays.asList(' ', '1', '^').contains(block)) {
 			if(block == '^') {
 				return 1;
 			}else{
-				return 2;
+				return 3;
 			}
 		} else {
 			return 0;
-		}
-	}
-	public boolean isSolid(char block) {
-		if(Arrays.asList(' ', '1', '^').contains(block)) {
-			return false;
-		} else {
-			return true;
 		}
 	}
 	

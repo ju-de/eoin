@@ -8,8 +8,8 @@ public class Player extends MovingObject {
 	private int jumpState = 0;
 	private int jumpDelay = 5;
 	private int facing = 0;
-	private boolean isWalking;
-	private boolean sprint;
+	private boolean isWalking,isClimbing,sprint;
+	private Direction walking,climbing;
 	
 	public Player(int x, int  y, BlockMap blockLoader) {
 		setX(x);
@@ -26,57 +26,35 @@ public class Player extends MovingObject {
 		//1: Idle Left [4]
 		//2: Walk Right [8]
 		//3: Walk Left [8]
-		int[] frameLimits = {2,2};
+		int[] frameLimits = {4,4};
 		setFrameLimits(frameLimits);
 		
 		setSequence(0);
 	}
 	
-	//Movement commands
-	public void walkLeft(boolean walking) {
-		if(walking) {
-			if(sprint) {
-				accelerate(1.0f, 4.0f, Direction.LEFT);
-			} else {
-				accelerate(1.0f, 2.0f, Direction.LEFT);
-			}
-			isWalking = true;
-			facing = 1;
+	public void walk(boolean isWalking, Direction direction) {
+		this.isWalking = isWalking;  
+		if(isWalking) {
+			walking = direction;
 		} else {
-			accelerate(0.0f, 0.0f, Direction.LEFT);
-			setVX(0);
-			isWalking = false;
+			walking = null;
 		}
-	}
-	
-	public void walkRight(boolean walking) {
-		if(walking) {
-			if(sprint) {
-				accelerate(1.0f, 4.0f, Direction.RIGHT);
-			} else {
-				accelerate(1.0f, 2.0f, Direction.RIGHT);
-			}
-			isWalking = true;
+		if(direction == Direction.RIGHT) {
 			facing = 0;
 		} else {
-			accelerate(0.0f, 0.0f, Direction.RIGHT);
-			setVX(0);
-			isWalking = false;
+			facing = 1;
 		}
 	}
 	
-	public void setSprint(boolean sprint) {
-		this.sprint = sprint;
-		//If already moving, update terminal velocities
-		if(isWalking) {
-			if(sprint) {
-				setTLeft(4.0f);
-				setTRight(4.0f);
-			} else {
-				setTLeft(2.0f);
-				setTRight(2.0f);
-			}
-		}
+	public void climbUp(boolean isClimbing) {
+		this.isClimbing = isClimbing;
+		climbing = Direction.UP;
+	}
+	
+	public void keyDown(boolean down) {
+		this.sprint = down;
+		isClimbing = down;
+		climbing = Direction.DOWN;
 	}
 	
 	public void jump(boolean jumping) {
@@ -94,13 +72,27 @@ public class Player extends MovingObject {
 	}
 	
 	public void step() {
-		move();
-		animate();
 		if(isWalking) {
 			setSequence(0+facing);
+			if(!sprint) {
+				accelerate(1.0f, 2.0f, walking);
+			} else {
+				accelerate(1.0f, 4.0f, walking);
+			}
 		}else{
 			setSequence(0+facing);
+			accelerate(0.0f, 0.0f, Direction.RIGHT);
+			setVX(0);
 		}
+		if(isClimbing && onLadder) {
+			if(climbing == Direction.UP) {
+				setVY(-2);
+			}else {
+				setVY(2);
+			}
+		}
+		move(isClimbing);
+		animate();
 		//Reset jump counter after player hits the ground
 		if(hitGround) {
 			jumpState = 0;

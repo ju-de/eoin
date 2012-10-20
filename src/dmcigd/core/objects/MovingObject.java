@@ -13,17 +13,15 @@ public class MovingObject extends VisibleObject {
 	private int y = 0;
 	private float vx = 0;
 	private float vy = 2;
-	private float aUp = 0;
-	private float aDown = 0;
-	private float aLeft = 0;
-	private float aRight = 0;
+	private float ax = 0;
+	private float ay = 0;
 	private float tUp = 32;
 	private float tDown = 32;
 	private float tLeft = 32;
 	private float tRight = 32;
 	
-	//Initialize hitGround and isFalling property to be passed for child manipulation
-	public boolean hitGround,isFalling;
+	//Initialize collision property to be passed for child manipulation
+	public boolean hitGround,isFalling,onLadder;
 	
 	//Initialize blockLoader
 	private BlockMap blockMap;
@@ -47,6 +45,9 @@ public class MovingObject extends VisibleObject {
 	public float getVY() {
 		return vy;
 	}
+	public float getAY() {
+		return ay;
+	}
 	
 	//Public setters
 	public void setHeight(int height) {
@@ -67,17 +68,11 @@ public class MovingObject extends VisibleObject {
 	public void setVY(float vy) {
 		this.vy = vy;
 	}
-	public void setAUp(float aUp) {
-		this.aUp = aUp;
+	public void setAX(float ax) {
+		this.ax = ax;
 	}
-	public void setADown(float aDown) {
-		this.aDown = aDown;
-	}
-	public void setALeft(float aLeft) {
-		this.aLeft = aLeft;
-	}
-	public void setARight(float aRight) {
-		this.aRight = aRight;
+	public void setAY(float ay) {
+		this.ay = ay;
 	}
 	public void setTUp(float tUp) {
 		this.tUp = tUp;
@@ -100,19 +95,19 @@ public class MovingObject extends VisibleObject {
 	public void accelerate(float rate, float terminal, Direction direction) {
 		switch(direction) {
 			case UP:
-				aUp = rate;
+				ay = -rate;
 				tUp = terminal;
 				break;
 			case DOWN:
-				aDown = rate;
+				ay = rate;
 				tDown = terminal;
 				break;
 			case LEFT:
-				aLeft = rate;
+				ax = -rate;
 				tLeft = terminal;
 				break;
 			case RIGHT:
-				aRight = rate;
+				ax = rate;
 				tRight = terminal;
 				break;
 			default:
@@ -120,26 +115,25 @@ public class MovingObject extends VisibleObject {
 		}
 	}
 	
-	public void move() {
+	public void move(boolean isClimbing) {
 		
 		hitGround = false;
 		isFalling = false;
-		
-		char[][] immediateBlocks = blockMap.getImmediateBlocks(x,y);
+		onLadder = false;
 		
 		//Calculate Acceleration
-		vx = vx + aRight - aLeft;
-		vy = vy + aDown - aUp;
+		vx = vx + ax;
+		vy = vy + ay;
 		
 		//Cap all speeds at 30px per tick
-		if(vx + aRight - aLeft > tRight) {
+		if(vx > tRight) {
 			vx = tRight;
-		}else if(vx + aRight - aLeft < -tLeft) {
+		}else if(vx < -tLeft) {
 			vx = -tLeft;
 		}
-		if(vy + aDown - aUp > tDown) {
+		if(vy > tDown) {
 			vy = tDown;
-		}else if(vy + aDown - aUp < -tUp) {
+		}else if(vy < -tUp) {
 			vy = -tUp;
 		}
 		
@@ -150,6 +144,8 @@ public class MovingObject extends VisibleObject {
 			
 			switch(blockCollisionStatus) {
 				case 2:
+					onLadder = true;
+				case 3:
 					x = x + (int) vx;
 					break;
 				case 1:
@@ -167,6 +163,8 @@ public class MovingObject extends VisibleObject {
 			
 			switch(blockCollisionStatus) {
 				case 2:
+					onLadder = true;
+				case 3:
 					x = x + (int) vx;
 					break;
 				case 1:
@@ -185,16 +183,26 @@ public class MovingObject extends VisibleObject {
 			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.DOWN);
 			
 			switch(blockCollisionStatus) {
-				case 2:
+				case 3:
 					y = y + (int) vy;
 					isFalling = true;
+					break;
+				case 2:
+					onLadder = true;
+					hitGround = true;
+					if(isClimbing) {
+						y = y + (int) vy;
+					} else {
+						vy = 0;
+					}
 					break;
 				case 1:
 					System.out.println("Oh dear, you are dead!");
 					break;
 				default:
-					y = blockMap.rowEdge(y, height, Direction.DOWN);					hitGround = true;
+					y = blockMap.rowEdge(y, height, Direction.DOWN);
 					hitGround = true;
+					vy = 0;
 					break;
 			}
 			
@@ -205,6 +213,8 @@ public class MovingObject extends VisibleObject {
 
 			switch(blockCollisionStatus) {
 				case 2:
+					onLadder = true;
+				case 3:
 					y = y + (int) vy;
 					break;
 				case 1:
@@ -215,9 +225,9 @@ public class MovingObject extends VisibleObject {
 					break;
 			}
 		}
-		
-		if(hitGround) {
-			vy = 0;
-		}
+	}
+	
+	public void move() {
+		move(false);
 	}
 }
