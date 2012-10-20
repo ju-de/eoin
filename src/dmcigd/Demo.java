@@ -1,6 +1,6 @@
 package dmcigd;
 
-import dmcigd.core.*;
+import dmcigd.core.objects.*;
 import dmcigd.core.objects.player.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -14,7 +14,7 @@ public class Demo implements Runnable {
 	
 	private boolean ready = false;
 	public Player player;
-	public BlockLoader blockLoader = new BlockLoader();
+	public BlockMap blockMap = new BlockMap();
 	
 	//Temporary measure to be abstracted later:
 	public Map<String, Image> blockImageMap = new HashMap<String, Image>();
@@ -68,8 +68,8 @@ public class Demo implements Runnable {
 	
 	public void run() {
 		
-		blockLoader.loadBlockMap("demo");
-		player = new Player(blockLoader.getSpawnX() * 32, blockLoader.getSpawnY() * 32, blockLoader);
+		blockMap.loadBlockMap("demo");
+		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap);
 		
 		ready = true;
 	}

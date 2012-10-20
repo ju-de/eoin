@@ -22,6 +22,9 @@ public class DmciGD extends Applet implements Runnable {
 	private Map<String, Image> blockImageMap = new HashMap<String, Image>();
 	private int playerX;
 	private int playerY;
+	private Image playerImage;
+	private int playerSequence;
+	private int playerFrame;
 	
 	//Initialize the Double-buffering Variables
 	private Image dbImage;
@@ -68,7 +71,11 @@ public class DmciGD extends Applet implements Runnable {
 					playerX = main.demo.player.getX();
 					playerY = main.demo.player.getY();
 					
-					visibleBlocks = main.demo.blockLoader.getVisibleBlocks(playerX, playerY);
+					visibleBlocks = main.demo.blockMap.getVisibleBlocks(playerX, playerY);
+					
+					playerImage = main.demo.player.getImage();
+					playerSequence = main.demo.player.getSequence();
+					playerFrame = main.demo.player.getFrame();
 					
 					//Tells Main thread to begin fetching next frame
 					threadSync.consumed();
@@ -154,16 +161,14 @@ public class DmciGD extends Applet implements Runnable {
 						
 						//Draw if object exists
 						if((tile = blockImageMap.get(String.valueOf(visibleBlocks[i][j]))) != null) {
-							dbg.drawImage(tile, j*32 - (playerX % 32) - 16, i*32 - (playerY % 32) - 16, this);
+							dbg.drawImage(tile, j*32 - (playerX % 32) - 10, i*32 - (playerY % 32) - 16, this);
 						}
 						
 					}
 					
 				}
-				
-				
-				dbg.fillOval(304, 144, main.demo.player.getWidth(), main.demo.player.getHeight());
-				
+
+				dbg.drawImage(playerImage, 308, 144, 332, 176, playerFrame * 24, playerSequence * 32, playerFrame * 24 + 24, playerSequence * 32 + 32, this);
 				
 				break;
 				
