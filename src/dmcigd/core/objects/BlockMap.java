@@ -4,6 +4,7 @@ import dmcigd.core.enums.*;
 
 import java.util.*;
 import java.io.*;
+import java.net.*;
 
 public class BlockMap extends BlockCollision {
 	
@@ -86,34 +87,27 @@ public class BlockMap extends BlockCollision {
 		block1 = tileType(blockMap.get(tileRow(y+1, height, Direction.DOWN)).charAt(x/32));
 		block2 = tileType(blockMap.get(tileRow(y+1, height, Direction.DOWN)).charAt((x/32)+1));
 		
-		//Treats the top ladder block as a solid block
+		boolean betweenCols = betweenCols(x, width);
+		
+		//Treats the top ladder block as a solid block 
 		int ladderCheck1;
 		int ladderCheck2;
 		ladderCheck1 = tileType(blockMap.get(tileRow(y, height, Direction.DOWN)).charAt(x/32));
 		ladderCheck2 = tileType(blockMap.get(tileRow(y, height, Direction.DOWN)).charAt((x/32)+1));
 		
-		boolean betweenCols = betweenCols(x, width);
-		
-		if(betweenCols && block2 < block1) {
-			if(block2 == 3 || ladderCheck1 == 3 || (betweenCols && ladderCheck2 == 3)) {
-				if(ladderCheck1 == 3 || (betweenCols && ladderCheck2 == 3)) {
-					return 3;
-				} else {
-					return 4;
-				}
-			}else{
-				return block2;
+		//Only returns a ladder block status if standing inside a ladder (not on top of a ladder)
+		if(ladderCheck1 == 3 || (betweenCols && ladderCheck2 == 3)) {
+			return 3;
+		} else if (betweenCols && block2 < block1) {
+			if(block2 == 3) {
+				block2 = 0;
 			}
+			return block2;
 		} else {
-			if(block1 == 3 || ladderCheck1 == 3 || (betweenCols && ladderCheck2 == 3)) {
-				if(ladderCheck1 == 3 || (betweenCols && ladderCheck2 == 3)) {
-					return 3;
-				} else {
-					return 4;
-				}
-			}else{
-				return block1;
+			if(block1 == 3) {
+				block1 = 0;
 			}
+			return block1;
 		}
 	}
 	
@@ -152,13 +146,13 @@ public class BlockMap extends BlockCollision {
 		}
 	}
 	
-	public void loadBlockMap(String folderName) {
+	public void loadBlockMap(URL codeBase, String folderName) {
 		
 		//Create blockMap array
 		try {
 			
 			//Load the textfile for blockmap
-			br = new BufferedReader(new FileReader("../share/txt/levelmaps/"+folderName+"/blockmap.txt"));
+			br = new BufferedReader(new InputStreamReader(new URL(codeBase, "../share/txt/levelmaps/"+folderName+"/blockmap.txt").openStream()));
 			
 			try {
 				
@@ -183,7 +177,9 @@ public class BlockMap extends BlockCollision {
 				
 			} catch(IOException e) {}
 			
-		} catch (FileNotFoundException e) {}
+		} catch (FileNotFoundException e) { }
+		catch (MalformedURLException e1) { }
+		catch (IOException e1) { }
 		
 		fetchVisibleBlocks(spawnX * 32, spawnY * 32);
 	}
