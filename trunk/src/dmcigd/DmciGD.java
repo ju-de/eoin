@@ -1,6 +1,7 @@
 package dmcigd;
 
 import dmcigd.core.*;
+import dmcigd.core.enums.*;
 
 import java.applet.*;
 import java.awt.*;

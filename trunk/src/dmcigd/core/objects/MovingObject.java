@@ -1,6 +1,6 @@
 package dmcigd.core.objects;
 
-import dmcigd.core.*;
+import dmcigd.core.enums.*;
 
 public class MovingObject extends VisibleObject {
 	

@@ -1,6 +1,6 @@
 package dmcigd;
 
-import dmcigd.core.*;
+import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.player.*;
 import java.awt.*;

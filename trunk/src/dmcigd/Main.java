@@ -1,6 +1,7 @@
 package dmcigd;
 
 import dmcigd.core.*;
+import dmcigd.core.enums.GameState;
 
 import java.awt.event.*;
 
@@ -15,6 +16,7 @@ public class Main implements Runnable, KeyListener {
 	private ThreadSync threadSync;
 	
 	public Main(ThreadSync threadSync) {
+		
 		this.threadSync = threadSync;
 		
 		//Set gameState variable (currently at 3 for Demo Screen, should be changed to 1 for real game to initiate start menu)
