@@ -1,0 +1,134 @@
+All characters are case-sensitive
+Any character not listed will behave like a solid, invisible block
+
+Blockmaps are saved in /share/txt/levelmaps/[LEVELNAME]/blockmap.txt
+
+VISUAL REPRESENTATION
+
+	GENERAL KEYBOARD:
+	
+		           SINGLE ROW
+		EDGED BLOCKS    │   PLATAFORMS
+		┌───┴───┬───┬───┴───┬───┴───┐
+		│ Q W E │ R │ T Y U │ I O P │
+		│       │   ├───────┴─────┬─┘  ┌─────┐
+		│ A S D │ F │ G H J   K L │    │ - = │
+		│       │   │       ┌─────┤    └──┬──┘
+		│ Z X C │ V │ B N M │ , . ├──── CENTER BLOCKS
+		└───────┴─┬─┴───┬───┴─────┘
+		  SINGLE COLUMN │
+		             LADDERS
+	             
+	SOLID BLOCKS
+	
+		 4x4 SQUARE
+		 WITH EDGES
+		┌────┴────┬───┐
+		│ q w W e │ r │
+		│ a , . d │ f ├ SINGLE COLUMN
+		│ A - = D │ F │
+		│ z x X c │ y │
+		├─────────┼───┤
+		│ t y Y u │ s ├ SINGLE BLOCK
+		└────┬────┴───┘
+		 SINGLE ROW
+		 
+	PLATFORMS
+
+		┌───────┬───┐
+		│ i o p │ O │
+		└───────┴───┘
+		
+	LADDERS
+	
+		SINGLE ROW
+		┌───┴───┬───┐
+		│ G H J │ k ├ SINGLE BLOCK
+		├───────┼───┤
+		│ b n m │ l ├ MIDAIR
+		│ B N M ├───┤
+		│ g h j │ L ├ MIDAIR END (if ladder does not reach ground)
+		└───┬───┴───┘
+		3x3 SQUARE
+	
+
+ 
+OVERALL REFERENCE
+
+	Character	Block
+	
+			SPECIAL BLOCKS
+			
+		1		spawn
+		^		death block
+		
+			SOLID BLOCKS
+			
+				NO EDGES
+		,		center variation 1
+		.		center variation 2
+		-		center variation 3
+		=		center variation 4
+		
+				ONE EDGE
+		w		top edge variation 1				
+		W		top edge variation 2
+		a		left edge variation 1
+		A		left edge variation 2
+		d		right edge variation 1
+		D		right edge variation 2
+		x		bottom edge variation 1
+		X		bottom edge variation 2
+		
+				TWO EDGES
+		q		top left corner
+		e		top right corner
+		z		bottom left corner
+		c		bottom right corner
+		y		single row variation 1
+		Y		single row variation 2
+		f		single column variation 1
+		F		single column variation 2
+		
+				THREE EDGES
+		t		single row left cap
+		u		single row right cap
+		r		single column top cap
+		v		single column bottom cap
+		
+				FOUR EDGES
+		s		single block
+		
+			PLATFORMS
+			
+		i		platform left cap
+		o		platform center
+		p		platform right cap
+		O		single platform
+		
+			LADDERS
+				
+				NO EDGES
+		l		midair ladder
+		L		midair ladder bottom (if not touching ground)
+		n		embedded ladder
+		
+				ONE EDGE
+		H		top edge ladder
+		b		left edge ladder
+		m		right edge ladder
+		N		bottom edge ladder
+				
+				TWO EDGES
+		G		top left corner ladder
+		J		top right corner ladder
+		B		bottom left corner ladder
+		M		bottom right corner ladder
+		h		single row ladder
+		
+				THREE EDGES
+		g		single row left cap ladder
+		j		single row right cap ladder
+		
+				FOUR EDGES
+		k		single block ladder
