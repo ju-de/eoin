@@ -3,12 +3,62 @@ Any character not listed will behave like a solid, invisible block
 
 Blockmaps are saved in /share/txt/levelmaps/[LEVELNAME]/blockmap.txt
 
-VISUAL REPRESENTATION
 
-	GENERAL KEYBOARD:
+MAPPING RULES
+
+	1.	Null characters break the map. Remember to fill all your
+		whitespace with a space character: ' '
+		
+	2.	Because fetching null characters breaks the map, ensure that
+		you always have enough padding at the edge of the map to fill
+		all visible blocks. This means that there needs to be:
+			
+			6 cells of padding along the top and bottom
+			11 cells of padding along the left and right
+			
+	3. 	Use invisible, solid blocks to reinforce this padding
+	
+	4. 	If creating a falling trap, remember to line the bottom with
+		death blocks, and keep enough padding
+		
+		
+SAMPLE MAP THAT FOLLOWS ALL OF THESE RULES AT A MINIMUM
+
+,.=-,.,-=,d                                    note
+,-,-...,.,D                                    
+,,.-,,=,,.d                                    the
+=,.,=,,,.,D                                    
+,=.-=,,.,,d                                    whitespace
+=,.-=,.-,=d;;;;;;;;;;;;;;;;;;;;;;;;;           
+,.=-,.,-=,d                        ;           along
+,-,-...,.,D                        ;           
+,,.-,,=,,.d                        ;           the
+=,.,=,,,.,D                        ;           
+,=.-=,,.,,d                        ;           outer
+=,.-=,.-,=d                        ;           
+,,.,.-,=.,d                        ;           edge
+,.=-,.,-=,d 1          tYyYu       ;           
+,-,-...,.,.wWwe                    ;           of
+,,.-,,=,,.-xXxc                    ;           
+=,.,=,,,.,D                        ;           the
+,=.-=,,.,,d                        ;           
+=,.-=,.-,=d                        ;           game
+,,.,.-,=.,d                        ;           
+,.=-,.,-=,d^^^^^^^^^^^^^^^^^^^^^^^^;           despite
+,-,-...,.,D                                    
+,,.-,,=,,.d                                    not
+=,.,=,,,.,D                                    
+,=.-=,,.,,d                                    being
+=,.-=,.-,=d                                    
+,,.,.-,=.,d                                    accessible
+
+
+VISUAL REPRESENTATION OF BLOCK CHARACTERS
+
+	KEYBOARD LAYOUT:
 	
 		           SINGLE ROW
-		EDGED BLOCKS    │   PLATAFORMS
+		EDGED BLOCKS    │   PLATFORMS
 		┌───┴───┬───┬───┴───┬───┴───┐
 		│ Q W E │ R │ T Y U │ I O P │
 		│       │   ├───────┴─────┬─┘  ┌─────┐
