@@ -1,6 +1,6 @@
 package dmcigd.core.objects.player;
 
-import dmcigd.core.*;
+import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
 
 public class Player extends MovingObject {
