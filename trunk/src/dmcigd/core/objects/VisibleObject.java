@@ -1,18 +1,13 @@
 package dmcigd.core.objects;
 
-import java.awt.*;
-
 public class VisibleObject {
 	
 	//Image Loader
-	Toolkit tk = Toolkit.getDefaultToolkit();
 	
 	private int sequence;
 	private float frame;
 	
 	private int[] frameLimits;
-	
-	private Image spriteSheet;
 	
 	//Public Getters
 	public int getSequence() {
@@ -21,9 +16,6 @@ public class VisibleObject {
 	public int getFrame() {
 		return (int) frame;
 	}
-	public Image getImage() {
-		return spriteSheet;
-	}
 	
 	//Public Setters
 	public void setSequence(int sequence) {
@@ -31,9 +23,6 @@ public class VisibleObject {
 			frame = 0;
 		}
 		this.sequence = sequence;
-	}
-	public void setImage(String path) {
-		spriteSheet = tk.getImage("../share/gfx/"+path);
 	}
 	public void setFrameLimits(int[] frameLimits) {
 		this.frameLimits = frameLimits;

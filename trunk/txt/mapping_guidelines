@@ -77,7 +77,7 @@ VISUAL REPRESENTATION OF BLOCK CHARACTERS
 		│ q w W e │ r │
 		│ a , . d │ f ├ SINGLE COLUMN
 		│ A - = D │ F │
-		│ z x X c │ y │
+		│ z x X c │ v │
 		├─────────┼───┤
 		│ t y Y u │ s ├ SINGLE BLOCK
 		└────┬────┴───┘
@@ -93,11 +93,11 @@ VISUAL REPRESENTATION OF BLOCK CHARACTERS
 	
 		SINGLE ROW
 		┌───┴───┬───┐
-		│ G H J │ k ├ SINGLE BLOCK
+		│ g h j │ k ├ SINGLE BLOCK
 		├───────┼───┤
-		│ b n m │ l ├ MIDAIR
-		│ B N M ├───┤
-		│ g h j │ L ├ MIDAIR END (if ladder does not reach ground)
+		│ G H J │ l ├ MIDAIR
+		│ b n m ├───┤
+		│ B N M │ L ├ MIDAIR END (if ladder does not reach ground)
 		└───┬───┴───┘
 		3x3 SQUARE
 	

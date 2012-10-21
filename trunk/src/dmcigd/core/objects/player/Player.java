@@ -19,8 +19,6 @@ public class Player extends MovingObject {
 		setGravity();
 		setBlockLoader(blockLoader);
 		
-		setImage("blocks/demo/playertemp.gif");
-		
 		//Spritesheet organized as follows:
 		//0: Idle Right [4]
 		//1: Idle Left [4]
@@ -33,16 +31,20 @@ public class Player extends MovingObject {
 	}
 	
 	public void walk(boolean isWalking, Direction direction) {
-		this.isWalking = isWalking;  
 		if(isWalking) {
+			this.isWalking = true;  
 			walking = direction;
+			if(direction == Direction.RIGHT) {
+				facing = 0;
+			} else {
+				facing = 1;
+			}
 		} else {
-			walking = null;
-		}
-		if(direction == Direction.RIGHT) {
-			facing = 0;
-		} else {
-			facing = 1;
+			//Smooths out controls in case of overlap with keypresses
+			if(walking == direction) {
+				this.isWalking = false;
+				walking = null;
+			}
 		}
 	}
 	

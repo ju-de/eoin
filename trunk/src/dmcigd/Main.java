@@ -4,6 +4,7 @@ import dmcigd.core.*;
 import dmcigd.core.enums.GameState;
 
 import java.awt.event.*;
+import java.net.*;
 
 //Catches input and manages game loop objects
 public class Main implements Runnable, KeyListener {
@@ -15,7 +16,7 @@ public class Main implements Runnable, KeyListener {
 	private GameState gameState;
 	private ThreadSync threadSync;
 	
-	public Main(ThreadSync threadSync) {
+	public Main(ThreadSync threadSync, URL codeBase) {
 		
 		this.threadSync = threadSync;
 		
@@ -26,7 +27,7 @@ public class Main implements Runnable, KeyListener {
 		Thread th = new Thread(this);
 		th.start();
 		
-		demo = new Demo();
+		demo = new Demo(codeBase);
 	}
 	
 	//Passes game state to rendering thread
