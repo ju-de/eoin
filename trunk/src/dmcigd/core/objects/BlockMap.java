@@ -92,9 +92,11 @@ public class BlockMap extends BlockCollision {
 		ladderCheck1 = tileType(blockMap.get(tileRow(y, height, Direction.DOWN)).charAt(x/32));
 		ladderCheck2 = tileType(blockMap.get(tileRow(y, height, Direction.DOWN)).charAt((x/32)+1));
 		
-		if(betweenCols(x, width) && block2 < block1) {
-			if(block2 == 3 || ladderCheck1 == 3 || ladderCheck2 == 3) {
-				if(ladderCheck1 == 3 || ladderCheck2 == 3) {
+		boolean betweenCols = betweenCols(x, width);
+		
+		if(betweenCols && block2 < block1) {
+			if(block2 == 3 || ladderCheck1 == 3 || (betweenCols && ladderCheck2 == 3)) {
+				if(ladderCheck1 == 3 || (betweenCols && ladderCheck2 == 3)) {
 					return 3;
 				} else {
 					return 4;
@@ -103,8 +105,8 @@ public class BlockMap extends BlockCollision {
 				return block2;
 			}
 		} else {
-			if(block1 == 3 || ladderCheck1 == 3 || ladderCheck2 == 3) {
-				if(ladderCheck1 == 3 || ladderCheck2 == 3) {
+			if(block1 == 3 || ladderCheck1 == 3 || (betweenCols && ladderCheck2 == 3)) {
+				if(ladderCheck1 == 3 || (betweenCols && ladderCheck2 == 3)) {
 					return 3;
 				} else {
 					return 4;
