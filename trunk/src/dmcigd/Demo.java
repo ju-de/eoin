@@ -11,7 +11,7 @@ public class Demo implements Runnable {
 	//Stores codeBase string to be passed for file loading
 	private URL codeBase;
 	
-	private boolean ready = false;
+	private boolean ready,isDead = false;
 	public Player player;
 	public BlockMap blockMap = new BlockMap();
 	public final String levelName = "demo";
@@ -19,6 +19,10 @@ public class Demo implements Runnable {
 	
 	public boolean isReady() {
 		return ready;
+	}
+	
+	public boolean isDead() {
+		return isDead;
 	}
 	
 	public Demo(URL codeBase) {
@@ -33,6 +37,9 @@ public class Demo implements Runnable {
 	public void step() {
 		
 		player.step();
+		if(player.isDead) {
+			isDead = true;
+		}
 		
 	}
 	

@@ -15,8 +15,11 @@ public class Main implements Runnable, KeyListener {
 	//Initializing gameState variable - decides which object to interact with
 	private GameState gameState;
 	private ThreadSync threadSync;
+	private URL codeBase;
 	
 	public Main(ThreadSync threadSync, URL codeBase) {
+		
+		this.codeBase = codeBase;
 		
 		this.threadSync = threadSync;
 		
@@ -45,6 +48,11 @@ public class Main implements Runnable, KeyListener {
 			switch(gameState) {
 				case DEMO:
 					demo.step();
+					
+					if(demo.isDead()) {
+						demo = new Demo(codeBase);
+					}
+					
 					break;
 				case LOADINGDEMO:
 					
