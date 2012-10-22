@@ -14,7 +14,7 @@ public class Player extends MovingObject {
 	public Player(int x, int  y, BlockMap blockLoader) {
 		setX(x);
 		setY(y);
-		setHeight(32);
+		setHeight(30);
 		setWidth(20);
 		setGravity();
 		setBlockLoader(blockLoader);
