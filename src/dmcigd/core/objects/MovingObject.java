@@ -170,7 +170,6 @@ public class MovingObject extends VisibleObject {
 					break;
 				case 1:
 					isDead = true;
-					System.out.println("Oh dear, you are dead!");
 				default:
 					y = blockMap.rowEdge(y, height, Direction.UP);
 					break;
@@ -189,7 +188,7 @@ public class MovingObject extends VisibleObject {
 					x = x + (int) vx;
 					break;
 				case 1:
-					System.out.println("Oh dear, you are dead!");
+					isDead = true;
 					break;
 				default:
 					x = blockMap.colEdge(x, width, Direction.RIGHT);
@@ -208,7 +207,7 @@ public class MovingObject extends VisibleObject {
 					x = x + (int) vx;
 					break;
 				case 1:
-					System.out.println("Oh dear, you are dead!");
+					isDead = true;
 					break;
 				default:
 					x = blockMap.colEdge(x, width, Direction.LEFT);
@@ -222,7 +221,6 @@ public class MovingObject extends VisibleObject {
 		switch(restingBlock) {
 			case 1:
 				isDead = true;
-				System.out.println("Oh dear, you are dead!");
 				break;
 			case 3:
 				onLadder = true;
