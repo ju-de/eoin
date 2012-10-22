@@ -159,6 +159,7 @@ OVERALL REFERENCE
 		o		platform center
 		p		platform right cap
 		O		single platform
+		_		moving platform (does not move, strictly visual)
 		
 			LADDERS
 				
