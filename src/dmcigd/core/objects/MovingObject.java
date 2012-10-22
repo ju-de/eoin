@@ -21,7 +21,7 @@ public class MovingObject extends VisibleObject {
 	private float tRight = 32;
 	
 	//Initialize collision property to be passed for child manipulation
-	public boolean hitGround,isFalling,onLadder = false;
+	public boolean hitGround,isFalling,onLadder,isDead = false;
 	
 	//Initialize blockLoader
 	private BlockMap blockMap;
@@ -117,9 +117,6 @@ public class MovingObject extends VisibleObject {
 	
 	public void move(boolean isClimbing) {
 		
-		hitGround = false;
-		isFalling = false;
-		
 		//Calculate Acceleration
 		vy = vy + ay;
 		vx = vx + ax;
@@ -154,9 +151,6 @@ public class MovingObject extends VisibleObject {
 					}
 					break;
 				case 1:
-					y = blockMap.rowEdge(y, height, Direction.DOWN);
-					System.out.println("Oh dear, you are dead!");
-					break;
 				default:
 					y = blockMap.rowEdge(y, height, Direction.DOWN);
 					vy = 0;
@@ -177,8 +171,6 @@ public class MovingObject extends VisibleObject {
 					y = y + (int) vy;
 					break;
 				case 1:
-					System.out.println("Oh dear, you are dead!");
-					break;
 				default:
 					y = blockMap.rowEdge(y, height, Direction.UP);
 					break;
@@ -228,6 +220,10 @@ public class MovingObject extends VisibleObject {
 		//Determine resting block
 		int restingBlock = blockMap.restingBlock(x,y,width,height);
 		switch(restingBlock) {
+			case 1:
+				isDead = true;
+				System.out.println("Oh dear, you are dead!");
+				break;
 			case 3:
 				onLadder = true;
 				hitGround = false;
