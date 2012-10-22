@@ -17,7 +17,6 @@ public class BlockMap extends BlockCollision {
 	private int spawnY;
 	
 	//Initialize object lists
-	private char[][] immediateBlocks = new char[4][4];
 	private char[][] visibleBlocks = new char[12][22];
 	
 	public int getSpawnX() {
@@ -35,101 +34,108 @@ public class BlockMap extends BlockCollision {
 	//Collision checks
 	public int collidesX(int x, int y, int vx, int width, int height, Direction direction) {
 		
-		char[][] immediateBlocks = getImmediateBlocks(x,y);
+		int returnType = 4;
+		int curType;
 		
-		//Determine which column to check (left, center, right, or two blocks to the right)
-		int col = tileCol(x + vx, width, direction) - tileCol(x, width, Direction.LEFT) + 1;
-
-		//Check immediate cells in column of travel
-		int tile1 = tileType(immediateBlocks[1][col]);
-		int tile2 = tileType(immediateBlocks[2][col]);
+		//Determine blockMap positions
+		int topRow = tileRow(y, height, Direction.UP); 
+		int bottomRow = tileRow(y, height, Direction.DOWN);
 		
-		//If column is between rows, and other cell takes priority, return tile2
-		if(!betweenRows(y, height) || tile1 < tile2) {
-			return tile1;
-		} else {
-			return tile2;
+		int destinationCol = tileCol(x + vx, width, direction);
+		
+		//Loop through rows to check destination blocks
+		for(int i = topRow; i <= bottomRow; i++) {
+			
+			//Get block type
+			curType = tileType(blockMap.get(i).charAt(destinationCol));
+			
+			//Return top priority block
+			if(curType < returnType) {
+				returnType = curType;
+			}
 		}
+		
+		return returnType;
 		
 	}
 	public int collidesY(int x, int y, int vy, int width, int height, Direction direction) {
 		
-		char[][] immediateBlocks = getImmediateBlocks(x,y);
+		int returnType = 4;
+		int curType;
 		
-		//Determine which row to check (top, center, bottom, or two blocks to the bottom)
-		int row = tileRow(y + vy, height, direction) - tileRow(y, height, Direction.UP) + 1;
+		//Determine blockMap positions
+		int leftCol = tileCol(x, width, Direction.LEFT);
+		int rightCol = tileCol(x, width, Direction.RIGHT);
 		
-		//Check immediate cells in row of travel
-		int tile1 = tileType(immediateBlocks[row][1]);
-		int tile2 = tileType(immediateBlocks[row][2]);
+		int destinationRow = tileRow(y + vy, height, direction);
 		
-		if(direction == Direction.DOWN) {
-			//Catch boundary case of falling in the middle of a platform
-			if(tile1 == 2 && (row < 2 || row == 2 && betweenRows(y, height))) {
-				tile1 = 4;
+		//Loop through columns to check destination blocks
+		for(int i = leftCol; i <= rightCol; i++) {
+			
+			//Get block type
+			curType = tileType(blockMap.get(destinationRow).charAt(i));
+			
+			//Checks for boundary case of falling in the middle of a platform
+			if(curType == 2 && direction == Direction.DOWN) {
+				if(destinationRow == tileRow(y, height, Direction.DOWN)) {
+					curType = 4;
+				}
 			}
-			if(tile2 == 2 && (row < 2 || row == 2 && betweenRows(y, height))) {
-				tile2 = 4;
+			
+			//Return top priority block
+			if(curType < returnType) {
+				returnType = curType;
 			}
 		}
 		
-		//If column is between columns, and other cell takes priority, return tile2
-		if(!betweenCols(x, width) || tile1 < tile2) {
-			return tile1;
-		} else {
-			return tile2;
-		}
+		return returnType;
 	}
 	
 	public int restingBlock(int x, int y, int width, int height) {
-		int block1;
-		int block2;
-		block1 = tileType(blockMap.get(tileRow(y+1, height, Direction.DOWN)).charAt(x/32));
-		block2 = tileType(blockMap.get(tileRow(y+1, height, Direction.DOWN)).charAt((x/32)+1));
 		
-		boolean betweenCols = betweenCols(x, width);
+		int returnType = 4;
+		int curType, backType;
 		
-		//Treats the top ladder block as a solid block 
-		int ladderCheck1;
-		int ladderCheck2;
-		ladderCheck1 = tileType(blockMap.get(tileRow(y, height, Direction.DOWN)).charAt(x/32));
-		ladderCheck2 = tileType(blockMap.get(tileRow(y, height, Direction.DOWN)).charAt((x/32)+1));
+		//Determine resting row
+		int restingRow = tileRow(y + 1, height, Direction.DOWN);
+		int backRow = -1;
 		
-		//Only returns a ladder block status if standing inside a ladder (not on top of a ladder)
-		if(ladderCheck1 == 3 || (betweenCols && ladderCheck2 == 3)) {
-			return 3;
-		} else if (betweenCols && block2 < block1) {
-			if(block2 == 3) {
-				block2 = 0;
-			}
-			return block2;
-		} else {
-			if(block1 == 3) {
-				block1 = 0;
-			}
-			return block1;
+		//Only check back row if character is resting on a block
+		if((y + height) % 32 == 0) {
+			backRow = tileRow(y, height, Direction.DOWN);
 		}
+		
+		//Determine resting columns
+		int leftCol = tileCol(x, width, Direction.LEFT);
+		int rightCol = tileCol(x, width, Direction.RIGHT);
+		
+		//Loop through resting columns
+		for(int i = leftCol; i <= rightCol; i++) {
+			curType = tileType(blockMap.get(restingRow).charAt(i));
+			
+			//Checks for special blocks like ladders or water
+			if(backRow > -1 ) {
+				backType = tileType(blockMap.get(backRow).charAt(i));
+				if(backType == 3) {
+					curType = 3;
+				}else if(curType == 3) {
+					curType = 4;
+				}
+			}
+			
+			//Return top priority block
+			if(curType < returnType) {
+				returnType = curType;
+			}
+			
+		}
+		
+		return returnType;
 	}
 	
 	public char[][] getVisibleBlocks(int x, int y) {
 		fetchVisibleBlocks(x, y);
 		return visibleBlocks;
-	}
-	
-	public char[][] getImmediateBlocks(int x, int y) {
-		
-		//Loop through Y axis
-		for(int i=0; i<4; i++) {
-			
-			//Loop through X axis
-			for(int j=0; j<4; j++) {
-				
-				//Checks block at given displacement from character sprite
-				immediateBlocks[i][j] = blockMap.get((y/32)-1+i).charAt((x/32)-1+j);
-			}
-		}
-		
-		return immediateBlocks;
 	}
 	
 	public void fetchVisibleBlocks(int x, int y) {
