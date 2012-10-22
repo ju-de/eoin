@@ -44,7 +44,7 @@ SAMPLE MAP THAT FOLLOWS ALL OF THESE RULES AT A MINIMUM
 ,=.-=,,.,,d                        ;           
 =,.-=,.-,=d                        ;           game
 ,,.,.-,=.,d                        ;           
-,.=-,.,-=,d^^^^^^^^^^^^^^^^^^^^^^^^;           despite
+,.=-,.,-=,d************************;           despite
 ,-,-...,.,D                                    
 ,,.-,,=,,.d                                    not
 =,.,=,,,.,D                                    
@@ -101,7 +101,11 @@ VISUAL REPRESENTATION OF BLOCK CHARACTERS
 		└───┬───┴───┘
 		3x3 SQUARE
 	
+	SPIKES
 
+		  ^     * Note the case "v" is a block but "V" is a spike
+		< s >
+		  V
  
 OVERALL REFERENCE
 
@@ -110,7 +114,7 @@ OVERALL REFERENCE
 			SPECIAL BLOCKS
 			
 		1		spawn
-		^		death block
+		*		invisible death block (for pitfalls or obnoxiously hard puzzles)
 		
 			SOLID BLOCKS
 			
@@ -182,3 +186,10 @@ OVERALL REFERENCE
 		
 				FOUR EDGES
 		k		single block ladder
+		
+			SPIKES
+			
+		^		Upward facing spike
+		V		Downward facing spike
+		>		Rightward facing spike
+		<		Leftward facing spike
