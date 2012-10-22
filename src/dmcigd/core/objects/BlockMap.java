@@ -119,7 +119,7 @@ public class BlockMap extends BlockCollision {
 				if(backType == 3) {
 					curType = 3;
 				}else if(curType == 3) {
-					curType = 4;
+					curType = 0;
 				}
 			}
 			

@@ -27,21 +27,6 @@ public class BlockCollision extends VisibleObject {
 		}
 	}
 	
-	public boolean betweenRows(int y, int height) {
-		if(y % 32 <= 32 - height) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	public boolean betweenCols(int x, int width) {
-		if(x % 32 <= 32 - width) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
 	//Tile math
 	public int tileRow(int y, int height, Direction direction) {
 		if(direction == Direction.DOWN) {
