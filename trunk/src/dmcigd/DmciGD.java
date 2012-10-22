@@ -72,7 +72,7 @@ public class DmciGD extends Applet implements Runnable {
 					if(gameState != GameState.DEMO) {
 						
 						//Retrieve blockmap
-						getBlockImages(main.demo.levelName);
+						getBlockImages(main.demo.tileSet);
 						
 						//ADD A PRELOADING SCRIPT HERE
 						//FOR LOADING TILEMAPS
@@ -257,10 +257,12 @@ public class DmciGD extends Applet implements Runnable {
 		blockImageMap.put(",", getImageFromPath("blocks/"+folder+"/normal/c2.gif"));
 		blockImageMap.put("-", getImageFromPath("blocks/"+folder+"/normal/c3.gif"));
 		blockImageMap.put("=", getImageFromPath("blocks/"+folder+"/normal/c4.gif"));
+		
 		blockImageMap.put("i", getImageFromPath("blocks/"+folder+"/normal/platformlcap.gif"));
 		blockImageMap.put("o", getImageFromPath("blocks/"+folder+"/normal/platformrow.gif"));
 		blockImageMap.put("p", getImageFromPath("blocks/"+folder+"/normal/platformrcap.gif"));
 		blockImageMap.put("O", getImageFromPath("blocks/"+folder+"/normal/platformsingle.gif"));
+		
 		blockImageMap.put("g", getImageFromPath("blocks/"+folder+"/normal/ladder/lcap.gif"));
 		blockImageMap.put("h", getImageFromPath("blocks/"+folder+"/normal/ladder/row.gif"));
 		blockImageMap.put("j", getImageFromPath("blocks/"+folder+"/normal/ladder/rcap.gif"));
@@ -276,5 +278,10 @@ public class DmciGD extends Applet implements Runnable {
 		blockImageMap.put("k", getImageFromPath("blocks/"+folder+"/normal/ladder/single.gif"));
 		blockImageMap.put("l", getImageFromPath("blocks/"+folder+"/normal/ladder/air.gif"));
 		blockImageMap.put("L", getImageFromPath("blocks/"+folder+"/normal/ladder/end.gif"));
+		
+		blockImageMap.put("^", getImageFromPath("blocks/"+folder+"/normal/spikes/up.gif"));
+		blockImageMap.put("V", getImageFromPath("blocks/"+folder+"/normal/spikes/down.gif"));
+		blockImageMap.put(">", getImageFromPath("blocks/"+folder+"/normal/spikes/right.gif"));
+		blockImageMap.put("<", getImageFromPath("blocks/"+folder+"/normal/spikes/left.gif"));
 	}
 }

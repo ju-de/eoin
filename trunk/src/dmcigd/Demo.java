@@ -3,7 +3,6 @@ package dmcigd;
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.player.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
 
@@ -15,7 +14,8 @@ public class Demo implements Runnable {
 	private boolean ready = false;
 	public Player player;
 	public BlockMap blockMap = new BlockMap();
-	public String levelName = "demo";
+	public final String levelName = "demo";
+	public final String tileSet = "demo";
 	
 	public boolean isReady() {
 		return ready;

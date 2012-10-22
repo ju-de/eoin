@@ -6,6 +6,7 @@ import java.util.*;
 
 public class BlockCollision extends VisibleObject {
 
+	public List<Character> death = Arrays.asList('^','>','<','V','*');				//Return 4
 	public List<Character> platforms = Arrays.asList('i','o','O','p');		//Return 2
 	public List<Character> ladders = Arrays.asList('g', 'h', 'j',			//Return 3
 			'G', 'H', 'J', 'b', 'n', 'm', 'B','N', 'M', 'k', 'l', 'L');
@@ -19,7 +20,7 @@ public class BlockCollision extends VisibleObject {
 			return 2;
 		} else if(ladders.contains(block)) {
 			return 3;
-		} else if(block == '^') {
+		} else if(death.contains(block)) {
 			return 1;
 		}else{
 			return 0;

@@ -20,12 +20,17 @@ public class Player extends MovingObject {
 		setBlockLoader(blockLoader);
 		
 		//Spritesheet organized as follows:
-		//0: Idle Right [4]
-		//1: Idle Left [4]
-		//2: On Ladder [1]
-		//3: Climbing [2]
-		int[] frameLimits = {4,4,1,2};
+		//0: Idle Right [4] [Loops]
+		//1: Idle Left [4] [Loops]
+		//2: Falling Right [3] [One Shot]
+		//3: Falling Left [3] [One Shot]
+		//4: On Ladder [1] [One Shot]
+		//5: Climbing [2] [Loops]
+		int[] frameLimits = {4,4,3,3,1,2};
 		setFrameLimits(frameLimits);
+		
+		boolean[] animationLoops = {true,true,false,false,false,true};
+		setAnimationLoops(animationLoops);
 		
 		setSequence(0);
 	}
@@ -100,14 +105,14 @@ public class Player extends MovingObject {
 		}
 		
 		if(isFalling) {
-			setSequence(0+facing);
+			setSequence(2+facing);
 		} else if(jumpState > 0) {
 			setSequence(0+facing);
 		} else if (onLadder) {
 			if(isClimbing) {
-				setSequence(3);
+				setSequence(5);
 			}else {
-				setSequence(2);
+				setSequence(4);
 			}
 		} else if (isWalking) {
 			setSequence(0+facing);
