@@ -262,6 +262,7 @@ public class DmciGD extends Applet implements Runnable {
 		blockImageMap.put("o", getImageFromPath("blocks/"+folder+"/normal/platformrow.gif"));
 		blockImageMap.put("p", getImageFromPath("blocks/"+folder+"/normal/platformrcap.gif"));
 		blockImageMap.put("O", getImageFromPath("blocks/"+folder+"/normal/platformsingle.gif"));
+		blockImageMap.put("_", getImageFromPath("blocks/"+folder+"/normal/platformmoving.gif"));
 		
 		blockImageMap.put("g", getImageFromPath("blocks/"+folder+"/normal/ladder/lcap.gif"));
 		blockImageMap.put("h", getImageFromPath("blocks/"+folder+"/normal/ladder/row.gif"));
