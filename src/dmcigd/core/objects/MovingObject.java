@@ -164,13 +164,13 @@ public class MovingObject extends VisibleObject {
 
 			switch(blockCollisionStatus) {
 				case 3:
-					y = y + (int) vy;
-					break;
 				case 2:
 				case 4:
 					y = y + (int) vy;
 					break;
 				case 1:
+					isDead = true;
+					System.out.println("Oh dear, you are dead!");
 				default:
 					y = blockMap.rowEdge(y, height, Direction.UP);
 					break;

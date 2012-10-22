@@ -116,6 +116,8 @@ public class BlockMap extends BlockCollision {
 			//Checks for special blocks like ladders or water
 			if(backRow > -1 ) {
 				backType = tileType(blockMap.get(backRow).charAt(i));
+				
+				//Check for ladder
 				if(backType == 3) {
 					curType = 3;
 				}else if(curType == 3) {
