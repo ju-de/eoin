@@ -40,7 +40,7 @@ public class DmciGD extends Applet implements Runnable {
 		main = new Main(threadSync, codeBase);
 		gameState = main.getGameState();
 		
-		playerImage = getImageFromPath("demo/playertemp.gif");
+		playerImage = getImageFromPath("player.gif");
 		
 		//Set canvas background
 		setBackground (new Color(200,240,255));
