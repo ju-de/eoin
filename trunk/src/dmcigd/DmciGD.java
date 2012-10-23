@@ -228,7 +228,18 @@ public class DmciGD extends Applet implements Runnable {
 	
 	//Image Loading Script
 	public Image getImageFromPath(String path) {
-		return getImage(getCodeBase(), "../share/gfx/"+path);
+		
+		//Retrieve image
+		Image image = getImage(getCodeBase(), "../share/gfx/"+path);
+		
+		//Wait for image to load
+		MediaTracker mt = new MediaTracker(this);
+		mt.addImage(image, 0);
+		try {
+			mt.waitForAll();
+		} catch (InterruptedException e) { }
+		
+		return image;
 	}
 	
 	public void getBlockImages(String folder) {
