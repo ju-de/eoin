@@ -8,6 +8,7 @@ import java.awt.*;
 import java.net.*;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Iterator;
 
 //Renders applet
 public class DmciGD extends Applet implements Runnable {
@@ -25,7 +26,7 @@ public class DmciGD extends Applet implements Runnable {
 	private Image playerImage;
 	private char[][] visibleBlocks = new char[12][22];
 	private char[][] visibleEnvironment = new char[12][22];
-	private Map<String, Image> blockImageMap = new HashMap<String, Image>();
+	private Map<String, Image> imageMap = new HashMap<String, Image>();
 	private int playerX;
 	private int playerY;
 	private int playerSequence;
@@ -42,6 +43,17 @@ public class DmciGD extends Applet implements Runnable {
 		gameState = main.getGameState();
 		
 		playerImage = getImageFromPath("player.gif");
+		
+		//Preload player spritesheet
+		
+		MediaTracker mt = new MediaTracker(this);
+		
+		mt.addImage(playerImage, 0);
+		
+		try {
+			mt.waitForAll();
+		} catch (InterruptedException e) { }
+		
 		
 		//Set canvas background
 		setBackground (new Color(200,240,255));
@@ -72,11 +84,23 @@ public class DmciGD extends Applet implements Runnable {
 					
 					if(gameState != GameState.DEMO) {
 						
-						//Retrieve blockmap
-						getBlockImages(main.demo.tileSet);
+						//Retrieve imagemap
+						getImages(main.demo.tileSet);
 						
-						//ADD A PRELOADING SCRIPT HERE
-						//FOR LOADING TILEMAPS
+						//Wait for images to load
+						int i = 0;
+						
+						MediaTracker mt = new MediaTracker(this);
+						
+						Iterator<Map.Entry<String, Image>> it = imageMap.entrySet().iterator();
+						while(it.hasNext()) {
+							mt.addImage(it.next().getValue(), i);
+							i++;
+						}
+						
+						try {
+							mt.waitForAll();
+						} catch (InterruptedException e) { }
 					}
 					
 					//Retrieve necessary objects
@@ -176,7 +200,7 @@ public class DmciGD extends Applet implements Runnable {
 					for(int j=0; j<22; j++) {
 						
 						//Draw if object exists
-						if((tile = blockImageMap.get("e_"+String.valueOf(visibleEnvironment[i][j]))) != null) {
+						if((tile = imageMap.get("e_"+String.valueOf(visibleEnvironment[i][j]))) != null) {
 							dbg.drawImage(tile, j*32 - (playerX % 32) - 10, i*32 - (playerY % 32) - 16, j*32 - (playerX % 32) + 22, i*32 - (playerY % 32) + 16, 0, 0, 16, 16, this);
 						}
 						
@@ -193,7 +217,7 @@ public class DmciGD extends Applet implements Runnable {
 					for(int j=0; j<22; j++) {
 						
 						//Draw if object exists
-						if((tile = blockImageMap.get(String.valueOf(visibleBlocks[i][j]))) != null) {
+						if((tile = imageMap.get(String.valueOf(visibleBlocks[i][j]))) != null) {
 							dbg.drawImage(tile, j*32 - (playerX % 32) - 10, i*32 - (playerY % 32) - 16, j*32 - (playerX % 32) + 22, i*32 - (playerY % 32) + 16, 0, 0, 16, 16, this);
 						}
 						
@@ -254,96 +278,89 @@ public class DmciGD extends Applet implements Runnable {
 		//Retrieve image
 		Image image = getImage(getCodeBase(), "../share/gfx/"+path);
 		
-		//Wait for image to load
-		MediaTracker mt = new MediaTracker(this);
-		mt.addImage(image, 0);
-		try {
-			mt.waitForAll();
-		} catch (InterruptedException e) { }
-		
 		return image;
 	}
 	
-	public void getBlockImages(String folder) {
+	public void getImages(String folder) {
 		
 		//BLOCKS
-		blockImageMap.put("q", getImageFromPath(folder+"/normal/blocks/tl.gif"));
-		blockImageMap.put("w", getImageFromPath(folder+"/normal/blocks/t1.gif"));
-		blockImageMap.put("W", getImageFromPath(folder+"/normal/blocks/t2.gif"));
-		blockImageMap.put("e", getImageFromPath(folder+"/normal/blocks/tr.gif"));
-		blockImageMap.put("a", getImageFromPath(folder+"/normal/blocks/l1.gif"));
-		blockImageMap.put("A", getImageFromPath(folder+"/normal/blocks/l2.gif"));
-		blockImageMap.put("d", getImageFromPath(folder+"/normal/blocks/r1.gif"));
-		blockImageMap.put("D", getImageFromPath(folder+"/normal/blocks/r2.gif"));
-		blockImageMap.put("z", getImageFromPath(folder+"/normal/blocks/bl.gif"));
-		blockImageMap.put("x", getImageFromPath(folder+"/normal/blocks/b1.gif"));
-		blockImageMap.put("X", getImageFromPath(folder+"/normal/blocks/b2.gif"));
-		blockImageMap.put("c", getImageFromPath(folder+"/normal/blocks/br.gif"));
-		blockImageMap.put("t", getImageFromPath(folder+"/normal/blocks/lcap.gif"));
-		blockImageMap.put("y", getImageFromPath(folder+"/normal/blocks/row1.gif"));
-		blockImageMap.put("Y", getImageFromPath(folder+"/normal/blocks/row2.gif"));
-		blockImageMap.put("u", getImageFromPath(folder+"/normal/blocks/rcap.gif"));
-		blockImageMap.put("r", getImageFromPath(folder+"/normal/blocks/tcap.gif"));
-		blockImageMap.put("f", getImageFromPath(folder+"/normal/blocks/col1.gif"));
-		blockImageMap.put("F", getImageFromPath(folder+"/normal/blocks/col2.gif"));
-		blockImageMap.put("v", getImageFromPath(folder+"/normal/blocks/bcap.gif"));
-		blockImageMap.put("s", getImageFromPath(folder+"/normal/blocks/single.gif"));
-		blockImageMap.put(".", getImageFromPath(folder+"/normal/blocks/c1.gif"));
-		blockImageMap.put(",", getImageFromPath(folder+"/normal/blocks/c2.gif"));
-		blockImageMap.put("-", getImageFromPath(folder+"/normal/blocks/c3.gif"));
-		blockImageMap.put("=", getImageFromPath(folder+"/normal/blocks/c4.gif"));
+		imageMap.put("q", getImageFromPath(folder+"/normal/blocks/tl.gif"));
+		imageMap.put("w", getImageFromPath(folder+"/normal/blocks/t1.gif"));
+		imageMap.put("W", getImageFromPath(folder+"/normal/blocks/t2.gif"));
+		imageMap.put("e", getImageFromPath(folder+"/normal/blocks/tr.gif"));
+		imageMap.put("a", getImageFromPath(folder+"/normal/blocks/l1.gif"));
+		imageMap.put("A", getImageFromPath(folder+"/normal/blocks/l2.gif"));
+		imageMap.put("d", getImageFromPath(folder+"/normal/blocks/r1.gif"));
+		imageMap.put("D", getImageFromPath(folder+"/normal/blocks/r2.gif"));
+		imageMap.put("z", getImageFromPath(folder+"/normal/blocks/bl.gif"));
+		imageMap.put("x", getImageFromPath(folder+"/normal/blocks/b1.gif"));
+		imageMap.put("X", getImageFromPath(folder+"/normal/blocks/b2.gif"));
+		imageMap.put("c", getImageFromPath(folder+"/normal/blocks/br.gif"));
+		imageMap.put("t", getImageFromPath(folder+"/normal/blocks/lcap.gif"));
+		imageMap.put("y", getImageFromPath(folder+"/normal/blocks/row1.gif"));
+		imageMap.put("Y", getImageFromPath(folder+"/normal/blocks/row2.gif"));
+		imageMap.put("u", getImageFromPath(folder+"/normal/blocks/rcap.gif"));
+		imageMap.put("r", getImageFromPath(folder+"/normal/blocks/tcap.gif"));
+		imageMap.put("f", getImageFromPath(folder+"/normal/blocks/col1.gif"));
+		imageMap.put("F", getImageFromPath(folder+"/normal/blocks/col2.gif"));
+		imageMap.put("v", getImageFromPath(folder+"/normal/blocks/bcap.gif"));
+		imageMap.put("s", getImageFromPath(folder+"/normal/blocks/single.gif"));
+		imageMap.put(".", getImageFromPath(folder+"/normal/blocks/c1.gif"));
+		imageMap.put(",", getImageFromPath(folder+"/normal/blocks/c2.gif"));
+		imageMap.put("-", getImageFromPath(folder+"/normal/blocks/c3.gif"));
+		imageMap.put("=", getImageFromPath(folder+"/normal/blocks/c4.gif"));
 		
 		//Platforms
-		blockImageMap.put("i", getImageFromPath(folder+"/normal/blocks/platform/lcap.gif"));
-		blockImageMap.put("o", getImageFromPath(folder+"/normal/blocks/platform/row.gif"));
-		blockImageMap.put("p", getImageFromPath(folder+"/normal/blocks/platform/rcap.gif"));
-		blockImageMap.put("O", getImageFromPath(folder+"/normal/blocks/platform/single.gif"));
-		blockImageMap.put("_", getImageFromPath(folder+"/normal/blocks/platform/moving.gif"));
+		imageMap.put("i", getImageFromPath(folder+"/normal/blocks/platform/lcap.gif"));
+		imageMap.put("o", getImageFromPath(folder+"/normal/blocks/platform/row.gif"));
+		imageMap.put("p", getImageFromPath(folder+"/normal/blocks/platform/rcap.gif"));
+		imageMap.put("O", getImageFromPath(folder+"/normal/blocks/platform/single.gif"));
+		imageMap.put("_", getImageFromPath(folder+"/normal/blocks/platform/moving.gif"));
 		
 		//Ladders
-		blockImageMap.put("g", getImageFromPath(folder+"/normal/blocks/ladder/lcap.gif"));
-		blockImageMap.put("h", getImageFromPath(folder+"/normal/blocks/ladder/row.gif"));
-		blockImageMap.put("j", getImageFromPath(folder+"/normal/blocks/ladder/rcap.gif"));
-		blockImageMap.put("G", getImageFromPath(folder+"/normal/blocks/ladder/tl.gif"));
-		blockImageMap.put("H", getImageFromPath(folder+"/normal/blocks/ladder/t.gif"));
-		blockImageMap.put("J", getImageFromPath(folder+"/normal/blocks/ladder/tr.gif"));
-		blockImageMap.put("b", getImageFromPath(folder+"/normal/blocks/ladder/l.gif"));
-		blockImageMap.put("n", getImageFromPath(folder+"/normal/blocks/ladder/c.gif"));
-		blockImageMap.put("m", getImageFromPath(folder+"/normal/blocks/ladder/r.gif"));
-		blockImageMap.put("B", getImageFromPath(folder+"/normal/blocks/ladder/bl.gif"));
-		blockImageMap.put("N", getImageFromPath(folder+"/normal/blocks/ladder/b.gif"));
-		blockImageMap.put("M", getImageFromPath(folder+"/normal/blocks/ladder/br.gif"));
-		blockImageMap.put("k", getImageFromPath(folder+"/normal/blocks/ladder/single.gif"));
-		blockImageMap.put("l", getImageFromPath(folder+"/normal/blocks/ladder/air.gif"));
-		blockImageMap.put("L", getImageFromPath(folder+"/normal/blocks/ladder/end.gif"));
+		imageMap.put("g", getImageFromPath(folder+"/normal/blocks/ladder/lcap.gif"));
+		imageMap.put("h", getImageFromPath(folder+"/normal/blocks/ladder/row.gif"));
+		imageMap.put("j", getImageFromPath(folder+"/normal/blocks/ladder/rcap.gif"));
+		imageMap.put("G", getImageFromPath(folder+"/normal/blocks/ladder/tl.gif"));
+		imageMap.put("H", getImageFromPath(folder+"/normal/blocks/ladder/t.gif"));
+		imageMap.put("J", getImageFromPath(folder+"/normal/blocks/ladder/tr.gif"));
+		imageMap.put("b", getImageFromPath(folder+"/normal/blocks/ladder/l.gif"));
+		imageMap.put("n", getImageFromPath(folder+"/normal/blocks/ladder/c.gif"));
+		imageMap.put("m", getImageFromPath(folder+"/normal/blocks/ladder/r.gif"));
+		imageMap.put("B", getImageFromPath(folder+"/normal/blocks/ladder/bl.gif"));
+		imageMap.put("N", getImageFromPath(folder+"/normal/blocks/ladder/b.gif"));
+		imageMap.put("M", getImageFromPath(folder+"/normal/blocks/ladder/br.gif"));
+		imageMap.put("k", getImageFromPath(folder+"/normal/blocks/ladder/single.gif"));
+		imageMap.put("l", getImageFromPath(folder+"/normal/blocks/ladder/air.gif"));
+		imageMap.put("L", getImageFromPath(folder+"/normal/blocks/ladder/end.gif"));
 		
 		//Spikes
-		blockImageMap.put("^", getImageFromPath(folder+"/normal/blocks/spikes/up.gif"));
-		blockImageMap.put("V", getImageFromPath(folder+"/normal/blocks/spikes/down.gif"));
-		blockImageMap.put(">", getImageFromPath(folder+"/normal/blocks/spikes/right.gif"));
-		blockImageMap.put("<", getImageFromPath(folder+"/normal/blocks/spikes/left.gif"));
+		imageMap.put("^", getImageFromPath(folder+"/normal/blocks/spikes/up.gif"));
+		imageMap.put("V", getImageFromPath(folder+"/normal/blocks/spikes/down.gif"));
+		imageMap.put(">", getImageFromPath(folder+"/normal/blocks/spikes/right.gif"));
+		imageMap.put("<", getImageFromPath(folder+"/normal/blocks/spikes/left.gif"));
 		
 		//ENVIRONMENT
 		//Ground
-		blockImageMap.put("e_q", getImageFromPath(folder+"/normal/environment/ground/tl.gif"));
-		blockImageMap.put("e_w", getImageFromPath(folder+"/normal/environment/ground/t.gif"));
-		blockImageMap.put("e_e", getImageFromPath(folder+"/normal/environment/ground/tr.gif"));
-		blockImageMap.put("e_a", getImageFromPath(folder+"/normal/environment/ground/l.gif"));
-		blockImageMap.put("e_s", getImageFromPath(folder+"/normal/environment/ground/c.gif"));
-		blockImageMap.put("e_d", getImageFromPath(folder+"/normal/environment/ground/r.gif"));
-		blockImageMap.put("e_z", getImageFromPath(folder+"/normal/environment/ground/bl.gif"));
-		blockImageMap.put("e_x", getImageFromPath(folder+"/normal/environment/ground/b.gif"));
-		blockImageMap.put("e_c", getImageFromPath(folder+"/normal/environment/ground/br.gif"));
+		imageMap.put("e_q", getImageFromPath(folder+"/normal/environment/ground/tl.gif"));
+		imageMap.put("e_w", getImageFromPath(folder+"/normal/environment/ground/t.gif"));
+		imageMap.put("e_e", getImageFromPath(folder+"/normal/environment/ground/tr.gif"));
+		imageMap.put("e_a", getImageFromPath(folder+"/normal/environment/ground/l.gif"));
+		imageMap.put("e_s", getImageFromPath(folder+"/normal/environment/ground/c.gif"));
+		imageMap.put("e_d", getImageFromPath(folder+"/normal/environment/ground/r.gif"));
+		imageMap.put("e_z", getImageFromPath(folder+"/normal/environment/ground/bl.gif"));
+		imageMap.put("e_x", getImageFromPath(folder+"/normal/environment/ground/b.gif"));
+		imageMap.put("e_c", getImageFromPath(folder+"/normal/environment/ground/br.gif"));
 		
 		//Water
-		blockImageMap.put("e_r", getImageFromPath(folder+"/normal/environment/water/tl.gif"));
-		blockImageMap.put("e_t", getImageFromPath(folder+"/normal/environment/water/t.gif"));
-		blockImageMap.put("e_y", getImageFromPath(folder+"/normal/environment/water/tr.gif"));
-		blockImageMap.put("e_f", getImageFromPath(folder+"/normal/environment/water/l.gif"));
-		blockImageMap.put("e_g", getImageFromPath(folder+"/normal/environment/water/c.gif"));
-		blockImageMap.put("e_h", getImageFromPath(folder+"/normal/environment/water/r.gif"));
-		blockImageMap.put("e_v", getImageFromPath(folder+"/normal/environment/water/bl.gif"));
-		blockImageMap.put("e_b", getImageFromPath(folder+"/normal/environment/water/b.gif"));
-		blockImageMap.put("e_n", getImageFromPath(folder+"/normal/environment/water/br.gif"));
+		imageMap.put("e_r", getImageFromPath(folder+"/normal/environment/water/tl.gif"));
+		imageMap.put("e_t", getImageFromPath(folder+"/normal/environment/water/t.gif"));
+		imageMap.put("e_y", getImageFromPath(folder+"/normal/environment/water/tr.gif"));
+		imageMap.put("e_f", getImageFromPath(folder+"/normal/environment/water/l.gif"));
+		imageMap.put("e_g", getImageFromPath(folder+"/normal/environment/water/c.gif"));
+		imageMap.put("e_h", getImageFromPath(folder+"/normal/environment/water/r.gif"));
+		imageMap.put("e_v", getImageFromPath(folder+"/normal/environment/water/bl.gif"));
+		imageMap.put("e_b", getImageFromPath(folder+"/normal/environment/water/b.gif"));
+		imageMap.put("e_n", getImageFromPath(folder+"/normal/environment/water/br.gif"));
 	}
 }
