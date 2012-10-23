@@ -20,16 +20,20 @@ public class Player extends AnimateObject {
 		setBlockMap(blockMap);
 		
 		//SpriteSheet organized as follows:
-		//0: Idle Right [4] [Loops]
-		//1: Idle Left [4] [Loops]
-		//2: Falling Right [3] [One Shot]
-		//3: Falling Left [3] [One Shot]
-		//4: On Ladder [1] [One Shot]
-		//5: Climbing [2] [Loops]
-		int[] frameLimits = {4,4,3,3,1,2};
+		//0: Idle Right [8] [Loops]
+		//1: Idle Left [8] [Loops]
+		//2: Walk Right [4] [Loops]
+		//3: Walk Left [4] [Loops]
+		//4: Jump Right [3] [One Shot]
+		//5: Jump Left [3] [One Shot]
+		//6: Falling Right [3] [One Shot]
+		//7: Falling Left [3] [One Shot]
+		//8: On Ladder [1] [One Shot]
+		//9: Climbing [2] [Loops]
+		int[] frameLimits = {8,8,4,4,3,3,3,3,1,2};
 		setFrameLimits(frameLimits);
 		
-		boolean[] animationLoops = {true,true,false,false,false,true};
+		boolean[] animationLoops = {true,true,true,true,false,false,false,false,false,true};
 		setAnimationLoops(animationLoops);
 		
 		setSequence(0);
@@ -70,6 +74,9 @@ public class Player extends AnimateObject {
 				setVY(-8);
 				jumpState++;
 				jumpDelay = 5;
+				if(jumpState == 2) {
+					setFrame(0);
+				}
 			}
 		}else{
 			if(getVY() < 0) {
@@ -110,17 +117,17 @@ public class Player extends AnimateObject {
 		}
 		
 		if(isFalling) {
-			setSequence(2+facing);
+			setSequence(6+facing);
 		} else if(jumpState > 0) {
-			setSequence(0+facing);
+			setSequence(4+facing);
 		} else if (onLadder) {
 			if(isClimbing) {
-				setSequence(5);
+				setSequence(9);
 			}else {
-				setSequence(4);
+				setSequence(8);
 			}
 		} else if (isWalking) {
-			setSequence(0+facing);
+			setSequence(2+facing);
 		} else {
 			setSequence(0+facing);
 		}
