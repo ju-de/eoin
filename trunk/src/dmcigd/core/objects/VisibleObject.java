@@ -8,6 +8,7 @@ public class VisibleObject {
 	private float frame;
 	
 	private int[] frameLimits;
+	private float frameSpeed = 0.1f;
 	private boolean[] animationLoops;
 	
 	//Public Getters
@@ -31,14 +32,17 @@ public class VisibleObject {
 	public void setFrameLimits(int[] frameLimits) {
 		this.frameLimits = frameLimits;
 	}
+	public void setFrameSpeed(float frameSpeed) {
+		this.frameSpeed = frameSpeed;
+	}
 	public void setAnimationLoops(boolean[] animationLoops) {
 		this.animationLoops = animationLoops;
 	}
 	
 	//Animate
 	public void animate() {
-		if(frame + 0.1f < frameLimits[sequence]) {
-			frame = frame + 0.1f;
+		if(frame + frameSpeed < frameLimits[sequence]) {
+			frame = frame + frameSpeed;
 		} else if (animationLoops[sequence]) {
 			frame = 0;
 		}

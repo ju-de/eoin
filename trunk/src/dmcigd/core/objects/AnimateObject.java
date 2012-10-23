@@ -59,6 +59,7 @@ public class AnimateObject extends MovingObject {
 				case 2:
 				case 4:
 					addY(vy);
+					isFalling = false;
 					break;
 				case 1:
 					isDead = true;
