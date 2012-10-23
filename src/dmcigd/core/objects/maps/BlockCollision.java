@@ -1,6 +1,7 @@
-package dmcigd.core.objects;
+package dmcigd.core.objects.maps;
 
-import dmcigd.core.enums.*;
+import dmcigd.core.enums.Direction;
+import dmcigd.core.enums.CollisionType;
 
 import java.util.*;
 
@@ -8,17 +9,18 @@ public class BlockCollision {
 	
 	public List<String> blockMap = new ArrayList<String>();
 
-	public List<Character> death = Arrays.asList('^','>','<','V','*');				//Return 4
+	public List<Character> death = Arrays.asList('^','>','<','V','*');				//Return 1
 	public List<Character> platforms = Arrays.asList('i','o','O','p','_');			//Return 2
 	public List<Character> ladders = Arrays.asList('g', 'h', 'j',					//Return 3
 			'G', 'H', 'J', 'b', 'n', 'm', 'B','N', 'M', 'k', 'l', 'L');
-	public List<Character> nonsolid = Arrays.asList(' ','1');						//Return 4
+	public List<Character> water = Arrays.asList('@');								//Return 4
+	public List<Character> nonsolid = Arrays.asList(' ','1');						//Return 5
 	
 	//Collision checks
-	public int collidesX(int x, int y, int vx, int width, int height, Direction direction) {
-		
-		int returnType = 4;
-		int curType;
+	public CollisionType collidesX(int x, int y, int vx, int width, int height, Direction direction) {
+
+		CollisionType returnType = CollisionType.NONSOLID;
+		CollisionType curType;
 		
 		//Determine blockMap positions
 		int topRow = tileRow(y, height, Direction.UP); 
@@ -33,7 +35,7 @@ public class BlockCollision {
 			curType = tileType(blockMap.get(i).charAt(destinationCol));
 			
 			//Return top priority block
-			if(curType < returnType) {
+			if(curType.getPriority() < returnType.getPriority()) {
 				returnType = curType;
 			}
 		}
@@ -41,10 +43,10 @@ public class BlockCollision {
 		return returnType;
 		
 	}
-	public int collidesY(int x, int y, int vy, int width, int height, Direction direction) {
-		
-		int returnType = 4;
-		int curType;
+	public CollisionType collidesY(int x, int y, int vy, int width, int height, Direction direction) {
+
+		CollisionType returnType = CollisionType.NONSOLID;
+		CollisionType curType;
 		
 		//Determine blockMap positions
 		int leftCol = tileCol(x, width, Direction.LEFT);
@@ -59,14 +61,14 @@ public class BlockCollision {
 			curType = tileType(blockMap.get(destinationRow).charAt(i));
 			
 			//Checks for boundary case of falling in the middle of a platform
-			if(curType == 2 && direction == Direction.DOWN) {
+			if(curType == CollisionType.PLATFORM && direction == Direction.DOWN) {
 				if(destinationRow == tileRow(y, height, Direction.DOWN)) {
-					curType = 4;
+					curType = CollisionType.NONSOLID;
 				}
 			}
 			
 			//Return top priority block
-			if(curType < returnType) {
+			if(curType.getPriority() < returnType.getPriority()) {
 				returnType = curType;
 			}
 		}
@@ -74,10 +76,10 @@ public class BlockCollision {
 		return returnType;
 	}
 	
-	public int restingBlock(int x, int y, int width, int height) {
+	public CollisionType restingBlock(int x, int y, int width, int height) {
 		
-		int returnType = 4;
-		int curType, backType;
+		CollisionType returnType = CollisionType.NONSOLID;
+		CollisionType curType, backType;
 		
 		//Determine resting row
 		int restingRow = tileRow(y + 1, height, Direction.DOWN);
@@ -100,16 +102,16 @@ public class BlockCollision {
 			if(backRow > -1 ) {
 				backType = tileType(blockMap.get(backRow).charAt(i));
 				
-				//Check for ladder
-				if(backType == 3) {
-					curType = 3;
-				}else if(curType == 3) {
-					curType = 0;
+				//Check for ladder or water
+				if((backType == CollisionType.LADDER || backType == CollisionType.WATER) && curType != CollisionType.DESTROY) {
+					curType = backType;
+				}else if(curType == CollisionType.LADDER) {
+					curType = CollisionType.SOLID;
 				}
 			}
 			
 			//Return top priority block
-			if(curType < returnType) {
+			if(curType.getPriority() < returnType.getPriority()) {
 				returnType = curType;
 			}
 			
@@ -119,17 +121,19 @@ public class BlockCollision {
 	}
 	
 	//Tile checks
-	public int tileType(char block) {
+	public CollisionType tileType(char block) {
 		if(nonsolid.contains(block)) {
-			return 4;
-		} else if(platforms.contains(block)) {
-			return 2;
+			return CollisionType.NONSOLID;
+		} else if(water.contains(block)) {
+			return CollisionType.WATER;
 		} else if(ladders.contains(block)) {
-			return 3;
+			return CollisionType.LADDER;
+		} else if(platforms.contains(block)) {
+			return CollisionType.PLATFORM;
 		} else if(death.contains(block)) {
-			return 1;
+			return CollisionType.DESTROY;
 		}else{
-			return 0;
+			return CollisionType.SOLID;
 		}
 	}
 	
