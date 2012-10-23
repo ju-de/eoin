@@ -20,21 +20,17 @@ public class Player extends AnimateObject {
 		setBlockMap(blockMap);
 		
 		//SpriteSheet organized as follows:
-		//0: Idle Right [8] [Loops]
-		//1: Idle Left [8] [Loops]
-		//2: Walk Right [4] [Loops]
-		//3: Walk Left [4] [Loops]
-		//4: Jump Right [3] [One Shot]
-		//5: Jump Left [3] [One Shot]
-		//6: Falling Right [3] [One Shot]
-		//7: Falling Left [3] [One Shot]
-		//8: On Ladder [1] [One Shot]
-		//9: Climbing [2] [Loops]
-		int[] frameLimits = {8,8,4,4,3,3,3,3,1,2};
-		setFrameLimits(frameLimits);
-		
-		boolean[] animationLoops = {true,true,true,true,false,false,false,false,false,true};
-		setAnimationLoops(animationLoops);
+		//0: Idle Right [2] [Loops] 0.015f
+		//1: Idle Left [2] [Loops] 0.01f
+		//2: Walk Right [4] [Loops] 0.1f / 0.075f
+		//3: Walk Left [4] [Loops] 0.1f / 0.075f
+		//4: Jump Right [3] [One Shot] 0.2f
+		//5: Jump Left [3] [One Shot] 0.2f
+		//6: Falling Right [3] [One Shot] 0.1f
+		//7: Falling Left [3] [One Shot] 0.1f
+		//8: Climbing [2] [Loops] 0.05f / 0f
+		setFrameLimits(new int[] {2,2,6,6,3,3,3,3,2});
+		setAnimationLoops(new boolean[] {true,true,true,true,false,false,false,false,true});
 		
 		setSequence(0);
 	}
@@ -74,9 +70,7 @@ public class Player extends AnimateObject {
 				setVY(-8);
 				jumpState++;
 				jumpDelay = 5;
-				if(jumpState == 2) {
-					setFrame(0);
-				}
+				setFrame(0);
 			}
 		}else{
 			if(getVY() < 0) {
@@ -109,27 +103,37 @@ public class Player extends AnimateObject {
 		//Step
 		move();
 		
+		//Animate Character
+		if(isFalling) {
+			setFrameSpeed(0.1f);
+			setSequence(6+facing);
+		} else if(jumpState > 0) {
+			setFrameSpeed(0.2f);
+			setSequence(4+facing);
+		} else if (onLadder) {
+			if(isClimbing) {
+				setFrameSpeed(0.05f);
+			}else {
+				setFrameSpeed(0);
+			}
+			setSequence(8);
+		} else if (isWalking) {
+			if(sprint) {
+				setFrameSpeed(0.1f);
+			} else {
+				setFrameSpeed(0.075f);
+			}
+			setSequence(2+facing);
+		} else {
+			setFrameSpeed(0.015f);
+			setSequence(0+facing);
+		}
+		
 		animate();
 		
 		//Reset jump counter after player hits the ground
 		if(hitGround || onLadder) {
 			jumpState = 0;
-		}
-		
-		if(isFalling) {
-			setSequence(6+facing);
-		} else if(jumpState > 0) {
-			setSequence(4+facing);
-		} else if (onLadder) {
-			if(isClimbing) {
-				setSequence(9);
-			}else {
-				setSequence(8);
-			}
-		} else if (isWalking) {
-			setSequence(2+facing);
-		} else {
-			setSequence(0+facing);
 		}
 		
 		//Counts falling at terminal velocity as a jump
