@@ -20,12 +20,6 @@ public class MovingObject extends VisibleObject {
 	private float tLeft = 32;
 	private float tRight = 32;
 	
-	//Initialize collision property to be passed for child manipulation
-	public boolean hitGround,isFalling,onLadder,isDead = false;
-	
-	//Initialize blockLoader
-	private BlockMap blockMap;
-	
 	//Public getters
 	public int getHeight() {
 		return height;
@@ -39,11 +33,11 @@ public class MovingObject extends VisibleObject {
 	public int getY() {
 		return y;
 	}
-	public float getVX() {
-		return vx;
+	public int getVX() {
+		return (int) vx;
 	}
-	public float getVY() {
-		return vy;
+	public int getVY() {
+		return (int) vy;
 	}
 	public float getAY() {
 		return ay;
@@ -61,6 +55,12 @@ public class MovingObject extends VisibleObject {
 	}
 	public void setY(int y) {
 		this.y = y;
+	}
+	public void addX(int vx) {
+		x = x + vx;
+	}
+	public void addY(int vy) {
+		y = y + vy;
 	}
 	public void setVX(float vx) {
 		this.vx = vx;
@@ -85,9 +85,6 @@ public class MovingObject extends VisibleObject {
 	}
 	public void setTRight(float tRight) {
 		this.tRight = tRight;
-	}
-	public void setBlockLoader(BlockMap blockMap) {
-		this.blockMap = blockMap;
 	}
 	public void setGravity() {
 		accelerate(0.4f, 5.0f, Direction.DOWN);
@@ -115,7 +112,7 @@ public class MovingObject extends VisibleObject {
 		}
 	}
 	
-	public void move(boolean isClimbing) {
+	public void addAcceleration() {
 		
 		//Calculate Acceleration
 		vy = vy + ay;
@@ -132,115 +129,5 @@ public class MovingObject extends VisibleObject {
 		}else if(vx < -tLeft) {
 			vx = -tLeft;
 		}
-		
-		if((int) vy >= 0) {
-			//Move Down
-			
-			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.DOWN);
-			
-			switch(blockCollisionStatus) {
-				case 4:
-					isFalling = true;
-					y = y + (int) vy;
-					break;
-				case 3:
-					if(isClimbing) {
-						y = y + (int) vy;
-					} else {
-						vy = 0;
-					}
-					break;
-				case 1:
-				default:
-					y = blockMap.rowEdge(y, height, Direction.DOWN);
-					vy = 0;
-					break;
-			}
-			
-		}else if((int) vy < 0) {
-			//Move Up
-			
-			int blockCollisionStatus = blockMap.collidesY(x, y, (int) vy, width, height, Direction.UP);
-
-			switch(blockCollisionStatus) {
-				case 3:
-				case 2:
-				case 4:
-					y = y + (int) vy;
-					break;
-				case 1:
-					isDead = true;
-				default:
-					y = blockMap.rowEdge(y, height, Direction.UP);
-					break;
-			}
-		}
-		
-		if((int) vx > 0) {
-			//Move Right
-			
-			int blockCollisionStatus = blockMap.collidesX(x, y, (int) vx, width, height, Direction.RIGHT);
-			
-			switch(blockCollisionStatus) {
-				case 3:
-				case 2:
-				case 4:
-					x = x + (int) vx;
-					break;
-				case 1:
-					isDead = true;
-					break;
-				default:
-					x = blockMap.colEdge(x, width, Direction.RIGHT);
-					break;
-			}
-			
-		}else if((int) vx < 0) {
-			//Move Left
-			
-			int blockCollisionStatus = blockMap.collidesX(x, y, (int) vx, width, height, Direction.LEFT);
-			
-			switch(blockCollisionStatus) {
-				case 3:
-				case 2:
-				case 4:
-					x = x + (int) vx;
-					break;
-				case 1:
-					isDead = true;
-					break;
-				default:
-					x = blockMap.colEdge(x, width, Direction.LEFT);
-					break;
-			}
-			
-		}
-		
-		//Determine resting block
-		int restingBlock = blockMap.restingBlock(x,y,width,height);
-		switch(restingBlock) {
-			case 1:
-				isDead = true;
-				break;
-			case 3:
-				onLadder = true;
-				hitGround = false;
-				isFalling = false;
-				break;
-			case 2:
-			case 0:
-				onLadder = false;
-				hitGround = true;
-				isFalling = false;
-				break;
-			default:
-				onLadder = false;
-				hitGround = false;
-				break;
-		}
-	}
-	
-	public void move() {
-		move(false);
 	}
 }

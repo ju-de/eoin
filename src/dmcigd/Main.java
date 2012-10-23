@@ -51,6 +51,7 @@ public class Main implements Runnable, KeyListener {
 					
 					if(demo.isDead()) {
 						demo = new Demo(codeBase);
+						gameState = GameState.LOADINGDEMO;
 					}
 					
 					break;

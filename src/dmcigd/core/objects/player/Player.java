@@ -3,23 +3,23 @@ package dmcigd.core.objects.player;
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
 
-public class Player extends MovingObject {
+public class Player extends AnimateObject {
 	
 	private int jumpState = 0;
 	private int jumpDelay = 5;
 	private int facing = 0;
-	private boolean isWalking,isClimbing,sprint;
+	private boolean isWalking,sprint;
 	private Direction walking,climbing;
 	
-	public Player(int x, int  y, BlockMap blockLoader) {
+	public Player(int x, int  y, BlockMap blockMap) {
 		setX(x);
 		setY(y);
 		setHeight(30);
 		setWidth(20);
 		setGravity();
-		setBlockLoader(blockLoader);
+		setBlockMap(blockMap);
 		
-		//Spritesheet organized as follows:
+		//SpriteSheet organized as follows:
 		//0: Idle Right [4] [Loops]
 		//1: Idle Left [4] [Loops]
 		//2: Falling Right [3] [One Shot]
@@ -79,6 +79,8 @@ public class Player extends MovingObject {
 	}
 	
 	public void step() {
+		
+		//Set movement vectors
 		if(isWalking) {
 			if(!sprint) {
 				accelerate(1.0f, 2.0f, walking);
@@ -96,7 +98,10 @@ public class Player extends MovingObject {
 				setVY(2);
 			}
 		}
-		move(isClimbing);
+		
+		//Step
+		move();
+		
 		animate();
 		
 		//Reset jump counter after player hits the ground
