@@ -1,7 +1,7 @@
 package dmcigd;
 
 import dmcigd.core.enums.*;
-import dmcigd.core.objects.*;
+import dmcigd.core.objects.maps.*;
 import dmcigd.core.objects.player.*;
 import java.awt.event.*;
 import java.net.*;
@@ -14,6 +14,7 @@ public class Demo implements Runnable {
 	private boolean ready,isDead = false;
 	public Player player;
 	public BlockMap blockMap = new BlockMap();
+	public EnvironmentMap environmentMap = new EnvironmentMap();
 	public final String levelName = "demo";
 	public final String tileSet = "demo";
 	
@@ -46,9 +47,12 @@ public class Demo implements Runnable {
 	public void run() {
 		
 		blockMap.loadBlockMap(codeBase, "demo");
+		environmentMap.loadEnvironmentMap(codeBase, "demo");
+		
 		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap);
 		
 		ready = true;
+		
 	}
 	
 	public void keyPressed(KeyEvent e) {

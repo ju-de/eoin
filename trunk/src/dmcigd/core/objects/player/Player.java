@@ -2,6 +2,7 @@ package dmcigd.core.objects.player;
 
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
+import dmcigd.core.objects.maps.BlockMap;
 
 public class Player extends AnimateObject {
 	

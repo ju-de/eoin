@@ -24,6 +24,7 @@ public class DmciGD extends Applet implements Runnable {
 	//Initialize visible objects list
 	private Image playerImage;
 	private char[][] visibleBlocks = new char[12][22];
+	private char[][] visibleEnvironment = new char[12][22];
 	private Map<String, Image> blockImageMap = new HashMap<String, Image>();
 	private int playerX;
 	private int playerY;
@@ -85,6 +86,7 @@ public class DmciGD extends Applet implements Runnable {
 					playerY = main.demo.player.getY();
 					
 					visibleBlocks = main.demo.blockMap.getVisibleBlocks(playerX, playerY);
+					visibleEnvironment = main.demo.environmentMap.getVisibleEnvironment(playerX, playerY);
 					
 					playerSequence = main.demo.player.getSequence();
 					playerFrame = main.demo.player.getFrame();
@@ -165,6 +167,25 @@ public class DmciGD extends Applet implements Runnable {
 				
 				Image tile;
 				
+				//Draw environment
+
+				//Loop through Y axis of visibleBlocks
+				for(int i=0; i<12; i++) {
+					
+					//Loop through X axis of visibleBlocks
+					for(int j=0; j<22; j++) {
+						
+						//Draw if object exists
+						if((tile = blockImageMap.get("e_"+String.valueOf(visibleEnvironment[i][j]))) != null) {
+							dbg.drawImage(tile, j*32 - (playerX % 32) - 10, i*32 - (playerY % 32) - 16, j*32 - (playerX % 32) + 22, i*32 - (playerY % 32) + 16, 0, 0, 16, 16, this);
+						}
+						
+					}
+					
+				}
+				
+				//Draw blocks
+				
 				//Loop through Y axis of visibleBlocks
 				for(int i=0; i<12; i++) {
 					
@@ -179,6 +200,7 @@ public class DmciGD extends Applet implements Runnable {
 					}
 					
 				}
+				
 
 				dbg.drawImage(playerImage, 308, 144, 332, 176, playerFrame * 12, playerSequence * 16, playerFrame * 12 + 12, playerSequence * 16 + 16, this);
 				
@@ -243,6 +265,8 @@ public class DmciGD extends Applet implements Runnable {
 	}
 	
 	public void getBlockImages(String folder) {
+		
+		//BLOCKS
 		blockImageMap.put("q", getImageFromPath(folder+"/normal/blocks/tl.gif"));
 		blockImageMap.put("w", getImageFromPath(folder+"/normal/blocks/t1.gif"));
 		blockImageMap.put("W", getImageFromPath(folder+"/normal/blocks/t2.gif"));
@@ -269,12 +293,14 @@ public class DmciGD extends Applet implements Runnable {
 		blockImageMap.put("-", getImageFromPath(folder+"/normal/blocks/c3.gif"));
 		blockImageMap.put("=", getImageFromPath(folder+"/normal/blocks/c4.gif"));
 		
+		//Platforms
 		blockImageMap.put("i", getImageFromPath(folder+"/normal/blocks/platform/lcap.gif"));
 		blockImageMap.put("o", getImageFromPath(folder+"/normal/blocks/platform/row.gif"));
 		blockImageMap.put("p", getImageFromPath(folder+"/normal/blocks/platform/rcap.gif"));
 		blockImageMap.put("O", getImageFromPath(folder+"/normal/blocks/platform/single.gif"));
 		blockImageMap.put("_", getImageFromPath(folder+"/normal/blocks/platform/moving.gif"));
 		
+		//Ladders
 		blockImageMap.put("g", getImageFromPath(folder+"/normal/blocks/ladder/lcap.gif"));
 		blockImageMap.put("h", getImageFromPath(folder+"/normal/blocks/ladder/row.gif"));
 		blockImageMap.put("j", getImageFromPath(folder+"/normal/blocks/ladder/rcap.gif"));
@@ -291,9 +317,33 @@ public class DmciGD extends Applet implements Runnable {
 		blockImageMap.put("l", getImageFromPath(folder+"/normal/blocks/ladder/air.gif"));
 		blockImageMap.put("L", getImageFromPath(folder+"/normal/blocks/ladder/end.gif"));
 		
+		//Spikes
 		blockImageMap.put("^", getImageFromPath(folder+"/normal/blocks/spikes/up.gif"));
 		blockImageMap.put("V", getImageFromPath(folder+"/normal/blocks/spikes/down.gif"));
 		blockImageMap.put(">", getImageFromPath(folder+"/normal/blocks/spikes/right.gif"));
 		blockImageMap.put("<", getImageFromPath(folder+"/normal/blocks/spikes/left.gif"));
+		
+		//ENVIRONMENT
+		//Ground
+		blockImageMap.put("e_q", getImageFromPath(folder+"/normal/environment/ground/tl.gif"));
+		blockImageMap.put("e_w", getImageFromPath(folder+"/normal/environment/ground/t.gif"));
+		blockImageMap.put("e_e", getImageFromPath(folder+"/normal/environment/ground/tr.gif"));
+		blockImageMap.put("e_a", getImageFromPath(folder+"/normal/environment/ground/l.gif"));
+		blockImageMap.put("e_s", getImageFromPath(folder+"/normal/environment/ground/c.gif"));
+		blockImageMap.put("e_d", getImageFromPath(folder+"/normal/environment/ground/r.gif"));
+		blockImageMap.put("e_z", getImageFromPath(folder+"/normal/environment/ground/bl.gif"));
+		blockImageMap.put("e_x", getImageFromPath(folder+"/normal/environment/ground/b.gif"));
+		blockImageMap.put("e_c", getImageFromPath(folder+"/normal/environment/ground/br.gif"));
+		
+		//Water
+		blockImageMap.put("e_r", getImageFromPath(folder+"/normal/environment/water/tl.gif"));
+		blockImageMap.put("e_t", getImageFromPath(folder+"/normal/environment/water/t.gif"));
+		blockImageMap.put("e_y", getImageFromPath(folder+"/normal/environment/water/tr.gif"));
+		blockImageMap.put("e_f", getImageFromPath(folder+"/normal/environment/water/l.gif"));
+		blockImageMap.put("e_g", getImageFromPath(folder+"/normal/environment/water/c.gif"));
+		blockImageMap.put("e_h", getImageFromPath(folder+"/normal/environment/water/r.gif"));
+		blockImageMap.put("e_v", getImageFromPath(folder+"/normal/environment/water/bl.gif"));
+		blockImageMap.put("e_b", getImageFromPath(folder+"/normal/environment/water/b.gif"));
+		blockImageMap.put("e_n", getImageFromPath(folder+"/normal/environment/water/br.gif"));
 	}
 }

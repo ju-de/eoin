@@ -1,4 +1,4 @@
-package dmcigd.core.objects;
+package dmcigd.core.objects.maps;
 
 import java.io.*;
 import java.net.*;
@@ -76,7 +76,5 @@ public class BlockMap extends BlockCollision {
 		} catch (FileNotFoundException e) { }
 		catch (MalformedURLException e1) { }
 		catch (IOException e1) { }
-		
-		fetchVisibleBlocks(spawnX * 32, spawnY * 32);
 	}
 }
