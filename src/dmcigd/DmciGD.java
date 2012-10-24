@@ -2,12 +2,12 @@ package dmcigd;
 
 import dmcigd.core.*;
 import dmcigd.core.enums.*;
+import dmcigd.core.objects.*;
 
 import java.applet.*;
 import java.awt.*;
 import java.net.*;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 //Renders applet
 public class DmciGD extends Applet implements Runnable {
@@ -25,13 +25,11 @@ public class DmciGD extends Applet implements Runnable {
 	private Image playerImage;
 	private char[][] visibleBlocks = new char[12][22];
 	private char[][] visibleEnvironment = new char[12][22];
+	private ArrayList<ObjectImage> visibleSolidObjects = new ArrayList<ObjectImage>();
 	private Image tileSheet;
 	private Map<String, int[]> imageMap = new HashMap<String, int[]>();
-	private int playerX;
-	private int playerY;
-	private int playerSequence;
-	private int playerFrame;
-	private boolean playerFlipped;
+	private ObjectImage player;
+	private int playerX, playerY;
 	
 	//Initialize the Double-buffering Variables
 	private Image dbImage;
@@ -100,13 +98,12 @@ public class DmciGD extends Applet implements Runnable {
 					playerX = main.demo.player.getX();
 					playerY = main.demo.player.getY();
 					
+					player = main.demo.player.getObjectImage(playerX, playerY);
+					
 					visibleBlocks = main.demo.blockMap.getVisibleBlocks(playerX, playerY);
 					visibleEnvironment = main.demo.environmentMap.getVisibleEnvironment(playerX, playerY);
 					
-					playerSequence = main.demo.player.getSequence();
-					playerFrame = main.demo.player.getFrame();
-					
-					playerFlipped = main.demo.player.flipped;
+					visibleSolidObjects = main.demo.visibleSolidObjects;
 					
 					//Tells Main thread to begin fetching next frame
 					threadSync.consumed();
@@ -178,11 +175,14 @@ public class DmciGD extends Applet implements Runnable {
 				
 				//Debugging element: highlights tile associated with player
 				//dbg.setColor(Color.green);
-				//dbg.fillRect(((main.demo.player.getX()/32)*32) - (main.demo.player.getX()) + 304,((main.demo.player.getY()/32)*32) - (main.demo.player.getY()) +144,32,32);
+				//dbg.fillRect(((main.demo.playerX/32)*32) - (main.demo.playerX) + 304,((main.demo.playerY/32)*32) - (main.demo.playerY) +144,32,32);
 
 				dbg.setColor(Color.red);
 				
 				int[] tileLocation;
+				
+				int gridOffsetX = (playerX % 32) + 10;
+				int gridOffsetY = (playerY % 32) + 16;
 				
 				//Draw blocks
 				
@@ -193,26 +193,16 @@ public class DmciGD extends Applet implements Runnable {
 						
 						//Draw Environment
 						if((tileLocation = imageMap.get("e_"+String.valueOf(visibleEnvironment[i][j]))) != null) {
-							dbg.drawImage(tileSheet, j*32 - (playerX % 32) - 10, i*32 - (playerY % 32) - 16, j*32 - (playerX % 32) + 22, i*32 - (playerY % 32) + 16, tileLocation[0] * 16, tileLocation[1] * 16, tileLocation[0] * 16 + 16, tileLocation[1] * 16 + 16, this);
+							dbg.drawImage(tileSheet, j*32 - gridOffsetX, i*32 - gridOffsetY, j*32 - gridOffsetX + 32, i*32 - gridOffsetY + 32, tileLocation[0] * 16, tileLocation[1] * 16, tileLocation[0] * 16 + 16, tileLocation[1] * 16 + 16, this);
 						}
 						//Draw Block
 						if((tileLocation = imageMap.get(String.valueOf(visibleBlocks[i][j]))) != null) {
-							dbg.drawImage(tileSheet, j*32 - (playerX % 32) - 10, i*32 - (playerY % 32) - 16, j*32 - (playerX % 32) + 22, i*32 - (playerY % 32) + 16, tileLocation[0] * 16, tileLocation[1] * 16, tileLocation[0] * 16 + 16, tileLocation[1] * 16 + 16, this);
+							dbg.drawImage(tileSheet, j*32 - gridOffsetX, i*32 - gridOffsetY, j*32 - gridOffsetX + 32, i*32 - gridOffsetY + 32, tileLocation[0] * 16, tileLocation[1] * 16, tileLocation[0] * 16 + 16, tileLocation[1] * 16 + 16, this);
 						}
 					}
 				}
 				
-				int x1, x2;
-				
-				if(playerFlipped) {
-					x1 = 332;
-					x2 = 308;
-				} else {
-					x1 = 308;
-					x2 = 332;
-				}
-				
-				dbg.drawImage(playerImage, x1, 144, x2, 176, playerFrame * 12, playerSequence * 16, playerFrame * 12 + 12, playerSequence * 16 + 16, this);
+				dbg.drawImage(playerImage, player.dstx1, player.dsty1, player.dstx2, player.dsty2, player.srcx1, player.srcy1, player.srcx2, player.srcy2, this);
 				
 				break;
 				

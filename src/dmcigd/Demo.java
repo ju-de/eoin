@@ -1,22 +1,31 @@
 package dmcigd;
 
 import dmcigd.core.enums.*;
+import dmcigd.core.objects.*;
 import dmcigd.core.objects.maps.*;
 import dmcigd.core.objects.player.*;
+
 import java.awt.event.*;
 import java.net.*;
+import java.util.*;
 
 public class Demo implements Runnable {
 	
 	//Stores codeBase string to be passed for file loading
 	private URL codeBase;
 	
+	//Level information
+	public final String levelName = "demo";
+	public final String tileSet = "demo";
+	
+	//Passes booleans to be manipulated by Main Game Loop
 	private boolean ready,isDead = false;
+	
+	//Objects and object lists
 	public Player player;
 	public BlockMap blockMap = new BlockMap();
 	public EnvironmentMap environmentMap = new EnvironmentMap();
-	public final String levelName = "demo";
-	public final String tileSet = "demo";
+	public ArrayList<ObjectImage> visibleSolidObjects;
 	
 	public boolean isReady() {
 		return ready;
@@ -42,6 +51,8 @@ public class Demo implements Runnable {
 			isDead = true;
 		}
 		
+		visibleSolidObjects = new ArrayList<ObjectImage>();
+		
 	}
 	
 	public void run() {
@@ -50,6 +61,8 @@ public class Demo implements Runnable {
 		environmentMap.loadEnvironmentMap(codeBase, "demo");
 		
 		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap);
+		
+		visibleSolidObjects = new ArrayList<ObjectImage>();
 		
 		ready = true;
 		
