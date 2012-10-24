@@ -68,7 +68,7 @@ public class Main implements Runnable, KeyListener {
 			}
 			
 			try {
-				Thread.sleep(10);
+				Thread.sleep(12);
 			} catch (InterruptedException e) {}
 			
 			//Tells DmciGD thread that there are new variables to grab
