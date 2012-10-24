@@ -1,6 +1,6 @@
 package dmcigd.core.objects;
 
-public class VisibleObject {
+public class VisibleObject implements Cloneable {
 	
 	//Object Positions
 	private int x = 0;
@@ -47,6 +47,10 @@ public class VisibleObject {
 	}
 	public int getFrame() {
 		return (int) frame;
+	}
+	
+	public ObjectImage getObjectImage(int viewX, int viewY) {
+		return new ObjectImage(viewX, viewY, x, y, width, height, imageWidth, imageHeight, (int) frame, sequence, flipped);
 	}
 	
 	//Public Setters

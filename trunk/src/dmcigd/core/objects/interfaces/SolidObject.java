@@ -13,6 +13,10 @@ public interface SolidObject {
 	public int getY();
 	public int getWidth();
 	public int getHeight();
+	public int getImageWidth();
+	public int getImageHeight();
+	public int getSequence();
+	public int getFrame();
 	public boolean isVisible(int x, int y);
 	public void step();
 }

@@ -17,6 +17,8 @@ public class Player extends AnimateObject {
 		setY(y);
 		setHeight(30);
 		setWidth(20);
+		setImageHeight(32);
+		setImageWidth(24);
 		setGravity();
 		setBlockMap(blockMap);
 		
