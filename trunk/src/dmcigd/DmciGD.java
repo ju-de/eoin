@@ -3,6 +3,7 @@ package dmcigd;
 import dmcigd.core.*;
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
+import dmcigd.core.objects.interfaces.*;
 
 import java.applet.*;
 import java.awt.*;
@@ -22,13 +23,12 @@ public class DmciGD extends Applet implements Runnable {
 	GameState gameState;
 	
 	//Initialize visible objects list
-	private Image playerImage;
 	private char[][] visibleBlocks = new char[12][22];
 	private char[][] visibleEnvironment = new char[12][22];
-	private ArrayList<ObjectImage> visibleSolidObjects = new ArrayList<ObjectImage>();
+	private ArrayList<ObjectImage> visibleObjects = new ArrayList<ObjectImage>();
 	private Image tileSheet;
 	private Map<String, int[]> imageMap = new HashMap<String, int[]>();
-	private ObjectImage player;
+	private Map<String, Image> objectImageMap = new HashMap<String, Image>();
 	private int playerX, playerY;
 	
 	//Initialize the Double-buffering Variables
@@ -46,16 +46,6 @@ public class DmciGD extends Applet implements Runnable {
 		
 		//Set canvas background
 		setBackground (new Color(200,240,255));
-		
-		playerImage = getImageFromPath("player.gif");
-		
-		//Preload player spritesheet
-		
-		MediaTracker mt = new MediaTracker(this);
-		mt.addImage(playerImage, 0);
-		try {
-			mt.waitForAll();
-		} catch (InterruptedException e) { }
 		
 		buildImageMap();
 		
@@ -87,6 +77,26 @@ public class DmciGD extends Applet implements Runnable {
 						//Preload map tilesheet
 						MediaTracker mt = new MediaTracker(this);
 						mt.addImage(tileSheet, 0);
+						
+						//Load Player Sprite
+						
+						objectImageMap.put("1", getImageFromPath("player.gif"));
+						mt.addImage(objectImageMap.get("1"), 1);
+						
+						int i = 2;
+						Image loadedImage;
+						
+						//Load all images
+						for(SolidObject object : main.demo.solidObjects) {
+							if(!objectImageMap.containsKey(object.getMapCode())) {
+								
+								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
+								
+								mt.addImage(objectImageMap.get(object.getMapCode()), i);
+							}
+							i++;
+						}
+						
 						try {
 							mt.waitForAll();
 						} catch (InterruptedException e) { }
@@ -97,13 +107,11 @@ public class DmciGD extends Applet implements Runnable {
 					
 					playerX = main.demo.player.getX();
 					playerY = main.demo.player.getY();
-					
-					player = main.demo.player.getObjectImage(playerX, playerY);
-					
+										
 					visibleBlocks = main.demo.blockMap.getVisibleBlocks(playerX, playerY);
 					visibleEnvironment = main.demo.environmentMap.getVisibleEnvironment(playerX, playerY);
 					
-					visibleSolidObjects = main.demo.visibleSolidObjects;
+					visibleObjects = main.demo.visibleObjects;
 					
 					//Tells Main thread to begin fetching next frame
 					threadSync.consumed();
@@ -202,7 +210,10 @@ public class DmciGD extends Applet implements Runnable {
 					}
 				}
 				
-				dbg.drawImage(playerImage, player.dstx1, player.dsty1, player.dstx2, player.dsty2, player.srcx1, player.srcy1, player.srcx2, player.srcy2, this);
+				for(ObjectImage i : visibleObjects) {
+					dbg.drawImage(objectImageMap.get(i.mapCode), i.dstx1, i.dsty1, i.dstx2, i.dsty2, i.srcx1, i.srcy1, i.srcx2, i.srcy2, this);
+				}
+				
 				
 				break;
 				

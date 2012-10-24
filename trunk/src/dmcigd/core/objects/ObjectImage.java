@@ -2,13 +2,16 @@ package dmcigd.core.objects;
 
 public class ObjectImage {
 	
+	public String mapCode;
 	public int dstx1,dsty1,dstx2,dsty2,srcx1,srcy1,srcx2,srcy2;
 	
-	public ObjectImage(int viewX, int viewY, int x, int y, int width, int height, int imageWidth, int imageHeight, int frame, int sequence, boolean flipped) {
+	public ObjectImage(String mapCode, int viewX, int viewY, int x, int y, int width, int height, int imageWidth, int imageHeight, int frame, int sequence, boolean flipped) {
+		
+		this.mapCode = mapCode;
 		
 		//Get relative positions to screen
-		int relX = viewX - x + 310;
-		int relY = viewY - y + 144;
+		int relX = x - viewX + 310;
+		int relY = y - viewY + 144;
 		
 		//Centers bounding box inside of image
 		relX = relX - ((imageWidth - width) / 2);

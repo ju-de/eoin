@@ -2,25 +2,32 @@ package dmcigd.core.objects.player;
 
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
+import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.objects.maps.BlockMap;
+
+import java.util.*;
 
 public class Player extends AnimateObject {
 	
 	private int jumpState = 0;
 	private int jumpDelay = 5;
-	private int facing = 0;
 	private boolean isWalking,sprint;
 	private Direction walking,climbing;
 	
 	public Player(int x, int  y, BlockMap blockMap) {
+		
 		setX(x);
 		setY(y);
 		setHeight(30);
 		setWidth(20);
 		setImageHeight(32);
 		setImageWidth(24);
+		
 		setGravity();
 		setBlockMap(blockMap);
+		
+		setMapCode("1");
+		setImagePath("player.gif");
 		
 		//SpriteSheet organized as follows:
 		//0: Idle [2] [Loops] 0.015f
@@ -78,7 +85,7 @@ public class Player extends AnimateObject {
 		}
 	}
 	
-	public void step() {
+	public void step(ArrayList<SolidObject> solidObjects) {
 		
 		//Set movement vectors
 		if(isWalking) {
@@ -100,7 +107,7 @@ public class Player extends AnimateObject {
 		}
 		
 		//Step
-		move();
+		move(solidObjects);
 		
 		//Animate Character
 		if(isFalling) {
