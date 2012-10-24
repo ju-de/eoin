@@ -2,8 +2,10 @@ package dmcigd;
 
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
+import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.objects.maps.*;
 import dmcigd.core.objects.player.*;
+import dmcigd.core.objects.platforms.*;
 
 import java.awt.event.*;
 import java.net.*;
@@ -25,7 +27,8 @@ public class Demo implements Runnable {
 	public Player player;
 	public BlockMap blockMap = new BlockMap();
 	public EnvironmentMap environmentMap = new EnvironmentMap();
-	public ArrayList<ObjectImage> visibleSolidObjects;
+	public ArrayList<ObjectImage> visibleObjects;
+	public ArrayList<SolidObject> solidObjects = new ArrayList<SolidObject>();
 	
 	public boolean isReady() {
 		return ready;
@@ -44,14 +47,31 @@ public class Demo implements Runnable {
 		
 	}
 	
+	public void fetchVisibleObjects() {
+		
+		visibleObjects = new ArrayList<ObjectImage>();
+		
+		visibleObjects.add(player.getObjectImage(player.getX(), player.getY()));
+		
+		for (SolidObject i : solidObjects) {
+			if(i.isVisible(player.getX(), player.getY())) {
+				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
+			}
+		}
+	}
+	
 	public void step() {
 		
-		player.step();
+		for (SolidObject i : solidObjects) {
+			i.step();
+		}
+		
+		player.step(solidObjects);
 		if(player.isDead) {
 			isDead = true;
 		}
 		
-		visibleSolidObjects = new ArrayList<ObjectImage>();
+		fetchVisibleObjects();
 		
 	}
 	
@@ -62,7 +82,11 @@ public class Demo implements Runnable {
 		
 		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap);
 		
-		visibleSolidObjects = new ArrayList<ObjectImage>();
+		solidObjects.add(new MovingPlatform(1920, 384, 1, 6, 1, 6));
+		
+		solidObjects.add(new MovingPlatform(1952, 480, 0, 6, 1, 6));
+
+		fetchVisibleObjects();
 		
 		ready = true;
 		

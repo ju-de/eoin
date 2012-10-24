@@ -2,6 +2,10 @@ package dmcigd.core.objects;
 
 public class VisibleObject implements Cloneable {
 	
+	//Image information
+	private String mapCode;
+	private String imagePath;
+	
 	//Object Positions
 	private int x = 0;
 	private int y = 0;
@@ -22,6 +26,14 @@ public class VisibleObject implements Cloneable {
 	private boolean[] animationLoops;
 	
 	//Public Getters
+	
+	public String getMapCode() {
+		return mapCode;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	
 	public int getX() {
 		return x;
 	}
@@ -49,11 +61,29 @@ public class VisibleObject implements Cloneable {
 		return (int) frame;
 	}
 	
+	public boolean isVisible(int viewX, int viewY) {
+		
+		int relX = x - viewX + 310 - ((imageWidth - width) / 2);
+		int relY = y - viewY + 144 - ((imageHeight - height)  - 2);
+		
+		if(relX + imageWidth >= 0 && relX <= 640 && relY + imageHeight >= 0 && relY <= 320) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	public ObjectImage getObjectImage(int viewX, int viewY) {
-		return new ObjectImage(viewX, viewY, x, y, width, height, imageWidth, imageHeight, (int) frame, sequence, flipped);
+		return new ObjectImage(mapCode, viewX, viewY, x, y, width, height, imageWidth, imageHeight, (int) frame, sequence, flipped);
 	}
 	
 	//Public Setters
+	public void setMapCode(String mapCode) {
+		this.mapCode = mapCode;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	
 	public void setX(int x) {
 		this.x = x;
 	}
