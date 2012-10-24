@@ -8,7 +8,6 @@ import java.awt.*;
 import java.net.*;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Iterator;
 
 //Renders applet
 public class DmciGD extends Applet implements Runnable {
@@ -32,6 +31,7 @@ public class DmciGD extends Applet implements Runnable {
 	private int playerY;
 	private int playerSequence;
 	private int playerFrame;
+	private boolean playerFlipped;
 	
 	//Initialize the Double-buffering Variables
 	private Image dbImage;
@@ -87,11 +87,8 @@ public class DmciGD extends Applet implements Runnable {
 						tileSheet = getImageFromPath(main.demo.tileSet+"/tilesheet.gif");
 						
 						//Preload map tilesheet
-						
 						MediaTracker mt = new MediaTracker(this);
-						
 						mt.addImage(tileSheet, 0);
-						
 						try {
 							mt.waitForAll();
 						} catch (InterruptedException e) { }
@@ -108,6 +105,8 @@ public class DmciGD extends Applet implements Runnable {
 					
 					playerSequence = main.demo.player.getSequence();
 					playerFrame = main.demo.player.getFrame();
+					
+					playerFlipped = main.demo.player.flipped;
 					
 					//Tells Main thread to begin fetching next frame
 					threadSync.consumed();
@@ -189,7 +188,6 @@ public class DmciGD extends Applet implements Runnable {
 				
 				//Loop through Y axis of visibleBlocks
 				for(int i=0; i<12; i++) {
-					
 					//Loop through X axis of visibleBlocks
 					for(int j=0; j<22; j++) {
 						
@@ -197,18 +195,24 @@ public class DmciGD extends Applet implements Runnable {
 						if((tileLocation = imageMap.get("e_"+String.valueOf(visibleEnvironment[i][j]))) != null) {
 							dbg.drawImage(tileSheet, j*32 - (playerX % 32) - 10, i*32 - (playerY % 32) - 16, j*32 - (playerX % 32) + 22, i*32 - (playerY % 32) + 16, tileLocation[0] * 16, tileLocation[1] * 16, tileLocation[0] * 16 + 16, tileLocation[1] * 16 + 16, this);
 						}
-						
 						//Draw Block
 						if((tileLocation = imageMap.get(String.valueOf(visibleBlocks[i][j]))) != null) {
 							dbg.drawImage(tileSheet, j*32 - (playerX % 32) - 10, i*32 - (playerY % 32) - 16, j*32 - (playerX % 32) + 22, i*32 - (playerY % 32) + 16, tileLocation[0] * 16, tileLocation[1] * 16, tileLocation[0] * 16 + 16, tileLocation[1] * 16 + 16, this);
 						}
-						
 					}
-					
 				}
 				
-
-				dbg.drawImage(playerImage, 308, 144, 332, 176, playerFrame * 12, playerSequence * 16, playerFrame * 12 + 12, playerSequence * 16 + 16, this);
+				int x1, x2;
+				
+				if(playerFlipped) {
+					x1 = 332;
+					x2 = 308;
+				} else {
+					x1 = 308;
+					x2 = 332;
+				}
+				
+				dbg.drawImage(playerImage, x1, 144, x2, 176, playerFrame * 12, playerSequence * 16, playerFrame * 12 + 12, playerSequence * 16 + 16, this);
 				
 				break;
 				
