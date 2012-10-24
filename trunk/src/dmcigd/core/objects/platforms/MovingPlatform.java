@@ -28,9 +28,9 @@ public class MovingPlatform extends MovingObject implements RestableObject {
 		
 		setX(x);
 		setY(y);
-		setHeight(32);
+		setHeight(24);
 		setWidth(width * 16);
-		setImageHeight(32);
+		setImageHeight(24);
 		setImageWidth(width * 16);
 		
 		setSequence(0);

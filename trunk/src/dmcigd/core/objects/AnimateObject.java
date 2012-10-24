@@ -32,11 +32,15 @@ public class AnimateObject extends MovingObject {
 		Rectangle boundingBox;
 		
 		if(direction == Direction.DOWN || direction == Direction.UP) {
-			boundingBox = getBounds(0, v);
+			//Checks block directly beneath you
+			//Allows for negligible 1px overlap onto solid blocks
+			boundingBox = getBounds(0, v + 1);
 		} else {
 			boundingBox = getBounds(v, 0);
 		}
 		
+		//This code will be cleaned up after all the cases are coded in
+		//For now just bear with me
 		for (SolidObject i : solidObjects) {
 			if(boundingBox.intersects(i.getBounds())) {
 				switch (direction) {
@@ -44,14 +48,23 @@ public class AnimateObject extends MovingObject {
 						switch(i.getCollisionType()) {
 							case PLATFORM:
 								//Check if object is not inside of platform
-								if(getY() + getHeight() > i.getY() + 2) {
-									break;
+								if(getY() + getHeight() <= i.getY()) {
+									setY(i.getY() - getHeight());
+									restingBlockCheck = (RestableObject) i;
+									obstructMovement = true;
+									setVY(0);
 								}
+								break;
 							case SOLID:
-								setY(i.getY() - getHeight() + 2);
-								restingBlockCheck = (RestableObject) i;
-								obstructMovement = true;
-								setVY(0);
+								if(i.getY() > getY()) {
+									setY(i.getY() - getHeight());
+									restingBlockCheck = (RestableObject) i;
+									obstructMovement = true;
+									setVY(0);
+								} else {
+									setY(i.getY() + i.getHeight());
+									obstructMovement = true;
+								}
 								break;
 							default:
 								break;
@@ -65,7 +78,7 @@ public class AnimateObject extends MovingObject {
 								}
 							case SOLID:
 								if(restingBlock == i) {
-									setY(i.getY() - getHeight() + 2);
+									setY(i.getY() - getHeight());
 									restingBlockCheck = (RestableObject) i;
 									obstructMovement = true;
 									setVY(0);
