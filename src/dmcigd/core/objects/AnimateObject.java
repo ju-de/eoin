@@ -1,7 +1,6 @@
 package dmcigd.core.objects;
 
 import dmcigd.core.enums.Direction;
-import dmcigd.core.enums.CollisionType;
 import dmcigd.core.objects.maps.BlockMap;
 
 public class AnimateObject extends MovingObject {

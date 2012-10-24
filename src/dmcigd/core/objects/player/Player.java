@@ -21,17 +21,13 @@ public class Player extends AnimateObject {
 		setBlockMap(blockMap);
 		
 		//SpriteSheet organized as follows:
-		//0: Idle Right [2] [Loops] 0.015f
-		//1: Idle Left [2] [Loops] 0.01f
-		//2: Walk Right [4] [Loops] 0.1f / 0.075f
-		//3: Walk Left [4] [Loops] 0.1f / 0.075f
-		//4: Jump Right [3] [One Shot] 0.2f
-		//5: Jump Left [3] [One Shot] 0.2f
-		//6: Falling Right [3] [One Shot] 0.1f
-		//7: Falling Left [3] [One Shot] 0.1f
-		//8: Climbing [2] [Loops] 0.05f / 0f
-		setFrameLimits(new int[] {2,2,6,6,3,3,3,3,2});
-		setAnimationLoops(new boolean[] {true,true,true,true,false,false,false,false,true});
+		//0: Idle [2] [Loops] 0.015f
+		//1: Walk [4] [Loops] 0.1f / 0.075f
+		//2: Jump [3] [One Shot] 0.2f
+		//3: Falling [3] [One Shot] 0.1f
+		//4: Climbing [2] [Loops] 0.05f / 0f
+		setFrameLimits(new int[] {2,6,3,3,2});
+		setAnimationLoops(new boolean[] {true,true,false,false,true});
 		
 		setSequence(0);
 	}
@@ -41,9 +37,9 @@ public class Player extends AnimateObject {
 			this.isWalking = true;  
 			walking = direction;
 			if(direction == Direction.RIGHT) {
-				facing = 0;
+				flipped = false;
 			} else {
-				facing = 1;
+				flipped = true;
 			}
 		} else {
 			//Smooths out controls in case of overlap with keypresses
@@ -107,27 +103,27 @@ public class Player extends AnimateObject {
 		//Animate Character
 		if(isFalling) {
 			setFrameSpeed(0.1f);
-			setSequence(6+facing);
+			setSequence(3);
 		} else if(jumpState > 0) {
 			setFrameSpeed(0.2f);
-			setSequence(4+facing);
+			setSequence(2);
 		} else if (onLadder) {
 			if(isClimbing) {
 				setFrameSpeed(0.05f);
 			}else {
 				setFrameSpeed(0);
 			}
-			setSequence(8);
+			setSequence(4);
 		} else if (isWalking) {
 			if(sprint) {
 				setFrameSpeed(0.1f);
 			} else {
 				setFrameSpeed(0.075f);
 			}
-			setSequence(2+facing);
+			setSequence(1);
 		} else {
 			setFrameSpeed(0.015f);
-			setSequence(0+facing);
+			setSequence(0);
 		}
 		
 		animate();

@@ -4,13 +4,7 @@ import dmcigd.core.enums.*;
 
 public class MovingObject extends VisibleObject {
 	
-	//Object Dimensions
-	private int height = 32;
-	private int width = 32;
-	
-	//Initialize position properties (position, velocity, and acceleration)
-	private int x = 0;
-	private int y = 0;
+	//Initialize movement properties (position, velocity, and acceleration)
 	private float vx = 0;
 	private float vy = 2;
 	private float ax = 0;
@@ -21,18 +15,6 @@ public class MovingObject extends VisibleObject {
 	private float tRight = 32;
 	
 	//Public getters
-	public int getHeight() {
-		return height;
-	}
-	public int getWidth() {
-		return width;
-	}
-	public int getX() {
-		return x;
-	}
-	public int getY() {
-		return y;
-	}
 	public int getVX() {
 		return (int) vx;
 	}
@@ -44,24 +26,6 @@ public class MovingObject extends VisibleObject {
 	}
 	
 	//Public setters
-	public void setHeight(int height) {
-		this.height = height;
-	}
-	public void setWidth(int width) {
-		this.width = width;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
-	public void addX(int vx) {
-		x = x + vx;
-	}
-	public void addY(int vy) {
-		y = y + vy;
-	}
 	public void setVX(float vx) {
 		this.vx = vx;
 	}
