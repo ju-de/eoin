@@ -102,8 +102,8 @@ public class BlockCollision {
 			if(backRow > -1 ) {
 				backType = tileType(blockMap.get(backRow).charAt(i));
 				
-				//Check for ladder or water
-				if((backType == CollisionType.LADDER || backType == CollisionType.WATER) && curType != CollisionType.DESTROY) {
+				//Check for ladder
+				if((backType == CollisionType.LADDER) && curType != CollisionType.DESTROY) {
 					curType = backType;
 				}else if(curType == CollisionType.LADDER) {
 					curType = CollisionType.SOLID;
