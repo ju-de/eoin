@@ -1,6 +1,6 @@
 package dmcigd.core.objects;
 
-import dmcigd.core.enums.Direction;
+import dmcigd.core.enums.*;
 import dmcigd.core.objects.maps.BlockMap;
 import dmcigd.core.objects.interfaces.*;
 
@@ -237,51 +237,47 @@ public class AnimateObject extends MovingObject {
 		
 		restingBlock = restingBlockCheck;
 		
+		CollisionType restingBlockType;
+		
 		if(restingBlock == null) {
-			
-			//Determine resting block on tilemap
-			switch(blockMap.restingBlock(getX(),getY(),width,height)) {
-			
-				//On ground
-				case PLATFORM:
-				case SOLID:
-					inWater = false;
-					onLadder = false;
-					hitGround = true;
-					isFalling = false;
-					break;
-				
-				//On ladder
-				case LADDER:
-					inWater = false;
-					onLadder = true;
-					hitGround = false;
-					isFalling = false;
-					break;
-				
-				//In water
-				case WATER:
-					inWater = true;
-					onLadder = false;
-					hitGround = true;
-					break;
-					
-				//In air
-				default:
-					inWater = false;
-					onLadder = false;
-					hitGround = false;
-					break;
-			}
-			
+			restingBlockType = blockMap.restingBlock(getX(),getY(),width,height);
 		} else {
+			restingBlockType = restingBlock.getCollisionType();
+		}
 			
-			//Treat resting blocks like solid ground
-			inWater = false;
-			onLadder = false;
-			hitGround = true;
-			isFalling = false;
+		//Determine entity states based on resting block
+		switch(restingBlockType) {
+		
+			//On ground
+			case PLATFORM:
+			case SOLID:
+				inWater = false;
+				onLadder = false;
+				hitGround = true;
+				isFalling = false;
+				break;
 			
+			//On ladder
+			case LADDER:
+				inWater = false;
+				onLadder = true;
+				hitGround = false;
+				isFalling = false;
+				break;
+			
+			//In water
+			case WATER:
+				inWater = true;
+				onLadder = false;
+				hitGround = true;
+				break;
+				
+			//In air
+			default:
+				inWater = false;
+				onLadder = false;
+				hitGround = false;
+				break;
 		}
 	}
 }
