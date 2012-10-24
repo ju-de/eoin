@@ -85,6 +85,12 @@ public class Demo implements Runnable {
 		solidObjects.add(new MovingPlatform(1920, 384, 1, 6, 1, 6));
 		
 		solidObjects.add(new MovingPlatform(1952, 480, 0, 6, 1, 6));
+		
+		solidObjects.add(new MovingPlatform(5184, 480, 1, 1, 1, 14));
+		
+		solidObjects.add(new MovingPlatform(5760, 896, 0, 8, 1, 20));
+		
+		solidObjects.add(new MovingPlatform(7200, 864, 0, 3, 1, 7));
 
 		fetchVisibleObjects();
 		
