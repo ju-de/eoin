@@ -108,6 +108,12 @@ public class BlockCollision {
 				}else if(curType == CollisionType.LADDER) {
 					curType = CollisionType.SOLID;
 				}
+			} else {
+				
+				//If in the middle of a platform, treat it like air
+				if(curType == CollisionType.PLATFORM) {
+					curType = CollisionType.NONSOLID;
+				}
 			}
 			
 			//Return top priority block
