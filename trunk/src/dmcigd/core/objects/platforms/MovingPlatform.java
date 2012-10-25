@@ -30,10 +30,10 @@ public class MovingPlatform extends MovingObject implements RestableObject {
 		setY(y);
 		setHeight(22);
 		setWidth(width * 16);
-		setImageHeight(24);
+		setImageHeight(32);
 		setImageWidth(width * 16);
 		
-		setSequence(0);
+		setSequence(1);
 		setFrame(0);
 		
 		setCollisionType(CollisionType.PLATFORM);
@@ -44,8 +44,8 @@ public class MovingPlatform extends MovingObject implements RestableObject {
 			setVY(speed);
 		}
 		
-		setMapCode("o");
-		setImagePath("demo/movingplatform.gif");
+		setMapCode("`");
+		setImagePath("demo/objects.gif");
 		
 		clockReset = travelDistance * 16 / speed;
 	}

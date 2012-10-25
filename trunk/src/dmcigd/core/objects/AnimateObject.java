@@ -41,30 +41,28 @@ public class AnimateObject extends MovingObject {
 		
 		//This code will be cleaned up after all the cases are coded in
 		//For now just bear with me
+		
 		for (SolidObject i : solidObjects) {
-			if(boundingBox.intersects(i.getBounds())) {
+			
+			//Checks if objects overlap
+			//And that player collided into object, object was not formed over player
+			//Actions that take place when an object forms over the player should be handled
+			//By the object itself, not in a collision check
+			
+			if(boundingBox.intersects(i.getBounds()) && (restingBlock == i || !getBounds().intersects(i.getBounds()))) {
 				switch (direction) {
 					case DOWN:
 						switch(i.getCollisionType()) {
 							case PLATFORM:
 								//Check if object is not inside of platform
-								if(getY() + getHeight() <= i.getY()) {
-									setY(i.getY() - getHeight());
-									restingBlockCheck = (RestableObject) i;
-									obstructMovement = true;
-									setVY(0);
+								if(getY() + getHeight() > i.getY()) {
+									break;
 								}
-								break;
 							case SOLID:
-								if(i.getY() > getY()) {
-									setY(i.getY() - getHeight());
-									restingBlockCheck = (RestableObject) i;
-									obstructMovement = true;
-									setVY(0);
-								} else {
-									setY(i.getY() + i.getHeight());
-									obstructMovement = true;
-								}
+								setY(i.getY() - getHeight());
+								restingBlockCheck = (RestableObject) i;
+								obstructMovement = true;
+								setVY(0);
 								break;
 							default:
 								break;
@@ -92,6 +90,18 @@ public class AnimateObject extends MovingObject {
 						}
 						break;
 					default:
+						switch (i.getCollisionType()) {
+							case SOLID:
+								if(direction == Direction.RIGHT) {
+									setX(i.getX() - getWidth());
+								} else {
+									setX(i.getX() + i.getWidth());
+								}
+								obstructMovement = true;
+								break;
+							default:
+								break;
+						}
 						break;
 				}
 			}
@@ -173,7 +183,8 @@ public class AnimateObject extends MovingObject {
 				}
 				
 				break;
-			default:
+				
+			default: //Moving left or right
 				
 				switch(blockMap.collidesX(getX(), getY(), v, width, height, direction)) {
 				
@@ -229,9 +240,9 @@ public class AnimateObject extends MovingObject {
 			checkBlockMapCollision(vy, solidObjects, Direction.UP);
 		}
 		
-		if(vx >= 0) {
+		if(vx > 0) {
 			checkBlockMapCollision(vx, solidObjects, Direction.RIGHT);
-		} else { 
+		} else if (vx < 0) { 
 			checkBlockMapCollision(vx, solidObjects, Direction.LEFT);
 		}
 		

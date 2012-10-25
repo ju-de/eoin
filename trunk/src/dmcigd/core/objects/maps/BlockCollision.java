@@ -100,14 +100,18 @@ public class BlockCollision {
 			
 			//Checks for special blocks like ladders or water
 			if(backRow > -1 ) {
+				
 				backType = tileType(blockMap.get(backRow).charAt(i));
 				
 				//Check for ladder
 				if((backType == CollisionType.LADDER) && curType != CollisionType.DESTROY) {
 					curType = backType;
 				}else if(curType == CollisionType.LADDER) {
+					
+					//Treats top of ladder as as solid block
 					curType = CollisionType.SOLID;
 				}
+				
 			} else {
 				
 				//If in the middle of a platform, treat it like air
