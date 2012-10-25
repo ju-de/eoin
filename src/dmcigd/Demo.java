@@ -5,6 +5,7 @@ import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.objects.maps.*;
 import dmcigd.core.objects.player.*;
+import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.platforms.*;
 
 import java.awt.event.*;
@@ -67,6 +68,7 @@ public class Demo implements Runnable {
 		}
 		
 		player.step(solidObjects);
+		
 		if(player.isDead) {
 			isDead = true;
 		}
@@ -91,6 +93,31 @@ public class Demo implements Runnable {
 		solidObjects.add(new MovingPlatform(5760, 896, 0, 8, 1, 20));
 		
 		solidObjects.add(new MovingPlatform(7200, 864, 0, 3, 1, 7));
+		
+		solidObjects.add(new TimedBlock(1312, 512, 1, 0, 100, 100));
+		
+		solidObjects.add(new TimedBlock(2016, 544, 4, 0, 200, 100));
+		
+		solidObjects.add(new TimedBlock(5184, 736, 5, 0, 300, 100));
+		
+		solidObjects.add(new TimedBlock(180 * 32, 704, 1, 17 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(181 * 32, 704, 1, 16 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(182 * 32, 704, 1, 15 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(183 * 32, 704, 1, 14 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(184 * 32, 704, 1, 13 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(185 * 32, 704, 1, 12 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(186 * 32, 704, 1, 11 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(187 * 32, 704, 1, 10 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(188 * 32, 704, 1, 9 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(189 * 32, 704, 1, 8 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(190 * 32, 704, 1, 7 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(191 * 32, 704, 1, 6 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(192 * 32, 704, 1, 5 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(193 * 32, 704, 1, 4 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(194 * 32, 704, 1, 3 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(195 * 32, 704, 1, 2 * 16, 32, 288));
+		solidObjects.add(new TimedBlock(196 * 32, 704, 1, 16, 32, 288));
+		solidObjects.add(new TimedBlock(197 * 32, 704, 1, 0, 32, 288));
 
 		fetchVisibleObjects();
 		
