@@ -7,14 +7,20 @@ import dmcigd.core.objects.maps.BlockMap;
 
 import java.util.*;
 
-public class Player extends AnimateObject {
+public class Player extends Entity implements SolidObject {
 	
 	private int jumpState = 0;
 	private int jumpDelay = 5;
 	private boolean isWalking,sprint;
 	private Direction walking,climbing;
+
+	public void onPush(EntityType entityType, int v) {
+		if(entityType == EntityType.MOVINGBLOCK) {
+			addX(v);
+		}
+	}
 	
-	public Player(int x, int  y, BlockMap blockMap) {
+	public Player(int x, int  y, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
 		
 		setX(x);
 		setY(y);
@@ -25,6 +31,7 @@ public class Player extends AnimateObject {
 		
 		setGravity();
 		setBlockMap(blockMap);
+		setSolidObjects(solidObjects);
 		
 		setMapCode("1");
 		setImagePath("player.gif");
@@ -39,6 +46,8 @@ public class Player extends AnimateObject {
 		setAnimationLoops(new boolean[] {true,true,false,false,true});
 		
 		setSequence(0);
+		
+		setEntityType(EntityType.PLAYER);
 	}
 	
 	public void walk(boolean isWalking, Direction direction) {
@@ -85,7 +94,7 @@ public class Player extends AnimateObject {
 		}
 	}
 	
-	public void step(ArrayList<SolidObject> solidObjects) {
+	public void step() {
 		
 		//Set movement vectors
 		if(isWalking) {
@@ -107,7 +116,7 @@ public class Player extends AnimateObject {
 		}
 		
 		//Step
-		move(solidObjects);
+		move();
 		
 		//Animate Character
 		if(isFalling) {

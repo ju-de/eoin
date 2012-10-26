@@ -2,19 +2,19 @@ package dmcigd.core.objects;
 
 public class VisibleObject implements Cloneable {
 	
+	//Initialize displacement properties for resting objects
+	private int dx,dy = 0;
+	
 	//Image information
 	private String mapCode;
 	private String imagePath;
 	
 	//Object Positions
-	private int x = 0;
-	private int y = 0;
+	private int x,y = 0;
 	
 	//Object Dimensions
-	private int height = 32;
-	private int width = 32;
-	private int imageHeight = 32;
-	private int imageWidth = 32;
+	private int height,width = 32;
+	private int imageHeight,imageWidth = 32;
 	
 	//Animation Status
 	private int sequence;
@@ -39,6 +39,12 @@ public class VisibleObject implements Cloneable {
 	}
 	public int getY() {
 		return y;
+	}
+	public int getDX() {
+		return dx;
+	}
+	public int getDY() {
+		return dy;
 	}
 	
 	public int getHeight() {
@@ -85,16 +91,26 @@ public class VisibleObject implements Cloneable {
 	}
 	
 	public void setX(int x) {
+		dx = x - this.x;
 		this.x = x;
 	}
 	public void setY(int y) {
+		dy = y - this.y;
 		this.y = y;
 	}
 	public void addX(int vx) {
+		dx = vx;
 		x = x + vx;
 	}
 	public void addY(int vy) {
+		dy = vy;
 		y = y + vy;
+	}
+	public void setDX(int dx) {
+		this.dx = dx;
+	}
+	public void setDY(int dy) {
+		this.dy = dy;
 	}
 	
 	public void setHeight(int height) {
