@@ -5,10 +5,8 @@ import dmcigd.core.enums.*;
 public class MovingObject extends ObjectCollision {
 	
 	//Initialize movement properties (position, velocity, and acceleration)
-	private float vx = 0;
-	private float vy = 0;
-	private float ax = 0;
-	private float ay = 0;
+	private float vx,vy = 0;
+	private float ax,ay = 0;
 	private float tUp = 32;
 	private float tDown = 32;
 	private float tLeft = 32;

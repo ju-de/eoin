@@ -7,9 +7,8 @@ import java.awt.*;
 
 public interface SolidObject {
 	
-	public boolean isRestable = false;
-	
 	public CollisionType getCollisionType();
+	public Rectangle getBounds(int vx, int vy);
 	public Rectangle getBounds();
 	
 	public String getMapCode();
@@ -27,5 +26,6 @@ public interface SolidObject {
 	public boolean isVisible(int x, int y);
 	public ObjectImage getObjectImage(int x, int y);
 	
+	public void onPush(EntityType entityType, int v);
 	public void step();
 }

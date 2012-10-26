@@ -66,9 +66,7 @@ public class Demo implements Runnable {
 		for (SolidObject i : solidObjects) {
 			i.step();
 		}
-		
-		player.step(solidObjects);
-		
+				
 		if(player.isDead) {
 			isDead = true;
 		}
@@ -82,11 +80,15 @@ public class Demo implements Runnable {
 		blockMap.loadBlockMap(codeBase, "demo");
 		environmentMap.loadEnvironmentMap(codeBase, "demo");
 		
-		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap);
+		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap, solidObjects);
+		
+		solidObjects.add(new PushableBlock(832, 480, blockMap, solidObjects));
 		
 		solidObjects.add(new MovingPlatform(1920, 384, 1, 6, 1, 6));
 		
 		solidObjects.add(new MovingPlatform(1952, 480, 0, 6, 1, 6));
+		
+		solidObjects.add(new PushableBlock(2048, 416, blockMap, solidObjects));
 		
 		solidObjects.add(new MovingPlatform(5184, 480, 1, 1, 1, 14));
 		
@@ -94,11 +96,22 @@ public class Demo implements Runnable {
 		
 		solidObjects.add(new MovingPlatform(7200, 864, 0, 3, 1, 7));
 		
+		solidObjects.add(new CrumblingBlock(960, 256, 0.15f, 500));
+		
 		solidObjects.add(new TimedBlock(1312, 512, 1, 0, 100, 100));
 		
-		solidObjects.add(new TimedBlock(2016, 544, 4, 0, 200, 100));
+		solidObjects.add(new CrumblingBlock(2016, 544, 0.15f, 500));
+		solidObjects.add(new CrumblingBlock(2048, 544, 0.15f, 500));
+		solidObjects.add(new CrumblingBlock(2080, 544, 0.15f, 500));
+		solidObjects.add(new CrumblingBlock(2112, 544, 0.15f, 500));
+		
+		//solidObjects.add(new TimedBlock(2016, 544, 4, 0, 200, 100));
 		
 		solidObjects.add(new TimedBlock(5184, 736, 5, 0, 300, 100));
+		
+		solidObjects.add(new CrumblingBlock(5792, 448, 0.15f, 500));
+		
+		solidObjects.add(new CrumblingBlock(5952, 416, 0.15f, 500));
 		
 		solidObjects.add(new TimedBlock(180 * 32, 704, 1, 17 * 16, 32, 288));
 		solidObjects.add(new TimedBlock(181 * 32, 704, 1, 16 * 16, 32, 288));
@@ -118,6 +131,8 @@ public class Demo implements Runnable {
 		solidObjects.add(new TimedBlock(195 * 32, 704, 1, 2 * 16, 32, 288));
 		solidObjects.add(new TimedBlock(196 * 32, 704, 1, 16, 32, 288));
 		solidObjects.add(new TimedBlock(197 * 32, 704, 1, 0, 32, 288));
+		
+		solidObjects.add(player);
 
 		fetchVisibleObjects();
 		

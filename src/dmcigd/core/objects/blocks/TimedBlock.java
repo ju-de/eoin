@@ -1,6 +1,8 @@
 package dmcigd.core.objects.blocks;
 
 import dmcigd.core.enums.CollisionType;
+import dmcigd.core.enums.Direction;
+import dmcigd.core.enums.EntityType;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 
@@ -8,14 +10,11 @@ public class TimedBlock extends ObjectCollision implements RestableObject {
 	
 	private int objectClock,changeState,clockReset = 0;
 	
-	//Interface Getters
+	public void onRest(EntityType entityType) {}
 	
-	public int getDX() {
-		return 0;
-	}
-	public int getDY() {
-		return 0;
-	}
+	public void onUnrest(EntityType entityType) {}
+	
+	public void onPush(EntityType entityType, int v) {}
 	
 	public void setState() {
 		if(objectClock < changeState) {
@@ -33,6 +32,8 @@ public class TimedBlock extends ObjectCollision implements RestableObject {
 		
 		setX(x);
 		setY(y);
+		setDX(0);
+		setDY(0);
 		setHeight(30);
 		setWidth(32 * width);
 		setImageHeight(32);

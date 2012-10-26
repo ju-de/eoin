@@ -7,10 +7,13 @@ import dmcigd.core.objects.interfaces.*;
 import java.util.*;
 import java.awt.*;
 
-public class AnimateObject extends MovingObject {
+public class Entity extends MovingObject {
 	
-	//Initialize blockmap
+	//Initialize level objects
 	private BlockMap blockMap;
+	private ArrayList<SolidObject> solidObjects;
+	
+	private EntityType entityType;
 	
 	//Initialize collision properties to be passed for child manipulation
 	public boolean hitGround,isFalling,onLadder,isClimbing,isDead,inWater = false;
@@ -21,9 +24,20 @@ public class AnimateObject extends MovingObject {
 	//Initialize Resting Block
 	private RestableObject restingBlock,restingBlockCheck;
 	
-	//Receive blockmap from subclass
+	//Public getters
+	public EntityType getEntityType() {
+		return entityType;
+	}
+	
+	//Public setters
 	public void setBlockMap(BlockMap blockMap) {
 		this.blockMap = blockMap;
+	}
+	public void setSolidObjects(ArrayList<SolidObject> solidObjects) {
+		this.solidObjects = solidObjects;
+	}
+	public void setEntityType(EntityType entityType) {
+		this.entityType = entityType;
 	}
 	
 	public void checkSolidObjectCollision(ArrayList<SolidObject> solidObjects, int v, Direction direction) {
@@ -90,6 +104,7 @@ public class AnimateObject extends MovingObject {
 						}
 						break;
 					default:
+						i.onPush(entityType, v);
 						switch (i.getCollisionType()) {
 							case SOLID:
 								if(direction == Direction.RIGHT) {
@@ -211,7 +226,7 @@ public class AnimateObject extends MovingObject {
 		}
 	}
 	
-	public void move(ArrayList<SolidObject> solidObjects) {
+	public void move() {
 		
 		
 		addAcceleration();
@@ -244,9 +259,19 @@ public class AnimateObject extends MovingObject {
 			checkBlockMapCollision(vx, solidObjects, Direction.RIGHT);
 		} else if (vx < 0) { 
 			checkBlockMapCollision(vx, solidObjects, Direction.LEFT);
+		} else {
+			setDX(0);
 		}
 		
-		restingBlock = restingBlockCheck;
+		if(restingBlock != restingBlockCheck) {
+			if(restingBlockCheck == null) {
+				restingBlock.onUnrest(entityType);
+				restingBlock = null;
+			} else {
+				restingBlock = restingBlockCheck;
+				restingBlock.onRest(entityType);
+			}
+		}
 		
 		CollisionType restingBlockType;
 		
