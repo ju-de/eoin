@@ -40,98 +40,148 @@ public class Entity extends MovingObject {
 		this.entityType = entityType;
 	}
 	
-	public void checkSolidObjectCollision(ArrayList<SolidObject> solidObjects, int v, Direction direction) {
+	public boolean objectsCollide(Rectangle boundingBox, SolidObject object) {
+		
+		//Checks if objects overlap
+		//And that player collided into object, object was not formed over player
+		//Actions that take place when an object forms over the player should be handled
+		//By the object itself, not in a collision check
+		
+		if(boundingBox.intersects(object.getBounds()) && (restingBlock == object || !getBounds().intersects(object.getBounds()))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void checkSolidObjectCollisionDown(int v) {
 		
 		boolean obstructMovement = false;
-		Rectangle boundingBox;
 		
-		if(direction == Direction.DOWN || direction == Direction.UP) {
-			//Checks block directly beneath you
-			//Allows for negligible 1px overlap onto solid blocks
-			boundingBox = getBounds(0, v + 1);
-		} else {
-			boundingBox = getBounds(v, 0);
-		}
+		//Get bounding box of destination
+		Rectangle boundingBox = getBounds(0, v+1);
 		
-		//This code will be cleaned up after all the cases are coded in
-		//For now just bear with me
-		
+		//Loop through all solid objects
 		for (SolidObject i : solidObjects) {
 			
-			//Checks if objects overlap
-			//And that player collided into object, object was not formed over player
-			//Actions that take place when an object forms over the player should be handled
-			//By the object itself, not in a collision check
-			
-			if(boundingBox.intersects(i.getBounds()) && (restingBlock == i || !getBounds().intersects(i.getBounds()))) {
-				switch (direction) {
-					case DOWN:
-						switch(i.getCollisionType()) {
-							case PLATFORM:
-								//Check if object is not inside of platform
-								if(getY() + getHeight() > i.getY()) {
-									break;
-								}
-							case SOLID:
-								setY(i.getY() - getHeight());
-								restingBlockCheck = (RestableObject) i;
-								obstructMovement = true;
-								setVY(0);
-								break;
-							default:
-								break;
+			//Check for collision
+			if(objectsCollide(boundingBox, i)) {
+				
+				//Determine collision type
+				switch(i.getCollisionType()) {
+				
+					case PLATFORM:
+						//Check if object is not inside of platform
+						if(getY() + getHeight() > i.getY()) {
+							break;
 						}
-						break;
-					case UP:
-						switch(i.getCollisionType()) {
-							case PLATFORM:
-								if(restingBlock != i) {
-									break;
-								}
-							case SOLID:
-								if(restingBlock == i) {
-									setY(i.getY() - getHeight());
-									restingBlockCheck = (RestableObject) i;
-									obstructMovement = true;
-									setVY(0);
-								} else {
-									setY(i.getY() + i.getHeight());
-									obstructMovement = true;
-								}
-								break;
-							default:
-								break;
-						}
+					case SOLID:
+						setY(i.getY() - getHeight());
+						restingBlockCheck = (RestableObject) i;
+						setVY(0);
+						obstructMovement = true;
 						break;
 					default:
-						i.onPush(entityType, v);
-						switch (i.getCollisionType()) {
-							case SOLID:
-								if(direction == Direction.RIGHT) {
-									setX(i.getX() - getWidth());
-								} else {
-									setX(i.getX() + i.getWidth());
-								}
-								obstructMovement = true;
-								break;
-							default:
-								break;
-						}
+						//Advance object normally
+						addY(v);
 						break;
 				}
 			}
 		}
 		
 		if(!obstructMovement) {
-			if(direction == Direction.DOWN || direction == Direction.UP) {
-				addY(v);
-			} else {
-				addX(v);
-			}
+			//Advance normally
+			addY(v);
 		}
 	}
 	
-	public void checkBlockMapCollision(int v, ArrayList<SolidObject> solidObjects, Direction direction) {
+	public void checkSolidObjectCollisionUp(int v) {
+		
+		boolean obstructMovement = false;
+		
+		//Get bounding box of destination
+		Rectangle boundingBox = getBounds(0, v + 1);
+		
+		//Loop through all solid objects
+		for (SolidObject i : solidObjects) {
+			
+			//Check for collision
+			if(objectsCollide(boundingBox, i)) {
+				
+				//Determine collision type
+				switch(i.getCollisionType()) {
+					case PLATFORM:
+						if(restingBlock != i) {
+							break;
+						}
+					case SOLID:
+						
+						//Check if object is being pushed up by resting block
+						if(restingBlock == i) {
+							setY(i.getY() - getHeight() + 1);
+							restingBlockCheck = (RestableObject) i;
+							setVY(0);
+						} else {
+							//Otherwise, hit ceiling
+							setY(i.getY() + i.getHeight());
+							obstructMovement = true;
+						}
+						
+						break;
+					default:
+						//Advance normally
+						break;
+				}
+			}
+		}
+		
+		if(!obstructMovement) {
+			//Advance normally
+			addY(v);
+		}
+	}
+	
+	public void checkSolidObjectCollisionX(int v) {
+		
+		boolean obstructMovement = false;
+		
+		//Get bounding box of destination
+		Rectangle boundingBox = getBounds(v, 0);
+		
+		//Loop through all solid objects
+		for (SolidObject i : solidObjects) {
+			
+			//Check for collision
+			if(objectsCollide(boundingBox, i)) {
+				
+				//Push against block
+				i.onPush(entityType, v);
+				
+				//Determine collision type
+				switch (i.getCollisionType()) {
+					case SOLID:
+						if(v > 0) {
+							//Push against left edge (if moving right)
+							setX(i.getX() - getWidth());
+						} else {
+							//Push against right edge (if moving left)
+							setX(i.getX() + i.getWidth());
+						}
+						obstructMovement = true;
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		if(!obstructMovement) {
+			//Advance normally
+			addX(v);
+		}
+	}
+	
+	public void checkBlockMapCollision(int v, Direction direction) {
 		
 		//Initialize variables
 		width = getWidth();
@@ -148,13 +198,13 @@ public class Entity extends MovingObject {
 					case NONSOLID:
 					case WATER:
 						isFalling = true;
-						checkSolidObjectCollision(solidObjects, v, direction);
+						checkSolidObjectCollisionDown(v);
 						break;
 						
 					//Climb down
 					case LADDER:
 						if(isClimbing) {
-							checkSolidObjectCollision(solidObjects, v, direction);
+							checkSolidObjectCollisionDown(v);
 						} else {
 							setVY(0);
 						}
@@ -183,7 +233,7 @@ public class Entity extends MovingObject {
 					case WATER:
 					case LADDER:
 					case PLATFORM:
-						checkSolidObjectCollision(solidObjects, v, direction);
+						checkSolidObjectCollisionUp(v);
 						isFalling = false;
 						break;
 						
@@ -208,7 +258,7 @@ public class Entity extends MovingObject {
 					case WATER:
 					case LADDER:
 					case PLATFORM:
-						checkSolidObjectCollision(solidObjects, v, direction);
+						checkSolidObjectCollisionX(v);
 						break;
 						
 					//Destroy
@@ -249,16 +299,16 @@ public class Entity extends MovingObject {
 		
 		if(vy >= 0) {
 			//Move Down
-			checkBlockMapCollision(vy, solidObjects, Direction.DOWN);
+			checkBlockMapCollision(vy, Direction.DOWN);
 		}else {
 			//Move Up
-			checkBlockMapCollision(vy, solidObjects, Direction.UP);
+			checkBlockMapCollision(vy, Direction.UP);
 		}
 		
 		if(vx > 0) {
-			checkBlockMapCollision(vx, solidObjects, Direction.RIGHT);
+			checkBlockMapCollision(vx, Direction.RIGHT);
 		} else if (vx < 0) { 
-			checkBlockMapCollision(vx, solidObjects, Direction.LEFT);
+			checkBlockMapCollision(vx, Direction.LEFT);
 		} else {
 			setDX(0);
 		}
