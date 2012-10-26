@@ -4,14 +4,7 @@ import dmcigd.core.enums.CollisionType;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 
-public class TimedBlock extends MovingObject implements RestableObject {
-	
-	//NOTE:
-	//It wasn't worth making an enumerator for a two-value integer
-	//That only exists for this class
-	
-	//Type 0: Horizontal movement
-	//Type 1: Vertical movement
+public class TimedBlock extends ObjectCollision implements RestableObject {
 	
 	private int objectClock,changeState,clockReset = 0;
 	
