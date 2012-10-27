@@ -52,7 +52,7 @@ public class BlockCollision {
 		int leftCol = tileCol(x, width, Direction.LEFT);
 		int rightCol = tileCol(x, width, Direction.RIGHT);
 		
-		int destinationRow = tileRow(y + vy, height, direction);
+		int destinationRow = tileRow(y + vy, height + 1, direction);
 		
 		//Loop through columns to check destination blocks
 		for(int i = leftCol; i <= rightCol; i++) {

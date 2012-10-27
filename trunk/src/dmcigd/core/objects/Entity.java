@@ -181,97 +181,83 @@ public class Entity extends MovingObject {
 		}
 	}
 	
-	public void checkBlockMapCollision(int v, Direction direction) {
-		
-		//Initialize variables
-		width = getWidth();
-		height = getHeight();
-		
-		//Check Collision
+	public CollisionType tileCollisionType(int v, Direction direction) {
 		switch (direction) {
 			case DOWN:
-				
-				//Move Down
-				switch(blockMap.collidesY(getX(), getY(), v, width, height, Direction.DOWN)) {
-				
-					//Fall down
-					case NONSOLID:
-					case WATER:
-						isFalling = true;
-						checkSolidObjectCollisionDown(v);
-						break;
-						
-					//Climb down
-					case LADDER:
-						if(isClimbing) {
-							checkSolidObjectCollisionDown(v);
-						} else {
-							setVY(0);
-						}
-						break;
-						
-					//Destroy
-					case DESTROY:
-						isDead = true;
-						break;
-						
-					//Hit ground
-					default:
-						setY(blockMap.rowEdge(getY(), height, Direction.DOWN));
-						setVY(0);
-						break;
-				}
-				
-				break;
-				
 			case UP:
-
-				switch(blockMap.collidesY(getX(), getY(), v, width, height, Direction.UP)) {
-				
-					//Move up
-					case NONSOLID:
-					case WATER:
-					case LADDER:
-					case PLATFORM:
-						checkSolidObjectCollisionUp(v);
-						isFalling = false;
-						break;
-						
-					//Destroy
-					case DESTROY:
-						isDead = true;
-						
-					//Hit ceiling
-					default:
-						setY(blockMap.rowEdge(getY(), height, Direction.UP));
-						break;
-				}
-				
+				return blockMap.collidesY(getX(), getY(), v, width, height, direction);
+			default:
+				return blockMap.collidesX(getX(), getY(), v, width, height, direction);
+		}
+	}
+	
+	public void blockMapCollision(int v, Direction direction) {
+		switch (direction) {
+			case DOWN:
+				setVY(0);
+			case UP:
+				setY(blockMap.rowEdge(getY(), height, direction));
+				break;
+			default:
+				setX(blockMap.colEdge(getX(), width, direction));
+				break;
+		}
+	}
+	
+	public void checkBlockMapCollisionDown(int v) {
+		//Move Down
+		switch(tileCollisionType(v, Direction.DOWN)) {
+			//Fall down
+			case NONSOLID:
+			case WATER:
+				isFalling = true;
+				checkSolidObjectCollisionDown(v);
 				break;
 				
-			default: //Moving left or right
-				
-				switch(blockMap.collidesX(getX(), getY(), v, width, height, direction)) {
-				
-					//Pass through
-					case NONSOLID:
-					case WATER:
-					case LADDER:
-					case PLATFORM:
-						checkSolidObjectCollisionX(v);
-						break;
-						
-					//Destroy
-					case DESTROY:
-						isDead = true;
-						break;
-						
-					//Hit wall
-					default:
-						setX(blockMap.colEdge(getX(), width, direction));
-						break;
+			//Climb down
+			case LADDER:
+				if(isClimbing) {
+					checkSolidObjectCollisionDown(v);
+				} else {
+					setVY(0);
 				}
+				break;
 				
+			//Destroy
+			case DESTROY:
+				isDead = true;
+				break;
+				
+			//Hit ground
+			default:
+				blockMapCollision(v, Direction.DOWN);
+				break;
+		}
+	}
+	
+	public void checkBlockMapCollision(int v, Direction direction) {
+		
+		switch(tileCollisionType(v, direction)) {
+				
+			//Move
+			case NONSOLID:
+			case WATER:
+			case LADDER:
+			case PLATFORM:
+				if(direction == Direction.UP) {
+					checkSolidObjectCollisionUp(v);
+				} else {
+					checkSolidObjectCollisionX(v);
+				}
+				break;
+				
+			//Destroy
+			case DESTROY:
+				isDead = true;
+				
+			//Hit solid object
+			default:
+				blockMapCollision(v, direction);
 				break;
 		}
 	}
@@ -299,7 +285,7 @@ public class Entity extends MovingObject {
 		
 		if(vy >= 0) {
 			//Move Down
-			checkBlockMapCollision(vy, Direction.DOWN);
+			checkBlockMapCollisionDown(vy);
 		}else {
 			//Move Up
 			checkBlockMapCollision(vy, Direction.UP);
