@@ -195,7 +195,7 @@ public class Player extends Entity implements RestableObject {
 		//Carries item
 		if(heldItem != null) {
 			heldItem.setX(getX());
-			heldItem.setY(getY());
+			heldItem.setY(getY() + 8);
 		}
 	}
 }
