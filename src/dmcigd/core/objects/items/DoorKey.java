@@ -29,7 +29,7 @@ public class DoorKey extends Entity implements Item {
 		setY(y);
 		setDX(0);
 		setDY(0);
-		setHeight(24);
+		setHeight(16);
 		setWidth(20);
 		setImageHeight(32);
 		setImageWidth(32);
