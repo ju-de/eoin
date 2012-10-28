@@ -15,9 +15,15 @@ public class PushableBlock extends Entity implements RestableObject {
 	
 	public void onPush(EntityType entityType, int v) {
 		if(entityType == EntityType.PLAYER) {
-			setVX(v/2);
+			if(restingBlock != null) {
+				setVX((v - restingBlock.getDX())/2);
+			} else {
+				setVX(v/2);
+			}
 		}
 	}
+	
+	public boolean isDestroyed() { return false; }
 	
 	public PushableBlock(int x, int y, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
 

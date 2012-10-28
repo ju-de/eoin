@@ -71,6 +71,9 @@ public class EntityBlockMapCollider extends EntityObjectCollider {
 			//Hit solid object
 			default:
 				blockMapCollision(v, direction);
+				if(direction != Direction.UP) {
+					setVX(0);
+				}
 				break;
 		}
 	}

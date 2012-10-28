@@ -7,20 +7,29 @@ import dmcigd.core.objects.maps.BlockMap;
 
 import java.util.*;
 
-public class Player extends Entity implements SolidObject {
+public class Player extends Entity implements RestableObject {
 	
 	private int jumpState = 0;
 	private int jumpDelay = 5;
 	private boolean isWalking,sprint;
 	private Direction walking,climbing;
+	
+	private ArrayList<Item> items = new ArrayList<Item>();
+	public Item heldItem;
 
 	public void onPush(EntityType entityType, int v) {
 		if(entityType == EntityType.MOVINGBLOCK) {
 			addX(v);
 		}
 	}
+
+	public void onRest(EntityType entityType) {}
+
+	public void onUnrest(EntityType entityType) {}
 	
-	public Player(int x, int  y, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
+	public boolean isDestroyed() { return false; }
+	
+	public Player(int x, int  y, BlockMap blockMap, ArrayList<SolidObject> solidObjects, ArrayList<Item> items) {
 		
 		setX(x);
 		setY(y);
@@ -32,6 +41,8 @@ public class Player extends Entity implements SolidObject {
 		setGravity();
 		setBlockMap(blockMap);
 		setSolidObjects(solidObjects);
+		
+		this.items = items;
 		
 		setMapCode("1");
 		setImagePath("player.gif");
@@ -77,6 +88,24 @@ public class Player extends Entity implements SolidObject {
 		this.sprint = down;
 		isClimbing = down;
 		climbing = Direction.DOWN;
+	}
+	
+	public void interact() {
+		if(heldItem != null) {
+			if(flipped) {
+				heldItem.setVX(-4);
+			} else {
+				heldItem.setVX(4);
+			}
+			heldItem.setVY(-4);
+			heldItem = null;
+		} else {
+			for (Item i : items) {
+				if(getBounds().intersects(i.getBounds())) {
+					heldItem = i;
+				}
+			}
+		}
 	}
 	
 	public void jump(boolean jumping) {
@@ -161,6 +190,12 @@ public class Player extends Entity implements SolidObject {
 		//Jump delay to prevent accidentally double jumping straight away
 		if(jumpDelay > 0) {
 			jumpDelay--;
+		}
+		
+		//Carries item
+		if(heldItem != null) {
+			heldItem.setX(getX());
+			heldItem.setY(getY());
 		}
 	}
 }

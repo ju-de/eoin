@@ -7,6 +7,7 @@ import dmcigd.core.objects.maps.*;
 import dmcigd.core.objects.player.*;
 import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.platforms.*;
+import dmcigd.core.objects.items.*;
 
 import java.awt.event.*;
 import java.net.*;
@@ -30,6 +31,9 @@ public class Demo implements Runnable {
 	public EnvironmentMap environmentMap = new EnvironmentMap();
 	public ArrayList<ObjectImage> visibleObjects;
 	public ArrayList<SolidObject> solidObjects = new ArrayList<SolidObject>();
+	private Iterator<SolidObject> solidObjectIt;
+	public ArrayList<Item> items = new ArrayList<Item>();
+	private Iterator<Item> itemIt;
 	
 	public boolean isReady() {
 		return ready;
@@ -59,12 +63,36 @@ public class Demo implements Runnable {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
 			}
 		}
+		
+		for (Item i : items) {
+			if(i.isVisible(player.getX(), player.getY())) {
+				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
+			}
+		}
 	}
 	
 	public void step() {
 		
-		for (SolidObject i : solidObjects) {
-			i.step();
+		solidObjectIt = solidObjects.iterator();
+		
+		while(solidObjectIt.hasNext()) {
+			SolidObject i = solidObjectIt.next();
+//			if(i.isDestroyed()) {
+//				it.remove();
+//			} else {
+				i.step();
+//			}
+		}
+		
+		itemIt = items.iterator();
+		
+		while(itemIt.hasNext()) {
+			Item i = itemIt.next();
+			if(i.isUsed()) {
+				itemIt.remove();
+			} else {
+				i.step();
+			}
 		}
 				
 		if(player.isDead) {
@@ -80,9 +108,13 @@ public class Demo implements Runnable {
 		blockMap.loadBlockMap(codeBase, "demo");
 		environmentMap.loadEnvironmentMap(codeBase, "demo");
 		
-		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap, solidObjects);
+		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap, solidObjects, items);
 		
 		solidObjects.add(new PushableBlock(832, 480, blockMap, solidObjects));
+
+		solidObjects.add(new LockedDoor(992, 480, 1));
+		
+		solidObjects.add(new LockedDoor(1088, 480, 2));
 		
 		solidObjects.add(new MovingPlatform(1920, 384, 1, 6, 1, 6));
 		
@@ -133,6 +165,9 @@ public class Demo implements Runnable {
 		solidObjects.add(new TimedBlock(197 * 32, 704, 1, 0, 32, 288));
 		
 		solidObjects.add(player);
+		
+		items.add(new DoorKey(416, 416, 1, blockMap, solidObjects));
+		items.add(new DoorKey(736, 416, 2, blockMap, solidObjects));
 
 		fetchVisibleObjects();
 		
@@ -157,6 +192,9 @@ public class Demo implements Runnable {
 				break;
 			case KeyEvent.VK_Z:
 				player.jump(true);
+				break;
+			case KeyEvent.VK_C:
+				player.interact();
 				break;
 			default:
 				break;
