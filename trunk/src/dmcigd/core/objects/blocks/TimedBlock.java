@@ -1,7 +1,6 @@
 package dmcigd.core.objects.blocks;
 
 import dmcigd.core.enums.CollisionType;
-import dmcigd.core.enums.Direction;
 import dmcigd.core.enums.EntityType;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
@@ -15,6 +14,8 @@ public class TimedBlock extends ObjectCollision implements RestableObject {
 	public void onUnrest(EntityType entityType) {}
 	
 	public void onPush(EntityType entityType, int v) {}
+	
+	public boolean isDestroyed() { return false; }
 	
 	public void setState() {
 		if(objectClock < changeState) {

@@ -1,13 +1,11 @@
 package dmcigd.core.objects.interfaces;
 
-import dmcigd.core.enums.*;
-import dmcigd.core.objects.*;
+import java.awt.Rectangle;
 
-import java.awt.*;
+import dmcigd.core.objects.ObjectImage;
 
-public interface SolidObject {
+public interface Item {
 	
-	public CollisionType getCollisionType();
 	public Rectangle getBounds(int vx, int vy);
 	public Rectangle getBounds();
 	
@@ -23,10 +21,16 @@ public interface SolidObject {
 	public int getSequence();
 	public int getFrame();
 	
-	public boolean isVisible(int x, int y);
-	public boolean isDestroyed();
-	public ObjectImage getObjectImage(int x, int y);
+	public void setX(int x);
+	public void setY(int y);
+	public void setVX(float vx);
+	public void setVY(float vy);
 	
-	public void onPush(EntityType entityType, int v);
+	public boolean isVisible(int x, int y);
+	public ObjectImage getObjectImage(int x, int y);
+
 	public void step();
+	
+	public boolean isUsed();
+	
 }

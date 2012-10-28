@@ -1,7 +1,6 @@
 package dmcigd.core.objects.platforms;
 
 import dmcigd.core.enums.CollisionType;
-import dmcigd.core.enums.Direction;
 import dmcigd.core.enums.EntityType;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
@@ -22,6 +21,8 @@ public class MovingPlatform extends MovingObject implements RestableObject {
 	public void onUnrest(EntityType entityType) {}
 	
 	public void onPush(EntityType entityType, int v) {}
+	
+	public boolean isDestroyed() { return false; }
 	
 	public MovingPlatform(int x, int y, int type, int width, int speed, int travelDistance) {
 		

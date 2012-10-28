@@ -13,6 +13,7 @@ public class EntityObjectCollider extends MovingObject {
 	private EntityType entityType;
 	
 	public RestableObject restingBlock,restingBlockCheck;
+	public SolidObject pushedObject;
 	
 	//Public getters
 	public EntityType getEntityType() {
@@ -26,6 +27,8 @@ public class EntityObjectCollider extends MovingObject {
 	public void setEntityType(EntityType entityType) {
 		this.entityType = entityType;
 	}
+	
+	public void pushedObject(SolidObject object, int v) { }
 	
 	public boolean objectsCollide(Rectangle boundingBox, SolidObject object) {
 		
@@ -131,6 +134,7 @@ public class EntityObjectCollider extends MovingObject {
 				
 				//Push against block
 				i.onPush(entityType, v);
+				pushedObject(i, v);
 				
 				//Determine collision type
 				switch (i.getCollisionType()) {
