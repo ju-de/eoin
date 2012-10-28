@@ -41,7 +41,7 @@ public class CrumblingBlock extends ObjectCollision implements RestableObject {
 		setFrameSpeed(0);
 		
 		setMapCode("`");
-		setImagePath("demo/objects.gif");
+		setImagePath("objects.gif");
 		
 		this.clockReset = clockReset;
 		this.crumbleSpeed = crumbleSpeed;

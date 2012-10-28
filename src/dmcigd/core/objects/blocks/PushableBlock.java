@@ -31,8 +31,8 @@ public class PushableBlock extends Entity implements RestableObject {
 		setY(y);
 		setDX(0);
 		setDY(0);
-		setHeight(32);
-		setWidth(32);
+		setHeight(28);
+		setWidth(28);
 		setImageHeight(32);
 		setImageWidth(32);
 		
@@ -40,7 +40,7 @@ public class PushableBlock extends Entity implements RestableObject {
 		setFrame(8);
 		
 		setMapCode("`");
-		setImagePath("demo/objects.gif");
+		setImagePath("objects.gif");
 		
 		setCollisionType(CollisionType.SOLID);
 		
