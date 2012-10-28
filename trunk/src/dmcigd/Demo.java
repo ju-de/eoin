@@ -8,6 +8,7 @@ import dmcigd.core.objects.player.*;
 import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.platforms.*;
 import dmcigd.core.objects.items.*;
+import dmcigd.core.objects.regions.*;
 
 import java.awt.event.*;
 import java.net.*;
@@ -34,6 +35,7 @@ public class Demo implements Runnable {
 	private Iterator<SolidObject> solidObjectIt;
 	public ArrayList<Item> items = new ArrayList<Item>();
 	private Iterator<Item> itemIt;
+	public ArrayList<Region> regions = new ArrayList<Region>();
 	
 	public boolean isReady() {
 		return ready;
@@ -55,14 +57,20 @@ public class Demo implements Runnable {
 	public void fetchVisibleObjects() {
 		
 		visibleObjects = new ArrayList<ObjectImage>();
-		
-		visibleObjects.add(player.getObjectImage(player.getX(), player.getY()));
+
+		for (Region i : regions) {
+			if(i.isVisible(player.getX(), player.getY())) {
+				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
+			}
+		}
 		
 		for (SolidObject i : solidObjects) {
 			if(i.isVisible(player.getX(), player.getY())) {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
 			}
 		}
+		
+		visibleObjects.add(player.getObjectImage(player.getX(), player.getY()));
 		
 		for (Item i : items) {
 			if(i.isVisible(player.getX(), player.getY())) {
@@ -73,17 +81,23 @@ public class Demo implements Runnable {
 	
 	public void step() {
 		
+		//Step all solid objects and player
 		solidObjectIt = solidObjects.iterator();
 		
 		while(solidObjectIt.hasNext()) {
 			SolidObject i = solidObjectIt.next();
-//			if(i.isDestroyed()) {
-//				it.remove();
-//			} else {
+			if(i.isDestroyed()) {
+				solidObjectIt.remove();
+			} else {
 				i.step();
-//			}
+			}
 		}
 		
+		if(player.isDead) {
+			isDead = true;
+		}
+		
+		//Step all items
 		itemIt = items.iterator();
 		
 		while(itemIt.hasNext()) {
@@ -94,9 +108,10 @@ public class Demo implements Runnable {
 				i.step();
 			}
 		}
-				
-		if(player.isDead) {
-			isDead = true;
+		
+		//Step all regions
+		for (Region i : regions) {
+			i.step();
 		}
 		
 		fetchVisibleObjects();
@@ -108,7 +123,7 @@ public class Demo implements Runnable {
 		blockMap.loadBlockMap(codeBase, "demo");
 		environmentMap.loadEnvironmentMap(codeBase, "demo");
 		
-		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap, solidObjects, items);
+		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap, solidObjects, items, regions);
 		
 		solidObjects.add(new PushableBlock(832, 480, blockMap, solidObjects));
 
@@ -168,6 +183,9 @@ public class Demo implements Runnable {
 		
 		items.add(new DoorKey(416, 416, 1, blockMap, solidObjects));
 		items.add(new DoorKey(736, 416, 2, blockMap, solidObjects));
+		
+		regions.add(new Pathway(416, 480, 2112, 320));
+		regions.add(new Pathway(2112, 320, 416, 480));
 
 		fetchVisibleObjects();
 		
@@ -195,6 +213,9 @@ public class Demo implements Runnable {
 				break;
 			case KeyEvent.VK_C:
 				player.interact();
+				break;
+			case KeyEvent.VK_R:
+				player.isDead = true;
 				break;
 			default:
 				break;

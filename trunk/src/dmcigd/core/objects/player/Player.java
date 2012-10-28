@@ -16,6 +16,7 @@ public class Player extends Entity implements RestableObject {
 	
 	private ArrayList<Item> items = new ArrayList<Item>();
 	public Item heldItem;
+	private ArrayList<Region> regions = new ArrayList<Region>();
 
 	public void onPush(EntityType entityType, int v) {
 		if(entityType == EntityType.MOVINGBLOCK) {
@@ -29,7 +30,7 @@ public class Player extends Entity implements RestableObject {
 	
 	public boolean isDestroyed() { return false; }
 	
-	public Player(int x, int  y, BlockMap blockMap, ArrayList<SolidObject> solidObjects, ArrayList<Item> items) {
+	public Player(int x, int  y, BlockMap blockMap, ArrayList<SolidObject> solidObjects, ArrayList<Item> items, ArrayList<Region> regions) {
 		
 		setX(x);
 		setY(y);
@@ -43,6 +44,7 @@ public class Player extends Entity implements RestableObject {
 		setSolidObjects(solidObjects);
 		
 		this.items = items;
+		this.regions = regions;
 		
 		setMapCode("1");
 		setImagePath("player.gif");
@@ -91,20 +93,49 @@ public class Player extends Entity implements RestableObject {
 	}
 	
 	public void interact() {
+		
 		if(heldItem != null) {
-			if(flipped) {
-				heldItem.setVX(-4);
-			} else {
-				heldItem.setVX(4);
+			
+			boolean interacted = false;
+			
+			//If holding an item, check for regions first, don't throw item if in interactive zone
+			
+			for (Region i : regions) {
+				if(getBounds().intersects(i.getBounds())) {
+					i.interact(this);
+					interacted = true;
+					break;
+				}
 			}
-			heldItem.setVY(-4);
-			heldItem = null;
+			
+			if(!interacted) {
+			
+				if(flipped) {
+					heldItem.setVX(-4);
+				} else {
+					heldItem.setVX(4);
+				}
+				heldItem.setVY(-4);
+				heldItem = null;
+			
+			}
 		} else {
+			
+			//Otherwise, check for items first, then check for regions
+			
 			for (Item i : items) {
 				if(getBounds().intersects(i.getBounds())) {
 					heldItem = i;
 				}
 			}
+			
+			for (Region i : regions) {
+				if(getBounds().intersects(i.getBounds())) {
+					i.interact(this);
+					break;
+				}
+			}
+			
 		}
 	}
 	
@@ -146,6 +177,12 @@ public class Player extends Entity implements RestableObject {
 		
 		//Step
 		move();
+		
+		for (Region i : regions) {
+			if(getBounds().intersects(i.getBounds())) {
+				i.onHover();
+			}
+		}
 		
 		//Animate Character
 		if(isFalling) {

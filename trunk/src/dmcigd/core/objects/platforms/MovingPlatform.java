@@ -45,7 +45,7 @@ public class MovingPlatform extends MovingObject implements RestableObject {
 		}
 		
 		setMapCode("`");
-		setImagePath("demo/objects.gif");
+		setImagePath("objects.gif");
 		
 		clockReset = travelDistance * 16 / speed;
 	}
