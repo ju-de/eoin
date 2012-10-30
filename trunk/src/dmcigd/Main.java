@@ -9,11 +9,11 @@ import java.net.*;
 //Catches input and manages game loop objects
 public class Main implements Runnable, KeyListener {
 	
-	//Initialize Demo Thread (temporary, delete when game is ready)
-	Demo demo;
+	//Initialize level object
+	Level level;
 	
 	//Initializing gameState variable - decides which object to interact with
-	private GameState gameState;
+	private GameState gameState,unpauseGameState;
 	private ThreadSync threadSync;
 	private URL codeBase;
 	
@@ -24,18 +24,33 @@ public class Main implements Runnable, KeyListener {
 		this.threadSync = threadSync;
 		
 		//Set gameState variable (currently at 3 for Demo Screen, should be changed to 1 for real game to initiate start menu)
-		gameState = GameState.LOADINGDEMO;
+		gameState = GameState.LOADINGLEVEL;
 		
 		//Initializes Thread
 		Thread th = new Thread(this);
 		th.start();
 		
-		demo = new Demo(codeBase);
+		level = new Demo(codeBase);
 	}
 	
 	//Passes game state to rendering thread
 	public GameState getGameState() {
 		return gameState;
+	}
+	
+	public void gameOver() {
+		//Temporary measure until proper level loader is implemented
+		level = new Demo(codeBase);
+		gameState = GameState.LOADINGLEVEL;
+	}
+	
+	public void pause() {
+		if(gameState != GameState.PAUSE) {
+			unpauseGameState = gameState;
+			gameState = GameState.PAUSE;
+		} else {
+			gameState = unpauseGameState;
+		}
 	}
 	
 	public void run() {
@@ -46,23 +61,35 @@ public class Main implements Runnable, KeyListener {
 			
 			//Temporary game state, remove when done
 			switch(gameState) {
-				case DEMO:
-					demo.step();
+				case LEVEL:
 					
-					if(demo.isDead()) {
-						demo = new Demo(codeBase);
-						gameState = GameState.LOADINGDEMO;
+					if(level.isDead()) {
+						gameOver();
+					}else if(level.inDialogue()) {
+						//Enter dialogue
+						gameState = GameState.DIALOGUE;
+					} else {
+						level.step();
 					}
 					
 					break;
-				case LOADINGDEMO:
+					
+				case LOADINGLEVEL:
 					
 					//Change gameState when level element is done loading
-					if(demo != null && demo.isReady()) {
-						gameState = GameState.DEMO;
+					if(level != null && level.isReady()) {
+						gameState = GameState.LEVEL;
 					}
 					
 					break;
+					
+				case DIALOGUE:
+					
+					if(!level.inDialogue()) {
+						//Exit dialogue
+						gameState = GameState.LEVEL;
+					}
+					
 				default:
 					break;
 			}
@@ -79,12 +106,31 @@ public class Main implements Runnable, KeyListener {
 	
 	public void keyPressed(KeyEvent e) {
 		//Catch core keypresses such as Pause/Unpause
+
+		int keyCode = e.getKeyCode();
+		switch(keyCode) {
 		
-		//Pass keypresses to appropriate object
-		switch(gameState) {
-			case DEMO:
-				demo.keyPressed(e);
+			case KeyEvent.VK_R:
+				//Reset Level
+				gameOver();
+				break;
+				
+			case KeyEvent.VK_P:
+				//Pause Game
+				pause();
+				break;
+				
 			default:
+
+				//Pass keypresses to appropriate object
+				switch(gameState) {
+					case DIALOGUE:
+					case LEVEL:
+						level.keyPressed(e);
+					default:
+						break;
+				}
+				
 				break;
 		}
 	}
@@ -94,8 +140,9 @@ public class Main implements Runnable, KeyListener {
 		
 		//Pass keyreleases to appropriate object
 		switch(gameState) {
-			case DEMO:
-				demo.keyReleased(e);
+			case DIALOGUE:
+			case LEVEL:
+				level.keyReleased(e);
 			default:
 				break;
 		}
