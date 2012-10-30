@@ -162,7 +162,7 @@ public class Level implements Runnable {
 			case KeyEvent.VK_Z:
 				player.jump(true);
 				break;
-			case KeyEvent.VK_C:
+			case KeyEvent.VK_X:
 				if(inDialogue()) {
 					dialogueHandler.progressDialogue();
 				} else {

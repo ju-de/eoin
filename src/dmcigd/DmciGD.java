@@ -309,11 +309,11 @@ public class DmciGD extends Applet implements Runnable {
 				}
 				
 				dbg.setFont(fSmall);
-				//Draw "Press "C" to continue" instruction
+				//Draw "Press "X" to continue" instruction
 				dbg.setColor(Color.BLACK);
-				dbg.drawString("Press \"C\" to continue", 375 + offset, 313);
+				dbg.drawString("Press \"X\" to continue", 375 + offset, 313);
 				dbg.setColor(Color.GRAY);
-				dbg.drawString("Press \"C\" to continue", 375 + offset, 312);
+				dbg.drawString("Press \"X\" to continue", 375 + offset, 312);
 				break;
 				
 			case PAUSE:
