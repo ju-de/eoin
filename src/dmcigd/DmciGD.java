@@ -32,6 +32,9 @@ public class DmciGD extends Applet implements Runnable {
 	private Map<String, Image> objectImageMap = new HashMap<String, Image>();
 	private int playerX, playerY;
 	
+	//Initialize Dialogue variables
+	private String avatarImageCode,name,line1,line2,line3;
+	
 	//Initialize the Double-buffering Variables
 	private Image dbImage;
 	private Graphics dbg;
@@ -79,11 +82,11 @@ public class DmciGD extends Applet implements Runnable {
 			threadSync.consume();
 			
 			switch (main.getGameState()) {
-				case DEMO:
+				case LEVEL:
 					
-					if(gameState != GameState.DEMO) {
+					if(gameState != GameState.LEVEL) {
 						
-						tileSheet = getImageFromPath(main.demo.tileSet+"/tilesheet.gif");
+						tileSheet = getImageFromPath("tilesheets/"+main.level.tileSet+".gif");
 						
 						//Preload map tilesheet
 						MediaTracker mt = new MediaTracker(this);
@@ -97,7 +100,7 @@ public class DmciGD extends Applet implements Runnable {
 						int i = 2;
 						
 						//Load all images
-						for(SolidObject object : main.demo.solidObjects) {
+						for(SolidObject object : main.level.solidObjects) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -106,7 +109,7 @@ public class DmciGD extends Applet implements Runnable {
 							}
 							i++;
 						}
-						for(Item object : main.demo.items) {
+						for(Item object : main.level.items) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -115,7 +118,7 @@ public class DmciGD extends Applet implements Runnable {
 							}
 							i++;
 						}
-						for(Region object : main.demo.regions) {
+						for(Region object : main.level.regions) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -131,20 +134,19 @@ public class DmciGD extends Applet implements Runnable {
 					}
 					
 					//Retrieve necessary objects
-					gameState = GameState.DEMO;
+					gameState = GameState.LEVEL;
 					
-					playerX = main.demo.player.getX();
-					playerY = main.demo.player.getY();
+					playerX = main.level.player.getX();
+					playerY = main.level.player.getY();
 										
-					visibleBlocks = main.demo.blockMap.getVisibleBlocks(playerX, playerY);
-					visibleEnvironment = main.demo.environmentMap.getVisibleEnvironment(playerX, playerY);
+					visibleBlocks = main.level.blockMap.getVisibleBlocks(playerX, playerY);
+					visibleEnvironment = main.level.environmentMap.getVisibleEnvironment(playerX, playerY);
 					
-					visibleObjects = main.demo.visibleObjects;
+					visibleObjects = main.level.visibleObjects;
 					
 					//Tells Main thread to begin fetching next frame
 					threadSync.consumed();
 					
-					//Repaint
 					repaint();
 					
 					//Only repaint after the previous frame has been painted and game is in a state of update - Reduces unnecessary calls
@@ -152,6 +154,34 @@ public class DmciGD extends Applet implements Runnable {
 						wait();
 					} catch (InterruptedException ex) {}
 					break;
+					
+				case DIALOGUE:
+					
+					//Retrieve Dialogue text
+					avatarImageCode = null;
+					avatarImageCode = main.level.dialogueHandler.avatarImageCode;
+					
+					name = null;
+					name = main.level.dialogueHandler.name;
+					
+					line1 = null;
+					line1 = main.level.dialogueHandler.line1;
+					
+					line2 = null;
+					line2 = main.level.dialogueHandler.line2;
+					
+					line3 = null;
+					line3 = main.level.dialogueHandler.line3;
+					
+					//Tell Main thread to continue with game loop
+					threadSync.consumed();
+					
+					repaint();
+					
+					//Only repaint after the previous frame has been painted and game is in a state of update - Reduces unnecessary calls
+					try {
+						wait();
+					} catch (InterruptedException ex) {}
 					
 				default:
 					
@@ -163,7 +193,7 @@ public class DmciGD extends Applet implements Runnable {
 						//Tells Main thread to begin fetching next frame
 						threadSync.consumed();
 						
-						//Update screen once
+						//Update screen once (and only once)
 						repaint();
 						
 						//Wait and check again
@@ -197,7 +227,7 @@ public class DmciGD extends Applet implements Runnable {
 	public void paint(Graphics g) {
       
 		//Do not clear screen in case of dialogue - Paused game should remain as background during cutscenes or dialogue)
-		if(gameState != GameState.DIALOGUE) {
+		if(gameState != GameState.DIALOGUE && gameState != GameState.PAUSE) {
 
 		  //Clear screen and draw Background
 		  dbg.setColor(getBackground());
@@ -207,12 +237,8 @@ public class DmciGD extends Applet implements Runnable {
 		
 		//Check for which paint method to call
 		switch(gameState) {
-			case DEMO:
+			case LEVEL:
 				
-				//Debugging element: highlights tile associated with player
-				//dbg.setColor(Color.green);
-				//dbg.fillRect(((main.demo.playerX/32)*32) - (main.demo.playerX) + 304,((main.demo.playerY/32)*32) - (main.demo.playerY) +144,32,32);
-
 				dbg.setColor(Color.red);
 				
 				int[] tileLocation;
@@ -241,61 +267,62 @@ public class DmciGD extends Applet implements Runnable {
 				for(ObjectImage i : visibleObjects) {
 					dbg.drawImage(objectImageMap.get(i.mapCode), i.dstx1, i.dsty1, i.dstx2, i.dsty2, i.srcx1, i.srcy1, i.srcx2, i.srcy2, this);
 				}
-
-				dbg.setColor(new Color(30,30,30));
-				dbg.fillRect(0, 210, 640, 110);
-				
-				dbg.setColor(Color.BLACK);
-				dbg.fillRect(493, 192, 128, 128);
-				
-				dbg.setFont(f);
-				dbg.setColor(Color.GRAY);
-				/*dbg.drawString("Name", 100, 235);*/
-				dbg.drawString("Name", 25, 235);
-				dbg.setColor(Color.WHITE);
-				/*dbg.drawString("Lorem ipsum dolor sit amet, consectetur adipiscing.", 100, 255);
-				dbg.drawString("elit. Etiam sit amet dui at ante semper pellentesque", 100, 275);
-				dbg.drawString("non nec velit...", 100, 295);*/
-				dbg.drawString("Lorem ipsum dolor sit amet, consectetur adipiscing.", 25, 255);
-				dbg.drawString("elit. Etiam sit amet dui at ante semper pellentesque", 25, 275);
-				dbg.drawString("non nec velit...", 25, 295);
-				
-				dbg.setFont(fSmall);
-
-				dbg.setColor(Color.BLACK);
-				dbg.drawString("Press \"C\" to continue", 375, 313);
-				dbg.setColor(Color.GRAY);
-				dbg.drawString("Press \"C\" to continue", 375, 312);
-				/*dbg.setColor(Color.BLACK);
-				dbg.drawString("Press \"C\" to continue", 450, 313);
-				dbg.setColor(Color.GRAY);
-				dbg.drawString("Press \"C\" to continue", 450, 312);*/
 				
 				
 				break;
 				
-			case LOADINGDEMO:
+			case LOADINGLEVEL:
 				
 				dbg.drawString("Loading Demo Level", 40, 75);
 				
 				break;
 				
-			case LEVEL:
-				break;
-				
 			case DIALOGUE:
-				break;
+				//Draw background box
+				dbg.setColor(new Color(30,30,30));
+				dbg.fillRect(0, 210, 640, 110);
+
+				int offset = 75;
+				if(avatarImageCode != null) {
+					//Draw avatar
+					dbg.setColor(Color.BLACK);
+					dbg.fillRect(493, 192, 128, 128);
+					offset = 0;
+				}
 				
-			case MENU:
-				break;
+				dbg.setFont(f);
 				
-			case LOADINGLEVEL:
-				break;
+				//Draw name
+				dbg.setColor(Color.GRAY);
+				dbg.drawString(name, 25 + offset, 235);
 				
-			case LOADING:
+				//Draw text
+				dbg.setColor(Color.WHITE);
+				if(line1 != null) {
+					dbg.drawString(line1, 25 + offset, 255);
+				}
+				if(line2 != null) {
+					dbg.drawString(line2, 25 + offset, 275);
+				}
+				if(line3 != null) {
+					dbg.drawString(line3, 25 + offset, 295);
+				}
+				
+				dbg.setFont(fSmall);
+				//Draw "Press "C" to continue" instruction
+				dbg.setColor(Color.BLACK);
+				dbg.drawString("Press \"C\" to continue", 375 + offset, 313);
+				dbg.setColor(Color.GRAY);
+				dbg.drawString("Press \"C\" to continue", 375 + offset, 312);
 				break;
 				
 			case PAUSE:
+				dbg.setColor(new Color(0, 0, 0, 180));
+				dbg.fillRect(0, 0, 640, 320);
+
+				dbg.setFont(f);
+				dbg.setColor(Color.WHITE);
+				dbg.drawString("[ PAUSED ]", 280, 160);
 				break;
 				
 			case GAMEOVER:
