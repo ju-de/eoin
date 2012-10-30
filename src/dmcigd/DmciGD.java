@@ -7,6 +7,7 @@ import dmcigd.core.objects.interfaces.*;
 
 import java.applet.*;
 import java.awt.*;
+import java.io.*;
 import java.net.*;
 import java.util.*;
 
@@ -35,6 +36,10 @@ public class DmciGD extends Applet implements Runnable {
 	private Image dbImage;
 	private Graphics dbg;
 	
+	//Initialize font
+	Font f;
+	Font fSmall;
+	
 	//Initialize all objects and gets audio data
 	public void init() {
 		codeBase = getCodeBase();
@@ -56,6 +61,12 @@ public class DmciGD extends Applet implements Runnable {
 		//Start new thread when applet loads
 		Thread th = new Thread(this);
 		th.start();
+		
+		//Create font
+		try {
+			f = Font.createFont(Font.PLAIN, new URL(getCodeBase(), "../share/gfx/04B_03__.TTF").openStream()).deriveFont(16f);
+			fSmall = f.deriveFont(8f);
+		} catch (FontFormatException | IOException e) { System.out.println(e); }
 	}
 	
 	//Repaints screen
@@ -84,10 +95,27 @@ public class DmciGD extends Applet implements Runnable {
 						mt.addImage(objectImageMap.get("1"), 1);
 						
 						int i = 2;
-						Image loadedImage;
 						
 						//Load all images
 						for(SolidObject object : main.demo.solidObjects) {
+							if(!objectImageMap.containsKey(object.getMapCode())) {
+								
+								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
+								
+								mt.addImage(objectImageMap.get(object.getMapCode()), i);
+							}
+							i++;
+						}
+						for(Item object : main.demo.items) {
+							if(!objectImageMap.containsKey(object.getMapCode())) {
+								
+								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
+								
+								mt.addImage(objectImageMap.get(object.getMapCode()), i);
+							}
+							i++;
+						}
+						for(Region object : main.demo.regions) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -213,13 +241,41 @@ public class DmciGD extends Applet implements Runnable {
 				for(ObjectImage i : visibleObjects) {
 					dbg.drawImage(objectImageMap.get(i.mapCode), i.dstx1, i.dsty1, i.dstx2, i.dsty2, i.srcx1, i.srcy1, i.srcx2, i.srcy2, this);
 				}
+
+				dbg.setColor(new Color(30,30,30));
+				dbg.fillRect(0, 210, 640, 110);
+				
+				dbg.setColor(Color.BLACK);
+				dbg.fillRect(493, 192, 128, 128);
+				
+				dbg.setFont(f);
+				dbg.setColor(Color.GRAY);
+				/*dbg.drawString("Name", 100, 235);*/
+				dbg.drawString("Name", 25, 235);
+				dbg.setColor(Color.WHITE);
+				/*dbg.drawString("Lorem ipsum dolor sit amet, consectetur adipiscing.", 100, 255);
+				dbg.drawString("elit. Etiam sit amet dui at ante semper pellentesque", 100, 275);
+				dbg.drawString("non nec velit...", 100, 295);*/
+				dbg.drawString("Lorem ipsum dolor sit amet, consectetur adipiscing.", 25, 255);
+				dbg.drawString("elit. Etiam sit amet dui at ante semper pellentesque", 25, 275);
+				dbg.drawString("non nec velit...", 25, 295);
+				
+				dbg.setFont(fSmall);
+
+				dbg.setColor(Color.BLACK);
+				dbg.drawString("Press \"C\" to continue", 375, 313);
+				dbg.setColor(Color.GRAY);
+				dbg.drawString("Press \"C\" to continue", 375, 312);
+				/*dbg.setColor(Color.BLACK);
+				dbg.drawString("Press \"C\" to continue", 450, 313);
+				dbg.setColor(Color.GRAY);
+				dbg.drawString("Press \"C\" to continue", 450, 312);*/
 				
 				
 				break;
 				
 			case LOADINGDEMO:
 				
-				dbg.setColor(Color.red);
 				dbg.drawString("Loading Demo Level", 40, 75);
 				
 				break;
