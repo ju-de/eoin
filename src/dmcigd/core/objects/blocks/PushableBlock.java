@@ -13,8 +13,8 @@ public class PushableBlock extends Entity implements RestableObject {
 	
 	public void onUnrest(EntityType entity) {}
 	
-	public void onPush(EntityType entityType, int v) {
-		if(entityType == EntityType.PLAYER) {
+	public void onPush(Entity entity, int v) {
+		if(entity.getEntityType() == EntityType.PLAYER) {
 			if(restingBlock != null) {
 				setVX((v - restingBlock.getDX())/2);
 			} else {

@@ -27,6 +27,6 @@ public interface SolidObject {
 	public boolean isDestroyed();
 	public ObjectImage getObjectImage(int x, int y);
 	
-	public void onPush(EntityType entityType, int v);
+	public void onPush(Entity entity, int v);
 	public void step();
 }

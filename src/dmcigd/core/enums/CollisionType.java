@@ -2,7 +2,7 @@ package dmcigd.core.enums;
 
 public enum CollisionType {
 	
-	SOLID(0), DESTROY(1), PLATFORM(2), LADDER(3), WATER(4), NONSOLID(5);
+	DESTROY(-1), SOLID(0), KILL(1), PLATFORM(2), SOLIDLADDER(3), NONSOLIDLADDER(4), WATER(5), NONSOLID(6);
 	
 	private int priority;
 	

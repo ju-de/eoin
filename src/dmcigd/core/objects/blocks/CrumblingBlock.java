@@ -16,7 +16,7 @@ public class CrumblingBlock extends ObjectCollision implements RestableObject {
 	
 	public void onUnrest(EntityType entityType) {}
 	
-	public void onPush(EntityType entityType, int v) {}
+	public void onPush(Entity entity, int v) {}
 	
 	public boolean isDestroyed() { return false; }
 	
