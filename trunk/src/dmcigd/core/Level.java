@@ -96,7 +96,7 @@ public class Level implements Runnable {
 			}
 		}
 		
-		if(player.isDead) {
+		if(player.isDead || player.isDestroyed) {
 			isDead = true;
 		}
 		
@@ -105,7 +105,7 @@ public class Level implements Runnable {
 		
 		while(itemIt.hasNext()) {
 			Item i = itemIt.next();
-			if(i.isUsed()) {
+			if(i.isDestroyed()) {
 				itemIt.remove();
 			} else {
 				i.step();
@@ -188,6 +188,9 @@ public class Level implements Runnable {
 				break;
 			case KeyEvent.VK_RIGHT:
 				player.walk(false, Direction.RIGHT);
+				break;
+			case KeyEvent.VK_Z:
+				player.jump(false);
 				break;
 			default:
 				break;

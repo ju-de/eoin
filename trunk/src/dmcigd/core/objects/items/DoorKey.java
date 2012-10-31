@@ -11,16 +11,10 @@ public class DoorKey extends Entity implements Item {
 	
 	int type;
 	
-	boolean used = false;
+	private boolean held = false;
 	
-	public boolean isUsed() {
-		return used;
-	}
-	
-	public void pushedObject(SolidObject object, int v) {
-		if(object.getMapCode() == "`" && object.getSequence() == 4 && object.getFrame() == 9) {
-			used = true;
-		}
+	public void setHeld(boolean held) {
+		this.held = held;
 	}
 	
 	public DoorKey(int x, int y, int type, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
@@ -62,9 +56,11 @@ public class DoorKey extends Entity implements Item {
 	}
 	
 	public void step() {
-		move();
-		if(hitGround) {
-			setVX(0);
+		if(!held) {
+			move();
+			if(hitGround) {
+				setVX(0);
+			}
 		}
 	}
 }

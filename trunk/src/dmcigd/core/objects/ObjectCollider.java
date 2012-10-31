@@ -6,29 +6,20 @@ import dmcigd.core.objects.interfaces.*;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-public class EntityObjectCollider extends MovingObject {
+public class ObjectCollider extends MovingObject {
 	
 	private ArrayList<SolidObject> solidObjects;
 	
-	private EntityType entityType;
-	
 	public RestableObject restingBlock,restingBlockCheck;
-	public SolidObject pushedObject;
-	
-	//Public getters
-	public EntityType getEntityType() {
-		return entityType;
-	}
 	
 	//Public setters
 	public void setSolidObjects(ArrayList<SolidObject> solidObjects) {
 		this.solidObjects = solidObjects;
 	}
-	public void setEntityType(EntityType entityType) {
-		this.entityType = entityType;
-	}
+
+	public void rest(CollisionType collisionType) { }
 	
-	public void pushedObject(SolidObject object, int v) { }
+	public void pushObject(SolidObject object, int v) { }
 	
 	public boolean objectsCollide(Rectangle boundingBox, SolidObject object) {
 		
@@ -132,10 +123,6 @@ public class EntityObjectCollider extends MovingObject {
 			//Check for collision
 			if(objectsCollide(boundingBox, i)) {
 				
-				//Push against block
-				i.onPush(entityType, v);
-				pushedObject(i, v);
-				
 				//Determine collision type
 				switch (i.getCollisionType()) {
 					case SOLID:
@@ -146,6 +133,7 @@ public class EntityObjectCollider extends MovingObject {
 							//Push against right edge (if moving left)
 							setX(i.getX() + i.getWidth());
 						}
+						pushObject(i, v);
 						obstructMovement = true;
 						break;
 					default:

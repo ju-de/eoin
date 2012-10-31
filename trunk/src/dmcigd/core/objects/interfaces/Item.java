@@ -28,9 +28,11 @@ public interface Item {
 	
 	public boolean isVisible(int x, int y);
 	public ObjectImage getObjectImage(int x, int y);
+	
+	public void setHeld(boolean held);
 
 	public void step();
 	
-	public boolean isUsed();
+	public boolean isDestroyed();
 	
 }

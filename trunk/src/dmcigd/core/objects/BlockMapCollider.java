@@ -3,12 +3,12 @@ package dmcigd.core.objects;
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.maps.BlockMap;
 
-public class EntityBlockMapCollider extends EntityObjectCollider {
+public class BlockMapCollider extends ObjectCollider {
 	
 	public BlockMap blockMap;
 	
 	//Creates entity statuses for further manipulation
-	public boolean hitGround,isFalling,onLadder,isClimbing,isDead,inWater = false;
+	public boolean hitGround,isFalling,isDead,isDestroyed,inWater = false;
 	
 	//Public setters
 	public void setBlockMap(BlockMap blockMap) {
@@ -17,70 +17,68 @@ public class EntityBlockMapCollider extends EntityObjectCollider {
 	
 	//Checks downward collision (behaves differently from other three directions)
 	public void checkBlockMapCollisionDown(int v) {
+		
 		//Move Down
 		switch(tileCollisionType(v, Direction.DOWN)) {
+		
 			//Fall down
-			case NONSOLID:
 			case WATER:
+			case NONSOLIDLADDER:
+			case NONSOLID:
 				isFalling = true;
 				checkSolidObjectCollisionDown(v);
 				break;
 				
-			//Climb down
-			case LADDER:
-				if(isClimbing) {
-					checkSolidObjectCollisionDown(v);
-				} else {
-					setVY(0);
-				}
-				break;
-				
 			//Destroy
-			case DESTROY:
+			case KILL:
 				isDead = true;
 				break;
 				
 			//Hit ground
 			default:
 				blockMapCollision(v, Direction.DOWN);
+				setVY(0);
+				rest(tileCollisionType(v, Direction.DOWN));
 				break;
+				
 		}
+		
 	}
 	
 	//Checks all other types of collision
 	public void checkBlockMapCollision(int v, Direction direction) {
 		
-		switch(tileCollisionType(v, direction)) {
-				
-			//Move
-			case NONSOLID:
-			case WATER:
-			case LADDER:
-			case PLATFORM:
-				if(direction == Direction.UP) {
-					checkSolidObjectCollisionUp(v);
-				} else {
-					checkSolidObjectCollisionX(v);
-				}
-				break;
-				
-			//Destroy
-			case DESTROY:
+		CollisionType collidingBlock = tileCollisionType(v, direction);
+		
+		//If object is not a solid block, move through (all other objects allow horizontal movement)
+		if(collidingBlock.getPriority() > 1) {
+			
+			if(direction == Direction.UP) {
+				checkSolidObjectCollisionUp(v);
+			} else {
+				checkSolidObjectCollisionX(v);
+			}
+			
+		} else {
+			
+			if(collidingBlock == CollisionType.DESTROY) {
+				isDestroyed = true;
+			}
+			
+			if(collidingBlock == CollisionType.KILL) {
 				isDead = true;
-				
-			//Hit solid object
-			default:
-				blockMapCollision(v, direction);
-				if(direction != Direction.UP) {
-					setVX(0);
-				}
-				break;
+			}
+			
+			blockMapCollision(v, direction);
+			if(direction != Direction.UP) {
+				setVX(0);
+			}
 		}
 	}
 	
 	//Returns collision type of tile of destination block
 	public CollisionType tileCollisionType(int v, Direction direction) {
-			switch (direction) {
+		switch (direction) {
 			case DOWN:
 			case UP:
 				return blockMap.collidesY(getX(), getY(), v, getWidth(), getHeight(), direction);
