@@ -32,7 +32,6 @@ public class BlockMapCollider extends ObjectCollider {
 			//Destroy
 			case KILL:
 				isDead = true;
-				break;
 				
 			//Hit ground
 			default:

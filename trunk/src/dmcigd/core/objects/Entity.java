@@ -32,6 +32,9 @@ public class Entity extends BlockMapCollider {
 			case DESTROY:
 				isDestroyed = true;
 				break;
+				
+			case KILL:
+				isDead = true;
 		
 			//On ground
 			case PLATFORM:
@@ -40,9 +43,6 @@ public class Entity extends BlockMapCollider {
 				hitGround = true;
 				isFalling = false;
 				break;
-				
-			case KILL:
-				isDead = true;
 				
 			//In air
 			default:

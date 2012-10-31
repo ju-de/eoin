@@ -6,6 +6,7 @@ import dmcigd.core.objects.platforms.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.regions.*;
 import dmcigd.core.objects.npc.*;
+import dmcigd.core.objects.projectiles.*;
 
 import java.net.*;
 

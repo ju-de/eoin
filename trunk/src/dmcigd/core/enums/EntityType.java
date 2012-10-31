@@ -4,8 +4,10 @@ public enum EntityType {
 	
 	//Items
 	KEY4(-4), KEY3(-3), KEY2 (-2), KEY1(-1),
-	//Other entities
-	PLAYER(0), MOVINGBLOCK(1), MONSTER(2);
+	//Solid Objects
+	PLAYER(0), MOVINGBLOCK(1), MONSTER(2),
+	//Projectiles
+	PROJECTILE(10);
 	
 	private int code;
 	
