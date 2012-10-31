@@ -122,6 +122,8 @@ public class ObjectCollider extends MovingObject {
 			
 			//Check for collision
 			if(objectsCollide(boundingBox, i)) {
+
+				pushObject(i, v);
 				
 				//Determine collision type
 				switch (i.getCollisionType()) {
@@ -133,7 +135,6 @@ public class ObjectCollider extends MovingObject {
 							//Push against right edge (if moving left)
 							setX(i.getX() + i.getWidth());
 						}
-						pushObject(i, v);
 						obstructMovement = true;
 						break;
 					default:

@@ -10,6 +10,10 @@ public class DialogueHandler {
 	//Chunks it off into pages
 	//And progresses through it line by line
 	
+	//Hussain please fix this, I'm bad at string manipulation
+	//and this script is the least efficient thing ever.
+	//I know there's a better way to do this, I just can't figure it out
+	
 	public boolean inDialogue = false;
 
 	public ArrayList<String[]> dialogueList = new ArrayList<String[]>();
