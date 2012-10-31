@@ -1,8 +1,13 @@
 All characters are case-sensitive
-Any character not listed will behave like a solid, invisible block
+
+=====================================================================
+
+	|	BLOCK MAPS
+  
+=====================================================================
+
 
 Blockmaps are saved in /share/txt/levelmaps/[LEVELNAME]/blockmap.txt
-
 
 MAPPING RULES
 
@@ -109,12 +114,15 @@ VISUAL REPRESENTATION OF BLOCK CHARACTERS
  
 OVERALL REFERENCE
 
+Any character not listed will behave like a solid, invisible block
+
 	Character	Block
 	
 			SPECIAL BLOCKS
 			
 		1		spawn
-		*		invisible death block (for pitfalls or obnoxiously hard puzzles)
+		*		invisible destroy block (for pitfalls, obnoxiously hard puzzles, or destroying monsters)
+		@		water block (note, this block is invisible, use in conjunction with Environment Map)
 		
 			SOLID BLOCKS
 			
@@ -194,3 +202,134 @@ OVERALL REFERENCE
 		V		Downward facing spike
 		>		Rightward facing spike
 		<		Leftward facing spike
+
+
+
+
+
+=====================================================================
+
+	||	ENVIRONMENT MAPS
+  
+=====================================================================
+
+
+Environmentmaps are saved in /share/txt/levelmaps/[LEVELNAME]/environmentmap.txt
+
+MAPPING RULES
+
+	1.	Make sure everything is aligned with the blockmap
+	
+	2.	Use the following convention to help aligned with blockmap:
+	
+			/	means a special block, such as ladders or a spike
+			.	means any normal block
+			
+	3. 	Water is invisible in the blockmap. Use the appropriate environment map
+		symbols to ensure that players can see where the water is.
+		
+	4. 	Use underground blocks to fill small gaps in tiles.
+	
+			Ex. the thorns in the grassy tileset make the gaps in the blocks look
+			awkward and ugly. By putting the appropriate underground block behind
+			the tile, this adds a brown background to that edge of the tile
+			and everything blends in nicely.
+			
+	5.	Pad underground and underwater regions to account for the gaps in the sides
+		of blocks, as noted in #4.
+		
+	TIP:	Save the EnvironmentMap for last, as you may need to change the BlockMap
+			only to realize that your entire EnvironmentMap is now misaligned
+		
+
+ENVIRONMENT MAPPING EXAMPLES
+
+Filling an underground room with a decoration:
+
+	 BLOCKMAP				  ENVIRONMENTMAP		
+
+,=.-,=-.,=-.=,.,d			.................
+,=-.xXxxXxXx=,.=D			...ssssssssss....
+,.-d        zxXxc			...ssssJssssssssd
+,=-D             			...sssssssssssssd
+,=-.wWwWwwWwe^qWw			...sssssssssssssd
+,=-.,=-.=,-.=W-.D			............sss..
+
+
+Adding Water and Spikes while following convention:
+
+	 BLOCKMAP				  ENVIRONMENTMAP		
+
+ ^            ^  			 /            /  
+wWwe@@@@@@@@qWwWw			.x.tttttttttt.x..
+,.-d@@@@@@@@a,.=-			...gggggggggg....
+,=-D@@@@@@@@A,=-.			...gggggggggg....
+,=-.wWwWwwWw.=,-.			...gggggggggg....
+,=-.,=-.=,-.=W-.D			.................
+
+Note the use of underground blocks underneath the spikes to fill the gaps
+
+
+VISUAL REPRESENTATION OF BLOCK CHARACTERS
+
+	KEYBOARD LAYOUT:
+	
+		UNDERGROUND      DECORATIONS
+		┌───┴───┬───────┬───┴───┐
+		│ Q W E │ R T Y │ U I O │ P
+		│       │       │       │
+		│ A S D │ F G H │ J K L │
+		│       │       ├───────┘
+		│ Z X C │ V B N │ M , .
+		└───────┴───┬───┘
+		        UNDERWATER
+		        
+OVERALL REFERENCE
+
+All underground and underwater blocks are lowercase
+Decorations are lowercase for aboveground versions, and capital for underground versions
+Decorations vary depending on tileset.
+
+	Character	SPRITE
+	
+			UNDERGROUND
+			
+		q		Top Left Corner
+		w		Top Edge
+		e		Top Right Corner
+		a		Left Edge
+		s		Center Tile
+		d		Right Edge
+		z		Bottom Left Corner
+		x		Bottom Edge
+		c		Bottom Right Corner
+		
+			UNDERWATER
+			
+		r		Top Left Corner
+		t		Top Edge
+		y		Top Right Corner
+		f		Left Edge
+		g		Center Tile
+		h		Right Edge
+		v		Bottom Left Corner
+		b		Bottom Edge
+		n		Bottom Right Corner
+		
+			OVERWORLD DECORATIONS
+			
+		u		Decoration 1
+		i		Decoration 2
+		o		Decoration 3
+		j		Decoration 4
+		k		Decoration 5
+		l		Decoration 6
+		
+			UNDERGROUND DECORATIONS
+			
+		U		Decoration 1
+		I		Decoration 2
+		O		Decoration 3
+		J		Decoration 4
+		K		Decoration 5
+		L		Decoration 6

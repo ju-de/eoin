@@ -441,6 +441,9 @@ public class DmciGD extends Applet implements Runnable {
 		imageMap.put("e_n", new int[] {15, 2});
 		
 		//Underground Environment
+		imageMap.put("e_U", new int[] {10, 3});
+		imageMap.put("e_I", new int[] {11, 3});
+		imageMap.put("e_O", new int[] {12, 3});
 		imageMap.put("e_J", new int[] {10, 4});
 		imageMap.put("e_K", new int[] {11, 4});
 		imageMap.put("e_L", new int[] {12, 4});
