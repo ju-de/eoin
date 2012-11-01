@@ -20,7 +20,7 @@
 		/tilesheets						Contains tile spritesheets (each tilesheet may be used for more than one level)
 	/snd							Contains the auditory elements of the game, such as background music and action sounds.
 	/txt							Contains the textual elements of the game, such as ASCII level maps.
-		/levelmaps						Contains game levelmaps
+		/maps						Contains game levelmaps
 /txt							Contains textfiles for the game, including all documentation.
 /lib							Contains any external libraries being used by the project.
 /misc							Contains any miscellaneous files, such as personal committer notes or school club files.

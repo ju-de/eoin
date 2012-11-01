@@ -7,7 +7,7 @@ All characters are case-sensitive
 =====================================================================
 
 
-Blockmaps are saved in /share/txt/levelmaps/[LEVELNAME]/blockmap.txt
+Blockmaps are saved in /share/txt/maps/[LEVELNAME]/[ROOMNAME]/blockmap.txt
 
 MAPPING RULES
 
@@ -214,7 +214,7 @@ Any character not listed will behave like a solid, invisible block
 =====================================================================
 
 
-Environmentmaps are saved in /share/txt/levelmaps/[LEVELNAME]/environmentmap.txt
+Environmentmaps are saved in /share/txt/maps/[LEVELNAME]/[ROOMNAME]/environmentmap.txt
 
 MAPPING RULES
 

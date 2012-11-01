@@ -41,7 +41,7 @@ public class Main implements Runnable, KeyListener {
 		currentLevel = "demo";
 		currentRoom = "Demo";
 		
-		loadRoom("demo","Demo");
+		loadRoom(currentLevel,currentRoom);
 	}
 	
 	//Passes game state to rendering thread
@@ -51,7 +51,7 @@ public class Main implements Runnable, KeyListener {
 	
 	public void gameOver() {
 		
-		loadRoom("demo","Demo");
+		loadRoom(currentLevel,currentRoom);
 		
 		gameState = GameState.LOADINGROOM;
 	}

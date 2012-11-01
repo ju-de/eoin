@@ -30,13 +30,13 @@ public class EnvironmentMap {
 		return visibleEnvironment;
 	}
 	
-	public void loadEnvironmentMap(URL codeBase, String folderName) {
+	public void loadEnvironmentMap(URL codeBase, String levelName, String roomName) {
 		
 		//Create environment map array
 		try {
 			
 			//Load the textfile for environment map
-			br = new BufferedReader(new InputStreamReader(new URL(codeBase, "../share/txt/levelmaps/"+folderName+"/environmentmap.txt").openStream()));
+			br = new BufferedReader(new InputStreamReader(new URL(codeBase, "../share/txt/maps/"+levelName+"/"+roomName+"/environmentmap.txt").openStream()));
 			
 			try {
 				
