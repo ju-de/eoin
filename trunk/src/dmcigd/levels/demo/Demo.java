@@ -1,4 +1,4 @@
-package dmcigd;
+package dmcigd.levels.demo;
 
 import dmcigd.core.*;
 import dmcigd.core.objects.blocks.*;
@@ -90,6 +90,7 @@ public class Demo extends Level implements Runnable {
 		regions.add(new Sign(896, 224, 9, "And in case you were wondering", "She is very gifted at her trade and a true craftsman. I must commend the quality and mastership she demonstrates at such a fine art.", dialogueHandler));
 		regions.add(new Sign(2176, 320, 4, "STOP ASKING SO MANY QUESTIONS", "NO I DO NOT KNOW WHY THERE'S A RANDOM TUNNEL OPENING IN THE MIDDLE OF THE SKY.", dialogueHandler));
 		regions.add(new Sign(6720, 512, 5, " ", "FNORD", dialogueHandler));
+		regions.add(new DemoProjectileSpawner(400, 320, projectiles, blockMap, solidObjects));
 		
 	}
 }

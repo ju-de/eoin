@@ -4,8 +4,6 @@ import dmcigd.core.enums.*;
 
 public interface RestableObject extends SolidObject {
 	
-	public boolean isRestable = true;
-	
 	public int getDX();
 	public int getDY();
 	

@@ -92,12 +92,10 @@ public class Entity extends BlockMapCollider {
 			checkBlockMapCollision(vy, Direction.UP);
 		}
 		
-		if(vx > 0) {
+		if(vx >= 0) {
 			checkBlockMapCollision(vx, Direction.RIGHT);
 		} else if (vx < 0) { 
 			checkBlockMapCollision(vx, Direction.LEFT);
-		} else {
-			setDX(0);
 		}
 		
 		if(restingBlock != restingBlockCheck) {

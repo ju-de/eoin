@@ -2,6 +2,7 @@ package dmcigd;
 
 import dmcigd.core.*;
 import dmcigd.core.enums.GameState;
+import dmcigd.levels.demo.*;
 
 import java.awt.event.*;
 import java.net.*;
