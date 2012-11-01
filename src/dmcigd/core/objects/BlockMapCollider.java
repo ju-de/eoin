@@ -3,7 +3,7 @@ package dmcigd.core.objects;
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.maps.BlockMap;
 
-public class BlockMapCollider extends ObjectCollider {
+public abstract class BlockMapCollider extends ObjectCollider {
 	
 	public BlockMap blockMap;
 	

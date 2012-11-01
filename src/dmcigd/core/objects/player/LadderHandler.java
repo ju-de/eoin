@@ -3,7 +3,7 @@ package dmcigd.core.objects.player;
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
 
-public class LadderHandler extends Entity {
+abstract class LadderHandler extends Entity {
 	
 	public boolean onLadder,onLadderTop,isClimbing = false;
 	public boolean isWalking,sprint;

@@ -6,7 +6,7 @@ import dmcigd.core.objects.interfaces.*;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-public class ObjectCollider extends MovingObject {
+public abstract class ObjectCollider extends MovingObject {
 	
 	private ArrayList<SolidObject> solidObjects;
 	
@@ -17,9 +17,8 @@ public class ObjectCollider extends MovingObject {
 		this.solidObjects = solidObjects;
 	}
 
-	public void rest(CollisionType collisionType) { }
-	
-	public void pushObject(SolidObject object, int v) { }
+	abstract void rest(CollisionType collisionType);
+	abstract void pushObject(SolidObject object, int v);
 	
 	public boolean objectsCollide(Rectangle boundingBox, SolidObject object) {
 		

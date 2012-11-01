@@ -8,7 +8,7 @@ import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.enums.EntityType;
 import dmcigd.core.objects.maps.BlockMap;
 
-public class BasicProjectile extends Entity {
+public abstract class BasicProjectile extends Entity {
 	
 	public boolean objectsCollide(Rectangle boundingBox, SolidObject object) {
 		
