@@ -7,7 +7,7 @@ import dmcigd.core.objects.Entity;
 import dmcigd.core.objects.interfaces.SolidObject;
 import dmcigd.core.objects.maps.BlockMap;
 
-public class SimpleProjectile extends BasicProjectile {
+public abstract class SimpleProjectile extends BasicProjectile {
 	
 	//Destroys object on collision with anything solid
 	public void blockMapCollision(int v, Direction direction) {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import dmcigd.core.enums.Direction;
 import dmcigd.core.objects.interfaces.*;
 
-public class ControlHandler extends LadderHandler {
+abstract class ControlHandler extends LadderHandler {
 
 	public int jumpDelay = 5;
 	
@@ -13,7 +13,7 @@ public class ControlHandler extends LadderHandler {
 	public Item heldItem;
 	public ArrayList<Region> regions = new ArrayList<Region>();
 	
-	public void handleRegionInteraction(Region region) {}
+	abstract void handleRegionInteraction(Region region);
 	
 	public void walk(boolean isWalking, Direction direction) {
 		if(isWalking) {

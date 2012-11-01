@@ -5,7 +5,7 @@ import dmcigd.core.enums.CollisionType;
 
 import java.util.*;
 
-public class BlockCollision {
+abstract class BlockCollision {
 	
 	public List<String> blockMap = new ArrayList<String>();
 
