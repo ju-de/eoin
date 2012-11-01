@@ -10,7 +10,7 @@ import java.awt.event.*;
 import java.net.*;
 import java.util.*;
 
-public class Level implements Runnable {
+public class Room implements Runnable {
 	
 	//Stores codeBase string to be passed for file loading
 	private URL codeBase;
@@ -50,7 +50,7 @@ public class Level implements Runnable {
 		return dialogueHandler.inDialogue;
 	}
 	
-	public Level(URL codeBase) {
+	public Room(URL codeBase) {
 		this.codeBase = codeBase;
 		
 		//Initializes Thread

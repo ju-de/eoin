@@ -10,7 +10,7 @@ import dmcigd.core.objects.projectiles.*;
 
 import java.net.*;
 
-public class Demo extends Level implements Runnable {
+public class Demo extends Room implements Runnable {
 	
 	//Level information
 	public final String levelName = "demo";

@@ -2,21 +2,29 @@ package dmcigd;
 
 import dmcigd.core.*;
 import dmcigd.core.enums.GameState;
-import dmcigd.levels.demo.*;
 
 import java.awt.event.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.*;
 
 //Catches input and manages game loop objects
 public class Main implements Runnable, KeyListener {
 	
-	//Initialize level object
-	Level level;
+	//Initialize level objects
+	Room room;
 	
 	//Initializing gameState variable - decides which object to interact with
 	private GameState gameState,unpauseGameState;
 	private ThreadSync threadSync;
 	private URL codeBase;
+	
+	private String currentLevel,currentRoom;
+	
+	public void loadRoom(String levelName, String roomClass) {
+		try {
+			room = (Room) Class.forName("dmcigd.levels."+levelName+"."+roomClass).getConstructor(URL.class).newInstance(codeBase);
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {}
+	}
 	
 	public Main(ThreadSync threadSync, URL codeBase) {
 		
@@ -24,14 +32,16 @@ public class Main implements Runnable, KeyListener {
 		
 		this.threadSync = threadSync;
 		
-		//Set gameState variable (currently at 3 for Demo Screen, should be changed to 1 for real game to initiate start menu)
-		gameState = GameState.LOADINGLEVEL;
+		gameState = GameState.LOADINGROOM;
 		
 		//Initializes Thread
 		Thread th = new Thread(this);
 		th.start();
 		
-		level = new Demo(codeBase);
+		currentLevel = "demo";
+		currentRoom = "Demo";
+		
+		loadRoom("demo","Demo");
 	}
 	
 	//Passes game state to rendering thread
@@ -40,9 +50,10 @@ public class Main implements Runnable, KeyListener {
 	}
 	
 	public void gameOver() {
-		//Temporary measure until proper level loader is implemented
-		level = new Demo(codeBase);
-		gameState = GameState.LOADINGLEVEL;
+		
+		loadRoom("demo","Demo");
+		
+		gameState = GameState.LOADINGROOM;
 	}
 	
 	public void pause() {
@@ -62,33 +73,33 @@ public class Main implements Runnable, KeyListener {
 			
 			//Temporary game state, remove when done
 			switch(gameState) {
-				case LEVEL:
+				case GAMEPLAY:
 					
-					if(level.isDead()) {
+					if(room.isDead()) {
 						gameOver();
-					}else if(level.inDialogue()) {
+					}else if(room.inDialogue()) {
 						//Enter dialogue
 						gameState = GameState.DIALOGUE;
 					} else {
-						level.step();
+						room.step();
 					}
 					
 					break;
 					
-				case LOADINGLEVEL:
+				case LOADINGROOM:
 					
 					//Change gameState when level element is done loading
-					if(level != null && level.isReady()) {
-						gameState = GameState.LEVEL;
+					if(room != null && room.isReady()) {
+						gameState = GameState.GAMEPLAY;
 					}
 					
 					break;
 					
 				case DIALOGUE:
 					
-					if(!level.inDialogue()) {
+					if(!room.inDialogue()) {
 						//Exit dialogue
-						gameState = GameState.LEVEL;
+						gameState = GameState.GAMEPLAY;
 					}
 					
 				default:
@@ -126,8 +137,8 @@ public class Main implements Runnable, KeyListener {
 				//Pass keypresses to appropriate object
 				switch(gameState) {
 					case DIALOGUE:
-					case LEVEL:
-						level.keyPressed(e);
+					case GAMEPLAY:
+						room.keyPressed(e);
 					default:
 						break;
 				}
@@ -142,8 +153,8 @@ public class Main implements Runnable, KeyListener {
 		//Pass keyreleases to appropriate object
 		switch(gameState) {
 			case DIALOGUE:
-			case LEVEL:
-				level.keyReleased(e);
+			case GAMEPLAY:
+				room.keyReleased(e);
 			default:
 				break;
 		}
