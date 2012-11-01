@@ -42,13 +42,13 @@ public class BlockMap extends BlockCollision {
 		}
 	}
 	
-	public void loadBlockMap(URL codeBase, String folderName) {
+	public void loadBlockMap(URL codeBase, String levelName, String roomName) {
 		
 		//Create blockMap array
 		try {
 			
 			//Load the textfile for blockmap
-			br = new BufferedReader(new InputStreamReader(new URL(codeBase, "../share/txt/levelmaps/"+folderName+"/blockmap.txt").openStream()));
+			br = new BufferedReader(new InputStreamReader(new URL(codeBase, "../share/txt/maps/"+levelName+"/"+roomName+"/blockmap.txt").openStream()));
 			
 			try {
 				

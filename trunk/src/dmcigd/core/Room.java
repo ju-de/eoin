@@ -17,6 +17,7 @@ public class Room implements Runnable {
 	
 	//Default level information
 	public final String levelName = "demo";
+	public final String roomName = "Demo";
 	public final String tileSet = "grassy";
 	
 	//Passes booleans to be manipulated by Main Game Loop
@@ -147,8 +148,8 @@ public class Room implements Runnable {
 	
 	public void run() {
 		
-		blockMap.loadBlockMap(codeBase, "demo");
-		environmentMap.loadEnvironmentMap(codeBase, "demo");
+		blockMap.loadBlockMap(codeBase, levelName, roomName);
+		environmentMap.loadEnvironmentMap(codeBase, levelName, roomName);
 		
 		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap, solidObjects, items, regions);
 		

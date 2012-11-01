@@ -14,6 +14,7 @@ public class Demo extends Room implements Runnable {
 	
 	//Level information
 	public final String levelName = "demo";
+	public final String roomName = "Demo";
 	public final String tileSet = "grassy";
 	
 	public Demo(URL codeBase) {
