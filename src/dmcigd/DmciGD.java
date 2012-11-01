@@ -82,11 +82,11 @@ public class DmciGD extends Applet implements Runnable {
 			threadSync.consume();
 			
 			switch (main.getGameState()) {
-				case LEVEL:
+				case GAMEPLAY:
 					
-					if(gameState != GameState.LEVEL) {
+					if(gameState != GameState.GAMEPLAY) {
 						
-						tileSheet = getImageFromPath("tilesheets/"+main.level.tileSet+".gif");
+						tileSheet = getImageFromPath("tilesheets/"+main.room.tileSet+".gif");
 						
 						//Preload map tilesheet
 						MediaTracker mt = new MediaTracker(this);
@@ -100,7 +100,7 @@ public class DmciGD extends Applet implements Runnable {
 						int i = 2;
 						
 						//Load all images
-						for(SolidObject object : main.level.solidObjects) {
+						for(SolidObject object : main.room.solidObjects) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -110,7 +110,7 @@ public class DmciGD extends Applet implements Runnable {
 							i++;
 						}
 						
-						for(Item object : main.level.items) {
+						for(Item object : main.room.items) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -120,7 +120,7 @@ public class DmciGD extends Applet implements Runnable {
 							i++;
 						}
 						
-						for(Region object : main.level.regions) {
+						for(Region object : main.room.regions) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -130,7 +130,7 @@ public class DmciGD extends Applet implements Runnable {
 							i++;
 						}
 						
-						for(SolidObject object : main.level.projectiles) {
+						for(SolidObject object : main.room.projectiles) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -146,15 +146,15 @@ public class DmciGD extends Applet implements Runnable {
 					}
 					
 					//Retrieve necessary objects
-					gameState = GameState.LEVEL;
+					gameState = GameState.GAMEPLAY;
 					
-					playerX = main.level.player.getX();
-					playerY = main.level.player.getY();
+					playerX = main.room.player.getX();
+					playerY = main.room.player.getY();
 										
-					visibleBlocks = main.level.blockMap.getVisibleBlocks(playerX, playerY);
-					visibleEnvironment = main.level.environmentMap.getVisibleEnvironment(playerX, playerY);
+					visibleBlocks = main.room.blockMap.getVisibleBlocks(playerX, playerY);
+					visibleEnvironment = main.room.environmentMap.getVisibleEnvironment(playerX, playerY);
 					
-					visibleObjects = main.level.visibleObjects;
+					visibleObjects = main.room.visibleObjects;
 					
 					//Tells Main thread to begin fetching next frame
 					threadSync.consumed();
@@ -171,19 +171,19 @@ public class DmciGD extends Applet implements Runnable {
 					
 					//Retrieve Dialogue text
 					avatarImageCode = null;
-					avatarImageCode = main.level.dialogueHandler.avatarImageCode;
+					avatarImageCode = main.room.dialogueHandler.avatarImageCode;
 					
 					name = null;
-					name = main.level.dialogueHandler.name;
+					name = main.room.dialogueHandler.name;
 					
 					line1 = null;
-					line1 = main.level.dialogueHandler.line1;
+					line1 = main.room.dialogueHandler.line1;
 					
 					line2 = null;
-					line2 = main.level.dialogueHandler.line2;
+					line2 = main.room.dialogueHandler.line2;
 					
 					line3 = null;
-					line3 = main.level.dialogueHandler.line3;
+					line3 = main.room.dialogueHandler.line3;
 					
 					//Tell Main thread to continue with game loop
 					threadSync.consumed();
@@ -249,7 +249,7 @@ public class DmciGD extends Applet implements Runnable {
 		
 		//Check for which paint method to call
 		switch(gameState) {
-			case LEVEL:
+			case GAMEPLAY:
 				
 				dbg.setColor(Color.red);
 				
@@ -283,7 +283,7 @@ public class DmciGD extends Applet implements Runnable {
 				
 				break;
 				
-			case LOADINGLEVEL:
+			case LOADINGROOM:
 				
 				dbg.drawString("Loading Demo Level", 40, 75);
 				
