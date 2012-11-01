@@ -109,6 +109,7 @@ public class DmciGD extends Applet implements Runnable {
 							}
 							i++;
 						}
+						
 						for(Item object : main.level.items) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
@@ -118,7 +119,18 @@ public class DmciGD extends Applet implements Runnable {
 							}
 							i++;
 						}
+						
 						for(Region object : main.level.regions) {
+							if(!objectImageMap.containsKey(object.getMapCode())) {
+								
+								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
+								
+								mt.addImage(objectImageMap.get(object.getMapCode()), i);
+							}
+							i++;
+						}
+						
+						for(SolidObject object : main.level.projectiles) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));

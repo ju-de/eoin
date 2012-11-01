@@ -1,13 +1,26 @@
-/bin						Contains the compiled class files for the project.
-/src						Contains the project Java sourcecode.
-	/dmcigd						The main game package.
-		/core						The game's core engine
-			/interfaces					Game object interfaces (Hussain you're going to have to explain why we're not just using inheritance here)
-			/objects					Game object classes (will be further subdivided as the engine is built)
-/share						Contains the game's shared resources
-	/gfx						Contains the visual elements of the game, such as sprites and game chrome.
-	/snd						Contains the auditory elements of the game, such as background music and action sounds.
-	/txt						Contains the textual elements of the game, such as ASCII level maps.
-/txt						Contains textfiles for the game, including all documentation.
-/lib						Contains any external libraries being used by the project.
-/misc						Contains any miscellaneous files, such as personal committer notes or school club files.
+/bin							Contains the compiled class files for the project.
+/src							Contains the project Java sourcecode.
+	/dmcigd							The main game package.
+		/core							The game's core engine
+			/enums							All enumerators that must be shared across non-inherited classes
+			/objects						Game object classes (will be further subdivided as the engine is built)
+				/interfaces						Object interfaces
+				/maps							Blockmap and environmental mapping scripts
+				/blocks							Basic solid blocks
+				/platforms						Basic platform types
+				/items							Basic items
+				/monsters						Basic monsters abstraction classes
+				/npc							Basic NPCs and relevant abstraction classes
+				/regions						Basic interactive regions
+				/projectiles					Basic projectile abstraction classes
+				/player							Player object and related handlers
+		/levels						Contains code related to individual levels, i.e. object classes and initializers
+/share							Contains the game's shared resources
+	/gfx							Contains the visual elements of the game, such as fonts and sprites.
+		/tilesheets						Contains tile spritesheets (each tilesheet may be used for more than one level)
+	/snd							Contains the auditory elements of the game, such as background music and action sounds.
+	/txt							Contains the textual elements of the game, such as ASCII level maps.
+		/levelmaps						Contains game levelmaps
+/txt							Contains textfiles for the game, including all documentation.
+/lib							Contains any external libraries being used by the project.
+/misc							Contains any miscellaneous files, such as personal committer notes or school club files.

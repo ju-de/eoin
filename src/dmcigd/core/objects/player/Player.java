@@ -1,6 +1,7 @@
 package dmcigd.core.objects.player;
 
 import dmcigd.core.enums.*;
+import dmcigd.core.objects.Entity;
 import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.objects.maps.BlockMap;
 
@@ -12,6 +13,13 @@ public class Player extends ControlHandler implements SolidObject {
 	
 	public void handleRegionInteraction (Region region) {
 		region.interact(this);
+	}
+	
+	public void onPush(Entity entity, int v) {
+		super.onPush(entity, v);
+		if(entity.getEntityType() == EntityType.PROJECTILE) {
+			isDead = true;
+		}
 	}
 	
 	public Player(int x, int  y, BlockMap blockMap, ArrayList<SolidObject> solidObjects, ArrayList<Item> items, ArrayList<Region> regions) {

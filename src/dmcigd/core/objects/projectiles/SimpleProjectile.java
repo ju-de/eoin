@@ -1,8 +1,11 @@
 package dmcigd.core.objects.projectiles;
 
+import java.util.ArrayList;
+
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.Entity;
 import dmcigd.core.objects.interfaces.SolidObject;
+import dmcigd.core.objects.maps.BlockMap;
 
 public class SimpleProjectile extends BasicProjectile {
 	
@@ -28,12 +31,12 @@ public class SimpleProjectile extends BasicProjectile {
 		isDestroyed = true;
 	}
 	
-	public SimpleProjectile(int x, int y, int speed, int angle, boolean flipped) {
-		super(x, y, speed, angle, flipped);
+	public SimpleProjectile(int x, int y, int speed, int angle, boolean flipped, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
+		super(x, y, speed, angle, flipped, blockMap, solidObjects);
 	}
 	
-	public SimpleProjectile(int x, int y, int speed, int angle) {
-		super(x, y, speed, angle);
+	public SimpleProjectile(int x, int y, int speed, int angle, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
+		super(x, y, speed, angle, blockMap, solidObjects);
 	}
 
 	public void step() {

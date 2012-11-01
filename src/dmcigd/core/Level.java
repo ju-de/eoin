@@ -31,6 +31,8 @@ public class Level implements Runnable {
 	private Iterator<SolidObject> solidObjectIt;
 	public ArrayList<Item> items = new ArrayList<Item>();
 	private Iterator<Item> itemIt;
+	public ArrayList<SolidObject> projectiles = new ArrayList<SolidObject>();
+	private Iterator<SolidObject> projectileIt;
 	public ArrayList<Region> regions = new ArrayList<Region>();
 	
 	//Dialogue Handler
@@ -80,9 +82,27 @@ public class Level implements Runnable {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
 			}
 		}
+		
+		for (SolidObject i : projectiles) {
+			if(i.isVisible(player.getX(), player.getY())) {
+				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
+			}
+		}
 	}
 	
 	public void step() {
+		
+		//Step all projectiles
+		projectileIt = projectiles.iterator();
+		
+		while(projectileIt.hasNext()) {
+			SolidObject i = projectileIt.next();
+			if(i.isDestroyed()) {
+				projectileIt.remove();
+			} else {
+				i.step();
+			}
+		}
 		
 		//Step all solid objects and player
 		solidObjectIt = solidObjects.iterator();
