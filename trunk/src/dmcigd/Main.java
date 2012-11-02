@@ -30,6 +30,13 @@ public class Main implements Runnable, KeyListener {
 	public void loadRoom(String levelName, String roomClass) {
 		try {
 			room = (Room) Class.forName("dmcigd.levels."+levelName+"."+roomClass).getConstructor(URL.class).newInstance(codeBase);
+			
+			gameState = GameState.LOADINGROOM;
+			
+			if(levelName != "game") {
+				currentLevel = levelName;
+				currentRoom = roomClass;
+			}
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {}
 	}
 	
@@ -56,13 +63,6 @@ public class Main implements Runnable, KeyListener {
 		return gameState;
 	}
 	
-	public void gameOver() {
-		
-		loadRoom(currentLevel,currentRoom);
-		
-		gameState = GameState.LOADINGROOM;
-	}
-	
 	public void pause() {
 		if(gameState != GameState.PAUSE) {
 			unpauseGameState = gameState;
@@ -83,9 +83,11 @@ public class Main implements Runnable, KeyListener {
 				case GAMEPLAY:
 					
 					if(room.isDead()) {
-						gameOver();
-					}else if(room.inDialogue()) {
+						gameState = GameState.GAMEOVER;
+					} else if(room.inDialogue()) {
 						gameState = GameState.DIALOGUE;
+					} else if(room.getRoom() != null) {
+						loadRoom(room.getLevel(), room.getRoom());
 					} else {
 						room.step();
 						
@@ -144,7 +146,7 @@ public class Main implements Runnable, KeyListener {
 		
 			case KeyEvent.VK_R:
 				//Reset Level
-				gameOver();
+				loadRoom(currentLevel,currentRoom);
 				break;
 				
 			case KeyEvent.VK_P:

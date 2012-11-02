@@ -245,7 +245,7 @@ public class DmciGD extends Applet implements Runnable {
 	public void paint(Graphics g) {
       
 		//Do not clear screen in case of dialogue - Paused game should remain as background during cutscenes or dialogue)
-		if(gameState != GameState.DIALOGUE && gameState != GameState.PAUSE) {
+		if(gameState != GameState.DIALOGUE && gameState != GameState.PAUSE && gameState != GameState.GAMEOVER) {
 
 		  //Clear screen and draw Background
 		  dbg.setColor(getBackground());
@@ -339,11 +339,27 @@ public class DmciGD extends Applet implements Runnable {
 				dbg.fillRect(0, 0, 640, 320);
 
 				dbg.setFont(f);
+				dbg.setColor(Color.BLACK);
+				dbg.drawString("[ PAUSED ]", 280, 162);
 				dbg.setColor(Color.WHITE);
 				dbg.drawString("[ PAUSED ]", 280, 160);
 				break;
 				
 			case GAMEOVER:
+				dbg.setColor(new Color(0, 0, 0, 180));
+				dbg.fillRect(0, 0, 640, 320);
+
+				dbg.setFont(f);
+				dbg.setColor(Color.BLACK);
+				dbg.drawString("[ GAME OVER ]", 260, 162);
+				dbg.setColor(Color.WHITE);
+				dbg.drawString("[ GAME OVER ]", 260, 160);
+
+				dbg.setFont(fSmall);
+				dbg.setColor(Color.BLACK);
+				dbg.drawString("PRESS \"R\" TO RESTART", 275, 181);
+				dbg.setColor(Color.GRAY);
+				dbg.drawString("PRESS \"R\" TO RESTART", 275, 180);
 				break;
 				
 			default:

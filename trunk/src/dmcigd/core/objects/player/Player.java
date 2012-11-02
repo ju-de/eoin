@@ -9,6 +9,21 @@ import java.util.*;
 
 public class Player extends ControlHandler implements SolidObject {
 	
+	private String level,room;
+	
+	public String getLevel() {
+		return level;
+	}
+	
+	public String getRoom() {
+		return room;
+	}
+	
+	public void setRoom(String level, String room) {
+		this.level = level;
+		this.room = room;
+	}
+	
 	public boolean isDestroyed() { return false; }
 	
 	public void handleRegionInteraction (Region region) {
