@@ -11,7 +11,14 @@ import java.net.*;
 public class Main implements Runnable, KeyListener {
 	
 	//Initialize level objects
-	Room room;
+	public Room room;
+	
+	//Initialize decayState variables
+	public boolean decayState = false;
+	private int killCount = 1;
+	private int maxKillCount = 1000;
+	private int decayTimer = 0;
+	private int decayLimit = maxKillCount;
 	
 	//Initializing gameState variable - decides which object to interact with
 	private GameState gameState,unpauseGameState;
@@ -78,10 +85,23 @@ public class Main implements Runnable, KeyListener {
 					if(room.isDead()) {
 						gameOver();
 					}else if(room.inDialogue()) {
-						//Enter dialogue
 						gameState = GameState.DIALOGUE;
 					} else {
 						room.step();
+						
+						//Determine decay state:
+						decayTimer++;
+						if(decayTimer == decayLimit) {
+							if(decayState) {
+								decayState = false;
+								decayLimit = 1 + (int)(Math.random() * (maxKillCount - killCount) * 2);
+							} else {
+								decayState = true;
+								decayLimit = 1 + (int)(Math.random() * killCount);
+							}
+							decayTimer = 0;
+						}
+						
 					}
 					
 					break;
@@ -130,6 +150,12 @@ public class Main implements Runnable, KeyListener {
 			case KeyEvent.VK_P:
 				//Pause Game
 				pause();
+				break;
+				
+			case KeyEvent.VK_T:
+				//Decay Test
+				killCount++;
+				System.out.println(killCount);
 				break;
 				
 			default:

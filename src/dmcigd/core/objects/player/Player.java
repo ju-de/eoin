@@ -115,7 +115,7 @@ public class Player extends ControlHandler implements SolidObject {
 		//Activate hover status of nearby regions
 		for (Region i : regions) {
 			if(getBounds().intersects(i.getBounds())) {
-				i.onHover();
+				i.onHover(this);
 			}
 		}
 		

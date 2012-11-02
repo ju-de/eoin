@@ -23,6 +23,9 @@ public class DmciGD extends Applet implements Runnable {
 	//Initializing gameState variable - decides which screen to paint
 	GameState gameState;
 	
+	//Initialize decayOffset integer, determines which tilesheet to display
+	private int decayOffset;
+	
 	//Initialize visible objects list
 	private char[][] visibleBlocks = new char[12][22];
 	private char[][] visibleEnvironment = new char[12][22];
@@ -92,12 +95,7 @@ public class DmciGD extends Applet implements Runnable {
 						MediaTracker mt = new MediaTracker(this);
 						mt.addImage(tileSheet, 0);
 						
-						//Load Player Sprite
-						
-						objectImageMap.put("1", getImageFromPath("player.gif"));
-						mt.addImage(objectImageMap.get("1"), 1);
-						
-						int i = 2;
+						int i = 1;
 						
 						//Load all images
 						for(SolidObject object : main.room.solidObjects) {
@@ -143,10 +141,11 @@ public class DmciGD extends Applet implements Runnable {
 						try {
 							mt.waitForAll();
 						} catch (InterruptedException e) { }
+						
+						gameState = GameState.GAMEPLAY;
 					}
 					
 					//Retrieve necessary objects
-					gameState = GameState.GAMEPLAY;
 					
 					playerX = main.room.player.getX();
 					playerY = main.room.player.getY();
@@ -155,6 +154,13 @@ public class DmciGD extends Applet implements Runnable {
 					visibleEnvironment = main.room.environmentMap.getVisibleEnvironment(playerX, playerY);
 					
 					visibleObjects = main.room.visibleObjects;
+					
+					//Decay tiles
+					if(main.decayState) {
+						decayOffset = 5;
+					} else {
+						decayOffset = 0;
+					}
 					
 					//Tells Main thread to begin fetching next frame
 					threadSync.consumed();
@@ -257,8 +263,6 @@ public class DmciGD extends Applet implements Runnable {
 				
 				int gridOffsetX = (playerX % 32) + 10;
 				int gridOffsetY = (playerY % 32) + 16;
-				
-				int decayOffset = 0;
 				
 				//Draw blocks
 				
