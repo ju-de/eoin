@@ -4,38 +4,37 @@ import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.objects.player.*;
 
-public class Pathway extends ObjectCollision implements Region {
+public class Warp extends ObjectCollision implements Region {
 	
 	int destX;
 	int destY;
 
-	public Pathway (int x, int y, int destX, int destY) {
+	public Warp (int x, int y, int width, int height, int destX, int destY) {
 		
-		setX(x + 6);
+		setX(x);
 		setY(y);
-		setHeight(30);
-		setWidth(20);
-		setImageHeight(32);
-		setImageWidth(32);
+		setHeight(height);
+		setWidth(width);
+		setImageHeight(0);
+		setImageWidth(0);
 		
-		setSequence(5);
-		setFrame(9);
+		setSequence(0);
+		setFrame(0);
 		
 		setMapCode("`");
 		setImagePath("objects.gif");
 		
-		this.destX = destX + 3;
+		this.destX = destX;
 		this.destY = destY;
 		
 	}
 	
-	public void onHover(Player player) {}
-
-	public void interact(Player player) {
+	public void onHover(Player player) {
 		player.setX(destX);
 		player.setY(destY);
 	}
+
+	public void interact(Player player) {}
 	
 	public void step() {}
-
 }
