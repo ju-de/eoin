@@ -26,6 +26,7 @@ public class Room implements Runnable {
 	public Player player;
 	public BlockMap blockMap = new BlockMap();
 	public EnvironmentMap environmentMap = new EnvironmentMap();
+	public ArrayList<TextLabel> textLabels = new ArrayList<TextLabel>();
 	public ArrayList<ObjectImage> visibleObjects;
 	public ArrayList<SolidObject> solidObjects = new ArrayList<SolidObject>();
 	private Iterator<SolidObject> solidObjectIt;
@@ -167,7 +168,7 @@ public class Room implements Runnable {
 		blockMap.loadBlockMap(codeBase, levelName, roomName);
 		environmentMap.loadEnvironmentMap(codeBase, levelName, roomName);
 		
-		player = new Player(blockMap.getSpawnX() * 32, blockMap.getSpawnY() * 32, blockMap, solidObjects, items, regions);
+		player = new Player(blockMap.getSpawnX() * 32 + 6, blockMap.getSpawnY() * 32, blockMap, solidObjects, items, regions);
 		
 		initializeSolidObjects();
 		

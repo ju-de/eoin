@@ -27,16 +27,16 @@ public class Main implements Runnable, KeyListener {
 	
 	private String currentLevel,currentRoom;
 	
+	
 	public void loadRoom(String levelName, String roomClass) {
 		try {
 			room = (Room) Class.forName("dmcigd.levels."+levelName+"."+roomClass).getConstructor(URL.class).newInstance(codeBase);
 			
 			gameState = GameState.LOADINGROOM;
 			
-			if(levelName != "game") {
-				currentLevel = levelName;
-				currentRoom = roomClass;
-			}
+			currentLevel = levelName;
+			currentRoom = roomClass;
+				
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {}
 	}
 	
@@ -52,8 +52,8 @@ public class Main implements Runnable, KeyListener {
 		Thread th = new Thread(this);
 		th.start();
 		
-		currentLevel = "demo";
-		currentRoom = "Demo";
+		currentLevel = "game";
+		currentRoom = "MainMenu";
 		
 		loadRoom(currentLevel,currentRoom);
 	}
@@ -92,16 +92,20 @@ public class Main implements Runnable, KeyListener {
 						room.step();
 						
 						//Determine decay state:
-						decayTimer++;
-						if(decayTimer == decayLimit) {
-							if(decayState) {
-								decayState = false;
-								decayLimit = 1 + (int)(Math.random() * (maxKillCount - killCount) * 2);
-							} else {
-								decayState = true;
-								decayLimit = 1 + (int)(Math.random() * killCount);
+						if(killCount < maxKillCount) {
+							decayTimer++;
+							if(decayTimer == decayLimit) {
+								if(decayState) {
+									decayState = false;
+									decayLimit = maxKillCount - killCount + (int)(Math.random() * (maxKillCount - killCount));
+								} else {
+									decayState = true;
+									decayLimit = 1 + (int)(Math.random() * killCount);
+								}
+								decayTimer = 0;
 							}
-							decayTimer = 0;
+						} else {
+							decayState = true;
 						}
 						
 					}
