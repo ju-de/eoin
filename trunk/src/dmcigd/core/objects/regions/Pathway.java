@@ -30,7 +30,7 @@ public class Pathway extends ObjectCollision implements Region {
 		
 	}
 	
-	public void onHover() {}
+	public void onHover(Player player) {}
 
 	public void interact(Player player) {
 		player.setX(destX);

@@ -37,7 +37,7 @@ public class DemoProjectileSpawner extends ObjectCollision implements Region {
 		
 	}
 	
-	public void onHover() {}
+	public void onHover(Player player) {}
 
 	public void interact(Player player) { }
 	
