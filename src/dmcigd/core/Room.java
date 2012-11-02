@@ -16,12 +16,11 @@ public class Room implements Runnable {
 	private URL codeBase;
 	
 	//Default level information
-	public final String levelName = "demo";
-	public final String roomName = "Demo";
-	public final String tileSet = "grassy";
+	public String levelName,roomName,tileSet;
 	
-	//Passes booleans to be manipulated by Main Game Loop
+	//Passes variables to be read by Main Game Loop
 	private boolean ready,isDead = false;
+	private String level,room;
 	
 	//Objects and object lists
 	public Player player;
@@ -47,12 +46,23 @@ public class Room implements Runnable {
 		return isDead;
 	}
 	
+	public String getLevel() {
+		return level;
+	}
+	
+	public String getRoom() {
+		return room;
+	}
+	
 	public boolean inDialogue() {
 		return dialogueHandler.inDialogue;
 	}
 	
-	public Room(URL codeBase) {
+	public Room(URL codeBase, String levelName, String roomName, String tileSet) {
 		this.codeBase = codeBase;
+		this.levelName = levelName;
+		this.roomName = roomName;
+		this.tileSet = tileSet;
 		
 		//Initializes Thread
 		Thread th = new Thread(this);
@@ -136,6 +146,12 @@ public class Room implements Runnable {
 		//Step all regions
 		for (Region i : regions) {
 			i.step();
+		}
+		
+		//Check for level advancement
+		if(player.getRoom() != null) {
+			level = player.getLevel();
+			room = player.getRoom();
 		}
 		
 		fetchVisibleObjects();

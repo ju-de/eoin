@@ -12,13 +12,8 @@ import java.net.*;
 
 public class Demo extends Room implements Runnable {
 	
-	//Level information
-	public final String levelName = "demo";
-	public final String roomName = "Demo";
-	public final String tileSet = "grassy";
-	
 	public Demo(URL codeBase) {
-		super(codeBase);
+		super(codeBase, "demo", "Demo", "grassy");
 	}
 	
 	public void initializeSolidObjects() {
@@ -91,6 +86,9 @@ public class Demo extends Room implements Runnable {
 		regions.add(new Sign(896, 224, 9, "And in case you were wondering", "She is very gifted at her trade and a true craftsman. I must commend the quality and mastership she demonstrates at such a fine art.", dialogueHandler));
 		regions.add(new Sign(2176, 320, 4, "STOP ASKING SO MANY QUESTIONS", "NO I DO NOT KNOW WHY THERE'S A RANDOM TUNNEL OPENING IN THE MIDDLE OF THE SKY.", dialogueHandler));
 		regions.add(new Sign(6720, 512, 5, " ", "FNORD", dialogueHandler));
+		
+		regions.add(new RoomWarp(6720, 512, 32, 32, "demo", "DemoTwo"));
+		
 		regions.add(new DemoProjectileSpawner(400, 320, projectiles, blockMap, solidObjects));
 		
 	}
