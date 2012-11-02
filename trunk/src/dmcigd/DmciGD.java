@@ -29,6 +29,7 @@ public class DmciGD extends Applet implements Runnable {
 	//Initialize visible objects list
 	private char[][] visibleBlocks = new char[12][22];
 	private char[][] visibleEnvironment = new char[12][22];
+	private ArrayList<TextLabel> textLabels = new ArrayList<TextLabel>();
 	private ArrayList<ObjectImage> visibleObjects = new ArrayList<ObjectImage>();
 	private Image tileSheet;
 	private Map<String, int[]> imageMap = new HashMap<String, int[]>();
@@ -154,6 +155,8 @@ public class DmciGD extends Applet implements Runnable {
 					visibleEnvironment = main.room.environmentMap.getVisibleEnvironment(playerX, playerY);
 					
 					visibleObjects = main.room.visibleObjects;
+					
+					textLabels = main.room.textLabels;
 					
 					//Decay tiles
 					if(main.decayState) {
@@ -282,6 +285,25 @@ public class DmciGD extends Applet implements Runnable {
 					}
 				}
 				
+				int shadowOffset = 1;
+				
+				//Draw text labels
+				for(TextLabel i : textLabels) {
+					if(i.isSmall()) {
+						dbg.setFont(fSmall);
+						shadowOffset = 1;
+					} else {
+						dbg.setFont(f);
+						shadowOffset = 2;
+					}
+					
+					dbg.setColor(Color.BLACK);
+					dbg.drawString(i.getString(), i.getX() - playerX + 310, i.getY() - playerY + 144 + shadowOffset);
+					dbg.setColor(Color.WHITE);
+					dbg.drawString(i.getString(), i.getX() - playerX + 310, i.getY() - playerY + 144);
+				}
+				
+				//Draw game objects
 				for(ObjectImage i : visibleObjects) {
 					dbg.drawImage(objectImageMap.get(i.mapCode), i.dstx1, i.dsty1, i.dstx2, i.dsty2, i.srcx1, i.srcy1, i.srcx2, i.srcy2, this);
 				}
