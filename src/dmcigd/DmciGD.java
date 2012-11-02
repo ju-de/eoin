@@ -258,6 +258,8 @@ public class DmciGD extends Applet implements Runnable {
 				int gridOffsetX = (playerX % 32) + 10;
 				int gridOffsetY = (playerY % 32) + 16;
 				
+				int decayOffset = 0;
+				
 				//Draw blocks
 				
 				//Loop through Y axis of visibleBlocks
@@ -267,11 +269,11 @@ public class DmciGD extends Applet implements Runnable {
 						
 						//Draw Environment
 						if((tileLocation = imageMap.get("e_"+String.valueOf(visibleEnvironment[i][j]))) != null) {
-							dbg.drawImage(tileSheet, j*32 - gridOffsetX, i*32 - gridOffsetY, j*32 - gridOffsetX + 32, i*32 - gridOffsetY + 32, tileLocation[0] * 16, tileLocation[1] * 16, tileLocation[0] * 16 + 16, tileLocation[1] * 16 + 16, this);
+							dbg.drawImage(tileSheet, j*32 - gridOffsetX, i*32 - gridOffsetY, j*32 - gridOffsetX + 32, i*32 - gridOffsetY + 32, tileLocation[0] * 16, (tileLocation[1] + decayOffset) * 16, tileLocation[0] * 16 + 16, (tileLocation[1] + decayOffset) * 16 + 16, this);
 						}
 						//Draw Block
 						if((tileLocation = imageMap.get(String.valueOf(visibleBlocks[i][j]))) != null) {
-							dbg.drawImage(tileSheet, j*32 - gridOffsetX, i*32 - gridOffsetY, j*32 - gridOffsetX + 32, i*32 - gridOffsetY + 32, tileLocation[0] * 16, tileLocation[1] * 16, tileLocation[0] * 16 + 16, tileLocation[1] * 16 + 16, this);
+							dbg.drawImage(tileSheet, j*32 - gridOffsetX, i*32 - gridOffsetY, j*32 - gridOffsetX + 32, i*32 - gridOffsetY + 32, tileLocation[0] * 16, (tileLocation[1] + decayOffset) * 16, tileLocation[0] * 16 + 16, (tileLocation[1] + decayOffset) * 16 + 16, this);
 						}
 					}
 				}
