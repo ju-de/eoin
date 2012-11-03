@@ -92,20 +92,16 @@ public class Main implements Runnable, KeyListener {
 						room.step();
 						
 						//Determine decay state:
-						if(killCount < maxKillCount) {
-							decayTimer++;
-							if(decayTimer == decayLimit) {
-								if(decayState) {
-									decayState = false;
-									decayLimit = maxKillCount - killCount + (int)(Math.random() * (maxKillCount - killCount));
-								} else {
-									decayState = true;
-									decayLimit = 1 + (int)(Math.random() * killCount);
-								}
-								decayTimer = 0;
+						decayTimer++;
+						if(decayTimer >= decayLimit) {
+							if(decayState) {
+								decayState = false;
+								decayLimit = maxKillCount - killCount + (int)(Math.random() * (maxKillCount - killCount));
+							} else {
+								decayState = true;
+								decayLimit = 1 + (int)(Math.random() * killCount);
 							}
-						} else {
-							decayState = true;
+							decayTimer = 0;
 						}
 						
 					}
@@ -143,6 +139,7 @@ public class Main implements Runnable, KeyListener {
 	}
 	
 	public void keyPressed(KeyEvent e) {
+		
 		//Catch core keypresses such as Pause/Unpause
 
 		int keyCode = e.getKeyCode();

@@ -26,6 +26,9 @@ public class DmciGD extends Applet implements Runnable {
 	//Initialize decayOffset integer, determines which tilesheet to display
 	private int decayOffset;
 	
+	//paintOnce attribute (for overlays)
+	private boolean paintOnce = false;
+	
 	//Initialize visible objects list
 	private char[][] visibleBlocks = new char[12][22];
 	private char[][] visibleEnvironment = new char[12][22];
@@ -210,27 +213,21 @@ public class DmciGD extends Applet implements Runnable {
 					if(gameState != main.getGameState()) {
 						
 						gameState = main.getGameState();
+						paintOnce = true;
 						
-						//Tells Main thread to begin fetching next frame
-						threadSync.consumed();
-						
-						//Update screen once (and only once)
-						repaint();
-						
-						//Wait and check again
-						try {
-							wait();
-						} catch (InterruptedException ex) {}
-					} else {
-						
-						//Tells Main thread to begin fetching next frame
-						threadSync.consumed();
-						
-						//If not in a state of update, wait and keep checking gameState
-						try {
-							Thread.sleep(50);
-						} catch (InterruptedException ex) {}
 					}
+						
+					//Tells Main thread to begin fetching next frame
+					threadSync.consumed();
+					
+					repaint();
+					
+					//If not in a state of update, wait and keep checking gameState
+					try {
+						wait();
+						Thread.sleep(50);
+					} catch (InterruptedException ex) {}
+						
 					break;
 			}
 			
@@ -357,34 +354,45 @@ public class DmciGD extends Applet implements Runnable {
 				break;
 				
 			case PAUSE:
-				dbg.setColor(new Color(0, 0, 0, 180));
-				dbg.fillRect(0, 0, 640, 320);
-
-				dbg.setFont(f);
-				dbg.setColor(Color.BLACK);
-				dbg.drawString("[ PAUSED ]", 280, 162);
-				dbg.setColor(Color.WHITE);
-				dbg.drawString("[ PAUSED ]", 280, 160);
+				if(paintOnce) {
+					dbg.setColor(new Color(0, 0, 0, 180));
+					dbg.fillRect(0, 0, 640, 320);
+	
+					dbg.setFont(f);
+					dbg.setColor(Color.BLACK);
+					dbg.drawString("[ PAUSED ]", 280, 162);
+					dbg.setColor(Color.WHITE);
+					dbg.drawString("[ PAUSED ]", 280, 160);
+					
+					paintOnce = false;
+				}
 				break;
 				
 			case GAMEOVER:
-				dbg.setColor(new Color(0, 0, 0, 180));
-				dbg.fillRect(0, 0, 640, 320);
-
-				dbg.setFont(f);
-				dbg.setColor(Color.BLACK);
-				dbg.drawString("[ GAME OVER ]", 260, 162);
-				dbg.setColor(Color.WHITE);
-				dbg.drawString("[ GAME OVER ]", 260, 160);
-
-				dbg.setFont(fSmall);
-				dbg.setColor(Color.BLACK);
-				dbg.drawString("PRESS \"R\" TO RESTART", 275, 181);
-				dbg.setColor(Color.GRAY);
-				dbg.drawString("PRESS \"R\" TO RESTART", 275, 180);
+				if(paintOnce) {
+					dbg.setColor(new Color(0, 0, 0, 180));
+					dbg.fillRect(0, 0, 640, 320);
+	
+					dbg.setFont(f);
+					dbg.setColor(Color.BLACK);
+					dbg.drawString("[ GAME OVER ]", 260, 162);
+					dbg.setColor(Color.WHITE);
+					dbg.drawString("[ GAME OVER ]", 260, 160);
+	
+					dbg.setFont(fSmall);
+					dbg.setColor(Color.BLACK);
+					dbg.drawString("PRESS \"R\" TO RESTART", 275, 181);
+					dbg.setColor(Color.GRAY);
+					dbg.drawString("PRESS \"R\" TO RESTART", 275, 180);
+					
+					paintOnce = false;
+				}
 				break;
 				
 			default:
+				if(paintOnce) {
+					paintOnce = false;
+				}
 				break;
 		}
 		
