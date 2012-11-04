@@ -52,10 +52,7 @@ public class Main implements Runnable, KeyListener {
 		Thread th = new Thread(this);
 		th.start();
 		
-		currentLevel = "game";
-		currentRoom = "MainMenu";
-		
-		loadRoom(currentLevel,currentRoom);
+		loadRoom("game","MainMenu");
 	}
 	
 	//Passes game state to rendering thread
@@ -144,6 +141,11 @@ public class Main implements Runnable, KeyListener {
 
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
+		
+			case KeyEvent.VK_Q:
+				//Quit Game
+				loadRoom("game","MainMenu");
+				break;
 		
 			case KeyEvent.VK_R:
 				//Reset Level
