@@ -15,7 +15,7 @@ public class MainMenu extends Room implements Runnable {
 
 	public void initializeNonsolidObjects() {
 		
-		regions.add(new RoomPathway(16 * 32, 10 * 32, "demo", "Demo"));
+		regions.add(new RoomPathway(16 * 32, 10 * 32, "tutorial", "Tutorial"));
 		textLabels.add(new TextLabel(16 * 32 - 7, 11 * 32 + 16, "Start Game"));
 		
 		regions.add(new Pathway(12 * 32, 10 * 32, 16 * 32, 10 * 32));

@@ -1,3 +1,5 @@
+package dmcigd.core;
+
 public class DialogueItem implements Comparable<DialogueItem> {
 	private final String avatarImageCode, name;
 	private final String[] text;
