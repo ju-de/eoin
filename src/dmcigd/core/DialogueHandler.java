@@ -38,6 +38,7 @@ public class DialogueHandler {
 		return inDialogue;
 	}
 	public boolean startDialogue() {
+		dialogueItemIterator = dialogueItems.listIterator();
 		if(dialogueItems.isEmpty())
 			return false;
 		inDialogue = true;
@@ -46,6 +47,7 @@ public class DialogueHandler {
 		return true;
 	}
 	public void closeDialogue() {
+		dialogueItems.clear();
 		inDialogue = false;
 	}
 	
@@ -64,23 +66,20 @@ public class DialogueHandler {
 
 	//Initiates current dialogue session
 	// clears current dialogue and adds new dialogue
-	public boolean setDialogueItems(ArrayList<DialogueItem> dialogueItems) {
+	public void setDialogueItems(ArrayList<DialogueItem> dialogueItems) {
 		this.dialogueItems.clear();
 		this.dialogueItems.addAll(dialogueItems);
-		return startDialogue();
 	}
 	// overloaded methods to deal with more intuitive parameters
-	public boolean setDialogue(ArrayList<String[]> dialogueItems) {
+	public void setDialogue(ArrayList<String[]> dialogueItems) {
 		this.dialogueItems.clear();
 		for(String[] dialogueItem : dialogueItems)
 			add(dialogueItem);
-		return startDialogue();
 	}
-	public boolean setDialogue(String[][] dialogueItems) {
+	public void setDialogue(String[][] dialogueItems) {
 		this.dialogueItems.clear();
 		for(String[] dialogueItem : dialogueItems)
 			add(dialogueItem);
-		return startDialogue();
 	}
 
 	//Adds new dialogue elements
