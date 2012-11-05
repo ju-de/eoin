@@ -37,7 +37,6 @@ public class DialogueHandler {
 
 	public DialogueHandler() {
 		dialogueItems = Collections.synchronizedList(new ArrayList<DialogueItem>());
-		dialogueItemIterator = dialogueItems.listIterator();
 		inDialogue = false;
 	}
 
@@ -65,6 +64,7 @@ public class DialogueHandler {
 		if(dialogueItems.isEmpty())
 			return false;
 		inDialogue = true;
+		dialogueItemIterator = dialogueItems.listIterator();
 		updateScreen();
 		return true;
 	}
@@ -89,11 +89,14 @@ public class DialogueHandler {
 // takes a text string and separates it into
 // a list of strings no more than maxWidth in length
 	public ArrayList<String> prepareDialogueText(String text) {
-		// the list of dialogue parts
+		// the list of strings
 		ArrayList<String> preparedText = new ArrayList<String>();
+		Matcher matcher;
 		// regex for splitting a line into chunks of at most maxWidth length
 		String lineRegex = ".{0," + maxWidth + "}\\s";
-		preparedText.addAll(Arrays.asList(Pattern.compile(lineRegex).split(text)));
+		matcher = Pattern.compile(lineRegex).matcher(text);
+		while(matcher.find())
+			preparedText.add(matcher.group());
 		return preparedText;
 	}
 
@@ -102,7 +105,8 @@ public class DialogueHandler {
 			closeDialogue();
 			return;
 		}
-		currentScreen = prepareDialogueText(dialogueItemIterator.next().text());
+		currentDialogueItem = dialogueItemIterator.next();
+		currentScreen = prepareDialogueText(currentDialogueItem.text());
 		updateView(0);
 	}
 	public void updateView(int position) {
