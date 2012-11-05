@@ -79,13 +79,13 @@ public class Demo extends Room implements Runnable {
 		
 		regions.add(new Pathway(416, 480, 2112, 320));
 		regions.add(new Pathway(2112, 320, 416, 480));
-		regions.add(new Sign(416, 416, 8, "Who do you think you are?", "Just going around taking random keys. Maybe those keys belong to somebody. Maybe those keys have a family", dialogueHandler));
-		regions.add(new Sign(512, 384, 6, "Long Test Sign. Heh.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elit purus, ornare id facilisis sed, sodales id leo. Nam sit amet turpis vitae justo eleifend ornare ultricies eu est. Etiam enim eros, adipiscing quis congue id, malesuada vitae nisi. Mauris orci quam, posuere et adipiscing vulputate, adipiscing ac metus.Nullam odio nibh, consequat id porttitor vitae, sodales nec nisi. Fusce neque tellus, condimentum eu facilisis eu, dictum a eros. In nec est scelerisque arcu egestas sagittis. Etiam cursus justo at dui pellentesque quis molestie erat aliquam. Integer tincidunt urna at tellus luctus laoreet.", dialogueHandler));
-		regions.add(new Sign(670, 352, 3, "Test Sign", "Please Ignore", dialogueHandler));
-		regions.add(new Sign(800, 224, 6, "The truth is...", "Your mother is a very sultry individual with whom I have commited several acts of adultery.", dialogueHandler));
-		regions.add(new Sign(896, 224, 9, "And in case you were wondering", "She is very gifted at her trade and a true craftsman. I must commend the quality and mastership she demonstrates at such a fine art.", dialogueHandler));
-		regions.add(new Sign(2176, 320, 4, "STOP ASKING SO MANY QUESTIONS", "NO I DO NOT KNOW WHY THERE'S A RANDOM TUNNEL OPENING IN THE MIDDLE OF THE SKY.", dialogueHandler));
-		regions.add(new Sign(6720, 512, 5, " ", "FNORD", dialogueHandler));
+		regions.add(new Sign(416, 416, 8, "Who do you think you are?", "Just going around taking random keys. Maybe those keys belong to somebody. Maybe those keys have a family", dh));
+		regions.add(new Sign(512, 384, 6, "Long Test Sign. Heh.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elit purus, ornare id facilisis sed, sodales id leo. Nam sit amet turpis vitae justo eleifend ornare ultricies eu est. Etiam enim eros, adipiscing quis congue id, malesuada vitae nisi. Mauris orci quam, posuere et adipiscing vulputate, adipiscing ac metus.Nullam odio nibh, consequat id porttitor vitae, sodales nec nisi. Fusce neque tellus, condimentum eu facilisis eu, dictum a eros. In nec est scelerisque arcu egestas sagittis. Etiam cursus justo at dui pellentesque quis molestie erat aliquam. Integer tincidunt urna at tellus luctus laoreet.", dh));
+		regions.add(new Sign(670, 352, 3, "Test Sign", "Please Ignore", dh));
+		regions.add(new Sign(800, 224, 6, "The truth is...", "Your mother is a very sultry individual with whom I have commited several acts of adultery.", dh));
+		regions.add(new Sign(896, 224, 9, "And in case you were wondering", "She is very gifted at her trade and a true craftsman. I must commend the quality and mastership she demonstrates at such a fine art.", dh));
+		regions.add(new Sign(2176, 320, 4, "STOP ASKING SO MANY QUESTIONS", "NO I DO NOT KNOW WHY THERE'S A RANDOM TUNNEL OPENING IN THE MIDDLE OF THE SKY.", dh));
+		regions.add(new Sign(6720, 512, 5, " ", "FNORD", dh));
 		
 		regions.add(new RoomWarp(6720, 512, 32, 32, "demo", "DemoTwo"));
 		

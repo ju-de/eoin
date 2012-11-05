@@ -7,10 +7,10 @@ import dmcigd.core.objects.player.*;
 
 public class Sign extends ObjectCollision implements Region {
 
-	private DialogueHandler dialogueHandler;
+	private DialogueHandler dh;
 	private String name,message;
 	
-	public Sign (int x, int y, int orientation, String name, String message, DialogueHandler dialogueHandler) {
+	public Sign (int x, int y, int orientation, String name, String message, DialogueHandler dh) {
 		
 		setX(x);
 		setY(y);
@@ -25,7 +25,7 @@ public class Sign extends ObjectCollision implements Region {
 		setMapCode("`");
 		setImagePath("objects.gif");
 		
-		this.dialogueHandler = dialogueHandler;
+		this.dh = dh;
 		this.name = name;
 		this.message = message;
 		
@@ -34,7 +34,7 @@ public class Sign extends ObjectCollision implements Region {
 	public void onHover(Player player) {}
 
 	public void interact(Player player) {
-		dialogueHandler.setDialogue(null, name, message);
+		dh.setDialogue(new String[][] {{null, name, message}});
 	}
 	
 	public void step() {}

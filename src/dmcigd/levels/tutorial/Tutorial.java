@@ -62,13 +62,13 @@ public class Tutorial extends Room implements Runnable {
 		textLabels.add(new TextLabel(129 * 32, 14 * 32, "Press \"X\"", false));
 		textLabels.add(new TextLabel(129 * 32, 14 * 32 + 20, "to read signs", false));
 		textLabels.add(new TextLabel(123 * 32 + 8, 14 * 32 + 30, "Sign"));
-		regions.add(new Sign(123 * 32, 15 * 32, 6, "SIGN", "Beware of cracked blocks! These will crumble beneath your feet.", dialogueHandler));
+		regions.add(new Sign(123 * 32, 15 * 32, 6, "SIGN", "Beware of cracked blocks! These will crumble beneath your feet.", dh));
 		
 		textLabels.add(new TextLabel(129 * 32, 20 * 32, "Or pick up items", false));
 		
 		items.add(new DoorKey(126 * 32, 20 * 32, 2, blockMap, solidObjects));
 		
-		regions.add(new Sign(121 * 32, 20 * 32, 4, "SIGN", "Keys can be thrown at locked doors of the corresponding colour to open them.", dialogueHandler));
+		regions.add(new Sign(121 * 32, 20 * 32, 4, "SIGN", "Keys can be thrown at locked doors of the corresponding colour to open them.", dh));
 		
 		items.add(new DoorKey(112 * 32, 23 * 32, 1, blockMap, solidObjects));
 
@@ -83,12 +83,12 @@ public class Tutorial extends Room implements Runnable {
 		textLabels.add(new TextLabel(141 * 32, 23 * 32 + 20, "\"R\" to restart the level", false));
 		textLabels.add(new TextLabel(141 * 32, 23 * 32 + 40, "or \"Q\" to quit the game", false));
 		
-		regions.add(new Sign(144 * 32, 20 * 32, 6, "SIGN", "Beware! Pointy spears ahead!", dialogueHandler));
+		regions.add(new Sign(144 * 32, 20 * 32, 6, "SIGN", "Beware! Pointy spears ahead!", dh));
 
 		textLabels.add(new TextLabel(150 * 32, 23 * 32, "It should be common sense to", false));
 		textLabels.add(new TextLabel(150 * 32, 23 * 32 + 20, "avoid walking into sharp objects", false));
 		
-		regions.add(new Sign(163 * 32, 20 * 32, 9, "SIGN", "If you can't swim, just jump arond wildly and hope for the best.", dialogueHandler));
+		regions.add(new Sign(163 * 32, 20 * 32, 9, "SIGN", "If you can't swim, just jump arond wildly and hope for the best.", dh));
 
 		textLabels.add(new TextLabel(171 * 32, 28 * 32, "When in water, jump to stay afloat", false));
 
