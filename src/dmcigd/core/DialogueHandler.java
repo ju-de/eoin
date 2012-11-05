@@ -1,120 +1,92 @@
 package dmcigd.core;
 
-import java.util.*;
+import java.util.ArrayList;
+import dmcigd.core.DialogueItem;
+import java.util.regex.*;
+import java.util.Arrays;
 
 public class DialogueHandler {
-	
-	//Sorry, this code is still really messy
-	//Somebody remind me to go back and clean this up later
-	//In a nutshell, it takes a list of lines of dialogue
-	//Chunks it off into pages
-	//And progresses through it line by line
-	
-	//Hussain please fix this, I'm bad at string manipulation
-	//and this script is the least efficient thing ever.
-	//I know there's a better way to do this, I just can't figure it out
-	
-	public boolean inDialogue = false;
+	// the internal ArrayList of DialogueItem elements
+	private ArrayList<DialogueItem> dialogueItems;
 
-	public ArrayList<String[]> dialogueList = new ArrayList<String[]>();
-	public int dialoguePosition = -1;
-	
-	public String avatarImageCode, name, line1, line2, line3;
-	
-	//Full method for consecutive items of dialogue
-	public void setDialogue(ArrayList<String[]> dialogue) {
-		//Reset variables
-		avatarImageCode = null;
-		name = null;
-		line1 = null;
-		line2 = null;
-		line3 = null;
-		dialogueList = new ArrayList<String[]>();
-		dialoguePosition = 0;
-		
-		//Loop through pieces of dialogue
-		for(String[] i : dialogue) {
-			
-			//Word wrap dialogue text
-			StringBuilder sb = new StringBuilder(i[2]);
-			
-			int j = 0;
-			while((j = sb.indexOf(" ", j + 42)) != -1) {
-				sb.replace(j, j + 1, "\n");
-			}
-			
-			String[] textBlock = sb.toString().split("\n");
-			
-			//Create multiple entries if the dialogue is more than 3 lines long
-			//Allows for scrolling through dialogue line by line
-			if(textBlock.length >= 3) {
-				
-				j = 0;
-				do {
-					String[] dialogueItem = {i[0], i[1], textBlock[j], textBlock[j+1], textBlock[j+2]};
-					j++;
-					dialogueList.add(dialogueItem);
-				} while ( j + 2 < textBlock.length);
-				
-			} else {
-				//Create single entry if dialogue is less than 3 lines long
-				String[] dialogueItem = new String[5];
-				dialogueItem[0] = i[0];
-				dialogueItem[1] = i[1];
-				
-				dialogueItem[2] = textBlock[0];
-				if(textBlock.length > 1) {
-					dialogueItem[3] = textBlock[1];
-				} else {
-					dialogueItem[3] = null;
-				}
-				dialogueItem[4] = null;
-				dialogueList.add(dialogueItem);
-			}
+	public void progressDialogue(ArrayList<DialogueItem> dialogueItems) {
+		this.dialogueItems = new ArrayList<DialogueItem>(dialogueItems);
+	}
+	// overloaded constructors to deal with more intuitive parameters
+	public void DialogueHandler(ArrayList<String[]> dialogueItems) {
+		this.dialogueItems = dialogueItemsFromList(dialogueItems);
+	}
+	public void DialogueHandler(String[][] dialogueItems) {
+		this.dialogueItems = dialogueItemsFromList(new ArrayList<String[]>(Arrays.asList(dialogueItems)));
+	}
+
+// generates an ArrayList of DialogueItem elements given
+// an ArrayList of string arrays of the required fields
+//
+// string array elements are in the order 
+// avatarImageCode, name, text
+	public ArrayList<DialogueItem> dialogueItemsFromList(ArrayList<String[]> dialogueList) {
+		ArrayList<DialogueItem> dialogueItems = new ArrayList<DialogueItem>();
+		// holds the list of prepared dialogue text arrays for each iteration
+ArrayList<String[]> itemText = new ArrayList<String[]>();
+		for(String[] element : dialogueList) {
+			// append the processed dialogue text
+			itemText.addAll(prepareDialogueText(element[2]));
+			// iterate through the list of dialogue text arrays,
+			// generating a new DialogueItem with the same avatarImageCode and name for each
+			for(String[] text : itemText) 
+				dialogueItems.add(new DialogueItem(element[0], element[1], text));
+			// clear the dialogue text list for the next iteration
+			itemText.clear();
 		}
-		
-		progressDialogue();
-		inDialogue = true;
+		return dialogueItems;
 	}
-	
-	//Shorthand method for single items of dialogue
-	public void setDialogue(String avatarImageCode, String name, String message) {
-		
-		//Create a single line of dialogue
-		String[] dialogueItem = {avatarImageCode,name,message};
-		ArrayList<String[]> dialogue = new ArrayList<String[]>();
-		dialogue.add(dialogueItem);
-		
-		//Run dialogue initialization as usual
-		setDialogue(dialogue);
+
+// add a new dialogue element
+	public void add(String avatarImageCode, String name, String text) {
+		// the list of processed dialogue text arrays
+		ArrayList<String[]> preparedText = prepareDialogueText(text);
+		// iterate through the dialogue text arrays,
+		// generating a new DialogueItem with the same avatarImageCode and name for each
+		for(String[] element : preparedText)
+			dialogueItems.add(new DialogueItem(avatarImageCode, name, element));
 	}
-	
-	public void progressDialogue() {
-		
-		//Checks if current page of dialogue exists
-		if(dialoguePosition < dialogueList.size()) {
-			
-			//Retrieve current lines of dialogue
-			String[] dialogueItem = dialogueList.get(dialoguePosition);
-			
-			//Passes off values into bite-sized chunks
-			avatarImageCode = dialogueItem[0];
-			name = dialogueItem[1];
-			line1 = dialogueItem[2];
-			line2 = dialogueItem[3];
-			line3 = dialogueItem[4];
-			
-			//Marks line as read (pushes counter up by one)
-			dialoguePosition++;
-		} else {
-			
-			//Close window and resume game loop
-			exitDialogue();
-			
+	// overloaded definitions for convenience
+	public void add(ArrayList<String> dialogue) {
+		if(dialogue.size() != 3)
+			throw new IllegalArgumentException("illegal list length for dialogue");
+		add(dialogue.get(0), dialogue.get(1), dialogue.get(2));
+	}
+	public void add(String[] dialogue) {
+		add(new ArrayList<String>(Arrays.asList(dialogue)));
+	}
+
+// takes a text string and separates it into 
+// a list of text arrays (dialogue parts) with no more than DialogueItem.maxLines string elements,
+// each string (line)  with no more than DialogueItem.maxWidth characters
+	public ArrayList<String[]> prepareDialogueText(String text) {
+		// the list of dialogue parts
+		ArrayList<String[]> preparedText = new ArrayList<String[]>();
+		// the initial array of dialogue parts
+		String[] splitText;
+		// if the parameter size is less than the max width, no need to separate it
+		if(text.length() <= DialogueItem.maxWidth) {
+			preparedText.add(new String[] {text});
+			return preparedText;
 		}
+		// regex for splitting a dialogue part into lines of at most DialogueItem.maxWidth length
+		String lineRegex = ".{1," + DialogueItem.maxWidth + "}\\s";
+		// regex for splitting the text into dialogue parts of no more than DialogueItem.maxLines * DialogueItem.maxWidth length
+		String partRegex = ".{" + DialogueItem.maxWidth + "," + DialogueItem.maxLines * DialogueItem.maxWidth + "}\\s";
+		// split the text into an array of dialogue parts
+		splitText = Pattern.compile(partRegex).split(text);
+		// iterate through the dialogue parts, split each into an array of lines and append to the final variable
+		for(String l : splitText)
+			preparedText.add(Pattern.compile(lineRegex).split(l));
+		return preparedText;
 	}
-	
-	public void exitDialogue() {
-		inDialogue = false;
+
+	public ArrayList<DialogueItem> dialogueItems() {
+		return dialogueItems;
 	}
 }
