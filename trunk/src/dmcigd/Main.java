@@ -52,7 +52,7 @@ public class Main implements Runnable, KeyListener {
 		Thread th = new Thread(this);
 		th.start();
 		
-		loadRoom("demo","Demo");
+		loadRoom("game","MainMenu");
 	}
 	
 	//Passes game state to rendering thread
