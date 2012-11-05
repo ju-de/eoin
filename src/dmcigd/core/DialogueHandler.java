@@ -106,11 +106,10 @@ public class DialogueHandler {
 		ArrayList<String> preparedText = new ArrayList<String>();
 		
 		// regex for splitting a line into chunks of at most maxWidth length
-		String lineRegex = ".{0," + maxWidth + "}\\s";
+		String lineRegex = ".{0," + maxWidth + "}\\s|\z";
 		
 		// Creates new array based on regex groups.
-		// A single space is appended at the end to counter the fencepost error with whitespaces when matching groups
-		Matcher matcher = Pattern.compile(lineRegex).matcher(text + " ");
+		Matcher matcher = Pattern.compile(lineRegex).matcher(text);
 		while(matcher.find())
 			preparedText.add(matcher.group());
 		
