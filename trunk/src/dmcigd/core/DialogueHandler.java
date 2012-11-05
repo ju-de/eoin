@@ -114,8 +114,6 @@ public class DialogueHandler {
 		while(matcher.find())
 			preparedText.add(matcher.group());
 		
-		System.out.println(preparedText);
-		
 		return preparedText;
 		
 	}
