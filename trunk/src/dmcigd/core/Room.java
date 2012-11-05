@@ -37,7 +37,7 @@ public class Room implements Runnable {
 	public ArrayList<Region> regions = new ArrayList<Region>();
 	
 	//Dialogue Handler
-	public DialogueHandler dialogueHandler = new DialogueHandler();
+	public DialogueHandler dh = new DialogueHandler();
 	
 	public boolean isReady() {
 		return ready;
@@ -56,7 +56,7 @@ public class Room implements Runnable {
 	}
 	
 	public boolean inDialogue() {
-		return dialogueHandler.inDialogue;
+		return dh.inDialogue();
 	}
 	
 	public Room(URL codeBase, String levelName, String roomName, String tileSet) {
@@ -202,7 +202,7 @@ public class Room implements Runnable {
 				break;
 			case KeyEvent.VK_X:
 				if(inDialogue()) {
-					dialogueHandler.progressDialogue();
+					dh.advance();
 				} else {
 					player.interact();
 				}

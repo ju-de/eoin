@@ -183,19 +183,19 @@ public class DmciGD extends Applet implements Runnable {
 					
 					//Retrieve Dialogue text
 					avatarImageCode = null;
-					avatarImageCode = main.room.dialogueHandler.avatarImageCode;
+					avatarImageCode = main.room.dh.getCurrentDialogueItem().getAvatarImageCode();
 					
 					name = null;
-					name = main.room.dialogueHandler.name;
+					name = main.room.dh.getCurrentDialogueItem().getName();
 					
 					line1 = null;
-					line1 = main.room.dialogueHandler.line1;
+					line1 = main.room.dh.getLine(1);
 					
 					line2 = null;
-					line2 = main.room.dialogueHandler.line2;
+					line2 = main.room.dh.getLine(2);
 					
 					line3 = null;
-					line3 = main.room.dialogueHandler.line3;
+					line3 = main.room.dh.getLine(3);
 					
 					//Tell Main thread to continue with game loop
 					threadSync.consumed();
