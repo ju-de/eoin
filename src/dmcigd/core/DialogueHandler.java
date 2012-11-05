@@ -109,9 +109,12 @@ public class DialogueHandler {
 		String lineRegex = ".{0," + maxWidth + "}\\s";
 		
 		// Creates new array based on regex groups.
-		Matcher matcher = Pattern.compile(lineRegex).matcher(text);
+		// A single space is appended at the end to counter the fencepost error with whitespaces when matching groups
+		Matcher matcher = Pattern.compile(lineRegex).matcher(text + " ");
 		while(matcher.find())
 			preparedText.add(matcher.group());
+		
+		System.out.println(preparedText);
 		
 		return preparedText;
 		
