@@ -20,6 +20,9 @@ public class DialogueHandler {
 	public static final int maxWidth = 42;
 	public static final int maxLines = 3;
 
+	public DialogueItem currentDialogueItem() {
+		return currentDialogueItem;
+	}
 	public boolean inDialogue() {
 		return inDialogue();
 	}
