@@ -106,7 +106,7 @@ public class DialogueHandler {
 		ArrayList<String> preparedText = new ArrayList<String>();
 		
 		// regex for splitting a line into chunks of at most maxWidth length
-		String lineRegex = ".{0," + maxWidth + "}\\s|\\z";
+		String lineRegex = ".{0," + maxWidth + "}(\\s|\\z)";
 		
 		// Creates new array based on regex groups.
 		Matcher matcher = Pattern.compile(lineRegex).matcher(text);
