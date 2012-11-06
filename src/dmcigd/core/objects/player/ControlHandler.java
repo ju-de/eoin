@@ -14,6 +14,7 @@ abstract class ControlHandler extends LadderHandler {
 	public ArrayList<Region> regions = new ArrayList<Region>();
 	
 	abstract void handleRegionInteraction(Region region);
+	abstract void handleAttack();
 	
 	public void walk(boolean isWalking, Direction direction) {
 		if(isWalking) {
@@ -28,7 +29,6 @@ abstract class ControlHandler extends LadderHandler {
 			//Smooths out controls in case of overlap with keypresses
 			if(walking == direction) {
 				this.isWalking = false;
-				walking = null;
 			}
 		}
 	}
@@ -65,9 +65,9 @@ abstract class ControlHandler extends LadderHandler {
 	
 	public void interact() {
 		
+		boolean interacted = false;
+		
 		if(heldItem != null) {
-			
-			boolean interacted = false;
 			
 			//If holding an item, check for regions first, don't throw item if in interactive zone
 			
@@ -105,8 +105,13 @@ abstract class ControlHandler extends LadderHandler {
 			for (Region i : regions) {
 				if(getBounds().intersects(i.getBounds())) {
 					handleRegionInteraction(i);
+					interacted = true;
 					break;
 				}
+			}
+			
+			if(heldItem == null && !interacted) {
+				handleAttack();
 			}
 			
 		}

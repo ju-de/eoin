@@ -77,8 +77,8 @@ public class Demo extends Room implements Runnable {
 		items.add(new DoorKey(416, 416, 1, blockMap, solidObjects));
 		items.add(new DoorKey(736, 416, 2, blockMap, solidObjects));
 		
-		regions.add(new Pathway(416, 480, 2112, 320));
-		regions.add(new Pathway(2112, 320, 416, 480));
+		regions.add(new Passage(416, 480, 2112, 320));
+		regions.add(new Passage(2112, 320, 416, 480));
 		regions.add(new Sign(416, 416, 8, "Who do you think you are?", "Just going around taking random keys. Maybe those keys belong to somebody. Maybe those keys have a family", dh));
 		regions.add(new Sign(512, 384, 6, "Long Test Sign. Heh.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elit purus, ornare id facilisis sed, sodales id leo. Nam sit amet turpis vitae justo eleifend ornare ultricies eu est. Etiam enim eros, adipiscing quis congue id, malesuada vitae nisi. Mauris orci quam, posuere et adipiscing vulputate, adipiscing ac metus.Nullam odio nibh, consequat id porttitor vitae, sodales nec nisi. Fusce neque tellus, condimentum eu facilisis eu, dictum a eros. In nec est scelerisque arcu egestas sagittis. Etiam cursus justo at dui pellentesque quis molestie erat aliquam. Integer tincidunt urna at tellus luctus laoreet.", dh));
 		regions.add(new Sign(670, 352, 3, "Test Sign", "Please Ignore", dh));

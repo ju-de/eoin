@@ -11,6 +11,8 @@ public class Player extends ControlHandler implements SolidObject {
 	
 	private String level,room;
 	
+	public Sword sword;
+	
 	public String getLevel() {
 		return level;
 	}
@@ -28,6 +30,10 @@ public class Player extends ControlHandler implements SolidObject {
 	
 	public void handleRegionInteraction (Region region) {
 		region.interact(this);
+	}
+	
+	public void handleAttack() {
+		sword.attack();
 	}
 	
 	public void onPush(Entity entity, int v) {
@@ -68,6 +74,9 @@ public class Player extends ControlHandler implements SolidObject {
 		setSequence(0);
 		
 		setEntityType(EntityType.PLAYER);
+		
+		//Create Sword
+		sword = new Sword(x, y, solidObjects);
 	}
 	
 	public void animate() {
@@ -153,10 +162,17 @@ public class Player extends ControlHandler implements SolidObject {
 			jumpDelay--;
 		}
 		
-		//Carries item
 		if(heldItem != null) {
+			//Carries item
 			heldItem.setX(getX());
 			heldItem.setY(getY() + 14);
+		} else {
+			//Carries sword
+			sword.setPosition(getX(),getY());
+			sword.setLadder(onLadder);
+			sword.flipped = flipped;
 		}
+		
+		sword.step();
 	}
 }

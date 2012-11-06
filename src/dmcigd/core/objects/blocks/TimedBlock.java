@@ -15,6 +15,8 @@ public class TimedBlock extends ObjectCollision implements RestableObject {
 	
 	public void onPush(Entity entity, int v) {}
 	
+	public void onAttack(int damage) {}
+	
 	public boolean isDestroyed() { return false; }
 	
 	public void setState() {

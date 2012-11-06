@@ -22,6 +22,8 @@ public class MovingPlatform extends MovingObject implements RestableObject {
 	
 	public void onPush(Entity entity, int v) {}
 	
+	public void onAttack(int damage) {}
+	
 	public boolean isDestroyed() { return false; }
 	
 	public MovingPlatform(int x, int y, int type, int width, int speed, int travelDistance) {

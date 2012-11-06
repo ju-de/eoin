@@ -18,6 +18,8 @@ public class CrumblingBlock extends ObjectCollision implements RestableObject {
 	
 	public void onPush(Entity entity, int v) {}
 	
+	public void onAttack(int damage) {}
+	
 	public boolean isDestroyed() { return false; }
 	
 	public CrumblingBlock(int x, int y, float crumbleSpeed, int clockReset) {

@@ -17,6 +17,7 @@ public class Tutorial extends Room implements Runnable {
 	}
 	
 	public void initializeSolidObjects() {
+		
 		solidObjects.add(new MovingPlatform(105 * 32, 16 * 32, 1, 6, 1, 11));
 		
 		solidObjects.add(new TimedBlock(116 * 32, 15 * 32, 1, 0, 100, 100));
@@ -29,6 +30,8 @@ public class Tutorial extends Room implements Runnable {
 		solidObjects.add(new LockedDoor(118 * 32, 23 * 32, 1));
 		
 		solidObjects.add(new PushableBlock(128 * 32, 23 * 32, blockMap, solidObjects));
+		
+		solidObjects.add(new TestMonster(199 * 32, 18 * 32, blockMap, solidObjects));
 	}
 
 	public void initializeNonsolidObjects() {
@@ -68,7 +71,12 @@ public class Tutorial extends Room implements Runnable {
 		
 		items.add(new DoorKey(126 * 32, 20 * 32, 2, blockMap, solidObjects));
 		
-		regions.add(new Sign(121 * 32, 20 * 32, 4, "SIGN", "Keys can be thrown at locked doors of the corresponding colour to open them.", dh));
+		regions.add(new Sign(126 * 32, 20 * 32, 4, "SIGN", "Keys can be thrown at locked doors of the corresponding colour to open them.", dh));
+		
+		regions.add(new Passage(120 * 32, 20 * 32, 116 * 32, 20 * 32));
+		regions.add(new Passage(116 * 32, 20 * 32, 120 * 32, 20 * 32));
+		
+		textLabels.add(new TextLabel(120 * 32, 22 * 32, "And go through passages", false));
 		
 		items.add(new DoorKey(112 * 32, 23 * 32, 1, blockMap, solidObjects));
 

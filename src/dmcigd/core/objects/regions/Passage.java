@@ -4,11 +4,12 @@ import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.objects.player.*;
 
-public class RoomPathway extends ObjectCollision implements Region {
+public class Passage extends ObjectCollision implements Region {
 	
-	String destLevel, destRoom;
+	int destX;
+	int destY;
 
-	public RoomPathway (int x, int y, String destLevel, String destRoom) {
+	public Passage (int x, int y, int destX, int destY) {
 		
 		setX(x + 6);
 		setY(y);
@@ -23,17 +24,16 @@ public class RoomPathway extends ObjectCollision implements Region {
 		setMapCode("`");
 		setImagePath("objects.gif");
 		
-		this.destLevel = destLevel;
-		this.destRoom = destRoom;
+		this.destX = destX + 3;
+		this.destY = destY;
 		
 	}
 	
 	public void onHover(Player player) {}
 
 	public void interact(Player player) {
-		
-		player.setRoom(destLevel, destRoom);
-		
+		player.setX(destX);
+		player.setY(destY);
 	}
 	
 	public void step() {}
