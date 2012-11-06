@@ -38,7 +38,6 @@ public class DialogueHandler {
 		return inDialogue;
 	}
 	public boolean startDialogue() {
-		dialogueItemIterator = dialogueItems.listIterator();
 		if(dialogueItems.isEmpty())
 			return false;
 		inDialogue = true;
@@ -69,17 +68,20 @@ public class DialogueHandler {
 	public void setDialogueItems(ArrayList<DialogueItem> dialogueItems) {
 		this.dialogueItems.clear();
 		this.dialogueItems.addAll(dialogueItems);
+		startDialogue();
 	}
 	// overloaded methods to deal with more intuitive parameters
 	public void setDialogue(ArrayList<String[]> dialogueItems) {
 		this.dialogueItems.clear();
 		for(String[] dialogueItem : dialogueItems)
 			add(dialogueItem);
+		startDialogue();
 	}
 	public void setDialogue(String[][] dialogueItems) {
 		this.dialogueItems.clear();
 		for(String[] dialogueItem : dialogueItems)
 			add(dialogueItem);
+		startDialogue();
 	}
 
 	//Adds new dialogue elements
