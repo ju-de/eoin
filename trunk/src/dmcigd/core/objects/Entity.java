@@ -61,6 +61,8 @@ public class Entity extends BlockMapCollider {
 		object.onPush(this, v);
 	}
 	
+	public void onAttack(int damage) {}
+	
 	public void move() {
 		
 		addAcceleration();

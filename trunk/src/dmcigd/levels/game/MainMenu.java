@@ -15,13 +15,13 @@ public class MainMenu extends Room implements Runnable {
 
 	public void initializeNonsolidObjects() {
 		
-		regions.add(new RoomPathway(16 * 32, 10 * 32, "tutorial", "Tutorial"));
+		regions.add(new RoomPassage(16 * 32, 10 * 32, "tutorial", "Tutorial"));
 		textLabels.add(new TextLabel(16 * 32 - 7, 11 * 32 + 16, "Start Game"));
 		
-		regions.add(new Pathway(12 * 32, 10 * 32, 16 * 32, 10 * 32));
+		regions.add(new Passage(12 * 32, 10 * 32, 16 * 32, 10 * 32));
 		textLabels.add(new TextLabel(12 * 32 - 10, 11 * 32 + 16, "Level Select"));
 		
-		regions.add(new Pathway(20 * 32, 10 * 32, 16 * 32, 10 * 32));
+		regions.add(new Passage(20 * 32, 10 * 32, 16 * 32, 10 * 32));
 		textLabels.add(new TextLabel(20 * 32 + 3, 11 * 32 + 16, "Credits"));
 		
 		textLabels.add(new TextLabel(15 * 32 - 11, 8 * 32, "UNTITLED GAME", false));

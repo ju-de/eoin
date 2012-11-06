@@ -89,6 +89,11 @@ public class Room implements Runnable {
 		
 		visibleObjects.add(player.getObjectImage(player.getX(), player.getY()));
 		
+		if(player.heldItem == null) {
+			//Draw sword if player is not holding an object
+			visibleObjects.add(player.sword.getObjectImage(player.getX(), player.getY()));
+		}
+		
 		for (Item i : items) {
 			if(i.isVisible(player.getX(), player.getY())) {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
