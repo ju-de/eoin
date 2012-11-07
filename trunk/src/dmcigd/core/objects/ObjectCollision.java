@@ -4,14 +4,15 @@ import dmcigd.core.enums.*;
 
 import java.awt.*;
 
-public class ObjectCollision extends VisibleObject {
+public abstract class ObjectCollision extends VisibleObject {
 	
 	CollisionType collisionType = CollisionType.NONSOLID;
 	
+	//Collision Checks
 	public Rectangle getBounds(int vx, int vy) {
 		return new Rectangle(getX() + vx, getY() + vy, getWidth(), getHeight());
 	}
-	
+	//Overrides getBounds with default of no velocity
 	public Rectangle getBounds() {
 		return getBounds(0,0);
 	}
@@ -23,5 +24,14 @@ public class ObjectCollision extends VisibleObject {
 	public void setCollisionType(CollisionType collisionType) {
 		this.collisionType = collisionType;
 	}
+
+	//Collision Events
+	public void onRest(EntityType entityType) {}
+	
+	public void onUnrest(EntityType entityType) {}
+	
+	public void onPush(Entity entity, int v) {}
+	
+	public void onAttack(int damage) {}
 
 }

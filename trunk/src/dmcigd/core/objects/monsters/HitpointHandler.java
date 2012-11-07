@@ -1,9 +1,8 @@
 package dmcigd.core.objects.monsters;
 
 import dmcigd.core.objects.*;
-import dmcigd.core.objects.interfaces.*;
 
-public class HitpointHandler extends Entity implements SolidObject {
+public class HitpointHandler extends Entity {
 	
 	private int maxHitpoints,hitpoints = 1;
 	

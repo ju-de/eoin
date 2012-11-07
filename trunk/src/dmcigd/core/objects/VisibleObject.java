@@ -1,6 +1,6 @@
 package dmcigd.core.objects;
 
-public class VisibleObject implements Cloneable {
+public abstract class VisibleObject implements Cloneable {
 	
 	//Initialize displacement properties for resting objects
 	private int dx,dy = 0;

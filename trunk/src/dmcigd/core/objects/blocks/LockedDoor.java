@@ -26,12 +26,6 @@ public class LockedDoor extends ObjectCollision implements RestableObject {
 		
 	}
 	
-	public void onAttack(int damage) {}
-
-	public void onRest(EntityType entityType) {}
-
-	public void onUnrest(EntityType entityType) {}
-	
 	public boolean isDestroyed() {
 		return unlocked;
 	}
