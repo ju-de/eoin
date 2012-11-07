@@ -9,10 +9,6 @@ import java.util.*;
 
 public class PushableBlock extends Entity implements RestableObject {
 	
-	public void onRest(EntityType entity) {}
-	
-	public void onUnrest(EntityType entity) {}
-	
 	public void onPush(Entity entity, int v) {
 		if(entity.getEntityType() == EntityType.PLAYER) {
 			if(restingBlock != null) {

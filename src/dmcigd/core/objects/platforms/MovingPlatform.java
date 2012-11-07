@@ -1,7 +1,6 @@
 package dmcigd.core.objects.platforms;
 
 import dmcigd.core.enums.CollisionType;
-import dmcigd.core.enums.EntityType;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 
@@ -15,14 +14,6 @@ public class MovingPlatform extends MovingObject implements RestableObject {
 	//Type 1: Vertical movement
 	
 	private int objectClock,clockReset = 0;
-	
-	public void onRest(EntityType entityType) {}
-	
-	public void onUnrest(EntityType entityType) {}
-	
-	public void onPush(Entity entity, int v) {}
-	
-	public void onAttack(int damage) {}
 	
 	public boolean isDestroyed() { return false; }
 	
