@@ -59,6 +59,10 @@ public class DmciGD extends Applet implements Runnable {
 		//Add listener to main thread
 		addKeyListener(main);
 		
+		//Start new thread when applet loads
+		Thread th = new Thread(this);
+		th.start();
+		
 		//Set canvas background
 		setBackground (new Color(200,240,255));
 		
@@ -67,10 +71,6 @@ public class DmciGD extends Applet implements Runnable {
 		//Initialize Double-Buffers
 		dbImage = createImage(this.getSize().width, this.getSize().height);
 		dbg = dbImage.getGraphics();
-		
-		//Start new thread when applet loads
-		Thread th = new Thread(this);
-		th.start();
 		
 		//Create font
 		try {
