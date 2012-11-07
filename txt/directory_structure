@@ -15,6 +15,7 @@
 				/projectiles					Basic projectile abstraction classes
 				/player							Player object and related handlers
 		/levels						Contains code related to individual levels, i.e. object classes and initializers
+			/LEVELNAME					Contains level classes and all bundled objects (e.g. level-specific monsters)
 /share							Contains the game's shared resources
 	/gfx							Contains the visual elements of the game, such as fonts and sprites.
 		/tilesheets						Contains tile spritesheets (each tilesheet may be used for more than one level)

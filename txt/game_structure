@@ -1,0 +1,317 @@
+===========================================
+= THIS DOCUMENTATION IS STILL IN PROGRESS =
+===========================================
+===== AND WILL TAKE A WHILE TO FINISH =====
+===========================================
+========== PLEASE BEAR WITH ME ============
+===========================================
+
+Seriously though, this is going to take forever.
+
+======================================================================================================
+======================================================================================================
+
+THE CORE CLASSES
+
+The game loop is handled by 3 main files:
+
+Double Buffering:			dmcigd.DmciGD.java
+Object and Input Handler:	dmcigd.Main.java
+Gameplay Loop:				dmcigd.core.Room.java
+
+These three objects are what handle every other object in the game. The first two handle low-level
+game structure, just getting all of the game objects on screen and actually executing the information
+it receives from other classes.
+
+As a level designer, your primary concern is to deal with dmcigd.core.Room.java as the level classes
+themselves, and the logic associated with the various game objects and interfaces
+
+(*)	)=================================================================================================
+
+	dmcigd.DmciGD.java
+	
+	This file handles the double buffering script. This is the object that actually draws the pixels
+	onto the screen. It shares a consumer/producer relationship with the Main.java class, and from
+	the Main.java class, it receives all information on the current game state and list of visible
+	objects to draw on screen.
+	
+	It is important to note that this file is an absolute mess. Due to limitations with Java's Applet
+	library (as we do value the distribution benefits of being a browser-based game), it becomes very
+	difficult to properly abstract out rendering into several classes, unlike using a library such as
+	Swing, as verbose as it may be.
+	
+	Please note that knowledge of this object is not necessary to work on the game, as long as you
+	adhere to the requirements of the Room.java class. The information on this class is strictly for
+	general information.
+	
+	It is also important to note that I have had no previous experience working with games or Applets,
+	so it is possible that this class is much more convoluted and contrived than need be.
+	
+		PUBLIC METHODS AND PROPERTIES
+		This object naturally has no methods associated with it that would run outside of the class,
+		as it is the root class of the game.
+		
+		OBJECT PROCEDURE
+		
+			INIT
+		
+		1.	Upon object initialization, this class creates an instance of Main.java
+		
+			Along with creating this instance, it must also pass down the appropriate properties and
+			resources. It passes down the codeBase URL which is used for file reading, especially
+			important for web implementation.
+			
+			It must also synchronize gameStates, adds the key listener to the Main.java instance so
+			that it can register inputs, and initialize the Consumer/Producer relationship via the
+			ThreadSync.java class. For a little more information on the Consumer/Producer relationship
+			to deal with multi-threading, see the EXTRA INFORMATION section.
+			
+		2.	The object must also initiate all properties associated with image rendering. This means
+			loading all information regarding spritesheet locations, as image information is stored in
+			spritesheets rather than individual sprites to cut down on HTTP requests. This also opens
+			the possibility of the mathematical manipulation of sprites, such as adding a certain
+			value to the Y coordinate to load an alternate set of sprites within the same sheet.
+			
+			It also loads the font from a TTF file in the /share/ directory and creates the relevant
+			font object for text rendering.
+			
+			[BACKGROUNDS ARE NOT DONE YET. WILL DOCUMENT LATER]
+			
+			RUN
+			
+		3.	For every iteration of the run loop, the object first synchronizes it's GameState with
+			that of the main class.
+			
+		4.	GAMEPLAY:
+				If the gameState doesn't match, this means that the level just loaded. Loop through
+				all of the objectLists and preload their images based on their image path and
+				associated mapCode. More information on the image map below
+				
+				Otherwise, the instance synchronizes a list of visible ObjectImage objects, which
+				contains object mapcodes, source locations (current sequence and frame), location and
+				dimensions.
+				
+				Also synchronizes a list of TextLabel objects and their locations.
+				
+			LOADINGROOM:
+				Directly call the repaint();
+				
+			DIALOGUE:
+				Check the current DialogueItem of the DialogueHandler dh, and synchronize the avatar's
+				image mapcode as well as the name and the three lines of text.
+				
+			DEFAULT:
+				Synchronizes the gameState and tells the loop to render a single frame.
+				
+		5.	After consumption actions are taken, an repaint(); and wait(); method are called. This is
+			important in ensuring that only one paint(); is called per repaint();, avoiding queuing up
+			a bunch of paint(); calls for no reason.
+			
+		6.	On paint, the method draws the appropriate objects onto a double-buffering image that is
+			size of the screen
+		
+		7.	GAMEPLAY:
+				Draw a 640x320 background to clear the previous frame
+		
+				The visible characters of the environment are matched to their according image and
+				spritesheet location and drawn on the screen.
+				
+					The position is based on the current offset of the Player from the 32x32 grid,
+					calculated using a special kind of modulo that handles the offset of the grid to
+					the screen as well.
+				
+				The same steps are taken for the blockmap (rendering it on top of the visible objects)
+				
+				All text labels are drawn out based on their according font size and string
+				
+				All visible objects are drawn onto the screen using their according image resource and
+				spritesheet location.
+				
+					Positions are calculated by the ObjectImage class, and are compared to the view
+					position (Player position) such that the coordinates represent a pixel near the
+					center of the screen (the top left pixel of the player)
+				
+			DIALOGUE:
+				Draws a 640x110 dark grey box along the bottom of the screen
+				
+				If the dialogue item contains an avatar, draw a 128 x 128 box and render the avatar
+				image to the bottom right.
+				
+				Given the current offset (centered usually, or set to the left if there is an avatar)
+				draw the name and three lines of text.
+				
+				Draw 'PRESS "X" TO CONTINUE' to the bottom right of the dialogue with a shadow.
+				
+			LOADINGROOM:
+				Render and iterate the loading animation.
+				
+			PAUSE:
+				Draw a translucent black overlay over the previous frame.
+				Render out the following text with shadows:
+					"[ PAUSED ]"
+			
+			GAMEOVER:
+				Draw a translucent black overlay over the previous frame.
+				Render out the following text with shadows:
+					"[ GAME OVER ]"
+					'PRESS "R" TO RESET'
+				
+		8. The offscreen image is drawn to the screen and the main thread loop is notified to resume.
+		
+		THE IMAGE MAP
+		
+		*********************************************************************
+		**PLEASE NOTE: THIS INFORMATION IS IMPORTANT TO THE LEVEL DESIGNERS**
+		*********************************************************************
+		
+		The only aspect that the level designers need to worry about is the image map. This is what
+		allows the applet to properly load image resources, again, due to the limitations of Applet
+		and the problems associated with loading and passing an image resource directly.
+		
+		As such, the images are all loaded, and for that matter, preloaded (which pauses the game) by
+		the DmciGD.java instance.
+		
+		The blockmap and environmentmap image resources are saved in a single spritesheet called the
+		tileset, and has a constant image resource associated with them.
+		
+		All other objects have their image resources stored in a HashMap which associates a string to
+		the image resource. This 
+		
+			i.e. "`" is associated with the core objects, which is "/share/gfx/objects.gif"
+			
+		This imagemap is totally dynamic and is loaded at the beginning of the level (loops through
+		all objects and fetches the associated image from the path).
+		
+		It is important to ensure that your mapcode string is unique to your object. Other than this
+		requirement for unique strings, there is currently no naming conventions for mapcodes.
+			
+			[IN PROGRESS]
+	
+(*)	)=================================================================================================
+	
+	dmcigd.Main.java
+	
+(*)	)=================================================================================================
+	
+	dmcigd.core.Room.java
+
+======================================================================================================
+======================================================================================================
+
+OBJECT INTERFACES AND BEHAVIOURS
+
+Please note that this section is meant strictly to describe how general object interfaces interact
+with each other. For documentation on how to use the object classes or abstraction classes available,
+please refer to the core_objects_documentation. This outlines the constructors and significant methods
+that are associated with the objects themselves.
+
+It has also come to my attention that some of you may not know what an Object Interface is, nor what
+Object Inheritance is. Please look this up on your own. They are both very important concepts to any
+OOP-based environment. This is particularly concerning considering that Java is nothing but OOP, and
+very strict OOP at that.
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.GameObject.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.SolidObject.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.RestableObject.java
+	
+	This is nothing more than an extension of the SolidObject interface, but introduces the onRest()
+	and onUnrest() methods.
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.Item.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.Region.java
+
+======================================================================================================
+======================================================================================================
+
+EXTRA INFORMATION
+
+(*)	)=================================================================================================
+
+	dmcigd.core.ThreadSync.java
+	
+	This file handles relationship between DmciGD.java and Main.java. DmciGD.java is the consumer,
+	while Main.java is the producer. Unlike with inheritances and interfaces, I will actually explain
+	what this relationship means, as it's a more specific concept.
+	
+	The producer produces the content, naturally.
+	
+	The consumer consumes the content, I would hope that the names were self-explanatory.
+	
+	The importance of this relationship is that the producer and consumer sometimes run in separate
+	threads, which means that they would usually be totally unsynchronized. The consumer would just
+	grab content from the producer at random times, and this means redundant consumption calls, and
+	inaccurate consumption calls if the producer is in the middle of changing the variables.
+	
+	To fix this problem we create a third object to synchronize the two.
+	
+	Using the wait(); and notify(); methods, we can control the ThreadSync.java so that it cannot run
+	another produce(); call until consumed(); has run once to notify the method to stop waiting. The
+	same applies for consume(); and produced();
+	
+	As such we force a constant back and forth between produce(); and consume(); regardless of the
+	speeds of the individual threads.
+	
+	The two-way nature of this relationship is particularly important because if the producer starts
+	modifying properties and objects that need to be passed to the consumer thread, the consumer will
+	receive fragmented and incomplete data. In this case, it causes half-screen flickering.
+	
+	Knowing that the producer thread calls a step(); property (which moves all the objects around),
+	and the consumer renders image through a double-buffering script, we can describe the relationship
+	graphically like so:
+	
+		Main	DmciGD
+	
+		STEP
+		 ||
+		 ||
+		 ||
+		 ||
+		 ||
+		DONE
+				COPY
+				 ||
+				 ||
+				DONE
+		STEP	PAINT
+		 ||		 ||
+		 ||		 ||
+		 ||		 ||
+FRAME 1: ||		PAINTED > COPY TO SCREEN
+		 ||
+		DONE 	
+				COPY
+				 ||
+				 ||
+				DONE
+		STEP	PAINT
+		 ||		 ||
+		 ||		 ||
+		 ||		 ||
+FRAME 2: ||		PAINTED > COPY TO SCREEN
+		 ||
+		DONE 	
+				COPY
+				 ||
+				 ||
+				DONE
+		STEP	PAINT
+		 ||		 ||
+		 ||		 ||
+		 ||		 ||
+FRAME 3: ||		PAINTED > COPY TO SCREEN
+		 ||
+		 
+	 CONTINUE AD INFINITUM
