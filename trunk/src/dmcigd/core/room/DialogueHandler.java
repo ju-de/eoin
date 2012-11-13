@@ -1,6 +1,7 @@
-package dmcigd.core;
+package dmcigd.core.room;
 
-import dmcigd.core.DialogueItem;
+import dmcigd.core.room.DialogueItem;
+
 import java.util.regex.*;
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.ListIterator;
 public class DialogueHandler {
 	
 	//Dialogue handler constants
-	public static final int maxWidth = 42;
+	public static final int maxWidth = 48;
 	public static final int maxLines = 3;
 	
 	// the internal ArrayList of DialogueItem elements
@@ -111,8 +112,14 @@ public class DialogueHandler {
 		
 		// Creates new array based on regex groups.
 		Matcher matcher = Pattern.compile(lineRegex).matcher(text);
-		while(matcher.find())
+		while(matcher.find()) {
 			preparedText.add(matcher.group());
+			
+			//Prevents the loop from adding the blank string at the end of the input
+			if(matcher.hitEnd()) {
+				break;
+			}
+		}
 		
 		return preparedText;
 		

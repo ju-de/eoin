@@ -15,13 +15,15 @@
 				/projectiles					Basic projectile abstraction classes
 				/player							Player object and related handlers
 		/levels						Contains code related to individual levels, i.e. object classes and initializers
-			/LEVELNAME					Contains level classes and all bundled objects (e.g. level-specific monsters)
+			/[LEVELNAME]				Contains level classes and all bundled objects (e.g. level-specific monsters)
 /share							Contains the game's shared resources
 	/gfx							Contains the visual elements of the game, such as fonts and sprites.
 		/tilesheets						Contains tile spritesheets (each tilesheet may be used for more than one level)
 	/snd							Contains the auditory elements of the game, such as background music and action sounds.
 	/txt							Contains the textual elements of the game, such as ASCII level maps.
-		/maps						Contains game levelmaps
+		/maps						Contains game maps
+			/[LEVELNAME]				Contains directory of rooms
+				/[ROOMNAME]					Contains environmentmap.txt and blockmap.txt for corresponding room
 /txt							Contains textfiles for the game, including all documentation.
 /lib							Contains any external libraries being used by the project.
 /misc							Contains any miscellaneous files, such as personal committer notes or school club files.

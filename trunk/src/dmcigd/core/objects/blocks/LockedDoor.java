@@ -1,7 +1,6 @@
 package dmcigd.core.objects.blocks;
 
 import dmcigd.core.enums.CollisionType;
-import dmcigd.core.enums.EntityType;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 

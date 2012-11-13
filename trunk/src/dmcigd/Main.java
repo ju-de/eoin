@@ -2,6 +2,7 @@ package dmcigd;
 
 import dmcigd.core.*;
 import dmcigd.core.enums.GameState;
+import dmcigd.core.room.Room;
 
 import java.awt.event.*;
 import java.lang.reflect.InvocationTargetException;
@@ -10,34 +11,34 @@ import java.net.*;
 //Catches input and manages game loop objects
 public class Main implements Runnable, KeyListener {
 	
-	//Initialize level objects
+	//Initialize level object
 	public Room room;
 	
 	//Initialize decayState variables
-	public boolean decayState = false;
+	private boolean decayState = false;
 	private int killCount = 1;
-	private int maxKillCount = 1000;
+	private int maxKillCount = 250;
 	private int decayTimer = 0;
 	private int decayLimit = maxKillCount;
 	
 	//Initializing gameState variable - decides which object to interact with
 	private GameState gameState,unpauseGameState;
+	
+	//Initialize game constants
 	private ThreadSync threadSync;
 	private URL codeBase;
 	
 	private String currentLevel,currentRoom;
 	
-	
-	public void loadRoom(String levelName, String roomClass) {
-		try {
-			room = (Room) Class.forName("dmcigd.levels."+levelName+"."+roomClass).getConstructor(URL.class).newInstance(codeBase);
-			
-			gameState = GameState.LOADINGROOM;
-			
-			currentLevel = levelName;
-			currentRoom = roomClass;
-				
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {}
+	//Public Getters
+	public GameState getGameState() {
+		return gameState;
+	}
+	public boolean getDecayState() {
+		return decayState;
+	}
+	public Room getRoom() {
+		return room;
 	}
 	
 	public Main(ThreadSync threadSync, URL codeBase) {
@@ -55,9 +56,16 @@ public class Main implements Runnable, KeyListener {
 		loadRoom("game","MainMenu");
 	}
 	
-	//Passes game state to rendering thread
-	public GameState getGameState() {
-		return gameState;
+	public void loadRoom(String levelName, String roomClass) {
+		try {
+			room = (Room) Class.forName("dmcigd.levels."+levelName+"."+roomClass).getConstructor(URL.class).newInstance(codeBase);
+			
+			gameState = GameState.LOADINGROOM;
+			
+			currentLevel = levelName;
+			currentRoom = roomClass;
+				
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {}
 	}
 	
 	public void pause() {
@@ -83,8 +91,8 @@ public class Main implements Runnable, KeyListener {
 						gameState = GameState.GAMEOVER;
 					} else if(room.inDialogue()) {
 						gameState = GameState.DIALOGUE;
-					} else if(room.getRoom() != null) {
-						loadRoom(room.getLevel(), room.getRoom());
+					} else if(room.getTargetRoom() != null) {
+						loadRoom(room.getTargetLevel(), room.getTargetRoom());
 					} else {
 						room.step();
 						
@@ -93,10 +101,10 @@ public class Main implements Runnable, KeyListener {
 						if(decayTimer >= decayLimit) {
 							if(decayState) {
 								decayState = false;
-								decayLimit = maxKillCount - killCount + (int)(Math.random() * (maxKillCount - killCount));
+								decayLimit = 4 * ((int)(Math.random() * (maxKillCount - killCount)));
 							} else {
 								decayState = true;
-								decayLimit = 1 + (int)(Math.random() * killCount);
+								decayLimit = 4 * ((int)(Math.random() * killCount));
 							}
 							decayTimer = 0;
 						}

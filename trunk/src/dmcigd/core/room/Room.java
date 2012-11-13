@@ -1,4 +1,4 @@
-package dmcigd.core;
+package dmcigd.core.room;
 
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
@@ -10,53 +10,75 @@ import java.awt.event.*;
 import java.net.*;
 import java.util.*;
 
-public class Room implements Runnable {
+public abstract class Room extends GameObjectHandler implements Runnable {
 	
 	//Stores codeBase string to be passed for file loading
 	private URL codeBase;
 	
 	//Default level information
-	public String levelName,roomName,tileSet;
+	private String levelName,roomName,tileSet;
 	
 	//Passes variables to be read by Main Game Loop
 	private boolean ready,isDead = false;
-	private String level,room;
+	private String targetLevel,targetRoom;
 	
 	//Objects and object lists
-	public Player player;
-	public BlockMap blockMap = new BlockMap();
-	public EnvironmentMap environmentMap = new EnvironmentMap();
-	public ArrayList<TextLabel> textLabels = new ArrayList<TextLabel>();
-	public ArrayList<ObjectImage> visibleObjects;
-	public ArrayList<SolidObject> solidObjects = new ArrayList<SolidObject>();
-	private Iterator<SolidObject> solidObjectIt;
-	public ArrayList<Item> items = new ArrayList<Item>();
-	private Iterator<Item> itemIt;
-	public ArrayList<SolidObject> projectiles = new ArrayList<SolidObject>();
-	private Iterator<SolidObject> projectileIt;
-	public ArrayList<Region> regions = new ArrayList<Region>();
+	private Player player;
+	private BlockMap blockMap = new BlockMap();
+	private EnvironmentMap environmentMap = new EnvironmentMap();
+	private DialogueHandler dialogueHandler = new DialogueHandler();
+	private ArrayList<ObjectImage> visibleObjects;
+	private ArrayList<TextLabel> textLabels = new ArrayList<TextLabel>();
 	
-	//Dialogue Handler
-	public DialogueHandler dh = new DialogueHandler();
+	//Public Getters
 	
+	//Booleans
 	public boolean isReady() {
 		return ready;
 	}
-	
 	public boolean isDead() {
 		return isDead;
 	}
-	
-	public String getLevel() {
-		return level;
-	}
-	
-	public String getRoom() {
-		return room;
-	}
-	
 	public boolean inDialogue() {
-		return dh.inDialogue();
+		return dialogueHandler.inDialogue();
+	}
+	
+	//Strings
+	public String getTargetLevel() {
+		return targetLevel;
+	}
+	public String getTargetRoom() {
+		return targetRoom;
+	}
+	public String getTileSet() {
+		return tileSet;
+	}
+	
+	//Special Objects
+	public Player getPlayer() {
+		return player;
+	}
+	public BlockMap getBlockMap() {
+		return blockMap;
+	}
+	public EnvironmentMap getEnvironmentMap() {
+		return environmentMap;
+	}
+	public DialogueHandler getDialogueHandler() {
+		return dialogueHandler;
+	}
+	
+	//Linked Lists
+	public ArrayList<ObjectImage> getVisibleObjects() {
+		return visibleObjects;
+	}
+	public ArrayList<TextLabel> getTextLabels() {
+		return textLabels;
+	}
+	
+	//Public Setters
+	public void addTextLabel(TextLabel textLabel) {
+		textLabels.add(textLabel);
 	}
 	
 	public Room(URL codeBase, String levelName, String roomName, String tileSet) {
@@ -75,13 +97,13 @@ public class Room implements Runnable {
 		
 		visibleObjects = new ArrayList<ObjectImage>();
 
-		for (Region i : regions) {
+		for (Region i : getRegions()) {
 			if(i.isVisible(player.getX(), player.getY())) {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
 			}
 		}
 		
-		for (SolidObject i : solidObjects) {
+		for (SolidObject i : getSolidObjects()) {
 			if(i.isVisible(player.getX(), player.getY())) {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
 			}
@@ -94,13 +116,13 @@ public class Room implements Runnable {
 			visibleObjects.add(player.sword.getObjectImage(player.getX(), player.getY()));
 		}
 		
-		for (Item i : items) {
+		for (Item i : getItems()) {
 			if(i.isVisible(player.getX(), player.getY())) {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
 			}
 		}
 		
-		for (SolidObject i : projectiles) {
+		for (SolidObject i : getProjectiles()) {
 			if(i.isVisible(player.getX(), player.getY())) {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
 			}
@@ -109,75 +131,32 @@ public class Room implements Runnable {
 	
 	public void step() {
 		
-		//Step all projectiles
-		projectileIt = projectiles.iterator();
-		
-		while(projectileIt.hasNext()) {
-			SolidObject i = projectileIt.next();
-			if(i.isDestroyed()) {
-				projectileIt.remove();
-			} else {
-				i.step();
-			}
-		}
-		
-		//Step all solid objects and player
-		solidObjectIt = solidObjects.iterator();
-		
-		while(solidObjectIt.hasNext()) {
-			SolidObject i = solidObjectIt.next();
-			if(i.isDestroyed()) {
-				solidObjectIt.remove();
-			} else {
-				i.step();
-			}
-		}
+		stepGameObjects();
 		
 		if(player.isDead || player.isDestroyed) {
 			isDead = true;
 		}
 		
-		//Step all items
-		itemIt = items.iterator();
-		
-		while(itemIt.hasNext()) {
-			Item i = itemIt.next();
-			if(i.isDestroyed()) {
-				itemIt.remove();
-			} else {
-				i.step();
-			}
-		}
-		
-		//Step all regions
-		for (Region i : regions) {
-			i.step();
-		}
-		
 		//Check for level advancement
 		if(player.getRoom() != null) {
-			level = player.getLevel();
-			room = player.getRoom();
+			targetLevel = player.getLevel();
+			targetRoom = player.getRoom();
 		}
 		
 		fetchVisibleObjects();
 		
 	}
 	
-	public void initializeSolidObjects() {}
-	
-	public void initializeNonsolidObjects() {}
-	
 	public void run() {
 		
 		blockMap.loadBlockMap(codeBase, levelName, roomName);
 		environmentMap.loadEnvironmentMap(codeBase, levelName, roomName);
 		
-		player = new Player(blockMap.getSpawnX() * 32 + 6, blockMap.getSpawnY() * 32, blockMap, solidObjects, items, regions);
+		player = new Player(blockMap.getSpawnX() * 32 + 6, blockMap.getSpawnY() * 32, blockMap, getSolidObjects(), getItems(), getRegions());
 		
 		initializeSolidObjects();
 		
-		solidObjects.add(player);
+		addSolidObject(player);
 		
 		initializeNonsolidObjects();
 
@@ -186,6 +165,8 @@ public class Room implements Runnable {
 		ready = true;
 		
 	}
+	
+	//Hussain, please abstract out input handling. We're starting to get a bad case of god classes
 	
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
@@ -207,7 +188,7 @@ public class Room implements Runnable {
 				break;
 			case KeyEvent.VK_X:
 				if(inDialogue()) {
-					dh.advance();
+					dialogueHandler.advance();
 				} else {
 					player.interact();
 				}

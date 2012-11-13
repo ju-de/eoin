@@ -11,20 +11,67 @@ Seriously though, this is going to take forever.
 ======================================================================================================
 ======================================================================================================
 
+OBJECT INTERFACES AND BEHAVIOURS
+
+Please note that this section is meant strictly to describe how general object interfaces interact
+with each other. For documentation on how to use the object classes or abstraction classes available,
+please refer to the core_objects_documentation. This outlines the constructors and significant methods
+that are associated with the objects themselves.
+
+It has also come to my attention that some of you may not know what an Object Interface is, nor what
+Object Inheritance is. Please look this up on your own. They are both very important concepts to any
+OOP-based environment. This is particularly concerning considering that Java is nothing but OOP, and
+very strict OOP at that.
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.GameObject.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.SolidObject.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.RestableObject.java
+	
+	This is nothing more than an extension of the SolidObject interface, but introduces the onRest()
+	and onUnrest() methods.
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.Item.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.Region.java
+
+======================================================================================================
+======================================================================================================
+
+*=============================*
+*=============================*
+*==NONE OF THE DOCUMENTATION==*
+*==ACCOUNT FOR CUTSCENES YET==*
+*==PLEASE REMEMBER TO UDPATE==*
+*=============================*
+*******************************
+
 THE CORE CLASSES
 
 The game loop is handled by 3 main files:
 
 Double Buffering:			dmcigd.DmciGD.java
 Object and Input Handler:	dmcigd.Main.java
-Gameplay Loop:				dmcigd.core.Room.java
+Gameplay Loop:				dmcigd.core.room.Room.java
 
 These three objects are what handle every other object in the game. The first two handle low-level
 game structure, just getting all of the game objects on screen and actually executing the information
 it receives from other classes.
 
-As a level designer, your primary concern is to deal with dmcigd.core.Room.java as the level classes
-themselves, and the logic associated with the various game objects and interfaces
+As a level designer, your primary concern is to deal with dmcigd.core.room.Room.java as the level
+classes themselves, and the logic associated with the various game objects and interfaces
+
 
 (*)	)=================================================================================================
 
@@ -47,7 +94,11 @@ themselves, and the logic associated with the various game objects and interface
 	It is also important to note that I have had no previous experience working with games or Applets,
 	so it is possible that this class is much more convoluted and contrived than need be.
 	
+	If this isn't actually a fault with Applet, and it turns out that Hussain and I just couldn't
+	figure out how to make proper use of it, please teach us your ways.
+	
 		PUBLIC METHODS AND PROPERTIES
+		
 		This object naturally has no methods associated with it that would run outside of the class,
 		as it is the root class of the game.
 		
@@ -158,7 +209,7 @@ themselves, and the logic associated with the various game objects and interface
 				
 		8. The offscreen image is drawn to the screen and the main thread loop is notified to resume.
 		
-		THE IMAGE MAP
+		OTHER NOTES
 		
 		*********************************************************************
 		**PLEASE NOTE: THIS INFORMATION IS IMPORTANT TO THE LEVEL DESIGNERS**
@@ -179,59 +230,85 @@ themselves, and the logic associated with the various game objects and interface
 		
 			i.e. "`" is associated with the core objects, which is "/share/gfx/objects.gif"
 			
+		This information is referenced through the getMapCode() and getImagePath() methods found in
+		the VisibleObject.java class, and required by the GameObject.java interface
+			
 		This imagemap is totally dynamic and is loaded at the beginning of the level (loops through
 		all objects and fetches the associated image from the path).
 		
 		It is important to ensure that your mapcode string is unique to your object. Other than this
 		requirement for unique strings, there is currently no naming conventions for mapcodes.
-			
-			[IN PROGRESS]
 	
 (*)	)=================================================================================================
 	
 	dmcigd.Main.java
 	
+	This file handles the low-level game logic. It controls the loading of levels, including the
+	initialization of a level instance, the handling of the current GameState (i.e. paused, gameover,
+	loadingroom, gameplay, dialogue), as well as the advancement of game frames (i.e. the step()
+	method)
+	
+		PUBLIC METHODS AND PROPERTIES
+		
+		This object contains a few properties that are passed only to the DmciGD.java class, as the
+		instance of Main.java handles only low-level functionality such as handling the rooms, pausing
+		the game, and later on, handling sound.
+		
+		[SOUND IS NOT YET IMPLEMENTED, UPDATE DOCUMENTATION WHEN IT IS READY]
+		
+		(*)	GameState getGameState()
+		
+			This method should be completely self-explanatory. It returns the current GameState, as
+			defined by the GameState enumerator, which is also self-explanatory.
+			
+			These GameStates are as follows:
+			
+				GAMEOVER, PAUSE, LOADINGROOM, GAMEPLAY, DIALOGUE
+				
+			And each of these gameStates must be handled and passed on to DmciGD.java so that it knows
+			how to render the frame.
+			
+		(*)	boolean getDecayState()
+		
+			This method returns a boolean value that tells the DmciGD.java whether it should render a
+			decayed tileset (offset by 5 vertically, due to the setup of the tilesheet images) or an
+			ordinary tilesheet.
+			
+			This boolean is determined through the use of an in-object clock and pseudo-random numbers
+			that depend on the current killCount integer.
+			
+		(*)	Room getRoom()
+		
+			This method returns the current instance of the Room class, as described below.
+			
+		OBJECT PROCEDURE
+		
+			INIT
+			
+		1.	Upon object initialization, the instance of Main.java receives a codeBase URL and stores
+			it as a private property to be passed down to any objects that need to load a resource.
+			
+		2.	After dealing with the codeBase URL, the instance begins the ThreadSync.java process as
+			mentioned above (and elaborated on below), initializes its own thread, begins loading the
+			first room, which is always game.MainMenu (as the game uses rooms as menus), and sets the
+			gameState to LOADINGROOM
+			
+			RUN
+			
+		3.	
+			
+		[IN PROGRESS, REMIND ME TO CONTINUE]
+		
+		OTHER NOTES
+		
+		N/A
+	
 (*)	)=================================================================================================
 	
-	dmcigd.core.Room.java
-
-======================================================================================================
-======================================================================================================
-
-OBJECT INTERFACES AND BEHAVIOURS
-
-Please note that this section is meant strictly to describe how general object interfaces interact
-with each other. For documentation on how to use the object classes or abstraction classes available,
-please refer to the core_objects_documentation. This outlines the constructors and significant methods
-that are associated with the objects themselves.
-
-It has also come to my attention that some of you may not know what an Object Interface is, nor what
-Object Inheritance is. Please look this up on your own. They are both very important concepts to any
-OOP-based environment. This is particularly concerning considering that Java is nothing but OOP, and
-very strict OOP at that.
-
-(*)	)=================================================================================================
-
-	dmcigd.core.objects.interfaces.GameObject.java
-
-(*)	)=================================================================================================
-
-	dmcigd.core.objects.interfaces.SolidObject.java
-
-(*)	)=================================================================================================
-
-	dmcigd.core.objects.interfaces.RestableObject.java
+	dmcigd.core.room.Room.java
 	
-	This is nothing more than an extension of the SolidObject interface, but introduces the onRest()
-	and onUnrest() methods.
-
-(*)	)=================================================================================================
-
-	dmcigd.core.objects.interfaces.Item.java
-
-(*)	)=================================================================================================
-
-	dmcigd.core.objects.interfaces.Region.java
+	This file handles all the gameplay logic, as well as any methods and properties associated with
+	the room instance.
 
 ======================================================================================================
 ======================================================================================================
