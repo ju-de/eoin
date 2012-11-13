@@ -59,6 +59,9 @@ public class Sword extends ObjectCollision {
 		for(SolidObject i : solidObjects) {
 			if(getBounds().intersects(i.getBounds())) {
 				i.onAttack(damage);
+				if(i.isDestroyed()) {
+					System.out.println("killcount++!");
+				}
 			}
 		}
 	}
@@ -73,9 +76,9 @@ public class Sword extends ObjectCollision {
 			
 			//Set Position
 			if(flipped) {
-				setX(baseX - getFrame());
+				setX(baseX - (getFrame()*2));
 			} else {
-				setX(baseX + getFrame());
+				setX(baseX + (getFrame()*2));
 			}
 			setY(baseY);
 			

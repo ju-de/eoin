@@ -93,7 +93,7 @@ public class DmciGD extends Applet implements Runnable {
 					
 					if(gameState != GameState.GAMEPLAY) {
 						
-						tileSheet = getImageFromPath("tilesheets/"+main.room.tileSet+".gif");
+						tileSheet = getImageFromPath("tilesheets/"+main.room.getTileSet()+".gif");
 						
 						//Preload map tilesheet
 						MediaTracker mt = new MediaTracker(this);
@@ -102,7 +102,7 @@ public class DmciGD extends Applet implements Runnable {
 						int i = 1;
 						
 						//Load all images
-						for(SolidObject object : main.room.solidObjects) {
+						for(SolidObject object : main.room.getSolidObjects()) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -112,7 +112,7 @@ public class DmciGD extends Applet implements Runnable {
 							i++;
 						}
 						
-						for(Item object : main.room.items) {
+						for(Item object : main.room.getItems()) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -122,7 +122,7 @@ public class DmciGD extends Applet implements Runnable {
 							i++;
 						}
 						
-						for(Region object : main.room.regions) {
+						for(Region object : main.room.getRegions()) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -132,7 +132,7 @@ public class DmciGD extends Applet implements Runnable {
 							i++;
 						}
 						
-						for(SolidObject object : main.room.projectiles) {
+						for(SolidObject object : main.room.getProjectiles()) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
 								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
@@ -151,18 +151,18 @@ public class DmciGD extends Applet implements Runnable {
 					
 					//Retrieve necessary objects
 					
-					playerX = main.room.player.getX();
-					playerY = main.room.player.getY();
+					playerX = main.room.getPlayer().getX();
+					playerY = main.room.getPlayer().getY();
 										
-					visibleBlocks = main.room.blockMap.getVisibleBlocks(playerX, playerY);
-					visibleEnvironment = main.room.environmentMap.getVisibleEnvironment(playerX, playerY);
+					visibleBlocks = main.room.getBlockMap().getVisibleBlocks(playerX, playerY);
+					visibleEnvironment = main.room.getEnvironmentMap().getVisibleEnvironment(playerX, playerY);
 					
-					visibleObjects = main.room.visibleObjects;
+					visibleObjects = main.room.getVisibleObjects();
 					
-					textLabels = main.room.textLabels;
+					textLabels = main.room.getTextLabels();
 					
 					//Decay tiles
-					if(main.decayState) {
+					if(main.getDecayState()) {
 						decayOffset = 5;
 					} else {
 						decayOffset = 0;
@@ -183,19 +183,19 @@ public class DmciGD extends Applet implements Runnable {
 					
 					//Retrieve Dialogue text
 					avatarImageCode = null;
-					avatarImageCode = main.room.dh.getCurrentDialogueItem().getAvatarImageCode();
+					avatarImageCode = main.room.getDialogueHandler().getCurrentDialogueItem().getAvatarImageCode();
 					
 					name = null;
-					name = main.room.dh.getCurrentDialogueItem().getName();
+					name = main.room.getDialogueHandler().getCurrentDialogueItem().getName();
 					
 					line1 = null;
-					line1 = main.room.dh.getLine(1);
+					line1 = main.room.getDialogueHandler().getLine(1);
 					
 					line2 = null;
-					line2 = main.room.dh.getLine(2);
+					line2 = main.room.getDialogueHandler().getLine(2);
 					
 					line3 = null;
-					line3 = main.room.dh.getLine(3);
+					line3 = main.room.getDialogueHandler().getLine(3);
 					
 					//Tell Main thread to continue with game loop
 					threadSync.consumed();

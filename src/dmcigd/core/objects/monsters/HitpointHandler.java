@@ -8,7 +8,7 @@ public class HitpointHandler extends Entity {
 	
 	private boolean invincible = false;
 	private int invincibilityCounter = 0;
-	private int invincibilityCounterReset = 50;
+	private int invincibilityCounterReset = 30;
 	
 	public int getMaxHitpoints() {
 		return maxHitpoints;

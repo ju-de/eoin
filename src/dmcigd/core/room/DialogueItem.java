@@ -1,4 +1,4 @@
-package dmcigd.core;
+package dmcigd.core.room;
 
 public class DialogueItem {
 	
