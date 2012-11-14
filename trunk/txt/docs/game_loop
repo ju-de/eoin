@@ -82,10 +82,10 @@ classes themselves, and the logic associated with the various game objects and i
 			
 			RUN (LOOPS CONTINUOUSLY IN OWN THREAD)
 			
-		3.	For every iteration of the run loop, the object first synchronizes it's GameState with
+		1.	For every iteration of the run loop, the object first synchronizes it's GameState with
 			that of the main class.
 			
-		4.	GAMEPLAY:
+		2.	GAMEPLAY:
 				If the gameState doesn't match, this means that the level just loaded. Loop through
 				all of the objectLists and preload their images based on their image path and
 				associated mapCode. More information on the image map below
@@ -106,14 +106,14 @@ classes themselves, and the logic associated with the various game objects and i
 			DEFAULT:
 				Synchronizes the gameState and tells the loop to render a single frame.
 				
-		5.	After consumption actions are taken, an repaint(); and wait(); method are called. This is
+		3.	After consumption actions are taken, an repaint(); and wait(); method are called. This is
 			important in ensuring that only one paint(); is called per repaint();, avoiding queuing up
 			a bunch of paint(); calls for no reason.
 			
-		6.	On paint, the method draws the appropriate objects onto a double-buffering image that is
+		4.	On paint, the method draws the appropriate objects onto a double-buffering image that is
 			size of the screen
 		
-		7.	GAMEPLAY:
+		5.	GAMEPLAY:
 				Draw a 640x320 background to clear the previous frame
 		
 				The visible characters of the environment are matched to their according image and
@@ -177,7 +177,7 @@ classes themselves, and the logic associated with the various game objects and i
 					"[ GAME OVER ]"
 					'PRESS "R" TO RESET'
 				
-		8. The offscreen image is drawn to the screen and the main thread loop is notified to resume.
+		6. The offscreen image is drawn to the screen and the thread loop is notified to resume.
 		
 		OTHER NOTES
 		
@@ -265,10 +265,10 @@ classes themselves, and the logic associated with the various game objects and i
 			
 			RUN (LOOPS CONTINUOUSLY IN OWN THREAD)
 			
-		3.	Runs a produce call to wait for the DmciGD.java to finish copying the information about
+		1.	Runs a produce call to wait for the DmciGD.java to finish copying the information about
 			the previous frame.
 			
-		4.	Checks the current gameState and takes the appropriate action:
+		2.	Checks the current gameState and takes the appropriate action:
 		
 			GAMEPLAY:
 				Checks to see if the level has ended for any reason (by checking the isDead() method)
@@ -296,7 +296,7 @@ classes themselves, and the logic associated with the various game objects and i
 				Checks to see if the room is in dialogue (by checking the inDialogue() method)
 					If not, resume the GAMEPLAY state
 					
-		5.	Runs a produced call to tell the DmciGD.java thread that it has finished producing a new
+		3.	Runs a produced call to tell the DmciGD.java thread that it has finished producing a new
 			frame
 		
 		OTHER NOTES
@@ -376,6 +376,9 @@ classes themselves, and the logic associated with the various game objects and i
 			
 			->	void addRegion()
 					appends an item to the regions linked list
+					
+			->	void addTextLabel()
+					appends an item to the textLabels linked list
 			
 			->	void initializeSolidObjects()
 					abstract method called during object initialization used to initialize items in
@@ -385,7 +388,7 @@ classes themselves, and the logic associated with the various game objects and i
 					abstract method called during object initialization used to initialize items in
 					the items, regions, and textLabels linked lists
 			
-			OTHER GETTERS
+			STATUS GETTERS
 			
 			->	boolean isReady()
 					returns false while the room is loading, returns true when the level is done
@@ -409,11 +412,39 @@ classes themselves, and the logic associated with the various game objects and i
 					position and collision
 					
 			->	String getTileset()
+					returns tileSet String (determines which spritesheet to use for game tiles)
+					In theory it is possible to change the tileset in the middle of a game, although
+					full implementation of that is currently not available (as the tileset is checked
+					only on level initialization)
+					
+			SPECIAL OBJECT AND LIST GETTERS
+			
+			For more information on the specific objects, refer to special_objects file
+					
+			->	Player getPlayer()
+					returns Player.java instance
+					
+			->	BlockMap getBlockMap()
+					returns BlockMap.java instance for current room
+					
+			->	EnvironmentMap getEnvironmentMap()
+					returns EnvironmentMap.java instance for current room
+					used only by the rendering script as no interactions take place with the
+					environment map
+					
+			->	DialogueHandler getDialogueHandler()
+					returns the DialogueHandler.java instance of current 
+			
+			->	ArrayList<ObjectImage> getVisibleObjects()
+					returns list of visible ObjectImages, recalculated with each frame
+					for more info on the ObjectImage.java class, refer to extra_information
+			
+			->	ArrayList<TextLabel> getTextLabels()
+					returns list of textLabels
 			
 		OBJECT PROCEDURE
 			
 			CONSTRUCTION
-			
 			This procedure is called when the object is created:
 			
 			1.	Set the codeBase URL to be passed onto the blockMap and environmentMap objects (which
@@ -425,16 +456,45 @@ classes themselves, and the logic associated with the various game objects and i
 			3.	Initialize the thread. This initialization procedure handles level loading in parallel
 				to the rest of the game loop.
 			
-			INITIALIZATION
+			INITIALIZATION (RUNS IN PARALLEL THREAD)
 			
-			4.	
+			4.	Initialize a BlockMap object by calling the loadBlockMap method with the codeBase URL,
+				levelName String, and roomName String:
+					
+					Creates bufferedReader of share/txt/maps/[levelName]/[roomName]/blockmap.txt
+					
+						Loop through lines and create an ArrayList<String> based on the lines,
+						effectively creating a 2D char array
+						
+						Search for the character "1" to determine the spawn location
+					
+					Close the bufferedReader
+			
+			5.	Initialize an EnvironmentMap object by calling the loadEnvironmentMap methyod with the
+				codeBase URL, levelName String, and roomName String:
+					
+					Creates bufferedReader of share/txt/maps/[levelName]/[roomName]/environmentmap.txt
+					
+						Loop through lines and create an ArrayList<String> based on the lines,
+						effectively creating a 2D char array
+					
+					Close the bufferedReader
+				
+			6.	Instantiate a new Player based on the BlockMap instance's spawn location, passing down
+				the BlockMap instance, as well as all linked lists.
+				
+			7.	Run the subclass-defined initializeSolidObjects() method, and append the Player.java
+				instance to the solidObjects linked list.
+				
+			8.	Run the subclass-defined initializeNonsolidObjects() method
+			
+			9.	Fetch visible objects (as explained below) and set the ready state to true.
 			
 			STEP
-			
 			This procedure is called with every frame, and thus every iteration of the thread loop in
 			Main.java, as long as the gameState is set to GAMEPLAY
 			
-			x.	Calls the stepGameObjects() method from the GameObjectHandler.java superclass:
+			1.	Calls the stepGameObjects() method from the GameObjectHandler.java superclass:
 			
 					Loops through all projectiles and calls their step methods
 						If a projectile is destroyed, remove object from list
@@ -454,5 +514,56 @@ classes themselves, and the logic associated with the various game objects and i
 				
 				For specific information on how a GameObject behaves, refer to the appropriate file
 				in the game_objects documentation directory.
-	
-	[I'M GOING BACK AND FORTH BETWEEN SECTIONS, REMIND ME TO FINISH THIS]
+				
+			2.	Checks if the player isDead() or isDestroyed(), and sets the local isDead property
+				accordingly
+				
+			3.	Checks if the player has received a new target room through its getRoom() method
+				If the value is not null, the player has received a new target room and the current
+				Room.java instance will set its local targetRoom property accordingly
+				
+			4.	Calls the fetchVisibleObjects() method:
+			
+					Loops through all regions and checks for visibility
+						If object is visible, append objectImage to list
+						
+					Loops through all solidObjects and checks for visibility
+						If object is visible, append objectImage to list
+						The player object is located in this list and should always be visible
+						
+					Check if the player has a heldItem, if not, add the Sword.java instance's
+					objectImage
+					
+					Loop through all items and check for visibility
+						If object is visible, append objectImage to list
+						
+					Loop through all projectiles and check for visibility
+						If object is visible, append objectImage to list
+				
+		OTHER NOTES
+		
+		This object also receives KeyEvents from the parent class Main.java. The method names of the
+		corresponding objects are self-explanatory such that comments and documentation are totally
+		unnecessary if you actually read through the code, however, here is an explanation anyways:
+		
+		UP ARROW Key:
+			Trigger/Stop player's climbUp method
+			
+		DOWN ARROW Key:
+			Trigger/Stop player's keyDown method (both sprint and "climbDown")
+			
+		LEFT ARROW Key:
+			Trigger/Stop player's walk() method in a leftward direction
+			
+		RIGHT ARROW Key:
+			Trigger/Stop player's walk() method in a rightward direction
+			
+		"Z" Key:
+			Trigger/Stop player's jump() method
+			
+		"X" Key:
+			If in dialogue:
+				trigger dialogueHandler's advance method
+			Else:
+				trigger player's interaact() method
+			

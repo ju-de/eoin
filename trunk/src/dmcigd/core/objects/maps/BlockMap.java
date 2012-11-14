@@ -73,8 +73,8 @@ public class BlockMap extends BlockCollision {
 				
 			} catch(IOException e) {}
 			
-		} catch (FileNotFoundException e) { }
-		catch (MalformedURLException e1) { }
-		catch (IOException e1) { }
+		} catch (FileNotFoundException e) {}
+		catch (MalformedURLException e) {}
+		catch (IOException e) {}
 	}
 }

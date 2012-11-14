@@ -103,8 +103,6 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 			}
 		}
 		
-		visibleObjects.add(player.getObjectImage(player.getX(), player.getY()));
-		
 		if(player.heldItem == null) {
 			//Draw sword if player is not holding an object
 			visibleObjects.add(player.sword.getObjectImage(player.getX(), player.getY()));
@@ -127,6 +125,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		
 		stepGameObjects();
 		
+		//Checks for player death
 		if(player.isDead || player.isDestroyed) {
 			isDead = true;
 		}
