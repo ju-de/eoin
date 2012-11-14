@@ -30,6 +30,9 @@ public class Tutorial extends Room implements Runnable {
 		addSolidObject(new LockedDoor(118 * 32, 23 * 32, 1));
 		
 		addSolidObject(new PushableBlock(128 * 32, 23 * 32, getBlockMap(), getSolidObjects()));
+
+		addSolidObject(new TestMonster(190 * 32, 18 * 32, getBlockMap(), getSolidObjects()));
+		addSolidObject(new TestMonster(193 * 32, 18 * 32, getBlockMap(), getSolidObjects()));
 		
 		addSolidObject(new TestMonster(199 * 32, 18 * 32, getBlockMap(), getSolidObjects()));
 	}
@@ -102,6 +105,8 @@ public class Tutorial extends Room implements Runnable {
 
 		addTextLabel(new TextLabel(188 * 32, 23 * 32, "Press \"X\" to attack", false));
 		addTextLabel(new TextLabel(188 * 32, 23 * 32 + 20, "enemies with your sword", false));
+		
+		addRegion(new RoomWarp(195 * 32, 0, 32, 35 * 32, "demo", "Demo"));
 	}
 }
 
