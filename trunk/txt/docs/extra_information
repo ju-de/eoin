@@ -1,0 +1,88 @@
+======================================================================================================
+======================================================================================================
+
+EXTRA INFORMATION
+
+(*)	)=================================================================================================
+
+	dmcigd.core.ThreadSync.java
+	
+	This file handles relationship between DmciGD.java and Main.java. DmciGD.java is the consumer,
+	while Main.java is the producer. Unlike with inheritances and interfaces, I will actually explain
+	what this relationship means, as it's a more specific concept.
+	
+	The producer produces the content, naturally.
+	
+	The consumer consumes the content, I would hope that the names were self-explanatory.
+	
+	The importance of this relationship is that the producer and consumer sometimes run in separate
+	threads, which means that they would usually be totally unsynchronized. The consumer would just
+	grab content from the producer at random times, and this means redundant consumption calls, and
+	inaccurate consumption calls if the producer is in the middle of changing the variables.
+	
+	To fix this problem we create a third object to synchronize the two.
+	
+	Using the wait(); and notify(); methods, we can control the ThreadSync.java so that it cannot run
+	another produce(); call until consumed(); has run once to notify the method to stop waiting. The
+	same applies for consume(); and produced();
+	
+	As such we force a constant back and forth between produce(); and consume(); regardless of the
+	speeds of the individual threads.
+	
+	The two-way nature of this relationship is particularly important because if the producer starts
+	modifying properties and objects that need to be passed to the consumer thread, the consumer will
+	receive fragmented and incomplete data. In this case, it causes half-screen flickering.
+	
+	Knowing that the producer thread calls a step(); property (which moves all the objects around),
+	and the consumer renders image through a double-buffering script, we can describe the relationship
+	graphically like so:
+	
+		Main	DmciGD
+	
+		STEP
+		 ||
+		 ||
+		 ||
+		 ||
+		 ||
+		DONE
+				COPY
+				 ||
+				 ||
+				DONE
+		STEP	PAINT
+		 ||		 ||
+		 ||		 ||
+		 ||		 ||
+FRAME 1: ||		PAINTED > COPY TO SCREEN
+		 ||
+		 ||
+		 ||
+		DONE 	
+				COPY
+				 ||
+				 ||
+				DONE
+		STEP	PAINT
+		 ||		 ||
+		 ||		 ||
+		 ||		 ||
+FRAME 2: ||		PAINTED > COPY TO SCREEN
+		 ||
+		DONE 	
+				COPY
+				 ||
+				 ||
+				 ||
+				DONE
+		STEP	PAINT
+		 ||		 ||
+		 ||		 ||
+		 ||		 ||
+		 ||      ||
+FRAME 3: ||		PAINTED > COPY TO SCREEN
+		 
+	 CONTINUE AD INFINITUM
+	 
+TODO:
+	ObjectImage.java

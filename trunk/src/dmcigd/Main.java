@@ -65,7 +65,13 @@ public class Main implements Runnable, KeyListener {
 			currentLevel = levelName;
 			currentRoom = roomClass;
 				
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {}
+		} catch (InstantiationException e) {} 
+		catch (IllegalAccessException e) {} 
+		catch (ClassNotFoundException e) {} 
+		catch (IllegalArgumentException e) {} 
+		catch (InvocationTargetException e) {} 
+		catch (NoSuchMethodException e) {} 
+		catch (SecurityException e) {}
 	}
 	
 	public void pause() {
@@ -145,7 +151,7 @@ public class Main implements Runnable, KeyListener {
 	
 	public void keyPressed(KeyEvent e) {
 		
-		//Catch core keypresses such as Pause/Unpause
+		//Catch core keypresses relating to the core game loop.
 
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
@@ -172,14 +178,10 @@ public class Main implements Runnable, KeyListener {
 				break;
 				
 			default:
-
-				//Pass keypresses to appropriate object
-				switch(gameState) {
-					case DIALOGUE:
-					case GAMEPLAY:
-						room.keyPressed(e);
-					default:
-						break;
+				
+				//Passes KeyEvent to room instance
+				if(gameState == GameState.DIALOGUE || gameState == GameState.GAMEPLAY) {
+					room.keyPressed(e);
 				}
 				
 				break;
@@ -187,15 +189,9 @@ public class Main implements Runnable, KeyListener {
 	}
 	
 	public void keyReleased(KeyEvent e) {
-		//Catch core keyreleases such as Pause/Unpause
-		
-		//Pass keyreleases to appropriate object
-		switch(gameState) {
-			case DIALOGUE:
-			case GAMEPLAY:
-				room.keyReleased(e);
-			default:
-				break;
+		//Passes KeyEvent to room instance
+		if(gameState == GameState.DIALOGUE || gameState == GameState.GAMEPLAY) {
+			room.keyReleased(e);
 		}
 	}
 	

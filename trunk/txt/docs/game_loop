@@ -1,51 +1,3 @@
-===========================================
-= THIS DOCUMENTATION IS STILL IN PROGRESS =
-===========================================
-===== AND WILL TAKE A WHILE TO FINISH =====
-===========================================
-========== PLEASE BEAR WITH ME ============
-===========================================
-
-Seriously though, this is going to take forever.
-
-======================================================================================================
-======================================================================================================
-
-OBJECT INTERFACES AND BEHAVIOURS
-
-Please note that this section is meant strictly to describe how general object interfaces interact
-with each other. For documentation on how to use the object classes or abstraction classes available,
-please refer to the core_objects_documentation. This outlines the constructors and significant methods
-that are associated with the objects themselves.
-
-It has also come to my attention that some of you may not know what an Object Interface is, nor what
-Object Inheritance is. Please look this up on your own. They are both very important concepts to any
-OOP-based environment. This is particularly concerning considering that Java is nothing but OOP, and
-very strict OOP at that.
-
-(*)	)=================================================================================================
-
-	dmcigd.core.objects.interfaces.GameObject.java
-
-(*)	)=================================================================================================
-
-	dmcigd.core.objects.interfaces.SolidObject.java
-
-(*)	)=================================================================================================
-
-	dmcigd.core.objects.interfaces.RestableObject.java
-	
-	This is nothing more than an extension of the SolidObject interface, but introduces the onRest()
-	and onUnrest() methods.
-
-(*)	)=================================================================================================
-
-	dmcigd.core.objects.interfaces.Item.java
-
-(*)	)=================================================================================================
-
-	dmcigd.core.objects.interfaces.Region.java
-
 ======================================================================================================
 ======================================================================================================
 
@@ -115,7 +67,7 @@ classes themselves, and the logic associated with the various game objects and i
 			It must also synchronize gameStates, adds the key listener to the Main.java instance so
 			that it can register inputs, and initialize the Consumer/Producer relationship via the
 			ThreadSync.java class. For a little more information on the Consumer/Producer relationship
-			to deal with multi-threading, see the EXTRA INFORMATION section.
+			to deal with multi-threading, see the extra_information file.
 			
 		2.	The object must also initiate all properties associated with image rendering. This means
 			loading all information regarding spritesheet locations, as image information is stored in
@@ -128,7 +80,7 @@ classes themselves, and the logic associated with the various game objects and i
 			
 			[BACKGROUNDS ARE NOT DONE YET. WILL DOCUMENT LATER]
 			
-			RUN
+			RUN (LOOPS CONTINUOUSLY IN OWN THREAD)
 			
 		3.	For every iteration of the run loop, the object first synchronizes it's GameState with
 			that of the main class.
@@ -170,6 +122,8 @@ classes themselves, and the logic associated with the various game objects and i
 					The position is based on the current offset of the Player from the 32x32 grid,
 					calculated using a special kind of modulo that handles the offset of the grid to
 					the screen as well.
+					
+					[Remind me to add a mathematical example here]
 				
 				The same steps are taken for the blockmap (rendering it on top of the visible objects)
 				
@@ -178,9 +132,25 @@ classes themselves, and the logic associated with the various game objects and i
 				All visible objects are drawn onto the screen using their according image resource and
 				spritesheet location.
 				
-					Positions are calculated by the ObjectImage class, and are compared to the view
-					position (Player position) such that the coordinates represent a pixel near the
-					center of the screen (the top left pixel of the player)
+				The source location of the sprite, that is, which section of the spritesheet to draw,
+				is determined by the ObjectImage's sequence and frame. These act as a y and x position
+				respectively, which is multiplied by the image's height and width.
+				
+				e.g. a 20x30 sprite at sequence 2 and frame 4 would return the following source:
+				
+						x = (20 * 4) -> (20 * 4) + 20
+						  = 80 -> 80 + 20
+						  = 80 -> 100
+						  
+						y = (30 * 2) -> (30 * 2) + 30
+						  = 60 -> 60 + 30
+						  = 60 -> 90
+				
+				Positions are calculated by the ObjectImage class, and are compared to the view
+				position (Player position) such that the coordinates represent a pixel near the center
+				of the screen (the top left pixel of the player)
+					
+					[Remind me to add a mathematical example here]
 				
 			DIALOGUE:
 				Draws a 640x110 dark grey box along the bottom of the screen
@@ -293,15 +263,71 @@ classes themselves, and the logic associated with the various game objects and i
 			first room, which is always game.MainMenu (as the game uses rooms as menus), and sets the
 			gameState to LOADINGROOM
 			
-			RUN
+			RUN (LOOPS CONTINUOUSLY IN OWN THREAD)
 			
-		3.	
+		3.	Runs a produce call to wait for the DmciGD.java to finish copying the information about
+			the previous frame.
 			
-		[IN PROGRESS, REMIND ME TO CONTINUE]
+		4.	Checks the current gameState and takes the appropriate action:
+		
+			GAMEPLAY:
+				Checks to see if the level has ended for any reason (by checking the isDead() method)
+					If so, change the state to GAMEOVER
+					
+				Checks to see if dialogue has been initialized (by checking the inDialogue() method)
+					If so, change the state to DIALOGUE
+					
+				Checks to see if the room has changed (by checking the getTargetRoom() method)
+					If so, load the according room (which changes the state to LOADINGROOM)
+					
+				If the state does not change, call the room's step() method (as elaborated on below in
+				the Room.java class explanation)
+				
+				Iterate the decayTimer to determine if the tileset is currently in a state of decay or
+				not, as determined by the current killCount.
+				
+			LOADINGROOM:
+				Checks the room instance to see if it is loaded (by checking the isReady() method)
+					If so, change the state to GAMEPLAY
+					
+			DIALOGUE:
+				Checks to see if the room is in dialogue (by checking the inDialogue() method)
+					If not, resume the GAMEPLAY state
+					
+		5.	Runs a produced call to tell the DmciGD.java thread that it has finished producing a new
+			frame
 		
 		OTHER NOTES
 		
-		N/A
+		The instance of main also handles key events, as such it is important to understand what each
+		key does.
+		
+		"Q" Key:
+			Quits the game by loading the room game.MainMenu
+			
+		"R" Key:
+			Resets the room by loading the room [currentlevel].[currentRoom] (creates a new instance
+			of the current room object)
+			
+		"P" Key:
+			Pauses and unpauses the game by calling the pause() method.
+			
+			If the game is not paused, that is, the gameState != GameState.PAUSE, then it will save
+			the current gameState (so that it knows what to resume to), and changes the gameState to
+			PAUSE
+			
+			If the game is paused, it will unpause the game by changing the gameState to the
+			aforementioned saved gameState (e.g. changing from PAUSE to DIALOGUE)
+			
+		Default:
+			Pauses the KeyEvent to the room object if one is initialized and ready to use, that is,
+			the gameState is either in DIALOGUE or GAMEPLAY.
+			
+		As you can see from the documentation, the Main.java class strictly deals with the GameState
+		and other low-level game functionality. It has little to do with the actual gameplay logic,
+		and is merely a broker for other objects. The DmciGD.java class handles drawing the objects or
+		frames on screen, while the Room.java class actually handles the game objects.
+		
 	
 (*)	)=================================================================================================
 	
@@ -309,86 +335,5 @@ classes themselves, and the logic associated with the various game objects and i
 	
 	This file handles all the gameplay logic, as well as any methods and properties associated with
 	the room instance.
-
-======================================================================================================
-======================================================================================================
-
-EXTRA INFORMATION
-
-(*)	)=================================================================================================
-
-	dmcigd.core.ThreadSync.java
 	
-	This file handles relationship between DmciGD.java and Main.java. DmciGD.java is the consumer,
-	while Main.java is the producer. Unlike with inheritances and interfaces, I will actually explain
-	what this relationship means, as it's a more specific concept.
-	
-	The producer produces the content, naturally.
-	
-	The consumer consumes the content, I would hope that the names were self-explanatory.
-	
-	The importance of this relationship is that the producer and consumer sometimes run in separate
-	threads, which means that they would usually be totally unsynchronized. The consumer would just
-	grab content from the producer at random times, and this means redundant consumption calls, and
-	inaccurate consumption calls if the producer is in the middle of changing the variables.
-	
-	To fix this problem we create a third object to synchronize the two.
-	
-	Using the wait(); and notify(); methods, we can control the ThreadSync.java so that it cannot run
-	another produce(); call until consumed(); has run once to notify the method to stop waiting. The
-	same applies for consume(); and produced();
-	
-	As such we force a constant back and forth between produce(); and consume(); regardless of the
-	speeds of the individual threads.
-	
-	The two-way nature of this relationship is particularly important because if the producer starts
-	modifying properties and objects that need to be passed to the consumer thread, the consumer will
-	receive fragmented and incomplete data. In this case, it causes half-screen flickering.
-	
-	Knowing that the producer thread calls a step(); property (which moves all the objects around),
-	and the consumer renders image through a double-buffering script, we can describe the relationship
-	graphically like so:
-	
-		Main	DmciGD
-	
-		STEP
-		 ||
-		 ||
-		 ||
-		 ||
-		 ||
-		DONE
-				COPY
-				 ||
-				 ||
-				DONE
-		STEP	PAINT
-		 ||		 ||
-		 ||		 ||
-		 ||		 ||
-FRAME 1: ||		PAINTED > COPY TO SCREEN
-		 ||
-		DONE 	
-				COPY
-				 ||
-				 ||
-				DONE
-		STEP	PAINT
-		 ||		 ||
-		 ||		 ||
-		 ||		 ||
-FRAME 2: ||		PAINTED > COPY TO SCREEN
-		 ||
-		DONE 	
-				COPY
-				 ||
-				 ||
-				DONE
-		STEP	PAINT
-		 ||		 ||
-		 ||		 ||
-		 ||		 ||
-FRAME 3: ||		PAINTED > COPY TO SCREEN
-		 ||
-		 
-	 CONTINUE AD INFINITUM
+	[I'M GOING BACK AND FORTH BETWEEN SECTIONS, REMIND ME TO FINISH THIS]
