@@ -16,7 +16,7 @@ public class Main implements Runnable, KeyListener {
 	
 	//Initialize decayState variables
 	private boolean decayState = false;
-	private int killCount = 1;
+	private int killCount = 0;
 	private int maxKillCount = 250;
 	private int decayTimer = 0;
 	private int decayLimit = maxKillCount;
@@ -28,7 +28,7 @@ public class Main implements Runnable, KeyListener {
 	private ThreadSync threadSync;
 	private URL codeBase;
 	
-	private String currentLevel,currentRoom;
+	private String currentRoom;
 	
 	//Public Getters
 	public GameState getGameState() {
@@ -53,17 +53,16 @@ public class Main implements Runnable, KeyListener {
 		Thread th = new Thread(this);
 		th.start();
 		
-		loadRoom("game","MainMenu");
+		loadRoom("game.MainMenu");
 	}
 	
-	public void loadRoom(String levelName, String roomClass) {
+	public void loadRoom(String roomName) {
 		try {
-			room = (Room) Class.forName("dmcigd.levels."+levelName+"."+roomClass).getConstructor(URL.class).newInstance(codeBase);
+			room = (Room) Class.forName("dmcigd.levels."+roomName).getConstructor(URL.class).newInstance(codeBase);
 			
 			gameState = GameState.LOADINGROOM;
 			
-			currentLevel = levelName;
-			currentRoom = roomClass;
+			currentRoom = roomName;
 				
 		} catch (InstantiationException e) {} 
 		catch (IllegalAccessException e) {} 
@@ -95,11 +94,11 @@ public class Main implements Runnable, KeyListener {
 					
 					if(room.isDead()) {
 						gameState = GameState.GAMEOVER;
-					} else if(room.inDialogue()) {
+					} else if(room.getDialogueHandler().inDialogue()) {
 						gameState = GameState.DIALOGUE;
 					} else if(room.getTargetRoom() != null) {
 						killCount += room.getPlayer().sword.getKillCount();
-						loadRoom(room.getTargetLevel(), room.getTargetRoom());
+						loadRoom(room.getTargetRoom());
 					} else {
 						room.step();
 						
@@ -131,7 +130,7 @@ public class Main implements Runnable, KeyListener {
 					
 				case DIALOGUE:
 					
-					if(!room.inDialogue()) {
+					if(!room.getDialogueHandler().inDialogue()) {
 						//Exit dialogue
 						gameState = GameState.GAMEPLAY;
 					}
@@ -159,12 +158,12 @@ public class Main implements Runnable, KeyListener {
 		
 			case KeyEvent.VK_Q:
 				//Quit Game
-				loadRoom("game","MainMenu");
+				loadRoom("game.MainMenu");
 				break;
 		
 			case KeyEvent.VK_R:
 				//Reset Level
-				loadRoom(currentLevel,currentRoom);
+				loadRoom(currentRoom);
 				break;
 				
 			case KeyEvent.VK_P:

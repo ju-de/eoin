@@ -226,7 +226,7 @@ classes themselves, and the logic associated with the various game objects and i
 		
 		[SOUND IS NOT YET IMPLEMENTED, UPDATE DOCUMENTATION WHEN IT IS READY]
 		
-		(*)	GameState getGameState()
+		->	GameState getGameState()
 		
 			This method should be completely self-explanatory. It returns the current GameState, as
 			defined by the GameState enumerator, which is also self-explanatory.
@@ -238,7 +238,7 @@ classes themselves, and the logic associated with the various game objects and i
 			And each of these gameStates must be handled and passed on to DmciGD.java so that it knows
 			how to render the frame.
 			
-		(*)	boolean getDecayState()
+		->	boolean getDecayState()
 		
 			This method returns a boolean value that tells the DmciGD.java whether it should render a
 			decayed tileset (offset by 5 vertically, due to the setup of the tilesheet images) or an
@@ -247,7 +247,7 @@ classes themselves, and the logic associated with the various game objects and i
 			This boolean is determined through the use of an in-object clock and pseudo-random numbers
 			that depend on the current killCount integer.
 			
-		(*)	Room getRoom()
+		->	Room getRoom()
 		
 			This method returns the current instance of the Room class, as described below.
 			
@@ -279,12 +279,14 @@ classes themselves, and the logic associated with the various game objects and i
 					
 				Checks to see if the room has changed (by checking the getTargetRoom() method)
 					If so, load the according room (which changes the state to LOADINGROOM)
+					and add the accumulated killCount of the room (stored in the Sword.java instance)
 					
 				If the state does not change, call the room's step() method (as elaborated on below in
 				the Room.java class explanation)
 				
 				Iterate the decayTimer to determine if the tileset is currently in a state of decay or
-				not, as determined by the current killCount.
+				not, as determined by the sum of the current killCount and the temporary killCount
+				(stored in the Sword.java instance).
 				
 			LOADINGROOM:
 				Checks the room instance to see if it is loaded (by checking the isReady() method)
@@ -333,7 +335,124 @@ classes themselves, and the logic associated with the various game objects and i
 	
 	dmcigd.core.room.Room.java
 	
+		extends dmcigd.core.room.GameObjectHandler.java
+	
 	This file handles all the gameplay logic, as well as any methods and properties associated with
 	the room instance.
+	
+	It also inherits from the GameObjectHandler.java class which, as the name suggests, handles all of
+	the game objects, linked lists, and iterators associated with a gameplay instance.
+	
+	Although this object creates it's own thread, said thread is used only for initialization, and is
+	only run once. Frame progression is run in the Main.java loop, and is called from a public step()
+	method.
+	
+		PUBLIC METHODS AND PROPERTIES
+	
+			PUBLIC GAME OBJECT GETTERS (SELF-EXPLANATORY)
+			
+			->	ArrayList<SolidObject> getSolidObjects()
+					returns a linked list solidObjects
+			
+			->	ArrayList<Item> getItems()
+					returns a linked list items
+			
+			->	ArrayList<SolidObject> getProjectiles()
+					returns a linked list projectiles
+			
+			->	ArrayList<Region> getRegions()
+					returns a linked list regions
+			
+			PUBLIC GAME OBJECT SETTERS (SELF-EXPLANATORY)
+			
+			->	void addSolidObject()
+					appends an item to the solidObjects linked list
+			
+			->	void addItem()
+					appends an item to the items linked list
+			
+			->	void addProjectile()
+					appends an item to the projectiles linked list
+			
+			->	void addRegion()
+					appends an item to the regions linked list
+			
+			->	void initializeSolidObjects()
+					abstract method called during object initialization used to initialize items in
+					the solidObjects linked list
+			
+			->	void initializeNonsolidObjects()
+					abstract method called during object initialization used to initialize items in
+					the items, regions, and textLabels linked lists
+			
+			OTHER GETTERS
+			
+			->	boolean isReady()
+					returns false while the room is loading, returns true when the level is done
+					loading. Used so that the main game loop can continue to run while a level
+					is loading.
+			
+			->	boolean isDead()
+					returns true when a room is terminated. This is typically caused by the player's
+					death, but can in theory be manipulated by other causes (i.e. failing a necessary
+					level condition, as coded in the specific room subclasses)
+					
+			->	String getTargetRoom()
+					usually returns null
+					
+					If instruction is sent to load a new room, which is usually done by manipulating
+					the player class by setting it's level and room properties, the respective String
+					is returned.
+					
+					In theory, this value can also be manipulated directly by the Room.java instance,
+					should room advancement be met by specific game conditions rather than player
+					position and collision
+					
+			->	String getTileset()
+			
+		OBJECT PROCEDURE
+			
+			CONSTRUCTION
+			
+			This procedure is called when the object is created:
+			
+			1.	Set the codeBase URL to be passed onto the blockMap and environmentMap objects (which
+				is used to load the appropriate textfile resources)
+				
+			2.	Set the levelName, roomName, and tileSet Strings so that information about the room is
+				stored in the object, and can be referenced from other low-level objects.
+				
+			3.	Initialize the thread. This initialization procedure handles level loading in parallel
+				to the rest of the game loop.
+			
+			INITIALIZATION
+			
+			4.	
+			
+			STEP
+			
+			This procedure is called with every frame, and thus every iteration of the thread loop in
+			Main.java, as long as the gameState is set to GAMEPLAY
+			
+			x.	Calls the stepGameObjects() method from the GameObjectHandler.java superclass:
+			
+					Loops through all projectiles and calls their step methods
+						If a projectile is destroyed, remove object from list
+					
+					Loops through all solidObjects and calls their step methods
+						If solidObject is destroyed, remove object from list
+					
+					Loops through all items and calls their step methods
+						If item is destroyed, remove object from list
+					
+					Loops through all regions and calls their step methods
+				
+				For more information on general behaviours of GameObjects, refer to the file
+				object_superclasses, which is crucial to understanding the game logic, as the instance
+				of Room.java handles as a broker for GameObjects, and does little in actual object
+				manipulation. Rather, objects manipulate each other.
+				
+				For specific information on how a GameObject behaves, refer to the appropriate file
+				in the game_objects documentation directory.
 	
 	[I'M GOING BACK AND FORTH BETWEEN SECTIONS, REMIND ME TO FINISH THIS]

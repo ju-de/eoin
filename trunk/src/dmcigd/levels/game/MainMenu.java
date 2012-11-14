@@ -16,7 +16,7 @@ public class MainMenu extends Room implements Runnable {
 
 	public void initializeNonsolidObjects() {
 		
-		addRegion(new RoomPassage(16 * 32, 10 * 32, "tutorial", "Tutorial"));
+		addRegion(new RoomPassage(16 * 32, 10 * 32, "tutorial.Tutorial"));
 		addTextLabel(new TextLabel(16 * 32 - 7, 11 * 32 + 16, "Start Game"));
 		
 		addRegion(new Passage(12 * 32, 10 * 32, 16 * 32, 10 * 32));

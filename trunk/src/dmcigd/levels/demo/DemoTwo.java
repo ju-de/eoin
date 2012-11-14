@@ -15,7 +15,7 @@ public class DemoTwo extends Room implements Runnable {
 	
 	public void initializeNonsolidObjects() {
 		
-		addRegion(new RoomPassage(34 * 32, 12 * 32, "demo", "Demo"));
+		addRegion(new RoomPassage(34 * 32, 12 * 32, "demo.Demo"));
 		
 		addRegion(new Warp(11 * 32, 13 * 32, 32, 32, 13 * 32, 7 * 32));
 				
