@@ -6,9 +6,9 @@ import dmcigd.core.objects.player.*;
 
 public class RoomPassage extends ObjectCollision implements Region {
 	
-	String destLevel, destRoom;
+	String destRoom;
 
-	public RoomPassage (int x, int y, String destLevel, String destRoom) {
+	public RoomPassage (int x, int y, String destRoom) {
 		
 		setX(x + 6);
 		setY(y);
@@ -23,7 +23,6 @@ public class RoomPassage extends ObjectCollision implements Region {
 		setMapCode("`");
 		setImagePath("objects.gif");
 		
-		this.destLevel = destLevel;
 		this.destRoom = destRoom;
 		
 	}
@@ -32,7 +31,7 @@ public class RoomPassage extends ObjectCollision implements Region {
 
 	public void interact(Player player) {
 		
-		player.setRoom(destLevel, destRoom);
+		player.setRoom(destRoom);
 		
 	}
 	

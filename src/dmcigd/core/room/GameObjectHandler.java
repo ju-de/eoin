@@ -19,8 +19,6 @@ abstract class GameObjectHandler {
 	private Iterator<SolidObject> projectileIt;
 	
 	//Public Getters
-	
-	//ArrayLists
 	public ArrayList<SolidObject> getSolidObjects() {
 		return solidObjects;
 	}
@@ -35,8 +33,6 @@ abstract class GameObjectHandler {
 	}
 	
 	//Public Setters
-	
-	//ArrayLists
 	public void addSolidObject(SolidObject solidObject) {
 		solidObjects.add(solidObject);
 	}
@@ -94,7 +90,7 @@ abstract class GameObjectHandler {
 		}
 		
 		//Step all regions
-		for (Region i : getRegions()) {
+		for (Region i : regions) {
 			i.step();
 		}
 		

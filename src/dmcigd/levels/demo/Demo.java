@@ -86,7 +86,7 @@ public class Demo extends Room implements Runnable {
 		addRegion(new Sign(2176, 320, 4, "STOP ASKING SO MANY QUESTIONS", "NO I DO NOT KNOW WHY THERE'S A RANDOM TUNNEL OPENING IN THE MIDDLE OF THE SKY.", getDialogueHandler()));
 		addRegion(new Sign(6720, 512, 5, " ", "FNORD", getDialogueHandler()));
 		
-		addRegion(new RoomWarp(6720, 512, 32, 32, "demo", "DemoTwo"));
+		addRegion(new RoomWarp(6720, 512, 32, 32, "demo.DemoTwo"));
 		
 		addRegion(new DemoProjectileSpawner(400, 320, getProjectiles(), getBlockMap(), getSolidObjects()));
 		

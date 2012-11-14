@@ -20,7 +20,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	
 	//Passes variables to be read by Main Game Loop
 	private boolean ready,isDead = false;
-	private String targetLevel,targetRoom;
+	private String targetRoom;
 	
 	//Objects and object lists
 	private Player player;
@@ -39,14 +39,8 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	public boolean isDead() {
 		return isDead;
 	}
-	public boolean inDialogue() {
-		return dialogueHandler.inDialogue();
-	}
 	
 	//Strings
-	public String getTargetLevel() {
-		return targetLevel;
-	}
 	public String getTargetRoom() {
 		return targetRoom;
 	}
@@ -139,7 +133,6 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		
 		//Check for level advancement
 		if(player.getRoom() != null) {
-			targetLevel = player.getLevel();
 			targetRoom = player.getRoom();
 		}
 		
@@ -166,8 +159,6 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		
 	}
 	
-	//Hussain, please abstract out input handling. We're starting to get a bad case of god classes
-	
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
@@ -187,7 +178,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 				player.jump(true);
 				break;
 			case KeyEvent.VK_X:
-				if(inDialogue()) {
+				if(dialogueHandler.inDialogue()) {
 					dialogueHandler.advance();
 				} else {
 					player.interact();

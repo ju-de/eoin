@@ -31,74 +31,101 @@ below. It is described in much greater detail in the object_superclasses section
 	
 	METHODS:
 	
-	COLLISION
-		
-		CollisionType getCollisionType()
-			returns a CollisionType enumerator used in collision checks
+		COLLISION
 			
-		Rectangle getBounds(int vx, int vy)
-			returns a bounding box rectangle of the object's destination
-			
-		Rectangle getBounds()
-			returns a bounding box rectangle of the object's current location
-		
-	IMAGE RESOURCES
-	
-		String getMapCode()
-			returns a mapCode string as explained in the Image Map section of the game_loop file
-			
-		String getImagePath()
-			returns an imagePath string as explained in the Image Map section of the game_loop file
-			
-	DIMENSIONS
-		
-		int getX()
-			returns the x position
-			
-		int getY()
-			returns the y position
-		
-		int getWidth()
-			returns the bounding box width
-			
-		int getHeight()
-			returns the bounding box height
-			
-		int getImageWidth()
-			returns the image (display) width
-			
-		int getImageHeight()
-			returns the image (display) height
-			
-		int getSequence()
-			returns the current animation sequence (tilesheet row)
-			also useful for determining an object's state
-				i.e. what action it is currently performing
-			
-		int getFrame()
-			returns the current animation frame (tilesheet column)
-			also useful for determining an object's state
-				i.e. how far it is along its action
+		->	CollisionType getCollisionType()
+				returns a CollisionType enumerator used in collision checks
 				
-	DISPLAY
-	
-		boolean isVisible(int x, int y)
-			determines if the object is visible from the current view (player) position
+		->	Rectangle getBounds(int vx, int vy)
+				returns a bounding box rectangle of the object's destination
+				
+		->	Rectangle getBounds()
+				returns a bounding box rectangle of the object's current location
 			
-		ObjectImage getObjectImage(int x, int y)
-			returns an ObjectImage class holding the image map code and all associated positions
-			more information on the ObjectImage class in the extra_information file
+		IMAGE RESOURCES
+		
+		->	String getMapCode()
+				returns a mapCode string as explained in the Image Map section of the game_loop file
+				
+		->	String getImagePath()
+				returns an imagePath string as explained in the Image Map section of the game_loop
+				file
+				
+		DIMENSIONS
 			
-	STEP
-	
-		void step()
-			generic method that determines what action the object will take each frame
+		->	int getX()
+				returns the x position
+				
+		->	int getY()
+				returns the y position
+			
+		->	int getWidth()
+				returns the bounding box width
+				
+		->	int getHeight()
+				returns the bounding box height
+				
+		->	int getImageWidth()
+				returns the image (display) width
+				
+		->	int getImageHeight()
+				returns the image (display) height
+				
+		->	int getSequence()
+				returns the current animation sequence (tilesheet row)
+				also useful for determining an object's state
+					i.e. what action it is currently performing
+				
+		->	int getFrame()
+				returns the current animation frame (tilesheet column)
+				also useful for determining an object's state
+					i.e. how far it is along its action
+					
+		DISPLAY
+		
+		->	boolean isVisible(int x, int y)
+				determines if the object is visible from the current view (player) position
+				
+		->	ObjectImage getObjectImage(int x, int y)
+				returns an ObjectImage class holding the image map code and all associated positions
+				more information on the ObjectImage class in the extra_information file
+				
+		STEP
+		
+		->	void step()
+				generic method that determines what action the object will take each frame
 
 (*)	)=================================================================================================
 
 	dmcigd.core.objects.interfaces.SolidObject.java
 	
 		extends dmcigd.core.objects.interfaces.GameObject.java
+		
+	The SolidObject interface is an extension of the GameObject interface that handles collision with
+	all Entities, in contrast to the Region class which handles only collision with the Player.java
+	instance. It inherits the collision check methods from GameObject.java and adds collision events
+	that Entities or other SolidObjects such as projectiles can call in the game loop.
+	
+	METHODS:
+	
+	->	boolean isDestroyed()
+			Checks to see if the object should be removed from the game
+			
+			Handled by the Room.java game loop, but can also be used to check if an interaction
+			destroyed the object (e.g. item disappearing on contact with its corresponding object)
+		
+	->	public void onPush(Entity entity, int v)
+			Calls a method when an entity collides at a certain horizontal velocity.
+			
+			Passing of entity object allows for dynamic object manipulation, as well as checking the
+			entity properties to determine which collision subroutine to call.
+			
+			The velocity integer allows for the object to determine speed-dependent collision
+			properties, and also infer direction
+		
+	->	public void onAttack(int damage)
+			Special collision property that deals with the Sword.java instance. Used for taking damage
+			on applicable objects, such as monsters.
 
 (*)	)=================================================================================================
 
@@ -119,18 +146,24 @@ below. It is described in much greater detail in the object_superclasses section
 	
 	METHODS:
 	
-	void onRest()
-		is called when an Entity lands on a RestableObject
+	->	void onRest()
+			is called when an Entity lands on a RestableObject
 	
-	void onUnrest()
-		is called when an Entity is no longer resting on said RestableObject
-		e.g. when a player jumps off a block
+	->	void onUnrest()
+			is called when an Entity is no longer resting on said RestableObject
+			e.g. when a player jumps off a block
 
 (*)	)=================================================================================================
 
 	dmcigd.core.objects.interfaces.Item.java
 	
 		extends dmcigd.core.objects.interfaces.SolidObject.java
+		
+	Items extend the SolidObject interface due to shared methods, however, an Item does not behave
+	like a SolidObject, but rather behaves purely as an Entity and basic projectile, that can be held
+	by the player. As such, Items are stored in their own linked list, and, like projectiles, have
+	one-way collision checks. Specifics on how Items and Projectiles behave can be found in both the
+	object_superclasses and game_loop files.
 
 (*)	)=================================================================================================
 

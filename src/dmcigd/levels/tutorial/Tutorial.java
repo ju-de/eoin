@@ -106,7 +106,7 @@ public class Tutorial extends Room implements Runnable {
 		addTextLabel(new TextLabel(188 * 32, 23 * 32, "Press \"X\" to attack", false));
 		addTextLabel(new TextLabel(188 * 32, 23 * 32 + 20, "enemies with your sword", false));
 		
-		addRegion(new RoomWarp(195 * 32, 0, 32, 35 * 32, "demo", "Demo"));
+		addRegion(new RoomWarp(195 * 32, 0, 32, 35 * 32, "demo.Demo"));
 	}
 }
 

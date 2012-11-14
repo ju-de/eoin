@@ -6,9 +6,9 @@ import dmcigd.core.objects.player.*;
 
 public class RoomWarp extends ObjectCollision implements Region {
 	
-	String destLevel, destRoom;
+	String destRoom;
 
-	public RoomWarp (int x, int y, int width, int height, String destLevel, String destRoom) {
+	public RoomWarp (int x, int y, int width, int height, String destRoom) {
 		
 		setX(x);
 		setY(y);
@@ -23,14 +23,13 @@ public class RoomWarp extends ObjectCollision implements Region {
 		setMapCode("`");
 		setImagePath("objects.gif");
 		
-		this.destLevel = destLevel;
 		this.destRoom = destRoom;
 		
 	}
 	
 	public void onHover(Player player) {
 		
-		player.setRoom(destLevel, destRoom);
+		player.setRoom(destRoom);
 		
 	}
 
