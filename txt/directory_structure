@@ -25,5 +25,8 @@
 			/[LEVELNAME]				Contains directory of rooms
 				/[ROOMNAME]					Contains environmentmap.txt and blockmap.txt for corresponding room
 /txt							Contains textfiles for the game, including all documentation.
+	/docs							Code documentation
+		/enums							Public enumerators and their meanings
+		/game_objects					Object-specific documentation, e.g. outlining the constructor methods
 /lib							Contains any external libraries being used by the project.
 /misc							Contains any miscellaneous files, such as personal committer notes or school club files.

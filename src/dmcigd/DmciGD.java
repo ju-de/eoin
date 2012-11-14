@@ -12,6 +12,7 @@ import java.net.*;
 import java.util.*;
 
 //Renders applet
+@SuppressWarnings("serial")
 public class DmciGD extends Applet implements Runnable {
 	
 	private URL codeBase;
@@ -76,7 +77,7 @@ public class DmciGD extends Applet implements Runnable {
 		try {
 			f = Font.createFont(Font.PLAIN, new URL(getCodeBase(), "../share/gfx/04B_03__.TTF").openStream()).deriveFont(16f);
 			fSmall = f.deriveFont(8f);
-		} catch (FontFormatException | IOException e) { System.out.println(e); }
+		} catch (FontFormatException e) {} catch (IOException e) {}
 	}
 	
 	//Repaints screen

@@ -1,0 +1,140 @@
+======================================================================================================
+======================================================================================================
+
+OBJECT INTERFACES AND BEHAVIOURS
+
+Please note that this section is meant strictly to describe how general object interfaces interact
+with each other. For documentation on how to use the object classes or abstraction classes available,
+please refer to the files in game_objects, which outlines constructors and significant methods that
+are associated with the objects themselves.
+
+Object interfaces control and standardize the way that objects can be interacted with, be it through
+the main game loop or by other game objects. This is particularly important for giving a generic means
+of calling the collision method associated with an object, as well 
+
+It has also come to my attention that some of you may not know what an Object Interface is, nor what
+Object Inheritance is. Please look this up on your own. They are both very important concepts to any
+OOP-based environment. This is particularly concerning considering that Java is nothing but OOP, and
+very strict OOP at that.
+
+You may find the word "Entity" be used throughout this section of the documentation. An Entity is a
+type of game object that interacts with the SolidObjects of the game through the interfaces defined
+below. It is described in much greater detail in the object_superclasses section.
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.GameObject.java
+	
+	This interface controls low-level methods associated with an in-game object, defining methods that
+	are associated with rendering and repositioning an object. The purpose of this interface is to
+	serve as a superinterface for all game object interfaces to inherit from.
+	
+	METHODS:
+	
+	COLLISION
+		
+		CollisionType getCollisionType()
+			returns a CollisionType enumerator used in collision checks
+			
+		Rectangle getBounds(int vx, int vy)
+			returns a bounding box rectangle of the object's destination
+			
+		Rectangle getBounds()
+			returns a bounding box rectangle of the object's current location
+		
+	IMAGE RESOURCES
+	
+		String getMapCode()
+			returns a mapCode string as explained in the Image Map section of the game_loop file
+			
+		String getImagePath()
+			returns an imagePath string as explained in the Image Map section of the game_loop file
+			
+	DIMENSIONS
+		
+		int getX()
+			returns the x position
+			
+		int getY()
+			returns the y position
+		
+		int getWidth()
+			returns the bounding box width
+			
+		int getHeight()
+			returns the bounding box height
+			
+		int getImageWidth()
+			returns the image (display) width
+			
+		int getImageHeight()
+			returns the image (display) height
+			
+		int getSequence()
+			returns the current animation sequence (tilesheet row)
+			also useful for determining an object's state
+				i.e. what action it is currently performing
+			
+		int getFrame()
+			returns the current animation frame (tilesheet column)
+			also useful for determining an object's state
+				i.e. how far it is along its action
+				
+	DISPLAY
+	
+		boolean isVisible(int x, int y)
+			determines if the object is visible from the current view (player) position
+			
+		ObjectImage getObjectImage(int x, int y)
+			returns an ObjectImage class holding the image map code and all associated positions
+			more information on the ObjectImage class in the extra_information file
+			
+	STEP
+	
+		void step()
+			generic method that determines what action the object will take each frame
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.SolidObject.java
+	
+		extends dmcigd.core.objects.interfaces.GameObject.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.RestableObject.java
+	
+		extends dmcigd.core.objects.interfaces.SolidObject.java
+	
+	This is nothing more than an extension of the SolidObject interface, but introduces the onRest()
+	and onUnrest() methods. This is necessary to enable typical object behaviours as collision based
+	on gravity and jumping are usually treated differently from pushing horizontally.
+	
+	Please note that there is no way to handle collision from underneath (i.e. Mario-style headbutting
+	or bricks) as I did not feel it was necessary to implement into the behaviour of Entities. If
+	absolutely necessary, I will modify the game loop to account for this, however I am hoping that it
+	will not be necessary.
+	
+	Although it should be self-explanatory:
+	
+	METHODS:
+	
+	void onRest()
+		is called when an Entity lands on a RestableObject
+	
+	void onUnrest()
+		is called when an Entity is no longer resting on said RestableObject
+		e.g. when a player jumps off a block
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.Item.java
+	
+		extends dmcigd.core.objects.interfaces.SolidObject.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.interfaces.Region.java
+	
+		extends dmcigd.core.objects.interfaces.GameObject.java
+	

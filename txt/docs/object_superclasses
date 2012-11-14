@@ -1,0 +1,23 @@
+======================================================================================================
+======================================================================================================
+
+OBJECT SUPERCLASSES AND BEHAVIOURS
+
+Objects are defined not only by the way that other objects interact with them (as is handled by the
+core object interfaces), but also the way that they interact with other objects. To handle the way
+that objects act, a set of object superclasses have been implemented so that game objects can easily
+extend these classes and save a lot of redundant code.
+
+In other words, the object superclasses control how the object acts, while the object interfaces only
+define how they react. Note the difference between controlling and defining, as the interfaces have no
+say in what the methods do, but only state that they exist.
+
+CORE SUPERCLASSES:
+
+ENTITY SUPERCLASSES:
+
+PROJECTILE SUPERCLASSES:
+
+MONSTER SUPERCLASSES:
+[Please note that more monster superclasses will be added to handle basic AI]
+
