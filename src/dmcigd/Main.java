@@ -98,6 +98,7 @@ public class Main implements Runnable, KeyListener {
 					} else if(room.inDialogue()) {
 						gameState = GameState.DIALOGUE;
 					} else if(room.getTargetRoom() != null) {
+						killCount += room.getPlayer().sword.getKillCount();
 						loadRoom(room.getTargetLevel(), room.getTargetRoom());
 					} else {
 						room.step();
@@ -107,10 +108,10 @@ public class Main implements Runnable, KeyListener {
 						if(decayTimer >= decayLimit) {
 							if(decayState) {
 								decayState = false;
-								decayLimit = 4 * ((int)(Math.random() * (maxKillCount - killCount)));
+								decayLimit = 4 * ((int)(Math.random() * (maxKillCount - (killCount + room.getPlayer().sword.getKillCount()))));
 							} else {
 								decayState = true;
-								decayLimit = 4 * ((int)(Math.random() * killCount));
+								decayLimit = 4 * ((int)(Math.random() * (killCount + room.getPlayer().sword.getKillCount())));
 							}
 							decayTimer = 0;
 						}

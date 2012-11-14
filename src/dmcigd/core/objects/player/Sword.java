@@ -11,6 +11,12 @@ public class Sword extends ObjectCollision {
 	private boolean attacking,onLadder = false;
 	private int damage = 10;
 	private ArrayList<SolidObject> solidObjects;
+	private int killCount = 0;
+	
+	//Public Getters
+	public int getKillCount() {
+		return killCount;
+	}
 	
 	//Public setters
 	public void setPosition(int x, int y) {
@@ -59,8 +65,10 @@ public class Sword extends ObjectCollision {
 		for(SolidObject i : solidObjects) {
 			if(getBounds().intersects(i.getBounds())) {
 				i.onAttack(damage);
+				
+				//Increments the KillCount
 				if(i.isDestroyed()) {
-					System.out.println("killcount++!");
+					killCount++;
 				}
 			}
 		}
