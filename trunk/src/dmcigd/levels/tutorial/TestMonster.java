@@ -16,7 +16,7 @@ public class TestMonster extends LethalityHandler implements RestableObject {
 		setDX(0);
 		setDY(0);
 		setHeight(28);
-		setWidth(28);
+		setWidth(24);
 		setImageHeight(32);
 		setImageWidth(32);
 		
