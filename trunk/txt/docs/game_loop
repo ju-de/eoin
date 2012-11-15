@@ -8,6 +8,8 @@
 *==PLEASE REMEMBER TO UDPATE==*
 *=============================*
 *******************************
+(when cutscenes are done, of course)
+
 
 THE CORE CLASSES
 
@@ -75,10 +77,14 @@ classes themselves, and the logic associated with the various game objects and i
 			the possibility of the mathematical manipulation of sprites, such as adding a certain
 			value to the Y coordinate to load an alternate set of sprites within the same sheet.
 			
+			It also must, ironically, preload a loading image at this point.
+			
+			Since the Sword.java instance is not stored in any ArrayList, and therefore not loaded in
+			the typical object image preloader described below, it must be loaded once upon
+			initialization.
+			
 			It also loads the font from a TTF file in the /share/ directory and creates the relevant
 			font object for text rendering.
-			
-			[BACKGROUNDS ARE NOT DONE YET. WILL DOCUMENT LATER]
 			
 			RUN (LOOPS CONTINUOUSLY IN OWN THREAD)
 			
@@ -86,9 +92,10 @@ classes themselves, and the logic associated with the various game objects and i
 			that of the main class.
 			
 		2.	GAMEPLAY:
-				If the gameState doesn't match, this means that the level just loaded. Loop through
-				all of the objectLists and preload their images based on their image path and
-				associated mapCode. More information on the image map below
+				If the gameState doesn't match, this means that the level just loaded. The game now
+				preloads the tileset and background image, and loops through all of the objectLists
+				and preload their images based on their image path and associated mapCode. More
+				information on the image map below
 				
 				Otherwise, the instance synchronizes a list of visible ObjectImage objects, which
 				contains object mapcodes, source locations (current sequence and frame), location and
