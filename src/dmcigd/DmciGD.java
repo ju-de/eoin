@@ -46,10 +46,15 @@ public class DmciGD extends Applet implements Runnable {
 	//Initialize the Double-buffering Variables
 	private Image dbImage;
 	private Graphics dbg;
+	private Image bgImage;
 	
 	//Initialize font
 	Font f;
 	Font fSmall;
+	
+	//Initialize loading animation
+	private Image loadingImage;
+	private int loadingClock = 0;
 	
 	//Initialize all objects and gets audio data
 	public void init() {
@@ -65,13 +70,22 @@ public class DmciGD extends Applet implements Runnable {
 		th.start();
 		
 		//Set canvas background
-		setBackground (new Color(200,240,255));
+		setBackground (new Color(141,141,141));
 		
 		buildImageMap();
 		
 		//Initialize Double-Buffers
 		dbImage = createImage(this.getSize().width, this.getSize().height);
 		dbg = dbImage.getGraphics();
+		
+		//Load loading image
+		loadingImage = getImageFromPath("loading.gif");
+		
+		MediaTracker mt = new MediaTracker(this);
+		mt.addImage(loadingImage, 0);
+		try {
+			mt.waitForAll();
+		} catch (InterruptedException e) { }
 		
 		//Create font
 		try {
@@ -94,13 +108,20 @@ public class DmciGD extends Applet implements Runnable {
 					
 					if(gameState != GameState.GAMEPLAY) {
 						
-						tileSheet = getImageFromPath("tilesheets/"+main.room.getTileSet()+".gif");
-						
 						//Preload map tilesheet
+						tileSheet = getImageFromPath("tilesheets/"+main.room.getTileSet()+".gif");
 						MediaTracker mt = new MediaTracker(this);
 						mt.addImage(tileSheet, 0);
 						
-						int i = 1;
+						//Preload background image
+						bgImage = getImageFromPath("bgs/tutorial.gif");
+						mt.addImage(bgImage, 1);
+						
+						//Preload sword sprite
+						objectImageMap.put("sword", getImageFromPath("sword.gif"));
+						mt.addImage(objectImageMap.get("sword"), 2);
+						
+						int i = 3;
 						
 						//Load all images
 						for(SolidObject object : main.room.getSolidObjects()) {
@@ -258,14 +279,16 @@ public class DmciGD extends Applet implements Runnable {
 		switch(gameState) {
 			case GAMEPLAY:
 				
-				dbg.setColor(Color.red);
+				//Draw Background Image
+				int offsetX = playerX/128;
+				int offsetY = playerY/128;
+				dbg.drawImage(bgImage, 0, 0, 640, 320, 0, 0, 240 + offsetX, 120 + offsetY, this);
 				
+				//Draw blocks
 				int[] tileLocation;
 				
 				int gridOffsetX = (playerX % 32) + 10;
 				int gridOffsetY = (playerY % 32) + 16;
-				
-				//Draw blocks
 				
 				//Loop through Y axis of visibleBlocks
 				for(int i=0; i<12; i++) {
@@ -306,12 +329,16 @@ public class DmciGD extends Applet implements Runnable {
 					dbg.drawImage(objectImageMap.get(i.mapCode), i.dstx1, i.dsty1, i.dstx2, i.dsty2, i.srcx1, i.srcy1, i.srcx2, i.srcy2, this);
 				}
 				
-				
 				break;
 				
 			case LOADINGROOM:
+
+				dbg.drawImage(loadingImage, 425, 230, 600, 300, 0, loadingClock/4*70, 175, loadingClock/4*70+70, this);
+				loadingClock++;
 				
-				dbg.drawString("Loading Demo Level", 40, 75);
+				if(loadingClock == 24) {
+					loadingClock = 0;
+				}
 				
 				break;
 				

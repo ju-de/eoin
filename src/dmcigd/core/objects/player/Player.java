@@ -54,7 +54,7 @@ public class Player extends ControlHandler implements SolidObject {
 		this.items = items;
 		this.regions = regions;
 		
-		setMapCode("1");
+		setMapCode("player");
 		setImagePath("player.gif");
 		
 		//SpriteSheet organized as follows:
