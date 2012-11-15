@@ -119,7 +119,7 @@ public class DmciGD extends Applet implements Runnable {
 						mt.addImage(tileSheet, 0);
 						
 						//Preload background image
-						bgImage = getImageFromPath("bgs/tutorial.gif");
+						bgImage = getImageFromPath("bgs/"+main.room.getLevelName()+".gif");
 						mt.addImage(bgImage, 1);
 						
 						int i = 2;
