@@ -12,11 +12,19 @@ In other words, the object superclasses control how the object acts, while the o
 define how they react. Note the difference between controlling and defining, as the interfaces have no
 say in what the methods do, but only state that they exist.
 
+======================================================================================================
+
 CORE SUPERCLASSES:
+
+======================================================================================================
 
 ENTITY SUPERCLASSES:
 
+======================================================================================================
+
 PROJECTILE SUPERCLASSES:
+
+======================================================================================================
 
 MONSTER SUPERCLASSES:
 [Please note that more monster superclasses will be added to handle basic AI]

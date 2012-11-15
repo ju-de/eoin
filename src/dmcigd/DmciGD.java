@@ -83,6 +83,11 @@ public class DmciGD extends Applet implements Runnable {
 		
 		MediaTracker mt = new MediaTracker(this);
 		mt.addImage(loadingImage, 0);
+		
+		//Preload sword sprite
+		objectImageMap.put("sword", getImageFromPath("sword.gif"));
+		mt.addImage(objectImageMap.get("sword"), 1);
+		
 		try {
 			mt.waitForAll();
 		} catch (InterruptedException e) { }
@@ -117,11 +122,7 @@ public class DmciGD extends Applet implements Runnable {
 						bgImage = getImageFromPath("bgs/tutorial.gif");
 						mt.addImage(bgImage, 1);
 						
-						//Preload sword sprite
-						objectImageMap.put("sword", getImageFromPath("sword.gif"));
-						mt.addImage(objectImageMap.get("sword"), 2);
-						
-						int i = 3;
+						int i = 2;
 						
 						//Load all images
 						for(SolidObject object : main.room.getSolidObjects()) {

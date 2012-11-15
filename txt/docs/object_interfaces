@@ -29,7 +29,7 @@ below. It is described in much greater detail in the object_superclasses section
 	are associated with rendering and repositioning an object. The purpose of this interface is to
 	serve as a superinterface for all game object interfaces to inherit from.
 	
-	METHODS:
+	METHODS
 	
 		COLLISION
 			
@@ -106,7 +106,7 @@ below. It is described in much greater detail in the object_superclasses section
 	instance. It inherits the collision check methods from GameObject.java and adds collision events
 	that Entities or other SolidObjects such as projectiles can call in the game loop.
 	
-	METHODS:
+	METHODS
 	
 	->	boolean isDestroyed()
 			Checks to see if the object should be removed from the game
@@ -144,7 +144,7 @@ below. It is described in much greater detail in the object_superclasses section
 	
 	Although it should be self-explanatory:
 	
-	METHODS:
+	METHODS
 	
 	->	void onRest()
 			is called when an Entity lands on a RestableObject
@@ -164,10 +164,53 @@ below. It is described in much greater detail in the object_superclasses section
 	by the player. As such, Items are stored in their own linked list, and, like projectiles, have
 	one-way collision checks. Specifics on how Items and Projectiles behave can be found in both the
 	object_superclasses and game_loop files.
+	
+	As such, the Item interface adds the following self-explanatory setters for control:
+	
+	METHODS
+	
+	->	void setX(int x)
+			sets the x position
+			
+	->	void setY(int y)
+			sets the y position
+			
+	->	void setVX(float vx)
+			sets the x velocity
+			
+	->	void setVY(float vy)
+			sets the y velocity
+			
+	->	void setHeld(boolean held)
+			sets the held boolean
+			controls whether or not the object behaves as an entity or a non-moving object, as a held
+			object's position is controlled entirely by the player's position
 
 (*)	)=================================================================================================
 
 	dmcigd.core.objects.interfaces.Region.java
 	
 		extends dmcigd.core.objects.interfaces.GameObject.java
+		
+	The real factor that sets apart a Region from a SolidObject is the fact that a Region is non-solid
+	and therefore has much simpler methods associated with it. What really sets apart Regions in the
+	actual game is the fact that Regions only interact with the Player, and that Regions can contain
+	not only collision (hover) methods, but also "interaction" methods called by pressing the "X" key.
 	
+	Because of this regions are used for things such as doors/pathways, invisible warp areas, and npcs
+	and introduce the following methods:
+	
+	METHODS
+	
+	->	void onHover(Player player)
+			generic method to handle collision
+			
+	->	void interact(Player player)
+			generic method to handle player interaction (pressing "X")
+			
+	It is important to note that there is no onUnhover method, and this has to do with the workings of
+	the Player class and the way it handles region collision. However, with proper design patterns,
+	this should be a non-issue considering that a step() method, inherited from the GameObject.java
+	interface runs every frame. Through the use of booleans that reset themselves with each frames,
+	and the fact that Regions call their step() method after the Player does, theoretical onUnhover
+	methods can be emulated in the step() method.

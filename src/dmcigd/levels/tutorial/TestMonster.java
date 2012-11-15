@@ -7,7 +7,7 @@ import dmcigd.core.objects.monsters.*;
 
 import java.util.*;
 
-public class TestMonster extends HitpointHandler implements RestableObject {
+public class TestMonster extends LethalityHandler implements RestableObject {
 	
 	public TestMonster(int x, int y, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
 
@@ -30,10 +30,12 @@ public class TestMonster extends HitpointHandler implements RestableObject {
 		
 		setBlockMap(blockMap);
 		setSolidObjects(solidObjects);
-		setEntityType(EntityType.MOVINGBLOCK);
+		setEntityType(EntityType.NONLETHALMONSTER);
 		setGravity();
 		
 		setMaxHitpoints(11);
+		
+		setLethalOnPush(true);
 		
 	}
 	

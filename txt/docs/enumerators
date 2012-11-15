@@ -1,0 +1,118 @@
+======================================================================================================
+======================================================================================================
+
+ENUMERATORS
+
+The game deals with several enumerators. Their values and meanings are listed below:
+
+(*)	)=================================================================================================
+
+	dmcigd.core.enums.Direction.java
+	
+	Used for checking collision and movement, following one of four cardinal directions:
+	
+		UP, DOWN, LEFT, RIGHT
+
+(*)	)=================================================================================================
+
+	dmcigd.core.enums.GameState.java
+	
+	Arbitrary enumerator used to determine what state the game is in, used for low-level game loops
+	(Main.java) and rendering instructions (DmciGD.java):
+	
+		GAMEOVER, PAUSE, LOADINGROOM, GAMEPLAY, DIALOGUE
+
+(*)	)=================================================================================================
+
+	dmcigd.core.enums.CollisionType.java
+	
+	Enumerator used to determine whether or not a collision check occurs, with associated integer
+	values that denote priority. Used mostly in blockmap associations.
+	
+	For example, a SOLID block checks for collision in all directions while a PLATFORM block checks
+	for only downward collision. A SOLID block takes priority over a PLATFORM block in collision checks
+	as the SOLID block would always hinder the motion.
+	
+	All values and associated integers:
+	
+	   [-1]	DESTROY
+			Destroys colliding object immediately
+		
+		[0]	SOLID
+			Stops motion in all directions
+		
+		[1]	KILL
+			Kills object, destroying certain Entities like Players, but acting as a solid platform to
+			others, such as a boulder (PushableBlock) which wouldn't "die"
+		
+		[2]	PLATFORM
+			Stops motion in downward direction only
+			
+		[3]	SOLIDLADDER
+			Behaves as SOLID for most, for Entities that can climb ladders, it enables the use of
+			onLadder booleans that change movement behaviours
+			
+		[4]	NONSOLIDLADDER
+			See above, but behaves as NONSOLID by default
+			
+		[5]	WATER
+			Does not stop motion in any direction, but hinders vertical speed
+			
+		[6]	NONSOLID
+			Does not affect motion or collision
+	
+
+(*)	)=================================================================================================
+
+	dmcigd.core.enums.EntityType.java
+	
+	This enumerator is used for collision methods. Acts as a non-unique identifier. For example, a
+	solidObject can be coded to react to all Entities of type PLAYER. Their associated integer values
+	are used to denote what kind of object they are and their general behaviours.
+	
+	Feel free to add EntityTypes as necessary for your object, but remember to keep them generic.
+	For example, items cannot be carried between rooms, so instead of creating a MAGICALSPECIFICITEM
+	EntityType, just create a ROOMITEM1 or QUESTITEM1 and code your objects accordingly.
+	
+	Values and associated integers:
+	
+	NONLETHAL ENTITIES (to player)
+	
+		ITEMS [NEGATIVES]
+		
+		   [-4]	KEY4
+		   		Diamond Key
+		   
+		   [-3]	KEY3
+		   		Bronze Key
+		   		
+		   [-2]	KEY2
+		   		Silver Key
+		   		
+		   [-1]	KEY1
+		   		Gold Key
+		
+		SOLIDOBJECTS [0-9]
+		
+			[0]	PLAYER
+				Self-explanatory
+				
+			[1]	MOVINGBLOCK
+				Any moving solid object such as a pushable block
+		
+		MONSTERS [10-19]
+		
+		   [10]	NONLETHALMONSTER
+		   		Generic monster that cannot hurt player on contact
+			
+	LETHAL ENTITIES (to player)
+		
+		MONSTERS [20-29]
+		
+		   [20]	NONLETHALMONSTER
+		   		Generic monster that can hurt player on contact
+		
+		PROJECTILES [30-39]
+		
+		   [30]	PROJECTILE
+		   		Generic projectile that hurts only the player
