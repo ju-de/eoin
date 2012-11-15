@@ -6,12 +6,12 @@
                ;;;                
              i k o  u              
           j....www..x.l           
-ttttttttttxqwwssssswwettttttttttt 
-ggggggggggqsssssssssssegggggggggg 
-ggggggggg-aJsJsJsJsJsJd,ggggggggg 
-gggggggg-,zxxxxxxxxxxxc-,gggggggg
-gggggg.-,=.,-.=,-.,.-,..=,-gggggg
-ggg.-,=.-,.-=,-.,=.-,=.,.-,.-,ggg
+          xqwwssssswwe            
+          qssssssssssse           
+         -aJsJsJsJsJsJd,          
+        -,zxxxxxxxxxxxc-,         
+      .-,=.,-.=,-.,.-,..=,-      
+   .-,=.-,.-=,-.,=.-,=.,.-,.-,   
 ,.=,-.,-.,-.,-.,-.=,-.,-.,-.,-.,-
 ,-.-,.-,-.,.=,-.,-.,=.-,-.=,.-,.,
 ,.=.-,-.,-.,=.-,-.,=.-,-.,-.,=-.,

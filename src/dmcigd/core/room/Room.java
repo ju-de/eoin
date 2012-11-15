@@ -44,6 +44,12 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	public String getTargetRoom() {
 		return targetRoom;
 	}
+	public String getLevelName() {
+		return levelName;
+	}
+	public String getRoomName() {
+		return roomName;
+	}
 	public String getTileSet() {
 		return tileSet;
 	}

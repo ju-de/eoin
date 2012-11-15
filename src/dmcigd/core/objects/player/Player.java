@@ -163,7 +163,7 @@ public class Player extends ControlHandler implements SolidObject {
 			heldItem.setY(getY() + 14);
 		} else {
 			//Carries sword
-			sword.setPosition(getX(),getY());
+			sword.setPosition(getX(),getY()-getFrame()%2);
 			sword.setLadder(onLadder);
 			sword.flipped = flipped;
 		}
