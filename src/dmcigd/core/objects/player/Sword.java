@@ -42,9 +42,9 @@ public class Sword extends ObjectCollision {
 		setX(baseX);
 		setY(baseY);
 		setHeight(16);
-		setWidth(30);
+		setWidth(44);
 		setImageHeight(30);
-		setImageWidth(30);
+		setImageWidth(44);
 		
 		setMapCode("sword");
 		setImagePath("sword.gif");
@@ -80,7 +80,7 @@ public class Sword extends ObjectCollision {
 			setSequence(0);
 			setFrame(1);
 			
-			setX(baseX - 4);
+			setX(baseX - 12);
 			setY(baseY + 2);
 			
 			attacking = false;
@@ -91,9 +91,9 @@ public class Sword extends ObjectCollision {
 			
 			//Set Position
 			if(flipped) {
-				setX(baseX - offSet - 10);
+				setX(baseX - offSet - 24);
 			} else {
-				setX(baseX + offSet);
+				setX(baseX + offSet - 4);
 			}
 			setY(baseY);
 			
@@ -110,9 +110,9 @@ public class Sword extends ObjectCollision {
 			setFrame(0);
 			
 			if(flipped) {
-				setX(baseX-10);
+				setX(baseX - 20);
 			} else {
-				setX(baseX);
+				setX(baseX - 4);
 			}
 			
 			setY(baseY);
