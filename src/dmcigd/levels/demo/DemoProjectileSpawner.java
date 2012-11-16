@@ -25,7 +25,6 @@ public class DemoProjectileSpawner extends ObjectCollision implements Region {
 		setSequence(4);
 		setFrame(9);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		this.projectiles = projectiles;

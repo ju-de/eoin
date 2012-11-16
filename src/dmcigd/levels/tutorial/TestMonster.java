@@ -23,7 +23,6 @@ public class TestMonster extends LethalityHandler implements RestableObject {
 		setSequence(4);
 		setFrame(8);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		setCollisionType(CollisionType.SOLID);

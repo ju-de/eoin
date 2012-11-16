@@ -21,7 +21,6 @@ public class Passage extends ObjectCollision implements Region {
 		setSequence(5);
 		setFrame(9);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		this.destX = destX + 3;

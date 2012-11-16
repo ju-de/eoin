@@ -29,7 +29,6 @@ public class DoorKey extends Entity implements Item {
 		setSequence(4);
 		setFrame(type + 3);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		switch (type) {

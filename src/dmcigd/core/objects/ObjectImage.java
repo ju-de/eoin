@@ -2,22 +2,12 @@ package dmcigd.core.objects;
 
 public class ObjectImage {
 	
-	public String mapCode;
+	public String imagePath;
 	public int dstx1,dsty1,dstx2,dsty2,srcx1,srcy1,srcx2,srcy2;
 	
-	public ObjectImage(String mapCode, int viewX, int viewY, int x, int y, int width, int height, int imageWidth, int imageHeight, int frame, int sequence, boolean flipped) {
+	public ObjectImage(String imagePath, int relX, int relY, int x, int y, int width, int height, int imageWidth, int imageHeight, int frame, int sequence, boolean flipped) {
 		
-		this.mapCode = mapCode;
-		
-		//Get relative positions to screen
-		int relX = x - viewX + 310;
-		int relY = y - viewY + 144;
-		
-		//Centers bounding box inside of image
-		relX = relX - ((imageWidth - width) / 2);
-		
-		//Adds 2px of padding to the image bottom for ground overlap
-		relY = relY - ((imageHeight - height) - 2);
+		this.imagePath = imagePath;
 		
 		//Flips dstx1 and dstx2 if image is flipped
 		if(flipped) {

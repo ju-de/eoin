@@ -16,16 +16,374 @@ say in what the methods do, but only state that they exist.
 
 CORE SUPERCLASSES:
 
+These classes all inherit off each other and are the three basic classes that control all objects in
+the game, affecting how the object is displayed, how it moves, and how it can be checked for collision
+(as implied by the file names). It is critical to understand these methods and how they can be used in
+order to control the object internally, in contrast to the object interfaces which are used to control
+the objects externally.
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.AnimationHandler.java
+	
+	As the name suggests, AnimationHandler handles animations, and by extension, deals with object
+	spritesheets. It controls the animation sequence and current frame, as well as the advancement of
+	frames.
+	
+	PUBLIC GETTERS
+	
+	->	int getSequence()
+			Returns the animation sequence (spritesheet row)
+			Can also be used to check object's state (rather than creating another property or enum
+			in the object)
+	
+	->	int getFrame()
+			Returns the animation frame (spritesheet row) as an integer
+			Can also be used to check an object's status, similar to getSequence()
+	
+	->	boolean flipped
+			This public boolean (bad practice, I know, I'll fix this eventually) simply stores a
+			flipped state. By passing it's value onto an associated ObjectImage, it can be determined
+			whether or not to flip the x variables, effectively flipping the image horizontally.
+	
+	PUBLIC SETTERS
+	
+	->	void setFrame(int frame)
+			Sets the current frame
+			
+	->	void setSequence(int sequence)
+			Sets the current sequence
+			If the sequence changes, also resets the frame to 0
+			  *	If using an object design pattern that relies on sequences and frames to store state
+				or status, keep this behaviour in mind, or override the method
+				
+	->	void setFramelimits(int[] frameLimits)
+			Sets the lengths of the animation where [SequenceIndex] => SequenceLength
+			
+	->	void setFrameSpeed(float frameSpeed)
+			Sets speed of frame advancement. Considering that game ticks are far faster than animation
+			speeds, this is usually set to a float of value < 1 (where the frame increments by
+			frameSpeed with each animate() call, which is typically once per tick)
+			
+	->	void setAnimationLoops(boolean[] animationLoops)
+			Sets whether or not the animation should loop at last frame. Similar to above, where
+			[SequenceIndex] => LoopsBoolean
+				
+	
+	OTHER METHODS
+	
+	->	void animate()
+			This method advances to the next frame by adding the frameSpeed to the current frame.
+			It is important to note that the frame and framespeed are both floats, so each tick it is
+			possible to advance the frame by values of less than one.
+			
+			Once the frame reaches the limit, if the animation loops, the frame is reset back to 0.
+			
+			If the frame does not loop, it simply does not advance.
+			
+	OTHER NOTES
+	
+			SPRITESHEET LAYOUT
+			
+				FRAMES
+			0 1 2 3 4 5 7 8 9			FrameLimits {
+	S	  0	a b c d e f g					8, 4, 2, 2,
+	E	  1 a b c d							10, 9, 1, 1,
+	Q	  2 a b								10 }
+	U	  3 a b 
+	E	  4 a b c d e f g h i
+	N	  5 a b c d e f g h
+	C	  6 a
+	E	  7 a
+	S	  8 a b c d e f g h i
+	
+	All visible objects are considered to be animated at a technical standpoint, although non-animated
+	objects are simply single frame objects that never advance frames.
+	
+	For example, if I wanted to store 4 colours of static blocks in one spritesheet:
+	
+		SPRITESHEET
+		
+		  0 1 2 3
+		0 A B C D
+		  
+		To get a block of colour C:
+			setSequence(0);
+			setFrame(2);
+	
+	This technique can also be used to store multiple sprites on a single image, if they are used in
+	conjunction. To do this, one must establish a constant image width and image height, and simply
+	reference the according sequence and frame, as these, in practice, are nothing more than source
+	image positions.
+	
+	Through clever use of the animate() call and frameSpeeds, there is a lot of possibility for purely
+	matrix-based and mathematical object state control that is synchronized directly with the object's
+	display sprite, however I'll leave that up to you to figure out as those cases would be absurdly
+	specific, although mathematically gorgeous.
+			
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.VisibleObject.java
+	
+		extends dmcigd.core.objects.AnimationHandler.java
+	
+	VisibleObject.java controls how an object is displayed, including image resources, position, and
+	visibility checks. This abstract class acts as nothing more than a bundle of properties, with a
+	couple of very basic calcuations to determine relative positions
+	
+	PUBLIC GETTERS
+	
+	->	String getImagePath()
+			Returns the path of the object's associated spritesheet
+			
+	->	int getX()
+			Returns the x position
+			
+	->	int getY()
+			Returns the y position
+			
+	->	int getDX()
+			Returns the x displacement
+			
+	->	int getDY()
+			Returns the y displacement
+			
+	->	int getHeight()
+			Returns the bounding box height
+		
+	->	int getWidth()
+			Returns the bounding box width
+			
+	->	int getImageHeight()
+			Returns the image height
+			
+	->	int getImageWidth()
+			Returns the image width
+			
+	->	int relX(int viewX, int viewY)
+			Uses the player's position to determine the x position of the viewing area
+			Returns the object's position relative to the viewing area
+			
+	->	int relY(int viewX, int viewY)
+			Uses the player's position to determine the y position of the viewing area
+			Returns the object's position relative to the viewing area
+			
+	->	ObjectImage getObjectImage(int viewX, int viewY)
+			Returns an ObjectImage instance of the current object
+			See extra_information for more info on the ObjectImage.java class
+			
+	PUBLIC SETTERS
+	
+	->	void setImagePath(String imagePath)
+			Sets the path of the object's associated spritesheet
+			Typically called only once upon object construction
+			
+	->	void setX(int x)
+			Sets the x position of an object
+			Also sets the object's displacement by finding the difference in x
+			
+	->	void setY(int y)
+			Sets the y position of an object
+			Also sets the object's displacement by finding the difference in y
+			
+	->	void setDX(int dx)
+			Directly sets the object's x displacement
+			Used to "fake" drag on a surface, pushing Entity's off, or to do the opposite, by setting
+			the displacement to 0 and ignoring the object's movement.
+			
+	->	void setDY(int dy)
+			Directly sets the object's y displacement
+			Same as above
+			
+	->	void setHeight(int height)
+			Sets the object's bounding box height
+			
+	->	void setWidth(int width)
+			Sets the object's bounding box width
+			
+	->	void setImageHeight(int imageHeight)
+			Sets the object's image height
+			
+	->	void setImageWidth(int imageWidth)
+			Sets the object's image width
+			
+	OTHER NOTES
+	
+	It is important to understand how bounding boxes and positions work mathematically, as only a
+	single pair of position integers is set.
+	
+	First and foremost, it should be common knowledge that with computers, the x and y value always
+	refers to the top left. Therefore, rather than running right and up like a coordinate grid, values
+	run right and down like a table of values.
+	
+	  0 1 2 3 4 5 6
+	0						A.x = 2
+	1     A					A.y = 1
+	2
+	3
+	
+	Next, it is important to note that in this game, position refers to the top left of the bounding
+	box. It is also important to note that the bounding box is always positioned in the bottom center
+	of the image, with 2px of padding at the bottom for overlap with the ground.
+	
+	It is also important to note that images are all scaled up by a factor of 2, meaning that they are
+	4x as large as their image resource.
+	
+	This diagram uses a scale of 2, simulating real pixels:
+	
+	  0 1 2 3 4 5 6 7 8 9			& top-left pixel (position)
+	0								# bounding box
+	1     x x x x x x x x			x image bounds
+	2     x x x x x x x x
+	3     x x x x x x x x			x = 8 (note the scale of 2)
+	4     x x x x x x x x			y = 10
+	5     x & # # # # # x			height = 8
+	6     x # # # # # # x			width = 12
+	7     x # # # # # # x			imageHeight = 18
+	8     x # # # # # # x			imageWidth = 16
+	9     x x x x x x x x
+	
+	General style notes are to ensure that hostile bounding boxes leave adequate padding (to make the
+	game easier and give more leeway for the player) while friendly bounding boxes should be very
+	close to the image's bounding box (usually leaving just 2px of padding on the bottom and nothing
+	more.
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.ObjectCollision.java
+	
+		extends dmcigd.core.objects.VisibleObject.java
+		
+	This class handles all methods relating to collision checks, and is inherited by all game objects
+	that are not static, as all game objects must be stored in their relative linked lists which are
+	used in collision checks, and therefore require collision methods in their interfaces.
+	
+	PUBLIC GETTERS
+	
+	->	Rectangle getBounds(int vx, int vy)
+			Returns a rectangle object of an object's bounding box at it's destination (after moving
+			the amount of its x and y velocities)
+			
+	->	Rectangle getBounds()
+			Overrides the above method to return the object's current bounding box
+			
+	->	CollisionType getCollisionType()
+			Returns the object's collisionType, as defined in the CollisionType enumerator
+	
+	PUBLIC SETTERS
+	
+	->	void setCollisionType(CollisionType collisionType)
+			Sets the object's collisionType, as defined in the CollisionType enumerator
+			Typically called only once upon object construction
+	
+	OTHER METHODS
+	
+	->	void onRest(EntityType entityType)
+			Blank method to satisfy interface requirements
+			
+	->	void onUnrest(EntityType entityType)
+			Blank method to satisfy interface requirements
+			
+	->	void onPush(Entity entity, int v)
+			Blank method to satisfy interface requirements
+			
+	->	void onAttack(int damage, boolean flipped)
+			Blank method to satisfy interface requirements
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.MovingObject.java
+	
+		extends dmcigd.core.objects.ObjectCollision.java
+		
+	This class handles motion vectors, including simple displacement, velocity vectors, acceleration
+	vectors, and gravity. Please note that this class does not handle motion itself, it simply handles
+	the vectors and properties associated with movement. Each object should define it's owh movement
+	properties, or inherit from a superclass such as Entity.java
+	
+	PUBLIC GETTERS
+	
+	->	int getVX()
+			Returns instantaneous x velocity as an integer
+			
+	->	int getVY()
+			Returns instantaneous y velocity as an integer
+			
+	->	float getAX()
+			Returns instantaneous x acceleration
+			
+	->	float getAY()
+			Returns instantaneous y acceleration
+	
+	PUBLIC SETTERS
+	
+	->	void addX(int dx)
+			Shorthand method to move an object by a defined x displacement
+	
+	->	void addY(int dy)
+			Shorthand method to move an object by a defined y displacement
+			
+	->	void setVX(float vx)
+			Sets the x velocity
+			
+	->	void setVY(float vy)
+			Sets the y velocity
+			
+	->	void setAX(float ax)
+			Sets the ax velocity
+			
+	->	void setTUp(float tUp)
+			Sets the upward terminal velocity
+			
+	->	void setTDown(float tDown)
+			Sets the downward terminal velocity
+			
+	->	void setTLeft(float tLeft)
+			Sets the leftward terminal velocity
+			
+	->	void setTRight(float tRight)
+			Sets the rightward terminal velocity
+			
+	->	accelerate(float rate, float terminal, Direction direction)
+			Creates an acceleration velocity with an assigned magnitude and direction
+			Also sets the terminal velocity for said vector
+		
+	->	setGravity()
+			Sets a gravity vector that is standard across all objects
+			This is an acceleration of 0.4 pixels / tick ^ 2
+				with a terminal velocity of 5 pixels / tick
+				and a downward direction
+	
+	OTHER METHODS
+	
+	->	addAcceleration()
+			This method tells the object to actually apply it's motion vectors and properties, and is
+			meant to be run once per tick
+			It adds the acceleration to the velocities, and does a check against the terminal
+			velocities to ensure that no object is defying it's own physical laws
+
 ======================================================================================================
 
 ENTITY SUPERCLASSES:
+
+ObjectCollider.java
+BlockMapCollider.java
+Entity.java
 
 ======================================================================================================
 
 PROJECTILE SUPERCLASSES:
 
+BasicProjectile.java
+SimpleProjectile.java
+
 ======================================================================================================
 
 MONSTER SUPERCLASSES:
+
 [Please note that more monster superclasses will be added to handle basic AI]
+
+HitpointHandler.java
+LethalityHandler.java
 

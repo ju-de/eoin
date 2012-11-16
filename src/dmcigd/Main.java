@@ -104,13 +104,15 @@ public class Main implements Runnable, KeyListener {
 						
 						//Determine decay state:
 						decayTimer++;
+						int curKillCount = killCount + room.getPlayer().sword.getKillCount();
 						if(decayTimer >= decayLimit) {
 							if(decayState) {
 								decayState = false;
-								decayLimit = 4 * ((int)(Math.random() * (maxKillCount - (killCount + room.getPlayer().sword.getKillCount()))));
+								decayLimit = 4 * (maxKillCount - curKillCount) +							//Base Timer
+											 4 * ((int)(Math.random() * (maxKillCount - curKillCount)));	//Random addition
 							} else {
 								decayState = true;
-								decayLimit = 4 * ((int)(Math.random() * (killCount + room.getPlayer().sword.getKillCount())));
+								decayLimit = 4 * ((int)(Math.random() * curKillCount));
 							}
 							decayTimer = 0;
 						}

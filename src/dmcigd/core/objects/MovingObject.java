@@ -19,23 +19,35 @@ public class MovingObject extends ObjectCollision {
 	public int getVY() {
 		return (int) vy;
 	}
+	public float getAX() {
+		return ax;
+	}
 	public float getAY() {
 		return ay;
 	}
 	
-	//Public setters
+	//Public basic setters
+	public void addX(int dx) {
+		setX(getX() + dx);
+	}
+	public void addY(int dy) {
+		setY(getY() + dy);
+	}
+	
 	public void setVX(float vx) {
 		this.vx = vx;
 	}
 	public void setVY(float vy) {
 		this.vy = vy;
 	}
+	
 	public void setAX(float ax) {
 		this.ax = ax;
 	}
 	public void setAY(float ay) {
 		this.ay = ay;
 	}
+	
 	public void setTUp(float tUp) {
 		this.tUp = tUp;
 	}
@@ -48,9 +60,8 @@ public class MovingObject extends ObjectCollision {
 	public void setTRight(float tRight) {
 		this.tRight = tRight;
 	}
-	public void setGravity() {
-		accelerate(0.4f, 5.0f, Direction.DOWN);
-	}
+	
+	//Create Acceleration Vector
 	public void accelerate(float rate, float terminal, Direction direction) {
 		switch(direction) {
 			case UP:
@@ -72,6 +83,10 @@ public class MovingObject extends ObjectCollision {
 			default:
 				break;
 		}
+	}
+	
+	public void setGravity() {
+		accelerate(0.4f, 5.0f, Direction.DOWN);
 	}
 	
 	public void addAcceleration() {

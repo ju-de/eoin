@@ -43,10 +43,7 @@ below. It is described in much greater detail in the object_superclasses section
 				returns a bounding box rectangle of the object's current location
 			
 		IMAGE RESOURCES
-		
-		->	String getMapCode()
-				returns a mapCode string as explained in the Image Map section of the game_loop file
-				
+						
 		->	String getImagePath()
 				returns an imagePath string as explained in the Image Map section of the game_loop
 				file

@@ -85,8 +85,8 @@ public class DmciGD extends Applet implements Runnable {
 		mt.addImage(loadingImage, 0);
 		
 		//Preload sword sprite
-		objectImageMap.put("sword", getImageFromPath("sword.gif"));
-		mt.addImage(objectImageMap.get("sword"), 1);
+		objectImageMap.put("sword.gif", getImageFromPath("sword.gif"));
+		mt.addImage(objectImageMap.get("sword.gif"), 1);
 		
 		try {
 			mt.waitForAll();
@@ -127,51 +127,51 @@ public class DmciGD extends Applet implements Runnable {
 						//Load all images
 						//This code is starting to look ugly, please clean up
 						for(VisibleObject object : main.room.getBackgroundObjects()) {
-							if(!objectImageMap.containsKey(object.getMapCode())) {
+							if(!objectImageMap.containsKey(object.getImagePath())) {
 								
-								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
+								objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
 								
-								mt.addImage(objectImageMap.get(object.getMapCode()), i);
+								mt.addImage(objectImageMap.get(object.getImagePath()), i);
 							}
 							i++;
 						}
 						
 						for(SolidObject object : main.room.getSolidObjects()) {
-							if(!objectImageMap.containsKey(object.getMapCode())) {
+							if(!objectImageMap.containsKey(object.getImagePath())) {
 								
-								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
+								objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
 								
-								mt.addImage(objectImageMap.get(object.getMapCode()), i);
+								mt.addImage(objectImageMap.get(object.getImagePath()), i);
 							}
 							i++;
 						}
 						
 						for(Item object : main.room.getItems()) {
-							if(!objectImageMap.containsKey(object.getMapCode())) {
+							if(!objectImageMap.containsKey(object.getImagePath())) {
 								
-								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
+								objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
 								
-								mt.addImage(objectImageMap.get(object.getMapCode()), i);
+								mt.addImage(objectImageMap.get(object.getImagePath()), i);
 							}
 							i++;
 						}
 						
 						for(Region object : main.room.getRegions()) {
-							if(!objectImageMap.containsKey(object.getMapCode())) {
+							if(!objectImageMap.containsKey(object.getImagePath())) {
 								
-								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
+								objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
 								
-								mt.addImage(objectImageMap.get(object.getMapCode()), i);
+								mt.addImage(objectImageMap.get(object.getImagePath()), i);
 							}
 							i++;
 						}
 						
 						for(SolidObject object : main.room.getProjectiles()) {
-							if(!objectImageMap.containsKey(object.getMapCode())) {
+							if(!objectImageMap.containsKey(object.getImagePath())) {
 								
-								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
+								objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
 								
-								mt.addImage(objectImageMap.get(object.getMapCode()), i);
+								mt.addImage(objectImageMap.get(object.getImagePath()), i);
 							}
 							i++;
 						}
@@ -320,7 +320,7 @@ public class DmciGD extends Applet implements Runnable {
 				
 				//Draw game objects
 				for(ObjectImage i : visibleObjects) {
-					dbg.drawImage(objectImageMap.get(i.mapCode), i.dstx1, i.dsty1, i.dstx2, i.dsty2, i.srcx1, i.srcy1, i.srcx2, i.srcy2, this);
+					dbg.drawImage(objectImageMap.get(i.imagePath), i.dstx1, i.dsty1, i.dstx2, i.dsty2, i.srcx1, i.srcy1, i.srcx2, i.srcy2, this);
 				}
 				
 				int shadowOffset = 1;

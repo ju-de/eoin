@@ -35,7 +35,6 @@ public class TimedBlock extends ObjectCollision implements RestableObject {
 		
 		setFrame(0);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		objectClock = phase;

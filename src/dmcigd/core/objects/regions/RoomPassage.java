@@ -20,7 +20,6 @@ public class RoomPassage extends ObjectCollision implements Region {
 		setSequence(5);
 		setFrame(9);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		this.destRoom = destRoom;

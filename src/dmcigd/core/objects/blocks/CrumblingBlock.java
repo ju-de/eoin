@@ -36,7 +36,6 @@ public class CrumblingBlock extends ObjectCollision implements RestableObject {
 		setAnimationLoops(new boolean[] {false,false,false,false});
 		setFrameSpeed(0);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		this.clockReset = clockReset;

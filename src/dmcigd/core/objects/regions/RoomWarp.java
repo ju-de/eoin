@@ -20,7 +20,6 @@ public class RoomWarp extends ObjectCollision implements Region {
 		setSequence(0);
 		setFrame(0);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		this.destRoom = destRoom;

@@ -37,7 +37,6 @@ public class MovingPlatform extends MovingObject implements RestableObject {
 			setVY(speed);
 		}
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		clockReset = travelDistance * 16 / speed;
