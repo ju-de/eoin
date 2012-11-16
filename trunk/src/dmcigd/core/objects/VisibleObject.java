@@ -13,7 +13,7 @@ public abstract class VisibleObject implements Cloneable {
 	private int x,y = 0;
 	
 	//Object Dimensions
-	private int height,width = 32;
+	private int height,width = 0;
 	private int imageHeight,imageWidth = 32;
 	
 	//Animation Status

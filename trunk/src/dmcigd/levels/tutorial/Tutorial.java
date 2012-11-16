@@ -94,12 +94,12 @@ public class Tutorial extends Room implements Runnable {
 		addTextLabel(new TextLabel(141 * 32, 23 * 32 + 20, "\"R\" to restart the level", false));
 		addTextLabel(new TextLabel(141 * 32, 23 * 32 + 40, "or \"Q\" to quit the game", false));
 		
-		addRegion(new Sign(144 * 32, 20 * 32, 6, "SIGN", "Beware! Pointy spears ahead!", getDialogueHandler()));
+		addRegion(new Sign(144 * 32, 20 * 32, 6, "WARNING:", "Pointy spears ahead!\n\nWatch where you step!", getDialogueHandler()));
 
-		addTextLabel(new TextLabel(150 * 32, 23 * 32, "It should be common sense to", false));
-		addTextLabel(new TextLabel(150 * 32, 23 * 32 + 20, "avoid walking into sharp objects", false));
+		addTextLabel(new TextLabel(152 * 32, 23 * 32, "Sharp objects hurt", false));
+		addTextLabel(new TextLabel(152 * 32, 23 * 32 + 20, "Try to avoid them", false));
 		
-		addRegion(new Sign(163 * 32, 20 * 32, 9, "SIGN", "If you can't swim, just jump arond wildly and hope for the best.", getDialogueHandler()));
+		addRegion(new Sign(163 * 32, 20 * 32, 9, "SIGN", "Please wait 30-60 minutes after eating before entering pool.", getDialogueHandler()));
 
 		addTextLabel(new TextLabel(171 * 32, 28 * 32, "When in water, jump to stay afloat", false));
 
@@ -107,6 +107,36 @@ public class Tutorial extends Room implements Runnable {
 		addTextLabel(new TextLabel(188 * 32, 23 * 32 + 20, "enemies with your sword", false));
 		
 		addRegion(new RoomWarp(195 * 32, 0, 32, 35 * 32, "demo.Demo"));
+		
+		//Add flags and banners
+		addBackgroundObject(new Flag(19 * 32, 22 * 32 + 6, 4));
+		
+		addBackgroundObject(new Flag(29 * 32, 22 * 32 + 6, 4));
+		
+		addBackgroundObject(new Flag(33 * 32, 22 * 32 + 6, 4));
+		
+		addBackgroundObject(new Flag(43 * 32, 13 * 32 + 6, 4));
+		
+		addBackgroundObject(new Flag(57 * 32 + 8, 16 * 32 + 16, 1));
+		addBackgroundObject(new Flag(58 * 32 + 16, 16 * 32 + 16, 0));
+		addBackgroundObject(new Flag(59 * 32 + 24, 16 * 32 + 16, 1));
+		
+		addBackgroundObject(new Flag(68 * 32 + 8, 16 * 32 + 16, 1));
+		addBackgroundObject(new Flag(69 * 32 + 16, 16 * 32 + 16, 2));
+		addBackgroundObject(new Flag(70 * 32 + 24, 16 * 32 + 16, 1));
+		
+		addBackgroundObject(new Flag(79 * 32 + 8, 16 * 32 + 16, 1));
+		addBackgroundObject(new Flag(80 * 32 + 16, 16 * 32 + 16, 0));
+		addBackgroundObject(new Flag(81 * 32 + 24, 16 * 32 + 16, 1));
+		
+		addBackgroundObject(new Flag(96 * 32, 13 * 32 + 6, 3));
+		addBackgroundObject(new Flag(96 * 32, 18 * 32 + 6, 5));
+		
+		addBackgroundObject(new Flag(106 * 32, 13 * 32 + 6, 5));
+		addBackgroundObject(new Flag(106 * 32, 18 * 32 + 6, 3));
+		
+		addBackgroundObject(new Flag(126 * 32, 13 * 32 + 6, 3));
+		addBackgroundObject(new Flag(126 * 32, 18 * 32 + 6, 5));
 	}
 }
 
