@@ -33,15 +33,27 @@ public class TestMonster extends LethalityHandler implements RestableObject {
 		setEntityType(EntityType.NONLETHALMONSTER);
 		setGravity();
 		
-		setMaxHitpoints(11);
+		setMaxHitpoints(40);
 		
 		setLethalOnPush(true);
+		
+		setKnockback(true);
 		
 	}
 	
 	public void step() {
+		
 		super.step();
+		
+		if(isFlickering()) {
+			setSequence(0);
+		}else{
+			setSequence(4);
+			setFrame(8);
+		}
+		
 		move();
+		
 	}
 	
 	public void onRest(EntityType entityType) {}

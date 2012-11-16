@@ -32,6 +32,6 @@ public abstract class ObjectCollision extends VisibleObject {
 	
 	public void onPush(Entity entity, int v) {}
 	
-	public void onAttack(int damage) {}
+	public void onAttack(int damage, boolean flipped) {}
 
 }

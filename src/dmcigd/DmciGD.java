@@ -125,6 +125,17 @@ public class DmciGD extends Applet implements Runnable {
 						int i = 2;
 						
 						//Load all images
+						//This code is starting to look ugly, please clean up
+						for(VisibleObject object : main.room.getBackgroundObjects()) {
+							if(!objectImageMap.containsKey(object.getMapCode())) {
+								
+								objectImageMap.put(object.getMapCode(), getImageFromPath(object.getImagePath()));
+								
+								mt.addImage(objectImageMap.get(object.getMapCode()), i);
+							}
+							i++;
+						}
+						
 						for(SolidObject object : main.room.getSolidObjects()) {
 							if(!objectImageMap.containsKey(object.getMapCode())) {
 								
@@ -307,6 +318,11 @@ public class DmciGD extends Applet implements Runnable {
 					}
 				}
 				
+				//Draw game objects
+				for(ObjectImage i : visibleObjects) {
+					dbg.drawImage(objectImageMap.get(i.mapCode), i.dstx1, i.dsty1, i.dstx2, i.dsty2, i.srcx1, i.srcy1, i.srcx2, i.srcy2, this);
+				}
+				
 				int shadowOffset = 1;
 				
 				//Draw text labels
@@ -323,11 +339,6 @@ public class DmciGD extends Applet implements Runnable {
 					dbg.drawString(i.getString(), i.getX() - playerX + 310, i.getY() - playerY + 144 + shadowOffset);
 					dbg.setColor(Color.WHITE);
 					dbg.drawString(i.getString(), i.getX() - playerX + 310, i.getY() - playerY + 144);
-				}
-				
-				//Draw game objects
-				for(ObjectImage i : visibleObjects) {
-					dbg.drawImage(objectImageMap.get(i.mapCode), i.dstx1, i.dsty1, i.dstx2, i.dsty2, i.srcx1, i.srcy1, i.srcx2, i.srcy2, this);
 				}
 				
 				break;

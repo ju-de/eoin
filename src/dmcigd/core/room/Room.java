@@ -29,6 +29,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	private DialogueHandler dialogueHandler = new DialogueHandler();
 	private ArrayList<ObjectImage> visibleObjects;
 	private ArrayList<TextLabel> textLabels = new ArrayList<TextLabel>();
+	private ArrayList<VisibleObject> backgroundObjects = new ArrayList<VisibleObject>();
 	
 	//Public Getters
 	
@@ -75,10 +76,16 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	public ArrayList<TextLabel> getTextLabels() {
 		return textLabels;
 	}
+	public ArrayList<VisibleObject> getBackgroundObjects() {
+		return backgroundObjects;
+	}
 	
 	//Public Setters
 	public void addTextLabel(TextLabel textLabel) {
 		textLabels.add(textLabel);
+	}
+	public void addBackgroundObject(VisibleObject backgroundObject) {
+		backgroundObjects.add(backgroundObject);
 	}
 	
 	public Room(URL codeBase, String levelName, String roomName, String tileSet) {
@@ -93,37 +100,47 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		
 	}
 	
+	public void addVisibleObject(GameObject i) {
+		if(i.isVisible(player.getX(), player.getY())) {
+			visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
+		}
+	}
+	
 	public void fetchVisibleObjects() {
 		
 		visibleObjects = new ArrayList<ObjectImage>();
 
-		for (Region i : getRegions()) {
+		//Add Background Objects
+		for (VisibleObject i : backgroundObjects) {
 			if(i.isVisible(player.getX(), player.getY())) {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
 			}
 		}
 		
-		for (SolidObject i : getSolidObjects()) {
-			if(i.isVisible(player.getX(), player.getY())) {
-				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
-			}
+		//Add Regions
+		for (GameObject i : getRegions()) {
+			addVisibleObject(i);
 		}
 		
+		//Add Solid Objects
+		for (GameObject i : getSolidObjects()) {
+			addVisibleObject(i);
+		}
+
+		//Draw sword only if player is not holding an object
 		if(player.heldItem == null) {
-			//Draw sword if player is not holding an object
+			//Add Sword
 			visibleObjects.add(player.sword.getObjectImage(player.getX(), player.getY()));
 		}
 		
-		for (Item i : getItems()) {
-			if(i.isVisible(player.getX(), player.getY())) {
-				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
-			}
+		//Add Items
+		for (GameObject i : getItems()) {
+			addVisibleObject(i);
 		}
-		
-		for (SolidObject i : getProjectiles()) {
-			if(i.isVisible(player.getX(), player.getY())) {
-				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
-			}
+
+		//Add Projectiles
+		for (GameObject i : getProjectiles()) {
+			addVisibleObject(i);
 		}
 	}
 	

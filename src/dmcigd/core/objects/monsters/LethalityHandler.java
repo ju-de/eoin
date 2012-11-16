@@ -17,12 +17,12 @@ public class LethalityHandler extends HitpointHandler {
 
 	//Lethality Actions
 	public void onPush(Entity entity, int v) {
-		if(lethalOnPush && entity.getEntityType() == EntityType.PLAYER) {
+		if(lethalOnPush && entity.getEntityType() == EntityType.PLAYER && !isInvincible()) {
 			entity.isDead = true;
 		}
 	}
 	public void onRest(Entity entity) {
-		if(lethalOnRest && entity.getEntityType() == EntityType.PLAYER) {
+		if(lethalOnRest && entity.getEntityType() == EntityType.PLAYER && !isInvincible()) {
 			entity.isDead = true;
 		}
 	}

@@ -134,8 +134,6 @@ classes themselves, and the logic associated with the various game objects and i
 				
 				The same steps are taken for the blockmap (rendering it on top of the visible objects)
 				
-				All text labels are drawn out based on their according font size and string
-				
 				All visible objects are drawn onto the screen using their according image resource and
 				spritesheet location.
 				
@@ -158,6 +156,8 @@ classes themselves, and the logic associated with the various game objects and i
 				of the screen (the top left pixel of the player)
 					
 					[Remind me to add a mathematical example here]
+				
+				All text labels are then drawn out based on their according font size and string
 				
 			DIALOGUE:
 				Draws a 640x110 dark grey box along the bottom of the screen
@@ -448,6 +448,9 @@ classes themselves, and the logic associated with the various game objects and i
 			
 			->	ArrayList<TextLabel> getTextLabels()
 					returns list of textLabels
+					
+			->	ArrayList<TextLabel> getBackgroundObjects()
+					returns list of backgroundObjects
 			
 		OBJECT PROCEDURE
 			
@@ -530,6 +533,9 @@ classes themselves, and the logic associated with the various game objects and i
 				Room.java instance will set its local targetRoom property accordingly
 				
 			4.	Calls the fetchVisibleObjects() method:
+			
+					Loops through all background objects and checks for visibility
+						If object is visible, append objectImage to list
 			
 					Loops through all regions and checks for visibility
 						If object is visible, append objectImage to list
