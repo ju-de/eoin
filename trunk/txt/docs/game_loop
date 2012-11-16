@@ -202,19 +202,20 @@ classes themselves, and the logic associated with the various game objects and i
 		The blockmap and environmentmap image resources are saved in a single spritesheet called the
 		tileset, and has a constant image resource associated with them.
 		
-		All other objects have their image resources stored in a HashMap which associates a string to
-		the image resource. This 
-		
-			i.e. "`" is associated with the core objects, which is "/share/gfx/objects.gif"
+		All other objects have their image resources stored in a hashmap associating their file path
+		String to the loaded image resource.
 			
-		This information is referenced through the getMapCode() and getImagePath() methods found in
-		the VisibleObject.java class, and required by the GameObject.java interface
+		This information is referenced through the getImagePath() method found in the
+		VisibleObject.java class, and required by the GameObject.java interface
 			
 		This imagemap is totally dynamic and is loaded at the beginning of the level (loops through
 		all objects and fetches the associated image from the path).
 		
-		It is important to ensure that your mapcode string is unique to your object. Other than this
-		requirement for unique strings, there is currently no naming conventions for mapcodes.
+		It is important to note that this is only run upon initialization, so if an object is not
+		initialized by generated (e.g. a projectile), ensure that you create an instance of it in a
+		controlled area out of sight to ensure that it gets loaded. Or, you could simply store the
+		image in the same spritesheet as its parent (i.e. placing all child object sprites as an
+		unreferenced sequence in the spritesheet)
 	
 (*)	)=================================================================================================
 	

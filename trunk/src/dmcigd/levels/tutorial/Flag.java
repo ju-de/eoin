@@ -15,7 +15,6 @@ public class Flag extends VisibleObject {
 		setSequence(0);
 		setFrame(type);
 		
-		setMapCode("flags");
 		setImagePath("objects/tutorial/flags.gif");
 	}
 	

@@ -43,7 +43,6 @@ public class LockedDoor extends ObjectCollision implements RestableObject {
 		setSequence(4);
 		setFrame(type-1);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		setCollisionType(CollisionType.SOLID);

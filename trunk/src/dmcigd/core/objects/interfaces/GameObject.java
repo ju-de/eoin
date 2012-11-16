@@ -11,7 +11,6 @@ public interface GameObject {
 	public Rectangle getBounds(int vx, int vy);
 	public Rectangle getBounds();
 	
-	public String getMapCode();
 	public String getImagePath();
 	
 	public int getX();

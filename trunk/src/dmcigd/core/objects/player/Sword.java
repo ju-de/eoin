@@ -46,7 +46,6 @@ public class Sword extends ObjectCollision {
 		setImageHeight(30);
 		setImageWidth(44);
 		
-		setMapCode("sword");
 		setImagePath("sword.gif");
 		
 		this.solidObjects = solidObjects;

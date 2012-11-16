@@ -22,7 +22,6 @@ public class Sign extends ObjectCollision implements Region {
 		setSequence(5);
 		setFrame(orientation-1);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 		
 		this.dialogueHandler = dialogueHandler;

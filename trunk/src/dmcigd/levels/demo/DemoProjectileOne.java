@@ -19,7 +19,6 @@ public class DemoProjectileOne extends SimpleProjectile implements SolidObject {
 		setSequence(4);
 		setFrame(8);
 		
-		setMapCode("`");
 		setImagePath("objects.gif");
 	}
 	
