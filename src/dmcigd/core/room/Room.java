@@ -30,6 +30,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	private ArrayList<ObjectImage> visibleObjects;
 	private ArrayList<TextLabel> textLabels = new ArrayList<TextLabel>();
 	private ArrayList<VisibleObject> backgroundObjects = new ArrayList<VisibleObject>();
+	private ArrayList<VisibleObject> foregroundObjects = new ArrayList<VisibleObject>();
 	
 	//Public Getters
 	
@@ -79,6 +80,9 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	public ArrayList<VisibleObject> getBackgroundObjects() {
 		return backgroundObjects;
 	}
+	public ArrayList<VisibleObject> getForegroundObjects() {
+		return foregroundObjects;
+	}
 	
 	//Public Setters
 	public void addTextLabel(TextLabel textLabel) {
@@ -86,6 +90,9 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	}
 	public void addBackgroundObject(VisibleObject backgroundObject) {
 		backgroundObjects.add(backgroundObject);
+	}
+	public void addForegroundObject(VisibleObject foregroundObject) {
+		backgroundObjects.add(foregroundObject);
 	}
 	
 	public Room(URL codeBase, String levelName, String roomName, String tileSet) {
@@ -141,6 +148,13 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		//Add Projectiles
 		for (GameObject i : getProjectiles()) {
 			addVisibleObject(i);
+		}
+		
+		//Add Foreground Objects
+		for (VisibleObject i : foregroundObjects) {
+			if(i.isVisible(player.getX(), player.getY())) {
+				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
+			}
 		}
 	}
 	
