@@ -373,20 +373,26 @@ classes themselves, and the logic associated with the various game objects and i
 			
 			PUBLIC GAME OBJECT SETTERS (SELF-EXPLANATORY)
 			
-			->	void addSolidObject()
+			->	void addSolidObject(SolidObject solidObject)
 					appends an item to the solidObjects linked list
 			
-			->	void addItem()
+			->	void addItem(Item item)
 					appends an item to the items linked list
 			
-			->	void addProjectile()
+			->	void addProjectile(SolidObject projectile)
 					appends an item to the projectiles linked list
 			
-			->	void addRegion()
+			->	void addRegion(Region region)
 					appends an item to the regions linked list
 					
-			->	void addTextLabel()
+			->	void addTextLabel(TextLabel textLabel)
 					appends an item to the textLabels linked list
+					
+			->	void addBackgroundObject(VisibleObject backgroundObject)
+					appends an item to the backgroundObjects linked list
+					
+			->	void addForegroundObject(VisibleObject foregroundObject)
+					appends an item to the foregroundObjects linked list
 			
 			->	void initializeSolidObjects()
 					abstract method called during object initialization used to initialize items in
@@ -452,6 +458,9 @@ classes themselves, and the logic associated with the various game objects and i
 					
 			->	ArrayList<TextLabel> getBackgroundObjects()
 					returns list of backgroundObjects
+					
+			->	ArrayList<TextLabel> getForegroundObjects()
+					returns list of foregroundObjects
 			
 		OBJECT PROCEDURE
 			
@@ -552,6 +561,9 @@ classes themselves, and the logic associated with the various game objects and i
 						If object is visible, append objectImage to list
 						
 					Loop through all projectiles and check for visibility
+						If object is visible, append objectImage to list
+			
+					Loops through all foreground objects and checks for visibility
 						If object is visible, append objectImage to list
 				
 		OTHER NOTES

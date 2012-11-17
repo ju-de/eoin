@@ -99,6 +99,20 @@ public class DmciGD extends Applet implements Runnable {
 		} catch (FontFormatException e) {} catch (IOException e) {}
 	}
 	
+	public int preloadVisibleObject(MediaTracker mt, VisibleObject object, int i) {
+		
+		if(!objectImageMap.containsKey(object.getImagePath())) {
+			
+			objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
+			
+			mt.addImage(objectImageMap.get(object.getImagePath()), i);
+			
+			return i++;
+		}
+		
+		return i;
+	}
+	
 	//Repaints screen
 	public synchronized void run(){
 		
@@ -125,55 +139,28 @@ public class DmciGD extends Applet implements Runnable {
 						int i = 2;
 						
 						//Load all images
-						//This code is starting to look ugly, please clean up
 						for(VisibleObject object : main.room.getBackgroundObjects()) {
-							if(!objectImageMap.containsKey(object.getImagePath())) {
-								
-								objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
-								
-								mt.addImage(objectImageMap.get(object.getImagePath()), i);
-							}
-							i++;
+							i = preloadVisibleObject(mt, object, i);
 						}
 						
 						for(SolidObject object : main.room.getSolidObjects()) {
-							if(!objectImageMap.containsKey(object.getImagePath())) {
-								
-								objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
-								
-								mt.addImage(objectImageMap.get(object.getImagePath()), i);
-							}
-							i++;
+							i = preloadVisibleObject(mt, (VisibleObject) object, i);
 						}
 						
 						for(Item object : main.room.getItems()) {
-							if(!objectImageMap.containsKey(object.getImagePath())) {
-								
-								objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
-								
-								mt.addImage(objectImageMap.get(object.getImagePath()), i);
-							}
-							i++;
+							i = preloadVisibleObject(mt, (VisibleObject) object, i);
 						}
 						
 						for(Region object : main.room.getRegions()) {
-							if(!objectImageMap.containsKey(object.getImagePath())) {
-								
-								objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
-								
-								mt.addImage(objectImageMap.get(object.getImagePath()), i);
-							}
-							i++;
+							i = preloadVisibleObject(mt, (VisibleObject) object, i);
 						}
 						
 						for(SolidObject object : main.room.getProjectiles()) {
-							if(!objectImageMap.containsKey(object.getImagePath())) {
-								
-								objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
-								
-								mt.addImage(objectImageMap.get(object.getImagePath()), i);
-							}
-							i++;
+							i = preloadVisibleObject(mt, (VisibleObject) object, i);
+						}
+						
+						for(VisibleObject object : main.room.getForegroundObjects()) {
+							i = preloadVisibleObject(mt, object, i);
 						}
 						
 						try {
