@@ -86,14 +86,14 @@ public class DialogueHandler {
 	}
 
 	//Adds new dialogue elements
-	public void add(String avatarImageCode, String name, String text) {
-		dialogueItems.add(new DialogueItem(avatarImageCode, name, text));
+	public void add(String name, String text) {
+		dialogueItems.add(new DialogueItem(name, text));
 	}
 	// overloaded definitions for convenience
 	public void add(ArrayList<String> dialogue) {
-		if(dialogue.size() != 3)
+		if(dialogue.size() != 2)
 			throw new IllegalArgumentException("illegal list length for dialogue");
-		add(dialogue.get(0), dialogue.get(1), dialogue.get(2));
+		add(dialogue.get(0), dialogue.get(1));
 	}
 	public void add(String[] dialogue) {
 		add(new ArrayList<String>(Arrays.asList(dialogue)));

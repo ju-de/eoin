@@ -203,8 +203,6 @@ public class DmciGD extends Applet implements Runnable {
 				case DIALOGUE:
 					
 					//Retrieve Dialogue text
-					avatarImageCode = null;
-					avatarImageCode = main.room.getDialogueHandler().getCurrentDialogueItem().getAvatarImageCode();
 					
 					name = null;
 					name = main.room.getDialogueHandler().getCurrentDialogueItem().getName();
@@ -345,39 +343,31 @@ public class DmciGD extends Applet implements Runnable {
 				//Draw background box
 				dbg.setColor(new Color(30,30,30));
 				dbg.fillRect(0, 210, 640, 110);
-
-				int offset = 75;
-				if(avatarImageCode != null) {
-					//Draw avatar
-					dbg.setColor(Color.BLACK);
-					dbg.fillRect(493, 192, 128, 128);
-					offset = 0;
-				}
 				
 				dbg.setFont(f);
 				
 				//Draw name
 				dbg.setColor(Color.GRAY);
-				dbg.drawString(name, 25 + offset, 235);
+				dbg.drawString(name, 100, 235);
 				
 				//Draw text
 				dbg.setColor(Color.WHITE);
 				if(line1 != null) {
-					dbg.drawString(line1, 25 + offset, 255);
+					dbg.drawString(line1, 100, 255);
 				}
 				if(line2 != null) {
-					dbg.drawString(line2, 25 + offset, 275);
+					dbg.drawString(line2, 100, 275);
 				}
 				if(line3 != null) {
-					dbg.drawString(line3, 25 + offset, 295);
+					dbg.drawString(line3, 100, 295);
 				}
 				
 				dbg.setFont(fSmall);
 				//Draw "Press "X" to continue" instruction
 				dbg.setColor(Color.BLACK);
-				dbg.drawString("Press \"X\" to continue", 375 + offset, 313);
+				dbg.drawString("Press \"X\" to continue", 450, 313);
 				dbg.setColor(Color.GRAY);
-				dbg.drawString("Press \"X\" to continue", 375 + offset, 312);
+				dbg.drawString("Press \"X\" to continue", 450, 312);
 				break;
 				
 			case PAUSE:

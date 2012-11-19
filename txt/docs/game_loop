@@ -107,8 +107,8 @@ classes themselves, and the logic associated with the various game objects and i
 				Directly call the repaint();
 				
 			DIALOGUE:
-				Check the current DialogueItem of the DialogueHandler dh, and synchronize the avatar's
-				image mapcode as well as the name and the three lines of text.
+				Check the current DialogueItem of the DialogueHandler dh, and synchronize the name and
+				three lines of text in the DialogueItem.
 				
 			DEFAULT:
 				Synchronizes the gameState and tells the loop to render a single frame.
@@ -162,11 +162,7 @@ classes themselves, and the logic associated with the various game objects and i
 			DIALOGUE:
 				Draws a 640x110 dark grey box along the bottom of the screen
 				
-				If the dialogue item contains an avatar, draw a 128 x 128 box and render the avatar
-				image to the bottom right.
-				
-				Given the current offset (centered usually, or set to the left if there is an avatar)
-				draw the name and three lines of text.
+				Draw the name and three lines of text.
 				
 				Draw 'PRESS "X" TO CONTINUE' to the bottom right of the dialogue with a shadow.
 				

@@ -92,7 +92,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		backgroundObjects.add(backgroundObject);
 	}
 	public void addForegroundObject(VisibleObject foregroundObject) {
-		backgroundObjects.add(foregroundObject);
+		foregroundObjects.add(foregroundObject);
 	}
 	
 	public Room(URL codeBase, String levelName, String roomName, String tileSet) {
