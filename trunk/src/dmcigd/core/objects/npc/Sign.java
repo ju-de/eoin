@@ -33,7 +33,7 @@ public class Sign extends ObjectCollision implements Region {
 	public void onHover(Player player) {}
 
 	public void interact(Player player) {
-		dialogueHandler.setDialogue(new String[][] {{null, name, message}});
+		dialogueHandler.setDialogue(new String[][] {{name, message}});
 	}
 	
 	public void step() {}

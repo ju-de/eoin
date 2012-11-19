@@ -94,7 +94,7 @@ public class Tutorial extends Room implements Runnable {
 		addTextLabel(new TextLabel(141 * 32, 23 * 32 + 20, "\"R\" to restart the level", false));
 		addTextLabel(new TextLabel(141 * 32, 23 * 32 + 40, "or \"Q\" to quit the game", false));
 		
-		addRegion(new Sign(144 * 32, 20 * 32, 6, "WARNING:", "Pointy spears ahead!\n\nWatch where you step!", getDialogueHandler()));
+		addRegion(new Sign(144 * 32, 20 * 32, 6, "WARNING:", "Pointy spears ahead!\nWatch where you step!", getDialogueHandler()));
 
 		addTextLabel(new TextLabel(152 * 32, 23 * 32, "Sharp objects hurt", false));
 		addTextLabel(new TextLabel(152 * 32, 23 * 32 + 20, "Try to avoid them", false));
@@ -106,7 +106,7 @@ public class Tutorial extends Room implements Runnable {
 		addTextLabel(new TextLabel(188 * 32, 23 * 32, "Press \"X\" to attack", false));
 		addTextLabel(new TextLabel(188 * 32, 23 * 32 + 20, "enemies with your sword", false));
 		
-		addRegion(new RoomWarp(195 * 32, 0, 32, 35 * 32, "demo.Demo"));
+		addRegion(new RoomWarp(195 * 32, 0, 32, 35 * 32, "rabbit.One"));
 		
 		//Add flags and banners
 		addBackgroundObject(new Flag(19 * 32, 22 * 32 + 6, 4));
