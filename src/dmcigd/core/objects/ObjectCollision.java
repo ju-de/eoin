@@ -26,9 +26,9 @@ public abstract class ObjectCollision extends VisibleObject {
 	}
 
 	//Collision Events
-	public void onRest(EntityType entityType) {}
+	public void onRest(Entity entity) {}
 	
-	public void onUnrest(EntityType entityType) {}
+	public void onUnrest(Entity entity) {}
 	
 	public void onPush(Entity entity, int v) {}
 	

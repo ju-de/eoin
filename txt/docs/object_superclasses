@@ -367,9 +367,356 @@ the objects externally.
 
 ENTITY SUPERCLASSES:
 
-ObjectCollider.java
-BlockMapCollider.java
-Entity.java
+The entity superclass is a very difficult class to understand as it handles a significant portion of
+the game logic (that is, the interaction between solid objects), which has to be consistent across the
+game, but at the same time, abstract enough to allow for unique applications of the engine. The useful
+methods have fairly self-explanatory method names, so the easiest way to learn how to use the Entity
+superclass is to look at the source code and applications of the core Entity objects such as players,
+items, projectiles, monsters, and pushable blocks.
+
+Originally the Entity class was a massive clusterfuck of a god object, sort of like DmciGD.java (yes,
+this is bad practice, do as I say, not as I do). It has since been split into three smaller classes.
+Please note that these classes aren't very useful on their own, simply due to the way they call their
+parent methods. It isn't nearly abstract enough for my liking, so it should be noted that Entity is
+split into three classes purely due for organization, and does not fall into any true design pattern.
+
+Also note that I don't write these long explanations and comments for no reason. If anybody has a
+solution to this issue, I'd love to hear it so we can fix this ugly code. My only fear is, considering
+my lack of previous experience, it may not be possible to fix this issue just because the game is
+structured poorly in itself.
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.ObjectCollider.java
+	
+		extends dmcigd.core.objects.MovingObject.java
+		
+	This class handles all methods having to do with colliding with another object. Please note that
+	while ObjectCollision.java handles object collision, that is, how to check if two objects are
+	colliding and what to do if collision occurs, ObjectCollider actively collides with other objects.
+	That is, it handles the calling of the appropriate collision methods in ObjectCollision.
+	
+	Please note that the significance of this class is the affect that it has on object movement. It
+	is fairly simple to directly deal with object collision through the ObjectCollision class, and
+	only requires a 3-condition if statement as seen in the objectsCollide() method. However, this
+	class also deals with CollisionTypes and motion obstruction, which is important to almost all
+	implementations of the Entity class with the exception of SimpleProjectiles.
+	
+	PUBLIC PROPERTIES
+	
+	->	RestableObject restingBlock
+			This object is used to store the object that the Entity is currently resting on, which is
+			particularly important for getting properties such as displacement for movement.
+	
+	->	RestableObject restingBlockCheck
+			This object is used to temporarily store the resting object during collision checks. It's
+			a countermeasure to ensure that one onRest() is called per onUnrest(), and that only one
+			onRest() is called at a time.
+	
+	PUBLIC SETTERS
+	
+	->	void setSolidObjects(ArrayList<SolidObject> solidObjects)
+			In order to check collision, a list of objects to check against is required. As such, it
+			is necessary to pass down the solidObjects ArrayList to all Entities, so that collision
+			checks can be made
+	
+	ABSTRACT METHODS (DEFINED IN ENTITY)
+	
+	->	void rest(CollisionType collisionType)
+			Not to be confused with restObject(), this method handles basic resting properties based
+			on the collisionType. This property is shared with the later BlockMapCollider object.
+			
+	->	void pushObject(SolidObject object, int v)
+			This method is called every time object "pushing" occurs, as explained in the object
+			interfaces. It is defined in the Entity class to do nothing more than call the target
+			object's onPush() method, however, is defined as its own method in order to allow for more
+			complicated interaction between objects.
+			
+	->	void restObject()
+			Not to be confused with rest(), this is much like pushObject(), but applies to the resting
+			block and onRest() method.
+			
+	->	void unrestObject()
+			Same as above, but acts onUnrest()
+			
+	COLLISION METHODS
+		
+	->	boolean objectsCollide(Rectangle boundingBox, SolidObject object)
+			Returns true if the bounding box collides with a solid object.
+			
+			Two conditions must be true for the objects to be considered as colliding:
+			
+			1.	The bounding box intersects with that of the target object
+			
+					AND
+			
+			2.	The target object is the current restingBlock.
+					You are assumed to be colliding with the object you are resting on in order to
+					properly determine your restingBlock for the next frame.
+				
+					OR
+					
+				The object's current bounding box (before movement, determined by getBounds() method)
+				does not intersect with that of the target object.
+					This ensure that it does not count as collision if you are somehow inside of the
+					object, saving a lot of trouble with the specific collision check methods, and
+					opening the door for directionally sensitive collision checks.
+	
+	COLLISION CHECKS
+	
+	Please note that a different method is called for upwards, downwards, and horizontal collision
+	as they all behave in different ways.
+					
+					
+	->	void checkSolidObjectCollisionDown(int v)
+	
+		First, the method establishes a bounding box of the target destination, which is called by
+		getBounds(0,v+1). The +1 is necessary in order to make a neglible difference in actual
+		collision behaviour, but important in ensuring that the object directly beneath the bounding
+		box is checked, as vertical velocity will often be equal to 0. This is very important for
+		checking the restingBlock and behaving accordingly (especially in the case of moving blocks).
+		
+		Next, the method loops through the list of SolidObjects and checks for collision using the
+		objectsCollide() method mentioned above. A different course of actions is taken depending on
+		the object's CollisionType:
+		
+		If the object is of CollisionType SOLID or PLATFORM, the following course of action is taken:
+			
+		1.	Sets the restingBlockCheck to the target object.
+			
+		2.	Sets the current Y position such that the bottom of the entity hits is at the top of the
+			target object
+				
+		3.	Sets the Y velocity to 0 and sets the local obstructMovement boolean to true, used later.
+			
+		Once all of the objects have been checked, the method checks the obstructMovement boolean. If
+		the value is still set to false, that means no object has obstructed the movement and the
+		Entity is to advance as usual, by adding the y velocity to the y value, i.e. addY(v)
+		
+	
+	->	void checkSolidObjectCollisionUp(int v)
+	
+		First, the method establishes a bounding box of the target destination, which is called by
+		getBounds(0,v+1). The +1 is necessary for the same reasons as explained above. Although this
+		may seem like a measure only necessary for downward collision, it is also important for any
+		moving block that will push the Entity upwards.
+		
+		Next, the method loops through the list of SolidObjects and checks for collision using the
+		objectsCollide() method mentioned above.
+		
+		If the object is the resting block, the restingBlockCheck is set to the target object.
+		
+		If the object is of CollisionType SOLID, the following course of actions taken:
+			
+		1.	Sets the current Y position such that the top of the entity hits is at the bottom of the
+			target object.
+				
+		2.	Sets the Y velocity to 0 and sets the local obstructMovement boolean to true, used later.
+			
+		Once all of the objects have been checked, the method checks the obstructMovement boolean. If
+		the value is still set to false, that means no object has obstructed the movement and the
+		Entity is to advance as usual, by adding the y velocity to the y value, i.e. addY(v)
+		
+	
+	->	void checkSolidObjectCollisionX(int v)
+	
+		First, the method establishes a bounding box of the target destination, which is called by
+		getBounds(v,0).
+		
+		Next, the method loops through the list of SolidObjects and checks for collision using the
+		objectsCollide method.
+		
+		For all objects that are collided with, the pushObject() method is called.
+		
+		If the object is of CollisionType SOLID, the following course of action is taken:
+		
+		1.	The X position is set so that the Entity is pushed against either the left or right edge
+			depending on the direction of the velocity.
+			
+		2.	The obstructMovement boolean is set to true.
+			
+		Once all of the objects have been checked, the method checks the obstructMovement boolean. If
+		the value is still set to false, that means no object has obstructed the movement and the
+		Entity is to advance as usual, by adding the x velocity to the x value, i.e. addX(v)
+		
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.BlockMapCollider.java
+	
+		extends dmcigd.core.objects.ObjectCollider.java
+		
+	Similar to the ObjectCollider class, although much simpler due to the nature of the game, this
+	class handles collision and the associated movement properties with blockMap collision.
+	
+	PUBLIC PROPERTIES
+	
+	->	boolean hitGround, isFalling, isDead, isDestroyed, inWater
+			These booleans all mean exactly what their name implies. The only thing to note is that
+			isDestroyed is called by blocks that immediately destroy the object, such as the invisible
+			blocks used to line falls, preventing monsters from falling infinitely and causing memory
+			leaks. isDead simply means that the Entity has hit something such as spikes, which is an
+			important distinction to make as some monsters do not die from spikes.
+	
+	PUBLIC SETTERS
+	
+	->	void setBlockMap(BlockMap blockMap)
+			In order to check blockMap collision, a BlockMap object is necessary. As such, the level's
+			blockMap must be passed down to all Entities for collision checks.
+			
+	COLLISION METHODS
+	
+	->	CollisionType tileCollisionType(int v, Direction direction)
+			Returns the CollisionType of the destination block by calling the collidesX() and
+			collidesY() methods of the BlockMap as explained in special_objects
+	
+	->	void blockMapCollision(Direction direction)
+			Places the entity at the edge of the tile in the direction it was traveling.
+			This is done by calling the rowEdge() and colEdge() functions of the BlockMap as explained
+			in special_objects
+	
+	COLLISION CHECKS
+	
+	Please note that a different method is called for upwards, downwards, and horizontal collision
+	as they all behave in different ways.
+	
+	->	void checkBlockMapCollisionDown(int v)
+			This method handles downward blockMap collision, as it behaves differently from all other
+			directions.
+			
+			This method checks the tileCollisionType in the Direction.DOWN and takes a different
+			course of action depending on the collisionType:
+			
+			WATER, NONSOLIDLADDER, or NONSOLID:
+				Sets the isFalling property to true and proceeds to call the
+				checkSolidObjectCollisionDown() method to proceed with object motion.
+				
+			DESTROY:
+				Sets isDestroyed to true and falls through to default
+			
+			KILL:
+				Sets isDead to true and falls through to default
+				
+			DEFAULT:
+				Treats block as if it were solid.
+				
+				Calls the blockMapCollision(Direction.DOWN) method to obstruct the object's motion,
+				sets the vertical velocity to 0, and calls the rest() as defined in ObjectCollider
+			
+	->	void checkBlockMapCollision(int v, Direction direction)
+			This method handles all other directions of blockMap collision.
+			
+			This method checks the tileCollisionType in the given direction and takes the following
+			courses of action based on the CollisionType:
+			
+			If the object is not solid, that is to say that the CollisionType's priority integer is
+			greater than 1, the appropriate checkSolidObjectCollision() method is called (depending on
+			the direction) to proceed with motion.
+			
+			Otherwise, a check is made to see if the collidingBlock is of CollisionType.DESTROY or of
+			CollisionType.KILL and sets isDestroyed and isDead to true respectively.
+			After that check is made, blockMapCollision(direction) is called to obstruct the movement
+			and if the direction is horizontal, the horizontal velocity is set to 0.
+		
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.Entity.java
+	
+		extends dmcigd.core.objects.BlockMapCollider.java
+		
+	This is the object that handles the specifics of Entity instances, where BlockMapCollider and
+	ObjectCollider simply run the collision checks and obstruct movement.
+	
+	PUBLIC GETTERS
+	
+	->	EntityType getEntityType()
+			Returns the EntityType (as defined in enumerators)
+			
+	->	boolean isDestroyed()
+			Used to satisfy SolidObject interface. By default, this method returns the isDestroyed
+			boolean which is defined in BlockMapCollider.
+			
+	->	CollisionType backBlock
+			Returns the CollisionType of the tile behind the Entity, used to check for water.
+	
+	PUBLIC SETTERS
+	
+	->	void setEntityType()
+			Sets the EntityType (as defined in enumerators)
+	
+	ACTION METHODS (DEFAULT INTERACTION METHODS)
+	
+	->	void onPush(Entity entity, int v)
+			Overrides the blank method in the ObjectCollision superclass so that Entities get pushed
+			over by MOVINGBLOCK EntityTypes. If this behaviour is to be preserved but also extended,
+			subclasses must call super.onPush() when defining their own onPush methods.
+	
+	->	void rest(CollisionType collisionType)
+			Called in the move() procedure described below, as well as in block collisions in the
+			parent class.
+			
+			Takes a different course of action depending on the collisionType:
+			
+				PLATFORM, SOLID, or SOLIDLADDER:
+					Sets hitGround to true
+					Sets isFalling to true
+					
+				DESTROY:
+					Sets isDestroyed to true
+				KILL:
+					Sets isDead to true
+	
+	->	void pushObject(SolidObject object, int v)
+			Calls the target object's onPush() method. Remember to use the super keyword if extending
+			functionality.
+			
+	->	void restObject()
+			Matches the restingBlock to the restingBlockCheck and calls the object's onRest() method
+			
+	->	void unrestObject()
+			Calls the restingBlock's onUnrest() method and sets the restingBlock to null
+	
+	OBJECT PROCEDURE
+	
+	Much like the animate() method in AnimationHandler and the step() method in many game objects,
+	Entity employs a method that is meant to be called every frame as well, which is called move().
+	Within move(), the following procedure is taken:
+	
+	1.	Reset the Entity's status, setting inWater to false, hitGround to false, isFalling to false,
+		and restingBlockCheck to null
+	
+	2.	Call the addAcceleration() method of the MovingObject parent class, and set the local integers
+		vx and vy according to the getVX() and getVY() values.
+		
+	3.	The vx and vy values are modified according to the Entity's conditions. If the restingBlock is
+		not null, then the restingBlock's dx and dy values are added to their respective velocities.
+		
+		Furthermore, if the restingBlock is null, and the Entity is inWater, then the vy is divided
+		by a factor of 2.2 (to slow down falling and jumping)
+		
+	4.	Move the object vertically, calling checkBlockMapCollisionDown(vy) if the velocity is greater
+		than or equal to zero, and calling checkBlockMapCollision(vy, Direction.UP) otherwise.
+		
+			These methods are explained in detail in the BlockMapCollider documentation above
+		
+	5.	Move the object horizontally, calling checkBlockMapCollision(vx, Direction.RIGHT) if the vx
+		is greater than or equal to zero, and calling checkBlockMapCollision(vy, Direction.LEFT)
+		otherwise.
+		
+			These methods are explained in detail in the BlockMapCollider documentation above
+			
+	6.	After the blockMap and subsequent solidObject collision checks are made, the restingBlockCheck
+		value is checked against the current restingBlock. If the values are not equal, either
+		restObject() or unrestObject() are called, depending on whether or not the value is null
+		
+	7.	If the restingBlock is not null, this means that the object has gotten past the blockMap
+		collision check unobstructed, and must take the appropriate rest() action based on the block
+		that it is resting on, so rest() is called with the restingBlock's CollisionType.
+		
+	8.	The backBlock property is reset based on the BlockMap's backBlock() method, and if the Entity
+		is determined to be in water, then:
+			Sets inWater to true
+			Sets hitGround to true
+	
 
 ======================================================================================================
 

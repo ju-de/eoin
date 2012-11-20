@@ -9,7 +9,7 @@ public class CrumblingBlock extends ObjectCollision implements RestableObject {
 	private int objectClock,clockReset = -1;
 	private float crumbleSpeed;
 	
-	public void onRest(EntityType entityType) {
+	public void onRest(Entity entity) {
 		objectClock = 0;
 		setFrameSpeed(crumbleSpeed);
 	}

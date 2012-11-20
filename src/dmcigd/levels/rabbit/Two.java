@@ -49,6 +49,8 @@ public class Two extends Room implements Runnable {
 		addBackgroundObject(new HouseFour(238 * 32 + 16, 13 * 32 + 4, 0));
 		addForegroundObject(new HouseFour(238 * 32 + 16, 13 * 32 + 4, 1));
 		
+		addForegroundObject(new HouseFive(230 * 32, 9 * 32 + 4));
+		
 		addBackgroundObject(new Furniture(226 * 32 + 24, 19 * 32, 1, 1, true));
 		addBackgroundObject(new Furniture(225 * 32 + 16, 19 * 32, 0, 2, false));
 		

@@ -10,8 +10,8 @@ import dmcigd.core.objects.maps.BlockMap;
 public abstract class SimpleProjectile extends BasicProjectile {
 	
 	//Destroys object on collision with anything solid
-	public void blockMapCollision(int v, Direction direction) {
-		super.blockMapCollision(v, direction);
+	public void blockMapCollision(Direction direction) {
+		super.blockMapCollision(direction);
 		isDestroyed = true;
 	}
 	public void rest(CollisionType collisionType) {
