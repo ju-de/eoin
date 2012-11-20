@@ -77,7 +77,7 @@ abstract class LadderHandler extends Entity {
 				}
 			//Hit ground
 			default:
-				blockMapCollision(v, Direction.DOWN);
+				blockMapCollision(Direction.DOWN);
 				setVY(0);
 				rest(tileCollisionType(v, Direction.DOWN));
 				break;

@@ -19,6 +19,8 @@ public abstract class ObjectCollider extends MovingObject {
 
 	abstract void rest(CollisionType collisionType);
 	abstract void pushObject(SolidObject object, int v);
+	abstract void restObject();
+	abstract void unrestObject();
 	
 	public boolean objectsCollide(Rectangle boundingBox, SolidObject object) {
 		
@@ -39,6 +41,7 @@ public abstract class ObjectCollider extends MovingObject {
 		boolean obstructMovement = false;
 		
 		//Get bounding box of destination
+		//v+1 is necessary to deal with resting objects
 		Rectangle boundingBox = getBounds(0, v+1);
 		
 		//Loop through all solid objects
@@ -48,13 +51,9 @@ public abstract class ObjectCollider extends MovingObject {
 			if(objectsCollide(boundingBox, i)) {
 				switch(i.getCollisionType()) {
 					case PLATFORM:
-						//Check if object is not inside of platform
-						if(getY() + getHeight() > i.getY()) {
-							break;
-						}
 					case SOLID:
-						setY(i.getY() - getHeight());
 						restingBlockCheck = (RestableObject) i;
+						setY(i.getY() - getHeight());
 						setVY(0);
 						obstructMovement = true;
 					default:
@@ -73,6 +72,7 @@ public abstract class ObjectCollider extends MovingObject {
 		boolean obstructMovement = false;
 		
 		//Get bounding box of destination
+		//v+1 is necessary to deal with resting objects (while being pushed up)
 		Rectangle boundingBox = getBounds(0, v+1);
 		
 		//Loop through all solid objects
@@ -80,25 +80,18 @@ public abstract class ObjectCollider extends MovingObject {
 			
 			//Check for collision
 			if(objectsCollide(boundingBox, i)) {
-				switch(i.getCollisionType()) {
-					case PLATFORM:
-						if(restingBlock != i) {
-							break;
-						}
-					case SOLID:
-						//Check if object is being pushed up by resting block
-						if(restingBlock == i) {
-							setY(i.getY() - getHeight() + 1);
-							restingBlockCheck = (RestableObject) i;
-							setVY(0);
-							break;
-						} else {
-							//Otherwise, hit ceiling
+				if(restingBlock == i) {
+					//Check if object is being pushed up by resting block
+					restingBlockCheck = (RestableObject) i;
+				} else {
+					switch(i.getCollisionType()) {
+						case SOLID:
+							//Hit ceiling
 							setY(i.getY() + i.getHeight());
 							obstructMovement = true;
-						}
-					default:
-						break;
+						default:
+							break;
+					}
 				}
 			}
 		}

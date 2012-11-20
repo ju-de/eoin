@@ -15,6 +15,31 @@ public abstract class BlockMapCollider extends ObjectCollider {
 		this.blockMap = blockMap;
 	}
 	
+	//Returns collision type of tile of destination block
+	public CollisionType tileCollisionType(int v, Direction direction) {
+		switch (direction) {
+			case DOWN:
+			case UP:
+				return blockMap.collidesY(getX(), getY(), v, getWidth(), getHeight(), direction);
+			default:
+				return blockMap.collidesX(getX(), getY(), v, getWidth(), getHeight(), direction);
+		}
+	}
+	
+	//Places entity at edge of tile (farthest accessible point) used in case of obstruction
+	public void blockMapCollision(Direction direction) {
+		switch (direction) {
+			case DOWN:
+				setVY(0);
+			case UP:
+				setY(blockMap.rowEdge(getY(), getHeight(), direction));
+				break;
+			default:
+				setX(blockMap.colEdge(getX(), getWidth(), direction));
+				break;
+		}
+	}
+	
 	//Checks downward collision (behaves differently from other three directions)
 	public void checkBlockMapCollisionDown(int v) {
 		
@@ -29,13 +54,13 @@ public abstract class BlockMapCollider extends ObjectCollider {
 				checkSolidObjectCollisionDown(v);
 				break;
 				
-			//Destroy
+			case DESTROY:
+				isDestroyed = true;
 			case KILL:
 				isDead = true;
-				
 			//Hit ground
 			default:
-				blockMapCollision(v, Direction.DOWN);
+				blockMapCollision(Direction.DOWN);
 				setVY(0);
 				rest(tileCollisionType(v, Direction.DOWN));
 				break;
@@ -68,35 +93,10 @@ public abstract class BlockMapCollider extends ObjectCollider {
 				isDead = true;
 			}
 			
-			blockMapCollision(v, direction);
+			blockMapCollision(direction);
 			if(direction != Direction.UP) {
 				setVX(0);
 			}
-		}
-	}
-	
-	//Returns collision type of tile of destination block
-	public CollisionType tileCollisionType(int v, Direction direction) {
-		switch (direction) {
-			case DOWN:
-			case UP:
-				return blockMap.collidesY(getX(), getY(), v, getWidth(), getHeight(), direction);
-			default:
-				return blockMap.collidesX(getX(), getY(), v, getWidth(), getHeight(), direction);
-		}
-	}
-	
-	//Places entity at edge of tile (farthest accessible point) used in case of obstruction
-	public void blockMapCollision(int v, Direction direction) {
-		switch (direction) {
-			case DOWN:
-				setVY(0);
-			case UP:
-				setY(blockMap.rowEdge(getY(), getHeight(), direction));
-				break;
-			default:
-				setX(blockMap.colEdge(getX(), getWidth(), direction));
-				break;
 		}
 	}
 	
