@@ -681,17 +681,17 @@ structured poorly in itself.
 	Entity employs a method that is meant to be called every frame as well, which is called move().
 	Within move(), the following procedure is taken:
 	
-	1.	Reset the Entity's status, setting inWater to false, hitGround to false, isFalling to false,
-		and restingBlockCheck to null
-	
-	2.	Call the addAcceleration() method of the MovingObject parent class, and set the local integers
+	1.	Call the addAcceleration() method of the MovingObject parent class, and set the local integers
 		vx and vy according to the getVX() and getVY() values.
 		
-	3.	The vx and vy values are modified according to the Entity's conditions. If the restingBlock is
+	2.	The vx and vy values are modified according to the Entity's conditions. If the restingBlock is
 		not null, then the restingBlock's dx and dy values are added to their respective velocities.
 		
 		Furthermore, if the restingBlock is null, and the Entity is inWater, then the vy is divided
 		by a factor of 2.2 (to slow down falling and jumping)
+	
+	3.	Reset the Entity's status, setting inWater to false, hitGround to false, isFalling to false,
+		and restingBlockCheck to null
 		
 	4.	Move the object vertically, calling checkBlockMapCollisionDown(vy) if the velocity is greater
 		than or equal to zero, and calling checkBlockMapCollision(vy, Direction.UP) otherwise.
