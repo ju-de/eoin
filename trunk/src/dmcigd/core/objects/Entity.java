@@ -75,12 +75,6 @@ public class Entity extends BlockMapCollider {
 	
 	public void move() {
 		
-		//Reset entity status
-		inWater = false;
-		hitGround = false;
-		isFalling = false;
-		restingBlockCheck = null;
-		
 		//Reset velocity
 		addAcceleration();
 		
@@ -95,6 +89,12 @@ public class Entity extends BlockMapCollider {
 			//If in water, divides falling or jumping speed by factor of 2.2
 			vy = (int) (vy / 2.2f);
 		}
+		
+		//Reset entity status
+		inWater = false;
+		hitGround = false;
+		isFalling = false;
+		restingBlockCheck = null;
 		
 		//Move Vertically
 		if(vy >= 0) {
