@@ -21,7 +21,7 @@ public class Dummy extends ObjectCollision implements SolidObject {
 
 		setFrameLimits(new int[] {2});
 		setAnimationLoops(new boolean [] {true});
-		setFrameSpeed(0.02f);
+		setFrameSpeed(0.015f);
 		
 		setImagePath("objects/tutorial/dummy.gif");
 		

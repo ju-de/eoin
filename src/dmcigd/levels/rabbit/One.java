@@ -3,6 +3,7 @@ package dmcigd.levels.rabbit;
 import java.net.URL;
 
 import dmcigd.core.room.Room;
+import dmcigd.core.objects.TextLabel;
 import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
@@ -25,6 +26,16 @@ public class One extends Room implements Runnable {
 		addRegion(new Sign(97 * 32, 22 * 32, 4, "SIGN", "Be careful of large falls!\nUse the ladder ahead to get back on track.", getDialogueHandler()));
 		addRegion(new Sign(144 * 32, 12 * 32, 6, "SIGN", "Mr. Scrufflebottom's Abode just past the gap.", getDialogueHandler()));
 		addRegion(new Sign(143 * 32, 28 * 32, 5, "SIGN", "DANGER!\nSTAY OUT!", getDialogueHandler()));
+
+		addRegion(new Knight(12 * 32 - 4, 12 * 32, false, "KNIGHT", "FNORD", getDialogueHandler()));
+		addTextLabel(new TextLabel(12 * 32, 14 * 32 - 20, "Press"));
+		addTextLabel(new TextLabel(12 * 32 - 2, 14 * 32 - 6, "\"X\"", false));
+		
+		addRegion(new Knight(33 * 32, 12 * 32, true, "KNIGHT", "Don't panic! These rabbits are mostly harmless, they couldn't even hurt you if they tried.", getDialogueHandler()));
+		addRegion(new Knight(81 * 32, 14 * 32, false, "KNIGHT", "Try not to fall off these platforms! You never know what'll be waiting for you down below.", getDialogueHandler()));
+		addRegion(new Knight(142 * 32, 12 * 32, true, "KNIGHT", "Mr. Scrufflebottom's home is just ahead. Maybe he knows something about the kidnapper!", getDialogueHandler()));
+		addRegion(new Knight(135 * 32, 28 * 32, false, "KNIGHT", "I really wouldn't be down here if I were you...", getDialogueHandler()));
+		addRegion(new Knight(138 * 32, 28 * 32, true, "KNIGHT", "W-what?! You shouldn't be down here! Get back on track!", getDialogueHandler()));
 		
 		addRegion(new RoomWarp(229 * 32+ 16, 0, 32, 640, "rabbit.Two"));
 		
