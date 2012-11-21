@@ -202,13 +202,16 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 				player.climbUp(true);
 				break;
 			case KeyEvent.VK_DOWN:
-				player.keyDown(true);
+				player.climbDown(true);
 				break;
 			case KeyEvent.VK_LEFT:
 				player.walk(true, Direction.LEFT);
 				break;
 			case KeyEvent.VK_RIGHT:
 				player.walk(true, Direction.RIGHT);
+				break;
+			case KeyEvent.VK_SHIFT:
+				player.sprint(true);
 				break;
 			case KeyEvent.VK_Z:
 				player.jump(true);
@@ -232,7 +235,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 				player.climbUp(false);
 				break;
 			case KeyEvent.VK_DOWN:
-				player.keyDown(false);
+				player.climbDown(false);
 				break;
 			case KeyEvent.VK_LEFT:
 				player.walk(false, Direction.LEFT);
@@ -240,6 +243,8 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 			case KeyEvent.VK_RIGHT:
 				player.walk(false, Direction.RIGHT);
 				break;
+			case KeyEvent.VK_SHIFT:
+				player.sprint(false);
 			case KeyEvent.VK_Z:
 				player.jump(false);
 				break;
