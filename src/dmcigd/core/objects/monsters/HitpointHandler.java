@@ -10,12 +10,14 @@ public class HitpointHandler extends Entity {
 	private int invincibilityCounter = 0;
 	private int invincibilityCounterReset = 30;
 	
+	//Public Getters
 	public int getMaxHitpoints() {
 		return maxHitpoints;
 	}
 	public int getHitpoints() {
 		return hitpoints;
 	}
+	
 	
 	public boolean isInvincible() {
 		return invincible;
@@ -24,6 +26,7 @@ public class HitpointHandler extends Entity {
 		return flicker;
 	}
 	
+	//Public Setters
 	public void setMaxHitpoints(int maxHitpoints) {
 		this.maxHitpoints = maxHitpoints;
 		hitpoints = maxHitpoints;
@@ -44,6 +47,7 @@ public class HitpointHandler extends Entity {
 		this.knockback = knockback;
 	}
 	
+	//Events
 	public void knockback(int damage, boolean flipped) {
 		if(knockback) {
 			
@@ -53,7 +57,7 @@ public class HitpointHandler extends Entity {
 			knockbackSpeed = 0.4f * (damage - (maxHitpoints / damage));
 			
 			//Minimum Knockback Speed
-			if(knockbackSpeed <= 0.2f) {
+			if(knockbackSpeed < 0.2f) {
 				knockbackSpeed = 0.2f;
 			}
 			
@@ -75,6 +79,7 @@ public class HitpointHandler extends Entity {
 		}
 	}
 	
+	//Step
 	public void step() {
 		
 		if(hitpoints <= 0) {

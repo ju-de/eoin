@@ -4,3 +4,6 @@ TODO:
 	BlockMap
 	EnvironmentMap
 	TextLabel
+
+Hussain, please add dialogueHandler and dialogue Item documentation (and note that I removed the code
+for avatarImageCodes)

@@ -635,6 +635,13 @@ structured poorly in itself.
 			Used to satisfy SolidObject interface. By default, this method returns the isDestroyed
 			boolean which is defined in BlockMapCollider.
 			
+			PLEASE NOTE:
+			If a destruction animation is required for your Entity, such as a monster's death
+			animation, or a projectile exploding, this method should be overridden and
+			isDestroyed should be treated as a flag for when to initiate the death animation.
+			Therefore the proper isDestroyed() method would check not only for the isDestroyed
+			boolean but also for the frame sequence and number.
+			
 	->	CollisionType backBlock
 			Returns the CollisionType of the tile behind the Entity, used to check for water.
 	
@@ -722,8 +729,101 @@ structured poorly in itself.
 
 PROJECTILE SUPERCLASSES:
 
-BasicProjectile.java
-SimpleProjectile.java
+Projectiles are, in theory, just Entities with different collision properties. They are stored in
+their own ArrayList purely for saving time on collision checks. This means that all Projectiles that
+inherit off of the BasicProjectile class no longer checks for the boundary case of objects that have
+already intersected. This is because the SolidObjects do not check collision against Projectiles, so
+there's no need to worry about doubling each collision check, and due to the nature of Projectiles,
+there is no need to worry about things like projectiles pushing against moving blocks or platforms.
+
+If you are dealing with a complicated projectile that must interact heavily with moving platforms
+and player interaction, do not create an object in the projectiles list but in the SolidObjects list.
+The Projectiles list exists purely for optimization, and for boss opportunities (i.e. a boss attack
+where it creates a bunch of wooden projectiles, then later loops through them and burns all of them)
+
+Please note that gravity can be applied to projectiles for curved motion, however it is not on by
+default, so to enable gravity, simply make a setGravity() call in your class' constructor
+
+Also note that, as explained in the VisibleObject section above, that a copy of the projectile's image
+must be loaded upon room initialization, whether this means making a mini room to store one copy of
+all of the projectiles, or just sharing a spritesheet with the parent object and assigning the
+appropriate sequence and frame.
+		
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.projectiles.BasicProjectile.java
+	
+		extends dmcigd.core.objects.Entity.java
+		
+	The basic projectile overrides the objectsCollide method to handle the behaviour described above,
+	regarding the difference in projectile collision checks. It also handles projectile motion, using
+	sin and cosine values to determine the component vectors of motion based off of an angle and a
+	speed.
+	
+	METHODS
+	
+	->	boolean objectsCollide(Rectangle boundingBox, SolidObject object)
+			This overrides the method in ObjectCollider to handle all collision rather than new or
+			restingBlock collision
+			
+	->	void setProjectileMotion(int speed, int angle, boolean flipped)
+			This uses sine and cosine functions on the angle and speed to determine the component
+			vectors of motion, that is, the x velocity (vx) and the y velocity (vy)
+			The flipped parameter, as the name suggests, inverts the horizontal velocity in the case
+			of projectile spawners or monsters that may change direction.
+			
+	->	void setProjectileMotion(int speed, int angle)
+			Overloads the method so that flipped = false
+			
+	->	void step()
+			Satisfies the necessary step() method for the SolidObject interface and calls the move()
+			method to save some redundant lines of code for basic projectiles that only need to follow
+			their basic motion vectors
+	
+	CONSTRUCTION
+	
+	->	BasicProjectile(int x, int y, int speed, int angle, boolean flipped, BlockMap blockMap,
+			ArrayList<SolidObject> solidObjects)
+			
+			x and y are the coordinates of the game object
+			
+			speed, angle, and flipped are all passed down to the setProjectileMotion() method to
+			determine the initial motion vectors
+			
+			blockMap and solidObjects set their according methods to satisfy the needs of Entity to
+			complete collision checks
+			
+	->	BasicProjectile(int x, int y, int speed, int angle, BlockMap blockMap,
+			ArrayList<SolidObject> solidObjects)
+			
+			Overloads the constructor so that flipped = false
+		
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.projectiles.SimpleProjectile.java
+	
+		extends dmcigd.core.objects.projectiles.BasicProjectile.java
+		
+	The simple projectile class is just an extension of the basic projectile class that deals with a
+	simple but common set of collision properties: self-destruct on any collision.
+	
+	It's constructors and step() method are the same as the parent class BasicProjectile, but
+	overrides the following methods:
+	
+	COLLISION METHODS
+	
+	->	void blockMapCollision(Direction direction)
+			Calls the superclass' method
+			Sets isDestroyed to true
+			
+	->	void rest(CollisionType collisionType)
+			If the collisionType's priority is less than 4, meaning it is solid from the top,
+				sets isDestroyed to true
+				
+	->	void pushObject(SolidObject object, int v)
+			Calls the superclass' method
+			Sets isDestroyed to true
+			
 
 ======================================================================================================
 
@@ -731,6 +831,159 @@ MONSTER SUPERCLASSES:
 
 [Please note that more monster superclasses will be added to handle basic AI]
 
-HitpointHandler.java
-LethalityHandler.java
+		
+(*)	)=================================================================================================
 
+	dmcigd.core.objects.monsters.HitpointHandler.java
+	
+		extends dmcigd.core.objects.Entity.java
+		
+	As the name implies, HitpointHandler handles hitpoints. More specifically, it deals with damage
+	collision, invincibility states, and knockback. All monsters should be inheriting from this class,
+	although it should be noted that invincibility length can be set to zero and knockback can be
+	turned off fairly easily. Any other level of customization with the hitpoints themselves must be
+	written or overrided in your own monster class.
+	
+	PUBLIC GETTERS
+	
+		HITPOINTS
+		
+		->	int getMaxHitpoints()
+				Returns max hitpoints (in case of dynamic hitpoint values)
+				This method will rarely be used
+				
+		->	int getHitpoints()
+				Returns current (remaining) hitpoint value
+		
+		INVINCIBILITY
+		
+		->	boolean isInvincibile()
+				Returns invincible boolean.
+				When set to true, the monster cannot take damage
+				
+		->	boolean isFlickering()
+				Returns flicker boolean.
+				This is used to apply a flicker animation to the monster, allowing it to flicker
+				during invincibility during any animation (e.g. flickering while falling)
+	
+	PUBLIC SETTERS
+	
+		HITPOINTS
+		
+		->	void setMaxHitpoints(int maxHitpoints)
+				Sets the maxHitpoints value and sets hitpoints to the max value
+				
+		->	void setHitpoints(int hitpoints)
+				Sets the hitpoint value
+		
+		INVINCIBILITY
+		
+		->	void setInvincibility(boolean invincible)
+				Sets invincibility to be true and resets the invincibilityCounter
+				Usually will not be called externally.
+				
+		->	void setInvincibilityCounterReset(int invincibilityCounterReset)
+				Sets the number of frames that invincibility lasts for.
+				If not set, defaults to 30 frames.
+		
+		KNOCKBACK
+		
+		->	void setKnockback(boolean knockback)
+				Turns knockback on or off
+	
+	EVENT METHODS
+	
+	->	void knockback(int damage, boolean flipped)
+			If knockback is on, set knockback motion vectors based on direction of attack.
+			
+			Knockback speed is calculated based off of the following formula:
+				
+				Knockback Speed	=	Coefficient * Base Knockback - Monster Resistance
+				
+					WHERE
+				Coefficient		=	0.4f
+				Base Knockback	=	damage
+				Resistance		=	# of hits it takes to kill monster
+								=	maxHitpoints / damage
+								
+					THEREFORE
+				knockbackSpeed = 0.4f * (damage - (maxHitpoints/damage))
+				
+					HOWEVER
+				The minimum knockbackSpeed is 0.2f, so if it is less than 0.2f, it will be set to 0.2f
+				
+			After the knockback speed is calculated, a motion vector is set (vx) as well as an
+			acceleration vector such that the speed will be equal to 0 by the time the knocback ends,
+			which is one half of the invincibility time.
+			
+			The acceleration format is therefore
+				knockbackSpeed / (invincibilityCounterReset / 2)
+			  = 2 * knockbackSpeed/invincibilityCounterReset
+			  
+	->	void onAttack(int damage, boolean flipped)
+			If the monster is not in a state of invincible (invincible is false), the damage is
+			subtracted from the remaining hitpoints and setInvincibility(true) is called.
+			
+			knockBack(damage, flipped) is also called, but due to the nature of the method, will only
+			run if the knockback flag is set to true.
+			
+	
+	OBJECT PROCEDURE (STEP METHOD)
+	
+	1.	Check the reaining hitpoints. If it is less than or equal to 0, isDestroyed is set to true
+	
+	2.	Invincibility is checked. If it is false, flicker must also be false, otherwise, the following
+		procedure is taken:
+		
+	3.	The invincibilityCounter is incremented (used to check when invincibility ends)
+	
+	4.	If the invincibilityCounter is greater than or equal to half of the invincibilityCounterReset,
+		and the knockback flag is set to true, freeze the monster horizontally, that is, setting the
+		vx and ax to 0
+		
+	5.	If the invincibilityCounter is greater than or equal to the invincibilityCounterReset, call
+		setInvincibility(false)
+	
+	6.	Alternate flicker state every 8 ticks. This is done by dividing the counter by 8 and checking
+		it's modulo of 2 (which would alternate between 0 and 1 due to integer flooring)
+
+		
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.monsters.LethalityHandler.java
+	
+		extends dmcigd.core.objects.monsters.HitpointHandler.java
+
+	The LethalityHandler class automatically creates methods for killing the player on either rest or
+	horizontal collision, as set by individual lethality flags.
+	
+	Please note that due to the two-way nature of lethality, if you want a monster to be lethal onPush
+	(that is, from horizontal collision), also set the entityType to something greater than or equal
+	to LETHALMONSTER
+	
+	This is done by the following setters, with the actual action methods described below:
+	
+	PUBLIC SETTERS
+	
+	->	setLethalOnPush(boolean lethalOnPush)
+			If set to true, the monster will be lethal on push (horizontal collision)
+			
+	->	setLethalOnRest(boolean lethalOnRest)
+			If set to true, the monster will be lethal on rest (downward collision)
+			
+	There is no lethality for upward collision (jumping into a monster) due to the nature of collision
+	checks as described above. For this kind of behaviour, overriding of the collision methods, a
+	slight modification of the collision checks must be made such that the monster checks all objects
+	that it collides with, similar to projectiles. Any monster that must be lethal from the bottom
+	would most likely be flying anyways (push methods would act first as long as there is any
+	horizontal motion), so this should not interfere with the physics.
+	
+	ACTION METHODS
+	
+	->	onPush(Entity entity, int v)
+			If the monster is lethalOnPush, is not in a state of invincibility, and the entity's
+			EntityType is PLAYER, set the entity's isDead state to true
+			
+	->	onRest(Entity entity)
+			Same method as above, except it checks for lethalOnRest
+	
