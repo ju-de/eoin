@@ -8,6 +8,7 @@ import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.platforms.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
+import dmcigd.levels.rabbit.houses.*;
 
 public class Two extends Room implements Runnable {
 	

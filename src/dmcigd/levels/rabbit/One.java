@@ -8,6 +8,8 @@ import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
 import dmcigd.core.objects.regions.*;
+import dmcigd.levels.rabbit.houses.*;
+import dmcigd.levels.rabbit.npc.*;
 
 public class One extends Room implements Runnable {
 	
@@ -36,6 +38,8 @@ public class One extends Room implements Runnable {
 		addRegion(new Knight(142 * 32, 12 * 32, true, "KNIGHT", "Mr. Scrufflebottom's home is just ahead. Maybe he knows something about the kidnapper!", getDialogueHandler()));
 		addRegion(new Knight(135 * 32, 28 * 32, false, "KNIGHT", "I really wouldn't be down here if I were you...", getDialogueHandler()));
 		addRegion(new Knight(138 * 32, 28 * 32, true, "KNIGHT", "W-what?! You shouldn't be down here! Get back on track!", getDialogueHandler()));
+		
+		addRegion(new MrScrufflebottom(180 * 32 - 4, 13 * 32 + 18, "Where did I put my key again?", getDialogueHandler()));
 		
 		addRegion(new RoomWarp(229 * 32+ 16, 0, 32, 640, "rabbit.Two"));
 		
