@@ -3,7 +3,6 @@ package dmcigd.core.objects.projectiles;
 import java.util.ArrayList;
 
 import dmcigd.core.enums.*;
-import dmcigd.core.objects.Entity;
 import dmcigd.core.objects.interfaces.SolidObject;
 import dmcigd.core.objects.maps.BlockMap;
 
@@ -21,13 +20,11 @@ public abstract class SimpleProjectile extends BasicProjectile {
 		}
 		
 	}
-	public void onPush(Entity entity, int v) {
-		if(entity.getEntityType() == EntityType.MOVINGBLOCK) {
-			isDestroyed = true;
-		}
-	}
 	public void pushObject(SolidObject object, int v) {
-		object.onPush(this, v);
+		super.pushObject(object, v);
+		//Please add some code here to only set isDestroyed to true
+		//if the CollisionType is not NONSOLID or the object is an Entity (I can't figure out the entity part)
+		//There should be a method to check if the object belongs to the Entity class, I just forgot what it was
 		isDestroyed = true;
 	}
 	
@@ -37,9 +34,5 @@ public abstract class SimpleProjectile extends BasicProjectile {
 	
 	public SimpleProjectile(int x, int y, int speed, int angle, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
 		super(x, y, speed, angle, blockMap, solidObjects);
-	}
-
-	public void step() {
-		move();
 	}
 }

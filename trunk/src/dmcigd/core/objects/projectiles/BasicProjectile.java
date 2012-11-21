@@ -21,11 +21,8 @@ public abstract class BasicProjectile extends Entity {
 			return false;
 		}
 	}
-
-	public BasicProjectile(int x, int y, int speed, int angle, boolean flipped, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
-		
-		setX(x);
-		setY(y);
+	
+	public void setProjectileMotion(int speed, int angle, boolean flipped) {
 		
 		//Flips angle if necessary, default facing right
 		if(flipped) {
@@ -42,6 +39,20 @@ public abstract class BasicProjectile extends Entity {
 		double vy = -speed * Math.sin(radians);
 		setVY((float) vy);
 		
+	}
+	//Overloads method with flipped defaulted to false
+	public void setProjectileMotion(int speed, int angle) {
+		setProjectileMotion(speed, angle, false);
+	}
+	
+
+	public BasicProjectile(int x, int y, int speed, int angle, boolean flipped, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
+		
+		setX(x);
+		setY(y);
+		
+		setProjectileMotion(speed, angle, flipped);
+		
 		//If specific collision attributes are necessary, override the EntityType in the constructor
 		setEntityType(EntityType.PROJECTILE);
 		setBlockMap(blockMap);
@@ -49,6 +60,7 @@ public abstract class BasicProjectile extends Entity {
 			
 	}
 	
+	//Overloads constructor with flipped defaulted to false
 	public BasicProjectile(int x, int y, int speed, int angle, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
 		this(x,y,speed,angle,false,blockMap,solidObjects);
 	}
