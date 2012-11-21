@@ -1,9 +1,143 @@
-TODO:
-	Player
-	Sword
+======================================================================================================
+======================================================================================================
+
+OBJECT SUPERCLASSES AND BEHAVIOURS
+
+The game uses several special objects that have unique behaviours. Unless dealing with very special
+interactions, knowledge of these objects will probably not be mandatory, but it's still pretty cool to
+know how the game is running in its entirety.
+======================================================================================================
+
+THE PLAYER
+
+The player class is actually made up of several classes, each handling their own unique properties.
+The basic hierarchy is as follows:
+
+	dmcigd.core.objects.player.Sword.java							Handles sword animation and attacks
+		extends dmcigd.core.objects.ObjectCollision.java				Handles bounding box
+					... (see ObjectCollision documentation in object_superclasses)
+	
+	is an Object that exists within
+	
+	dmcigd.core.objects.player.Player.java							Handles animation and movement
+		extends dmcigd.core.objects.player.ControlHandler.java			Handles control properties
+		extends dmcigd.core.objects.player.LadderHandler.java			Handles ladder collision
+		extends dmcigd.core.objects.Entity.java							Handles object behaviour
+					... (see Entity documentation in object_superclasses)
+					
+In reverse hierarchy (that is, lowest level object to highest level) the objects are as follows:
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.player.LadderHandler.java
+	
+		extends dmcigd.core.objects.Entity.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.player.ControlHandler.java
+	
+		extends dmcigd.core.objects.player.LadderHandler.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.player.Player.java
+	
+		extends dmcigd.core.objects.player.ControlHandler.java
+
+(*)	)=================================================================================================
+
+	dmcigd.core.objects.player.Sword.java
+	
+		extends dmcigd.core.objects.ObjectCollision.java
+		
+	The sword exists as it's own entity in order to handle its own bounding box. Furthermore, due to
+	animation constraints (seriously, you try animating a player sprite in the given time), the Sword's
+	animations are independent of the player (which is also why it looks very awkward).
+	
+	Because the Sword is in many ways an extension of the Player instance, it has its own collision
+	checking loop that is, although similar, independent of the Entity or BasicProjectile classes.
+	
+	CONSTRUCTOR
+	
+	->	Sword(int x, int y, ArrayList<SolidObject> solidObjects)
+			x and y set the baseX and baseY positions
+			solidObjects is necessary to complete collision checks on attack()
+	
+	PUBLIC GETTERS
+	
+	->	int getKillCount()
+			Returns the local in-room killCount. Since it is the sword that attacks, naturally, it
+			checks for destruction and stores the killCount.
+			
+			Please note when designing levels that blocks that are destroyed onAttack also increment
+			the killCount, so use them sparingly (or use this to your advantage)
+			
+	PUBLIC SETTERS
+	
+	->	void setPosition(int x, int y)
+			Sets the position of the sword in conjunction to the player's position.
+			This is stored as baseX and baseY as they will be manipulated further depending on the
+			Sword's state
+			
+	->	void setLadder(boolean onLadder)
+			Sets the sword's ladder state, which affects its appearance and ability to attack.
+			
+	->	void attack()
+			If not on a ladder, and not already attacking, this sets of the attacking flag, which is
+			handled by the step method.
+			Also sets the sequence to 1 (attack animation)
+			
+	COLLISION METHOD
+	
+	->	void checkCollision()
+			When this method is called, the sword is assumed to be attacking.
+			
+			It loops through all solidObjects, and if bounding box intersection is detected, the
+			object's onAttack() method is called with the according damage and flipped state (to
+			determine the "magnitude" and "direction" of the attack).
+			
+			If the object is detected to be destroyed, the killCount is incremented
+			
+			[SOMEBODY PLEASE FIX THIS METHOD TO CHECK THE isDestroyed BOOLEAN FOR DYING ANIMATIONS]
+			
+	OBJECT PROCEDURE (STEP METHOD)
+	
+		IF onLadder:
+		
+		1.	Set sequence to 0
+			Set frame to 1 (ladder state sprite)
+		
+		2.	Set x to baseX - 12
+			Set y to baseY + 2
+			
+		3.	Set attacking to false (it is not possible to attack while on a ladder, but certain
+			control glitches can allow this to happen with perfect timing)
+		
+		IF attacking:
+		
+		1.	Determine the offset of the sword off of the player, where the offset is the square of
+			the animation frame number
+			
+		2.	Set the x position according to the baseX, flipped state and sword offset
+			Set the y position to the baseY
+			
+		3.	Call checkCollision() to attack objects
+		
+		4.	Call animate() to animate the sword
+				If the frame number is equal to 5, stop attacking (reached end of animation and by
+				extension, the end of the attack time)
+		
+		DEFAULT:
+		
+		1.	Set sequence to 0
+			Set frame to 0 (idle sprite)
+			
+		2.	Set x to baseX - 20 if flipped, or baseX - 4 if not flipped
+			Set y to baseY
+	
 	BlockMap
 	EnvironmentMap
-	TextLabel
 
 Hussain, please add dialogueHandler and dialogue Item documentation (and note that I removed the code
 for avatarImageCodes)

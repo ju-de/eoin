@@ -41,7 +41,7 @@ public class DmciGD extends Applet implements Runnable {
 	private int playerX, playerY;
 	
 	//Initialize Dialogue variables
-	private String avatarImageCode,name,line1,line2,line3;
+	private String name,line1,line2,line3;
 	
 	//Initialize the Double-buffering Variables
 	private Image dbImage;
