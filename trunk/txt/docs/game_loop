@@ -590,5 +590,5 @@ classes themselves, and the logic associated with the various game objects and i
 			If in dialogue:
 				trigger dialogueHandler's advance method
 			Else:
-				trigger player's interaact() method
+				trigger player's interact() method
 			
