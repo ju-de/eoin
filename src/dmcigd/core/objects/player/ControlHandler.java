@@ -38,10 +38,13 @@ abstract class ControlHandler extends LadderHandler {
 		climbing = Direction.UP;
 	}
 	
-	public void keyDown(boolean down) {
-		this.sprint = down;
-		isClimbing = down;
+	public void climbDown(boolean isClimbing) {
+		this.isClimbing = isClimbing;
 		climbing = Direction.DOWN;
+	}
+	
+	public void sprint(boolean sprint) {
+		this.sprint = sprint;
 	}
 	
 	public void jump(boolean jumping) {

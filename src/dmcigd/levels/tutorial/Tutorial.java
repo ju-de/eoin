@@ -30,11 +30,10 @@ public class Tutorial extends Room implements Runnable {
 		addSolidObject(new LockedDoor(118 * 32, 23 * 32, 1));
 		
 		addSolidObject(new PushableBlock(128 * 32, 23 * 32, getBlockMap(), getSolidObjects()));
-
-		addSolidObject(new TestMonster(190 * 32, 18 * 32, getBlockMap(), getSolidObjects()));
-		addSolidObject(new TestMonster(193 * 32, 18 * 32, getBlockMap(), getSolidObjects()));
 		
-		addSolidObject(new TestMonster(199 * 32, 18 * 32, getBlockMap(), getSolidObjects()));
+		addSolidObject(new Dummy(198 * 32, 19 * 32 + 24));
+		addSolidObject(new Dummy(201 * 32, 19 * 32 + 24));
+		addSolidObject(new Dummy(204 * 32, 19 * 32 + 24));
 	}
 
 	public void initializeNonsolidObjects() {
@@ -53,7 +52,7 @@ public class Tutorial extends Room implements Runnable {
 		addTextLabel(new TextLabel(47 * 32, 18 * 32, "And jump once midair", false));
 		addTextLabel(new TextLabel(47 * 32, 18 * 32 + 20, "to get past taller obstacles", false));
 		
-		addTextLabel(new TextLabel(62 * 32, 18 * 32, "Hold the down arrow", false));
+		addTextLabel(new TextLabel(62 * 32, 18 * 32, "Hold down the shift", false));
 		addTextLabel(new TextLabel(62 * 32, 18 * 32 + 20, "key to sprint", false));
 		
 		addTextLabel(new TextLabel(86 * 32, 18 * 32, "Hold the down key and jump", false));
