@@ -1,4 +1,4 @@
-package dmcigd.levels.rabbit;
+package dmcigd.levels.rabbit.houses;
 
 import dmcigd.core.objects.VisibleObject;
 
