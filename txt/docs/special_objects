@@ -252,7 +252,7 @@ In reverse hierarchy (that is, lowest level object to highest level) the objects
 		methods) If the player is climbing and is on a ladder, or if the player is climbing down and
 		on top of a ladder, a velocity of 2 is set in the direction of climbing
 		
-	3.	move() is called to apply the motion vecvtors
+	3.	move() is called to apply the motion vectors
 	
 	4.	The player loops through all regions and checks for intersection to activate onHover(this)
 	
@@ -285,7 +285,6 @@ In reverse hierarchy (that is, lowest level object to highest level) the objects
 	9.	If the player is holding an item, the x and y positions are set accordingly
 		Otherwise, the position of the sword (and flipstate) is set accordingly and the sword's step()
 		method is called
-	
 
 (*)	)=================================================================================================
 
