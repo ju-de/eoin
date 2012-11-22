@@ -36,20 +36,20 @@ public class Entity extends BlockMapCollider {
 		//Determine entity states based on resting block
 		switch(collisionType) {
 		
-			//On ground
-			case PLATFORM:
-			case SOLID:
-			case SOLIDLADDER:
-				hitGround = true;
-				isFalling = false;
-				break;
-			
 			case DESTROY:
 				isDestroyed = true;
 				break;
 				
 			case KILL:
 				isDead = true;
+				//Falls through so death blocks are treated like solid blocks
+				
+			//On ground
+			case PLATFORM:
+			case SOLID:
+			case SOLIDLADDER:
+				hitGround = true;
+				isFalling = false;
 				break;
 				
 			//Fall through

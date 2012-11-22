@@ -13,7 +13,7 @@ THE PLAYER
 The player class is actually made up of several classes, each handling their own unique properties.
 The basic hierarchy is as follows:
 
-	dmcigd.core.objects.player.Sword.java							Handles sword animation and attacks
+	dmcigd.core.objects.player.Sword.java							Handles sword animation and attack
 		extends dmcigd.core.objects.ObjectCollision.java				Handles bounding box
 					... (see ObjectCollision documentation in object_superclasses)
 	
@@ -32,18 +32,260 @@ In reverse hierarchy (that is, lowest level object to highest level) the objects
 	dmcigd.core.objects.player.LadderHandler.java
 	
 		extends dmcigd.core.objects.Entity.java
+		
+	By default, Entities ignore ladders treating them as either solid blocks or non-solid blocks
+	depending on which type of ladder it is. Ladders do, however, exist for the benefit of the player
+	and therefore must be usable by the player. As such, the Entity superclass must be modified in
+	order to handle ladder behaviour. This is done by changing downward collision properties such that
+	being inside of a ladder, and implementing onLadder states so that the Player.java class can apply
+	the appropriate velocities.
+	
+	Also, because the code is ridden with bad practice, it also handles down-jumping off of platforms
+	by checking the ladder climb state (pressing down) as well as the jump state and fall state.
+	
+	PUBLIC PROPERTIES (BAD PRACTICE, I KNOW, REFACTORING WOULD BE NICE HINT HINT)
+	
+	->	boolean onLadder
+			Determines whether or not the player is clinging on to a ladder or not (if the backBlock
+			is of CollisionType.LADDER or not)
+	
+	->	boolean onLadderTop
+			Determines whether or not a player is on top of a SolidLadder block (and can therefore
+			climb down)
+	
+	->	boolean isClimbing
+			Determines if the player is moving on a ladder or not
+			This can probably be refactored out by giving climbing a null value.
+	
+	->	Direction climbing
+			Determines the direction of ladder movement
+			
+	->	int jumpState
+			Determines if the player is in a jump or a double jump
+			
+	METHOD OVERRIDES
+	
+	->	void rest(CollisionType collisionType)
+			Same as the parent method except with the addition of the SOLIDLADDER case in which
+			onLadderTop is set to true, but falls through to behave like a solid platform
+			
+			onLadderTop will allow the Player class to handle the appropriate motion vectors upon
+			climbing down
+			
+	->	void checkBlockMapCollisionDown(int v)
+			Same as parent method except NONSOLIDLADDER and SOLIDLADDER will no long obstruct motion.
+			This is done by calling the checkSolidObjectCollisionDown(v) method as long as onLadder is
+			true or the player is climbing down. Vertical velocity is also reset at this point so that
+			the player remains stationary (not falling) while on a ladder
+			
+			Also, PLATFORM now has an added condition before proceeding with the solidObject collision
+			check where if the jumpState > 0 (player has just jumped) and the player is climbing down
+			(the down arrow key is pressed), the player will fall through the platform.
+	
+	->	void move()
+			This method calls the superclass' move method (as defined in Entity) but sets onLadderTop
+			to false before each super.move(), and after the super.move(), backBlock is checked to
+			see if the player is clinging on to a ladder or not (searching for CollisionType of either
+			NONSOLIDLADDER of SOLDILADDER)
+			
+			Please note that onLadderTop is set to true within the move() method due to the override
+			of the rest() method.
 
 (*)	)=================================================================================================
 
 	dmcigd.core.objects.player.ControlHandler.java
 	
 		extends dmcigd.core.objects.player.LadderHandler.java
+		
+	ControlHandler is another class created purely for the sake or organization, separating all of the
+	control methods called by the Room.java class.
+	
+	PUBLIC PROPERTIES
+	
+	->	int jumpDelay
+			Default value of 5, acts as a countdown clock inside of the object to prevent accidental
+			early double jumps which screw up the double jump counter.
+	
+	->	boolean isWalking
+			Determines if the player is walking or not
+			Like isClimbing, this can probably be refactored out
+	
+	->	boolean sprint
+			Determines if the player is sprinting or not (and therefore the speed of motion)
+			(Should probably be refactored as isSprinting for consitency)
+			
+	->	Direction walking
+			Determines the direction of player motion.
+			
+	->	ArrayList<Item> items
+			ArrayList of items for interaction checks
+			
+	->	ArrayList<Region> regions
+			ArrayList of regions for interaction and hover checks
+			
+	->	Item heldItem
+			Currently held item
+	
+	ABSTRACT METHODS
+	
+	->	abstract void handleRegionInteraction(Region region)
+			Handles region interaction, similar to pushObject(), must be defined in the Player class
+			as it has to pass the player object (calling "this")
+			
+	->	abstract void handleAttack()
+			If no interaction takes place, an attack must take place. This must be handled by the
+			Player class as the instance of Sword exists in Player, not in ControlHandler (although
+			this could be easily refactored)
+	
+	CONTROL METHODS
+	
+	->	void walk(boolean isWalking, Direction direction)
+			Sets the isWalking property and sets the flipped property.
+			
+			The importance of the walking Direction rather than using the flipped property for
+			reference is necessary as isWalking should only be set to false if it is in the same
+			direction. This smooths out issues regarding overlapping keyPresses
+	
+	->	void climb(boolean isClimbing, Direction direction)
+			Sets the isClimbing and climbing properties as defined in LadderHandler
+	
+	->	void sprint(boolean sprint)
+			Sets sprinting on or off
+	
+	->	void jump(boolean jumping)
+			If jumping is true,
+				if the jumpState is < 2 (that is, the player has not double jumped), the jumpDelay is
+				0, and the player is not on a ladder,
+					Then a negative vy is set (causing projectile motion due to the nature of gravity)
+					The jumpState is incremented (normal -> jump -> double jump)
+					The jumpDelay is set back to 5
+					The frame is set back to 0 (for the one-shot jump animation)
+				Please note that if the player is "cimbing down" while jumping, a smaller jump will be
+				produced, halving the initial velocity and thereby drastically reducing the max height
+			Otherwise,
+				If the vy is greater than 0, it is set to 0 (terminates a jump early)
+	
+	->	void interact()
+			First, all regions are checked for areas of intersection, and handleRegionInteraction() is
+			called on any intersection regions. If any regions do intersect, the loop is broken and
+			interacted is set to true (which will disable further actions)
+			
+			It may be possible to remove this check as it is redundant with the hover check. If
+			somebody could investigate this and refactor accordingly that would be very nice.
+			
+			If the player is holding an item,
+				If no interaction has taken place, the item is released into the air. This is done
+				by adding a horizontal velocity vector in the direction the player is facing, adding
+				negative vertical velocity to give it a projectile arc, and setting the heldItem to
+				no longer being held so that it will resume its ordinary motion loop.
+				
+			Otherwise
+				All items are checked for intersection, and first item is picked up.
+				
+				If no interaction has taken place and no item has been picked up, handleAttack() is
+				called at this point (lowest priority interaction)
 
 (*)	)=================================================================================================
 
 	dmcigd.core.objects.player.Player.java
 	
 		extends dmcigd.core.objects.player.ControlHandler.java
+		
+	The Player class handles all extra aspects of of the player, and the actual movement (where the
+	parents handle movement states for the Player class to manipulate)
+	
+	CONSTRUCTION
+	
+	->	Player(int x, int y, BlockMap blockMap, ArrayList<SolidObject> solidObjects,
+			ArrayList<Item> items, ArrayList<Region> regions)
+			x and y set the spawn position of the player
+			blockMap and solidObjects are passed to the according superclasses for collision checks
+			items and regions are used for the Player's internal collision checks
+			
+			At this point, animation loops are also set, with sequences as follows:
+			
+			SEQUENCE # ANIMATION	FRAMES	LOOPS		FRAME SPEED
+					0: Idle 		[2] 	[Loops]		0.015f
+					1: Walk 		[4] 	[Loops]		0.1f / 0.075f	Sprinting/Walking
+					2: Jump 		[3] 	[One Shot]	0.2f
+					3: Falling 		[3] 	[One Shot]	0.1f
+					4: Climbing 	[2]		[Loops]		0.05f / 0f		Climbing/Hanging
+					
+			The EntityType is set to PLAYER and a new instance of Sword is also created
+	
+	PUBLIC GETTERS AND PROPERTIES
+	
+	->	Sword sword
+			The instance of the Sword class described below is stored in the instance of the Player
+			class, and is publically accessible because of bad practice. This should probably be
+			refactored to a getSword() method ASAP.
+
+	->	String getRoom()
+			This method is manipulated by the main game loop as room transitions are controlled by
+			modifying the Player instance.
+			
+	PUBLIC SETTERS
+	
+	->	void setRoom(String room)
+			Used by regions to change the Room
+			
+	EVENT METHODS
+	
+	->	void handleRegionInteraction (Region region)
+			Calls the region's interact() method passing itself (region.interact(this))
+			
+	->	void handleAttack()
+			Calls the sword's attack() method
+			
+	->	void onPush(Entity entity, int v)
+			Calls the superclass' onPush method, but adds a condition where if the EntityType is
+			greater than or equal to LETHALMONSTER, isDead is set to true.
+			This would apply to all LETHALMONSTER types and projectiles
+			
+	OBJECT PROCEDURE
+	
+	1.	The horizontal movement vectors are set. If the player is walking, the speed is set to 2, and
+		if the player is sprinting the speed is set to 4. Otherwise, the speed is set to 0 and the
+		acceleration vectors are reset.
+		
+	2.	Climbing vectors are then set (jumping and gravity are already handled by their respective
+		methods) If the player is climbing and is on a ladder, or if the player is climbing down and
+		on top of a ladder, a velocity of 2 is set in the direction of climbing
+		
+	3.	move() is called to apply the motion vecvtors
+	
+	4.	The player loops through all regions and checks for intersection to activate onHover(this)
+	
+	5.	animate() is called. The player actually sets it sequence in its own animate() method:
+		
+			If the player is on a ladder,
+				The frame speed is set dependent on whether the player is moving or not (isClimbing)
+				The sequence is set to 4
+			Otherwise, if the player is falling,
+				The frame speed is set and the sequence is set to 3
+			Otherwise, if the player is jumping (and not logically, not falling)
+				The frame speed is set and the sequence is set to 2
+			Otherwise, if the player is walking,
+				The frame speed is set dependent on whether the player is sprinting or not (sprint)
+				The sequence is set to 1
+			Otherwise, if none of these cases are present (the player is idling),
+				The frame speed is set and the sequence is set to 0
+			After the sequence is set a super.animate() call is made to apply these changes.
+			
+	6.	If the player has hit the ground or is on a ladder, the jumpState is reset to 0
+	
+	7.	If the player is falling and has reached terminal velocity, the jumpState is set to 1.
+			The game waits until reaching terminal velocity (5 pixels/tick) to allow for a grace
+			period, but the player is not allowed to double jump after falling. Doubling jumping can
+			only be done off of a solid surface.
+			One jump is still allowed, so the jumpState is only set to 1, not 2.
+			
+	8.	If the jumpDelay is greater than 0, it is decremented (counted down)
+	
+	9.	If the player is holding an item, the x and y positions are set accordingly
+		Otherwise, the position of the sword (and flipstate) is set accordingly and the sword's step()
+		method is called
+	
 
 (*)	)=================================================================================================
 
@@ -52,7 +294,7 @@ In reverse hierarchy (that is, lowest level object to highest level) the objects
 		extends dmcigd.core.objects.ObjectCollision.java
 		
 	The sword exists as it's own entity in order to handle its own bounding box. Furthermore, due to
-	animation constraints (seriously, you try animating a player sprite in the given time), the Sword's
+	animation constraints (seriously, you try animating a player sprite in the given time), the Sword
 	animations are independent of the player (which is also why it looks very awkward).
 	
 	Because the Sword is in many ways an extension of the Player instance, it has its own collision
@@ -135,9 +377,23 @@ In reverse hierarchy (that is, lowest level object to highest level) the objects
 			
 		2.	Set x to baseX - 20 if flipped, or baseX - 4 if not flipped
 			Set y to baseY
+			
+======================================================================================================
+
+THE ASCIIMAPS
 	
 	BlockMap
 	EnvironmentMap
+	
+======================================================================================================
+
+DIALOGUE
 
 Hussain, please add dialogueHandler and dialogue Item documentation (and note that I removed the code
 for avatarImageCodes)
+
+======================================================================================================
+
+CUTSCENES
+
+Not yet implemented

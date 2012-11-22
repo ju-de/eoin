@@ -21,8 +21,6 @@ public class Player extends ControlHandler implements SolidObject {
 		this.room = room;
 	}
 	
-	public boolean isDestroyed() { return false; }
-	
 	public void handleRegionInteraction (Region region) {
 		region.interact(this);
 	}
@@ -109,12 +107,12 @@ public class Player extends ControlHandler implements SolidObject {
 		//Set movement vectors
 		if(isWalking) {
 			if(!sprint) {
-				accelerate(1.0f, 2.0f, walking);
+				accelerate(1, 2, walking);
 			} else {
-				accelerate(1.0f, 4.0f, walking);
+				accelerate(1, 4, walking);
 			}
 		}else{
-			accelerate(0.0f, 0.0f, Direction.RIGHT);
+			accelerate(0, 0, Direction.RIGHT);
 			setVX(0);
 		}
 		
@@ -165,8 +163,8 @@ public class Player extends ControlHandler implements SolidObject {
 			sword.setPosition(getX(),getY()-getFrame()%2);
 			sword.setLadder(onLadder);
 			sword.flipped = flipped;
+			
+			sword.step();
 		}
-		
-		sword.step();
 	}
 }
