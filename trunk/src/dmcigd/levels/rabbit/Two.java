@@ -6,6 +6,7 @@ import dmcigd.core.room.Room;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.platforms.*;
+import dmcigd.core.objects.regions.RoomWarp;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
 import dmcigd.levels.rabbit.houses.*;
@@ -43,6 +44,8 @@ public class Two extends Room implements Runnable {
 		addRegion(new Switch(220 * 32 - 4, 22 * 32 + 16, false, switchBlock1));
 		addTextLabel(new TextLabel(219 * 32, 23 * 32 - 4, "Press"));
 		addTextLabel(new TextLabel(219 * 32 - 2, 23 * 32 + 10, "\"X\"", false));
+		
+		addRegion(new RoomWarp(276 * 32+ 16, 0, 32, 640, "rabbit.Three"));
 		
 		addBackgroundObject(new HouseThree(218 * 32, 15 * 32 + 4, 0));
 		addForegroundObject(new HouseThree(218 * 32, 15 * 32 + 4, 1));
