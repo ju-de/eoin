@@ -199,10 +199,10 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
 			case KeyEvent.VK_UP:
-				player.climbUp(true);
+				player.climb(true, Direction.UP);
 				break;
 			case KeyEvent.VK_DOWN:
-				player.climbDown(true);
+				player.climb(true, Direction.DOWN);
 				break;
 			case KeyEvent.VK_LEFT:
 				player.walk(true, Direction.LEFT);
@@ -232,10 +232,10 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		int keyCode = e.getKeyCode();
 		switch(keyCode) {
 			case KeyEvent.VK_UP:
-				player.climbUp(false);
+				player.climb(false, Direction.UP);
 				break;
 			case KeyEvent.VK_DOWN:
-				player.climbDown(false);
+				player.climb(false, Direction.DOWN);
 				break;
 			case KeyEvent.VK_LEFT:
 				player.walk(false, Direction.LEFT);

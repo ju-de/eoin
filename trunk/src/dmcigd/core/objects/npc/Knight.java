@@ -8,9 +8,9 @@ import dmcigd.core.room.*;
 public class Knight extends ObjectCollision implements Region {
 
 	private DialogueHandler dialogueHandler;
-	private String name,message;
+	private String message;
 	
-	public Knight (int x, int y, boolean flipped, String name, String message, DialogueHandler dialogueHandler) {
+	public Knight (int x, int y, boolean flipped, String message, DialogueHandler dialogueHandler) {
 		
 		setX(x + 6);
 		setY(y);
@@ -29,7 +29,6 @@ public class Knight extends ObjectCollision implements Region {
 		setImagePath("knight.gif");
 		
 		this.dialogueHandler = dialogueHandler;
-		this.name = name;
 		this.message = message;
 		this.flipped = flipped;
 		
@@ -38,7 +37,7 @@ public class Knight extends ObjectCollision implements Region {
 	public void onHover(Player player) {}
 
 	public void interact(Player player) {
-		dialogueHandler.setDialogue(new String[][] {{name, message}});
+		dialogueHandler.setDialogue(new String[][] {{"KNIGHT", message}});
 	}
 	
 	public void step() {

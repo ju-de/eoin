@@ -569,10 +569,10 @@ classes themselves, and the logic associated with the various game objects and i
 		unnecessary if you actually read through the code, however, here is an explanation anyways:
 		
 		UP ARROW Key:
-			Trigger/Stop player's climbUp() method
+			Trigger/Stop player's climb() method in an upward direction
 			
 		DOWN ARROW Key:
-			Trigger/Stop player's climbDown() method
+			Trigger/Stop player's climb() method in a downward direction
 			
 		LEFT ARROW Key:
 			Trigger/Stop player's walk() method in a leftward direction

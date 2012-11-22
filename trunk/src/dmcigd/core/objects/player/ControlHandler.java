@@ -9,6 +9,9 @@ abstract class ControlHandler extends LadderHandler {
 
 	public int jumpDelay = 5;
 	
+	public boolean isWalking,sprint;
+	public Direction walking;
+	
 	public ArrayList<Item> items = new ArrayList<Item>();
 	public Item heldItem;
 	public ArrayList<Region> regions = new ArrayList<Region>();
@@ -33,14 +36,9 @@ abstract class ControlHandler extends LadderHandler {
 		}
 	}
 	
-	public void climbUp(boolean isClimbing) {
+	public void climb(boolean isClimbing, Direction direction) {
 		this.isClimbing = isClimbing;
-		climbing = Direction.UP;
-	}
-	
-	public void climbDown(boolean isClimbing) {
-		this.isClimbing = isClimbing;
-		climbing = Direction.DOWN;
+		climbing = direction;
 	}
 	
 	public void sprint(boolean sprint) {
@@ -70,49 +68,43 @@ abstract class ControlHandler extends LadderHandler {
 		
 		boolean interacted = false;
 		
+		//Check for region interaction
+		for (Region i : regions) {
+			if(getBounds().intersects(i.getBounds())) {
+				handleRegionInteraction(i);
+				interacted = true;
+				break;
+			}
+		}
+		
 		if(heldItem != null) {
 			
 			//If holding an item, check for regions first, don't throw item if in interactive zone
-			
-			for (Region i : regions) {
-				if(getBounds().intersects(i.getBounds())) {
-					handleRegionInteraction(i);
-					interacted = true;
-					break;
-				}
-			}
-			
 			if(!interacted) {
-			
+				//Push item in the direction the player is facing
 				if(flipped) {
 					heldItem.setVX(-4);
 				} else {
 					heldItem.setVX(4);
 				}
+				//Release item into air
 				heldItem.setVY(-4);
 				heldItem.setHeld(false);
 				heldItem = null;
-			
 			}
+			
 		} else {
 			
-			//Otherwise, check for items first, then check for regions
-			
+			//Otherwise, check for items to pick up, regardless of interaction
 			for (Item i : items) {
 				if(getBounds().intersects(i.getBounds())) {
 					heldItem = i;
 					i.setHeld(true);
-				}
-			}
-			
-			for (Region i : regions) {
-				if(getBounds().intersects(i.getBounds())) {
-					handleRegionInteraction(i);
-					interacted = true;
 					break;
 				}
 			}
 			
+			//Only attack if no item is picked up and no interaction takes place
 			if(heldItem == null && !interacted) {
 				handleAttack();
 			}

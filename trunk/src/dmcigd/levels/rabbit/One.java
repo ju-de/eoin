@@ -29,17 +29,23 @@ public class One extends Room implements Runnable {
 		addRegion(new Sign(164 * 32, 14 * 32, 6, "SIGN", "Mr. Scrufflebottom's Abode", getDialogueHandler()));
 		addRegion(new Sign(143 * 32, 28 * 32, 5, "SIGN", "DANGER!\nSTAY OUT!", getDialogueHandler()));
 
-		addRegion(new Knight(12 * 32 - 4, 12 * 32, false, "KNIGHT", "FNORD", getDialogueHandler()));
+		addBackgroundObject(new Flag(12 * 32 - 16, 10 * 32 + 2 ,0));
+		addRegion(new Knight(12 * 32 - 4, 12 * 32, false, "Greetings! It's good that you've arrived. We, the royal knights will be guiding you through the unfamiliar territory along your quest.", getDialogueHandler()));
 		addTextLabel(new TextLabel(12 * 32, 14 * 32 - 20, "Press"));
 		addTextLabel(new TextLabel(12 * 32 - 2, 14 * 32 - 6, "\"X\"", false));
+
+		addBackgroundObject(new Flag(17 * 32 + 16, 10 * 32 + 2 ,1));
+		addRegion(new Knight(17 * 32 + 4, 12 * 32, true, "We have already begun to spread out. Time of the essence, so you best be leaving immediately! Onwards!", getDialogueHandler()));
+		addTextLabel(new TextLabel(17 * 32 + 8, 14 * 32 - 20, "Press"));
+		addTextLabel(new TextLabel(17 * 32 + 6, 14 * 32 - 6, "\"X\"", false));
 		
-		addRegion(new Knight(33 * 32, 12 * 32, true, "KNIGHT", "Don't panic! These rabbits are mostly harmless, they couldn't even hurt you if they tried.", getDialogueHandler()));
-		addRegion(new Knight(81 * 32, 14 * 32, false, "KNIGHT", "Try not to fall off these platforms! You never know what'll be waiting for you down below.", getDialogueHandler()));
-		addRegion(new Knight(142 * 32, 12 * 32, true, "KNIGHT", "Mr. Scrufflebottom's home is just ahead. Maybe he knows something about the kidnapper!", getDialogueHandler()));
+		addRegion(new Knight(33 * 32, 12 * 32, true, "Don't panic! These rabbits are mostly harmless, they couldn't even hurt you if they tried.", getDialogueHandler()));
+		addRegion(new Knight(81 * 32, 14 * 32, false, "Try not to fall off these platforms! You never know what'll be waiting for you down below.", getDialogueHandler()));
+		addRegion(new Knight(142 * 32, 12 * 32, true, "Mr. Scrufflebottom's home is just ahead. Maybe he knows something about the kidnapper!", getDialogueHandler()));
 		
-		addRegion(new Knight(71 * 32, 24 * 32, false, "KNIGHT", "The king will never find me down here!", getDialogueHandler()));
-		addRegion(new Knight(135 * 32, 28 * 32, false, "KNIGHT", "I really wouldn't be down here if I were you...", getDialogueHandler()));
-		addRegion(new Knight(138 * 32, 28 * 32, true, "KNIGHT", "W-what?! You shouldn't be down here! Get back on track!", getDialogueHandler()));
+		addRegion(new Knight(71 * 32, 24 * 32, false, "The king will never find me down here!", getDialogueHandler()));
+		addRegion(new Knight(135 * 32, 28 * 32, false, "I really wouldn't be down here if I were you...", getDialogueHandler()));
+		addRegion(new Knight(138 * 32, 28 * 32, true, "W-what?! You shouldn't be down here! Get back on track!", getDialogueHandler()));
 		
 		addRegion(new MrScrufflebottom(180 * 32 - 4, 13 * 32 + 18, "Kidnapping? I've never heard of any kidnapping!\nNow where did I put my key again?", getDialogueHandler()));
 		

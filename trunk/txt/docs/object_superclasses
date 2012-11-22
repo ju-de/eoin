@@ -585,16 +585,17 @@ structured poorly in itself.
 			
 			This method checks the tileCollisionType in the Direction.DOWN and takes a different
 			course of action depending on the collisionType:
+				
+			DESTROY:
+				Sets isDestroyed to true
 			
 			WATER, NONSOLIDLADDER, or NONSOLID:
 				Sets the isFalling property to true and proceeds to call the
 				checkSolidObjectCollisionDown() method to proceed with object motion.
-				
-			DESTROY:
-				Sets isDestroyed to true and falls through to default
 			
 			KILL:
 				Sets isDead to true and falls through to default
+				(Monsters that can't be killed by spikes treat spikes like solid blocks)
 				
 			DEFAULT:
 				Treats block as if it were solid.
