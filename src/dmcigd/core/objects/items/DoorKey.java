@@ -1,11 +1,8 @@
 package dmcigd.core.objects.items;
 
-import java.util.ArrayList;
-
 import dmcigd.core.enums.EntityType;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
-import dmcigd.core.objects.maps.BlockMap;
 
 public class DoorKey extends Entity implements Item {
 	
@@ -17,7 +14,7 @@ public class DoorKey extends Entity implements Item {
 		this.held = held;
 	}
 	
-	public DoorKey(int x, int y, int type, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
+	public DoorKey(int x, int y, int type, PhysicsHandler physicsHandler) {
 		
 		setX(x + 6);
 		setY(y);
@@ -46,8 +43,7 @@ public class DoorKey extends Entity implements Item {
 				break;
 		}
 		
-		setBlockMap(blockMap);
-		setSolidObjects(solidObjects);
+		setPhysicsHandler(physicsHandler);
 		setGravity();
 		
 		this.type = type;

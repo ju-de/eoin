@@ -1,19 +1,14 @@
 package dmcigd.core.objects.npc;
 
-import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
-import dmcigd.core.objects.player.*;
 import dmcigd.core.room.*;
 
-public class Knight extends ObjectCollision implements Region {
-
-	private DialogueHandler dialogueHandler;
-	private String message;
+public class Knight extends SimpleNpc implements Region {
 	
 	public Knight (int x, int y, boolean flipped, String message, DialogueHandler dialogueHandler) {
 		
-		setX(x + 6);
-		setY(y);
+		super(x + 6, y, "KNIGHT", message, dialogueHandler);
+		
 		setWidth(20);
 		setHeight(32);
 		setImageWidth(20);
@@ -28,16 +23,6 @@ public class Knight extends ObjectCollision implements Region {
 		
 		setImagePath("knight.gif");
 		
-		this.dialogueHandler = dialogueHandler;
-		this.message = message;
-		this.flipped = flipped;
-		
-	}
-	
-	public void onHover(Player player) {}
-
-	public void interact(Player player) {
-		dialogueHandler.setDialogue(new String[][] {{"KNIGHT", message}});
 	}
 	
 	public void step() {

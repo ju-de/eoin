@@ -1,15 +1,23 @@
 package dmcigd.levels.demo;
 
+import dmcigd.core.enums.*;
 import dmcigd.core.objects.interfaces.*;
-import dmcigd.core.objects.maps.BlockMap;
 import dmcigd.core.objects.projectiles.*;
+import dmcigd.core.objects.maps.*;
 
 import java.util.*;
 
-public class DemoProjectileOne extends SimpleProjectile implements SolidObject {
+public class DemoProjectileOne extends ProjectileMotion implements SolidObject {
 	
 	public DemoProjectileOne(int x, int y, int speed, int angle, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
-		super(x,y,speed,angle, blockMap, solidObjects);
+		setPhysicsHandler(new SimpleProjectileHandler(blockMap, solidObjects));
+		
+		setProjectileMotion(speed, angle);
+		
+		setEntityType(EntityType.PROJECTILE);
+		
+		setX(x);
+		setY(y);
 		
 		setHeight(28);
 		setWidth(28);
@@ -23,7 +31,7 @@ public class DemoProjectileOne extends SimpleProjectile implements SolidObject {
 	}
 	
 	public void step() {
-		super.step();
+		move();
 	}
 	
 }

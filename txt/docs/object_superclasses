@@ -362,6 +362,10 @@ the objects externally.
 			meant to be run once per tick
 			It adds the acceleration to the velocities, and does a check against the terminal
 			velocities to ensure that no object is defying it's own physical laws
+			
+======================================================================================================
+
+EVERYTHING BELOW THIS LINE IS WRONG! Please wait for new documentation
 
 ======================================================================================================
 

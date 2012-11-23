@@ -17,14 +17,12 @@ public class One extends Room implements Runnable {
 		super(codeBase, "rabbit", "One", "grassy");
 	}
         
-        @Override
 	public void initializeSolidObjects() {
 		addSolidObject(new LockedDoor(184 * 32, 14 * 32, 1));
 	}
         
-        @Override
 	public void initializeNonsolidObjects() {
-		addItem(new DoorKey(186 * 32, 16 * 32, 1, getBlockMap(), getSolidObjects()));
+		addItem(new DoorKey(186 * 32, 16 * 32, 1, getPhysicsHandler()));
 		
 		addRegion(new Sign(15 * 32, 13 * 32, 3, "SIGN", "Welcome to the Rabbit Hills.\nForest Ahead.", getDialogueHandler()));
 		addRegion(new Sign(97 * 32, 22 * 32, 4, "SIGN", "Be careful of large falls!\nUse the ladder ahead to get back on track.", getDialogueHandler()));

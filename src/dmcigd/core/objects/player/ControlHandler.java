@@ -2,15 +2,22 @@ package dmcigd.core.objects.player;
 
 import java.util.ArrayList;
 
+import dmcigd.core.enums.CollisionType;
 import dmcigd.core.enums.Direction;
+import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 
-abstract class ControlHandler extends LadderHandler {
+abstract class ControlHandler extends Entity {
 
 	public int jumpDelay = 5;
 	
 	public boolean isWalking,sprint;
 	public Direction walking;
+	
+	public boolean onLadder,onLadderTop,isClimbing = false;
+	public Direction climbing;
+	
+	public int jumpState = 0;
 	
 	public ArrayList<Item> items = new ArrayList<Item>();
 	public Item heldItem;
@@ -109,6 +116,19 @@ abstract class ControlHandler extends LadderHandler {
 				handleAttack();
 			}
 			
+		}
+	}
+	
+	public void move() {
+		onLadderTop = false;
+		
+		super.move();
+		
+		//Checks for ladders
+		if(backBlock == CollisionType.NONSOLIDLADDER || backBlock == CollisionType.SOLIDLADDER) {
+			onLadder = true;
+		} else {
+			onLadder = false;
 		}
 	}
 }

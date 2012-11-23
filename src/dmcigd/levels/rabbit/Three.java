@@ -7,7 +7,7 @@ import dmcigd.core.room.Room;
 import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.items.*;
 //import dmcigd.core.objects.npc.*;
-//import dmcigd.levels.rabbit.houses.*;
+import dmcigd.levels.rabbit.houses.*;
 
 public class Three extends Room implements Runnable {
 	
@@ -29,11 +29,14 @@ public class Three extends Room implements Runnable {
 	}
 
 	public void initializeNonsolidObjects() {
-		addItem(new DoorKey(126 * 32, 23 * 32, 3, getBlockMap(), getSolidObjects()));
-		addItem(new DoorKey(117 * 32, 22 * 32, 2, getBlockMap(), getSolidObjects()));
-		addItem(new DoorKey(131 * 32, 15 * 32, 1, getBlockMap(), getSolidObjects()));
+		addItem(new DoorKey(126 * 32, 23 * 32, 3, getPhysicsHandler()));
+		addItem(new DoorKey(117 * 32, 22 * 32, 2, getPhysicsHandler()));
+		addItem(new DoorKey(131 * 32, 15 * 32, 1, getPhysicsHandler()));
 		
 		addRegion(new Switch(119 * 32 + 4, 23 * 32 + 16, true, switchBlock1));
 		addRegion(new Switch(130 * 32 + 4, 27 * 32 + 16, true, switchBlock2));
+		
+		addBackgroundObject(new HouseSix(96 * 32 - 8, 16 * 32 + 4, 0));
+		addForegroundObject(new HouseSix(96 * 32 - 8, 16 * 32 + 4, 1));
 	}
 }

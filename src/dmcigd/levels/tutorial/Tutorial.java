@@ -29,7 +29,7 @@ public class Tutorial extends Room implements Runnable {
 		addSolidObject(new LockedDoor(114 * 32, 23 * 32, 2));
 		addSolidObject(new LockedDoor(118 * 32, 23 * 32, 1));
 		
-		addSolidObject(new PushableBlock(128 * 32, 23 * 32, getBlockMap(), getSolidObjects()));
+		addSolidObject(new PushableBlock(128 * 32, 23 * 32, getPhysicsHandler()));
 		
 		addSolidObject(new Dummy(198 * 32, 19 * 32 + 24));
 		addSolidObject(new Dummy(201 * 32, 19 * 32 + 24));
@@ -71,7 +71,7 @@ public class Tutorial extends Room implements Runnable {
 		
 		addTextLabel(new TextLabel(129 * 32, 20 * 32, "Or pick up items", false));
 		
-		addItem(new DoorKey(126 * 32, 20 * 32, 2, getBlockMap(), getSolidObjects()));
+		addItem(new DoorKey(126 * 32, 20 * 32, 2, getPhysicsHandler()));
 		
 		addRegion(new Sign(126 * 32, 20 * 32, 4, "SIGN", "Keys can be thrown at locked doors of the corresponding colour to open them.", getDialogueHandler()));
 		
@@ -80,7 +80,7 @@ public class Tutorial extends Room implements Runnable {
 		
 		addTextLabel(new TextLabel(120 * 32, 22 * 32, "And go through passages", false));
 		
-		addItem(new DoorKey(112 * 32, 23 * 32, 1, getBlockMap(), getSolidObjects()));
+		addItem(new DoorKey(112 * 32, 23 * 32, 1, getPhysicsHandler()));
 
 		addTextLabel(new TextLabel(113 * 32, 25 * 32, "While holding an item", false));
 		addTextLabel(new TextLabel(113 * 32, 25 * 32 + 20, "press \"X\" again to throw it", false));
