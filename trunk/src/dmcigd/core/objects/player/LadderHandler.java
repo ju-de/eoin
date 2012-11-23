@@ -18,10 +18,10 @@ abstract class LadderHandler extends Entity {
 		
 			//Dead
 			case DESTROY:
-				getPhysicsHandler().isDestroyed = true;
+				isDestroyed = true;
 				break;
 			case KILL:
-				getPhysicsHandler().isDead = true;
+				isDead = true;
 				break;
 
 			//On ladder
@@ -31,8 +31,8 @@ abstract class LadderHandler extends Entity {
 			//On ground
 			case PLATFORM:
 			case SOLID:
-				getPhysicsHandler().hitGround = true;
-				getPhysicsHandler().isFalling = false;
+				hitGround = true;
+				isFalling = false;
 				break;
 			//In air
 			default:
@@ -44,41 +44,41 @@ abstract class LadderHandler extends Entity {
 	//Checks downward collision for ladders
 	public void checkBlockMapCollisionDown(int v) {
 		//Move Down
-		switch(getPhysicsHandler().tileCollisionType(v, Direction.DOWN)) {
+		switch(tileCollisionType(v, Direction.DOWN)) {
 		
 			//Dead
 			case DESTROY:
-				getPhysicsHandler().isDestroyed = true;
+				isDestroyed = true;
 				break;
 			case KILL:
-				getPhysicsHandler().isDead = true;
+				isDead = true;
 				break;
 		
 			case WATER:
 			case NONSOLID:
-				getPhysicsHandler().isFalling = true;
-				getPhysicsHandler().checkSolidObjectCollisionDown(v);
+				isFalling = true;
+				checkSolidObjectCollisionDown(v);
 				break;
 				
 			//Climb down
 			case NONSOLIDLADDER:
 			case SOLIDLADDER:
 				if(onLadder || (isClimbing && climbing == Direction.DOWN)) {
-					getPhysicsHandler().checkSolidObjectCollisionDown(v);
+					checkSolidObjectCollisionDown(v);
 					setVY(0);
 					break;
 				}
 				
 			case PLATFORM:
 				if(isClimbing && climbing == Direction.DOWN && jumpState > 0) {
-					getPhysicsHandler().checkSolidObjectCollisionDown(v);
+					checkSolidObjectCollisionDown(v);
 					break;
 				}
 			//Hit ground
 			default:
-				getPhysicsHandler().blockMapCollision(Direction.DOWN);
+				blockMapCollision(Direction.DOWN);
 				setVY(0);
-				rest(getPhysicsHandler().tileCollisionType(v, Direction.DOWN));
+				rest(tileCollisionType(v, Direction.DOWN));
 				break;
 		}
 	}

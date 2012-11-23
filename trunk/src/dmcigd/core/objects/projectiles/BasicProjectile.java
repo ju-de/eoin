@@ -55,8 +55,8 @@ public abstract class BasicProjectile extends Entity {
 		
 		//If specific collision attributes are necessary, override the EntityType in the constructor
 		setEntityType(EntityType.PROJECTILE);
-		getPhysicsHandler().setBlockMap(blockMap);
-		getPhysicsHandler().setSolidObjects(solidObjects);
+		setBlockMap(blockMap);
+		setSolidObjects(solidObjects);
 			
 	}
 	
