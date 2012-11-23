@@ -1,9 +1,8 @@
 package dmcigd.core.objects.interfaces;
 
-import java.awt.Rectangle;
-
 import dmcigd.core.enums.CollisionType;
 import dmcigd.core.objects.ObjectImage;
+import java.awt.Rectangle;
 
 public interface GameObject {
 	

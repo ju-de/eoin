@@ -19,7 +19,7 @@ public class LockedDoor extends ObjectCollision implements RestableObject {
 			setCollisionType(CollisionType.NONSOLID);
 			unlocked = true;
 			
-			entity.isDestroyed = true;
+			entity.getPhysicsHandler().isDestroyed = true;
 			
 		}
 		

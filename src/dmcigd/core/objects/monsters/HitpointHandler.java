@@ -83,7 +83,7 @@ public class HitpointHandler extends Entity {
 	public void step() {
 		
 		if(hitpoints <= 0) {
-			isDestroyed = true;
+			getPhysicsHandler().isDestroyed = true;
 		}
 		
 		if(invincible) {
