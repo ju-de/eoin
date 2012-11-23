@@ -2,8 +2,8 @@ package dmcigd.core.objects.player;
 
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.Entity;
+import dmcigd.core.objects.PhysicsHandler;
 import dmcigd.core.objects.interfaces.*;
-import dmcigd.core.objects.maps.BlockMap;
 
 import java.util.*;
 
@@ -31,12 +31,12 @@ public class Player extends ControlHandler implements SolidObject {
 	
 	public void onPush(Entity entity, int v) {
 		super.onPush(entity, v);
-		if(getEntityType().getCode() >= EntityType.LETHALMONSTER.getCode()) {
+		if(entity.getEntityType().getCode() >= EntityType.LETHALMONSTER.getCode()) {
 			isDead = true;
 		}
 	}
 	
-	public Player(int x, int  y, BlockMap blockMap, ArrayList<SolidObject> solidObjects, ArrayList<Item> items, ArrayList<Region> regions) {
+	public Player(int x, int  y, PhysicsHandler physicsHandler, ArrayList<Item> items, ArrayList<Region> regions) {
 		
 		setX(x);
 		setY(y);
@@ -46,8 +46,7 @@ public class Player extends ControlHandler implements SolidObject {
 		setImageWidth(24);
 		
 		setGravity();
-		setBlockMap(blockMap);
-		setSolidObjects(solidObjects);
+		setPhysicsHandler(new LadderHandler(physicsHandler.getBlockMap(), physicsHandler.getSolidObjects()));
 		
 		this.items = items;
 		this.regions = regions;
@@ -68,7 +67,7 @@ public class Player extends ControlHandler implements SolidObject {
 		setEntityType(EntityType.PLAYER);
 		
 		//Create Sword
-		sword = new Sword(x, y, solidObjects);
+		sword = new Sword(x, y, getPhysicsHandler().getSolidObjects());
 	}
 	
 	public void animate() {
@@ -107,9 +106,9 @@ public class Player extends ControlHandler implements SolidObject {
 		//Set movement vectors
 		if(isWalking) {
 			if(!sprint) {
-				accelerate(1, 2, walking);
+				accelerate(1.0f, 2.0f, walking);
 			} else {
-				accelerate(1, 4, walking);
+				accelerate(1.0f, 4.0f, walking);
 			}
 		}else{
 			accelerate(0, 0, Direction.RIGHT);
@@ -119,9 +118,9 @@ public class Player extends ControlHandler implements SolidObject {
 		//Set movement vectors for climbing
 		if(isClimbing && (onLadder || climbing == Direction.DOWN && onLadderTop)) {
 			if(climbing == Direction.UP) {
-				setVY(-2);
+				setVY(-2.0f);
 			}else {
-				setVY(2);
+				setVY(2.0f);
 			}
 		}
 		

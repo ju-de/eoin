@@ -17,7 +17,7 @@ public class Demo extends Room implements Runnable {
 	
 	public void initializeSolidObjects() {
 				
-		addSolidObject(new PushableBlock(832, 480, getBlockMap(), getSolidObjects()));
+		addSolidObject(new PushableBlock(832, 480, getPhysicsHandler()));
 
 		addSolidObject(new LockedDoor(992, 480, 1));
 		
@@ -27,7 +27,7 @@ public class Demo extends Room implements Runnable {
 		
 		addSolidObject(new MovingPlatform(1952, 480, 0, 6, 1, 6));
 		
-		addSolidObject(new PushableBlock(2048, 416, getBlockMap(), getSolidObjects()));
+		addSolidObject(new PushableBlock(2048, 416, getPhysicsHandler()));
 		
 		addSolidObject(new MovingPlatform(5184, 480, 1, 1, 1, 14));
 		
@@ -73,8 +73,8 @@ public class Demo extends Room implements Runnable {
 	
 	public void initializeNonsolidObjects() {
 		
-		addItem(new DoorKey(416, 416, 1, getBlockMap(), getSolidObjects()));
-		addItem(new DoorKey(736, 416, 2, getBlockMap(), getSolidObjects()));
+		addItem(new DoorKey(416, 416, 1, getPhysicsHandler()));
+		addItem(new DoorKey(736, 416, 2, getPhysicsHandler()));
 		
 		addRegion(new Passage(416, 480, 2112, 320));
 		addRegion(new Passage(2112, 320, 416, 480));

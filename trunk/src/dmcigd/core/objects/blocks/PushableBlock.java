@@ -3,16 +3,13 @@ package dmcigd.core.objects.blocks;
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
-import dmcigd.core.objects.maps.BlockMap;
-
-import java.util.*;
 
 public class PushableBlock extends Entity implements RestableObject {
 	
 	public void onPush(Entity entity, int v) {
 		if(entity.getEntityType() == EntityType.PLAYER) {
-			if(restingBlock != null) {
-				setVX((v - restingBlock.getDX())/2);
+			if(getRestingBlock() != null) {
+				setVX((v - getRestingBlock().getDX())/2);
 			} else {
 				setVX(v/2);
 			}
@@ -21,7 +18,7 @@ public class PushableBlock extends Entity implements RestableObject {
 	
 	public boolean isDestroyed() { return false; }
 	
-	public PushableBlock(int x, int y, BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
+	public PushableBlock(int x, int y, PhysicsHandler physicsHandler) {
 
 		setX(x);
 		setY(y);
@@ -39,8 +36,7 @@ public class PushableBlock extends Entity implements RestableObject {
 		
 		setCollisionType(CollisionType.SOLID);
 		
-		setBlockMap(blockMap);
-		setSolidObjects(solidObjects);
+		setPhysicsHandler(physicsHandler);
 		setEntityType(EntityType.MOVINGBLOCK);
 		setGravity();
 	}

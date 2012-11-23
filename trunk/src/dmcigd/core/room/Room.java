@@ -25,6 +25,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	//Objects and object lists
 	private Player player;
 	private BlockMap blockMap = new BlockMap();
+	private PhysicsHandler physicsHandler;
 	private EnvironmentMap environmentMap = new EnvironmentMap();
 	private DialogueHandler dialogueHandler = new DialogueHandler();
 	private ArrayList<ObjectImage> visibleObjects;
@@ -62,6 +63,9 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	}
 	public BlockMap getBlockMap() {
 		return blockMap;
+	}
+	public PhysicsHandler getPhysicsHandler() {
+		return physicsHandler;
 	}
 	public EnvironmentMap getEnvironmentMap() {
 		return environmentMap;
@@ -181,7 +185,9 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		blockMap.loadBlockMap(codeBase, levelName, roomName);
 		environmentMap.loadEnvironmentMap(codeBase, levelName, roomName);
 		
-		player = new Player(blockMap.getSpawnX() * 32 + 6, blockMap.getSpawnY() * 32, blockMap, getSolidObjects(), getItems(), getRegions());
+		physicsHandler = new PhysicsHandler(blockMap, getSolidObjects());
+		
+		player = new Player(blockMap.getSpawnX() * 32 + 6, blockMap.getSpawnY() * 32, physicsHandler, getItems(), getRegions());
 		
 		initializeSolidObjects();
 		
