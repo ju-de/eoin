@@ -16,11 +16,13 @@ public class One extends Room implements Runnable {
 	public One(URL codeBase) {
 		super(codeBase, "rabbit", "One", "grassy");
 	}
-
+        
+        @Override
 	public void initializeSolidObjects() {
 		addSolidObject(new LockedDoor(184 * 32, 14 * 32, 1));
 	}
-
+        
+        @Override
 	public void initializeNonsolidObjects() {
 		addItem(new DoorKey(186 * 32, 16 * 32, 1, getBlockMap(), getSolidObjects()));
 		

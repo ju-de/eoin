@@ -46,8 +46,8 @@ public class DoorKey extends Entity implements Item {
 				break;
 		}
 		
-		getPhysicsHandler().setBlockMap(blockMap);
-		getPhysicsHandler().setSolidObjects(solidObjects);
+		setBlockMap(blockMap);
+		setSolidObjects(solidObjects);
 		setGravity();
 		
 		this.type = type;
@@ -57,7 +57,7 @@ public class DoorKey extends Entity implements Item {
 	public void step() {
 		if(!held) {
 			move();
-			if(getPhysicsHandler().hitGround) {
+			if(hitGround) {
 				setVX(0);
 			}
 		}

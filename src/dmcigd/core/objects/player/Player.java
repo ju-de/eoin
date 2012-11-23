@@ -31,8 +31,8 @@ public class Player extends ControlHandler implements SolidObject {
 	
 	public void onPush(Entity entity, int v) {
 		super.onPush(entity, v);
-		if(entity.getEntityType().getCode() >= EntityType.LETHALMONSTER.getCode()) {
-			getPhysicsHandler().isDead = true;
+		if(getEntityType().getCode() >= EntityType.LETHALMONSTER.getCode()) {
+			isDead = true;
 		}
 	}
 	
@@ -46,8 +46,8 @@ public class Player extends ControlHandler implements SolidObject {
 		setImageWidth(24);
 		
 		setGravity();
-		getPhysicsHandler().setBlockMap(blockMap);
-		getPhysicsHandler().setSolidObjects(solidObjects);
+		setBlockMap(blockMap);
+		setSolidObjects(solidObjects);
 		
 		this.items = items;
 		this.regions = regions;
@@ -81,7 +81,7 @@ public class Player extends ControlHandler implements SolidObject {
 				setFrameSpeed(0);
 			}
 			setSequence(4);
-		} else if(getPhysicsHandler().isFalling) {
+		} else if(isFalling) {
 			setFrameSpeed(0.1f);
 			setSequence(3);
 		} else if(jumpState > 0) {
@@ -138,14 +138,14 @@ public class Player extends ControlHandler implements SolidObject {
 		animate();
 		
 		//Reset jump count
-		if(getPhysicsHandler().hitGround || onLadder) {
+		if(hitGround || onLadder) {
 			jumpState = 0;
 		}
 		
 		//Counts falling at terminal velocity as a jump
 		//If falling, player should not be allowed to defy physics even further and jump a second time
 		//Period of acceleration is given as a grace period to give player time to react
-		if(getPhysicsHandler().isFalling && getVY() >= 5 && jumpState == 0) {
+		if(isFalling && getVY() >= 5 && jumpState == 0) {
 			jumpState = 1;
 		}
 		

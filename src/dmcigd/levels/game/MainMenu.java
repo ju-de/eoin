@@ -22,7 +22,7 @@ public class MainMenu extends Room implements Runnable {
 		addRegion(new RoomPassage(12 * 32, 10 * 32, "rabbit.One"));
 		addTextLabel(new TextLabel(12 * 32 - 10, 11 * 32 + 16, "Level Select"));
 		
-		addRegion(new RoomPassage(20 * 32, 10 * 32, "rabbit.Three"));
+		addRegion(new Passage(20 * 32, 10 * 32, 16 * 32, 10 * 32));
 		addTextLabel(new TextLabel(20 * 32 + 3, 11 * 32 + 16, "Credits"));
 		
 		addTextLabel(new TextLabel(15 * 32 - 11, 8 * 32, "UNTITLED GAME", false));
