@@ -37,8 +37,8 @@ public class Two extends Room implements Runnable {
 	public void initializeNonsolidObjects() {
 		addItem(new DoorKey(231 * 32, 17 * 32, 1, getPhysicsHandler()));
 		
-		addRegion(new Sign(67 * 32, 15 * 32, 9, "SIGN", "Beware of thorns!", getDialogueHandler()));
-		addRegion(new Sign(216 * 32, 20 * 32, 3, "SIGN", "Property of the Wiggleton Family", getDialogueHandler()));
+		addRegion(NPCGenerator.makeSign(67 * 32, 15 * 32, 9, "DANGER", "Beware of thorns!", getDialogueHandler()));
+		addRegion(NPCGenerator.makeSign(216 * 32, 20 * 32, 3, "SIGN", "Property of the Wiggleton Family", getDialogueHandler()));
 		
 		addRegion(new Switch(220 * 32 - 4, 22 * 32 + 16, false, switchBlock1));
 		addTextLabel(new TextLabel(219 * 32, 23 * 32 - 4, "Press"));
