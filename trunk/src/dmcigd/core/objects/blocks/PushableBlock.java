@@ -11,8 +11,8 @@ public class PushableBlock extends Entity implements RestableObject {
 	
 	public void onPush(Entity entity, int v) {
 		if(entity.getEntityType() == EntityType.PLAYER) {
-			if(restingBlock != null) {
-				setVX((v - restingBlock.getDX())/2);
+			if(getPhysicsHandler().restingBlock != null) {
+				setVX((v - getPhysicsHandler().restingBlock.getDX())/2);
 			} else {
 				setVX(v/2);
 			}
@@ -39,8 +39,8 @@ public class PushableBlock extends Entity implements RestableObject {
 		
 		setCollisionType(CollisionType.SOLID);
 		
-		setBlockMap(blockMap);
-		setSolidObjects(solidObjects);
+		getPhysicsHandler().setBlockMap(blockMap);
+		getPhysicsHandler().setSolidObjects(solidObjects);
 		setEntityType(EntityType.MOVINGBLOCK);
 		setGravity();
 	}

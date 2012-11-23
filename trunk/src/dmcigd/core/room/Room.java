@@ -163,7 +163,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		stepGameObjects();
 		
 		//Checks for player death
-		if(player.isDead || player.isDestroyed) {
+		if(player.getPhysicsHandler().isDead || player.getPhysicsHandler().isDestroyed) {
 			isDead = true;
 		}
 		
