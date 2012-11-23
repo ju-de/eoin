@@ -70,11 +70,61 @@ public class NPCGenerator {
         npc.setImagePath(imagePath);
         npc.setImageHeight(32);
         npc.setImageWidth(32);
-        npc.setWidth(24);
-        npc.setHeight(24);
+        npc.setWidth(26);
+        npc.setHeight(26);
         npc.setX(x);
         npc.setY(y);
         npc.flipped = imageFlipped;
+        return npc;
+    }
+    
+    public static GenericNPC make48x48(int x, int y, String imagePath, String name, String message, boolean imageFlipped, DialogueHandler dialogueHandler){
+        GenericNPC npc = new GenericNPC();
+        npc.setInteraction(message, name, dialogueHandler);
+        npc.setImagePath(imagePath);
+        npc.setImageHeight(48);
+        npc.setImageWidth(48);
+        npc.setWidth(44);
+        npc.setHeight(44);
+        npc.setX(x);
+        npc.setY(y);
+        npc.flipped = imageFlipped;
+        return npc;
+    }
+    
+    public static GenericNPC make64x64(int x, int y, String imagePath, String name, String message, boolean imageFlipped, DialogueHandler dialogueHandler){
+        GenericNPC npc = new GenericNPC();
+        npc.setInteraction(message, name, dialogueHandler);
+        npc.setImagePath(imagePath);
+        npc.setImageHeight(64);
+        npc.setImageWidth(64);
+        npc.setWidth(52);
+        npc.setHeight(52);
+        npc.setSequence(0);
+        npc.setFrame(0);
+        npc.setX(x);
+        npc.setY(y);
+        npc.flipped = imageFlipped;
+        return npc;
+    }
+    
+    /**
+     * Given an NPC, modifies it's 'extra' animation parameters (that is, not 
+     * the image location, since that is always passed in to the factory method)
+     * @param npc The GenericNPC to modify
+     * @param sequence The sequence number of the npc's animation/sprite
+     * @param frame The frame number of the npc's sprite within a particular sequence.
+     * @param framelimits The something something dark side who nose?
+     * @param animationLoops Does the animation loop?
+     * @param frameSpeed How fast one frame leads on to the next (appears to be a delay length).
+     * @return 
+     */
+    public static GenericNPC modifyAnimation(GenericNPC npc, int sequence, int frame, int[] framelimits, boolean[] animationLoops, float frameSpeed){
+        npc.setSequence(sequence);
+        npc.setFrame(frame);
+        npc.setFrameLimits(framelimits);
+        npc.setAnimationLoops(animationLoops);
+        npc.setFrameSpeed(frameSpeed);
         return npc;
     }
 }

@@ -59,7 +59,7 @@ public class Main implements Runnable, KeyListener {
 	public void loadRoom(String roomName) {
 		try {
 			room = (Room) Class.forName("dmcigd.levels."+roomName).getConstructor(URL.class).newInstance(codeBase);
-			
+
 			gameState = GameState.LOADINGROOM;
 			
 			currentRoom = roomName;

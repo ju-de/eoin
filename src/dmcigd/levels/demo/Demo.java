@@ -78,13 +78,13 @@ public class Demo extends Room implements Runnable {
 		
 		addRegion(new Passage(416, 480, 2112, 320));
 		addRegion(new Passage(2112, 320, 416, 480));
-		addRegion(new Sign(416, 416, 8, "Who do you think you are?", "Just going around taking random keys. Maybe those keys belong to somebody. Maybe those keys have a family", getDialogueHandler()));
-		addRegion(new Sign(512, 384, 6, "Long Test Sign. Heh.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elit purus, ornare id facilisis sed, sodales id leo. Nam sit amet turpis vitae justo eleifend ornare ultricies eu est. Etiam enim eros, adipiscing quis congue id, malesuada vitae nisi. Mauris orci quam, posuere et adipiscing vulputate, adipiscing ac metus.Nullam odio nibh, consequat id porttitor vitae, sodales nec nisi. Fusce neque tellus, condimentum eu facilisis eu, dictum a eros. In nec est scelerisque arcu egestas sagittis. Etiam cursus justo at dui pellentesque quis molestie erat aliquam. Integer tincidunt urna at tellus luctus laoreet.", getDialogueHandler()));
-		addRegion(new Sign(670, 352, 3, "Test Sign", "Please Ignore", getDialogueHandler()));
-		addRegion(new Sign(800, 224, 6, "The truth is...", "Your mother is a very sultry individual with whom I have commited several acts of adultery.", getDialogueHandler()));
-		addRegion(new Sign(896, 224, 9, "And in case you were wondering", "She is very gifted at her trade and a true craftsman. I must commend the quality and mastership she demonstrates at such a fine art.", getDialogueHandler()));
-		addRegion(new Sign(2176, 320, 4, "STOP ASKING SO MANY QUESTIONS", "NO I DO NOT KNOW WHY THERE'S A RANDOM TUNNEL OPENING IN THE MIDDLE OF THE SKY.", getDialogueHandler()));
-		addRegion(new Sign(6720, 512, 5, " ", "FNORD", getDialogueHandler()));
+		addRegion(NPCGenerator.makeSign(416, 416, 8, "Who do you think you are?", "Just going around taking random keys. Maybe those keys belong to somebody. Maybe those keys have a family", getDialogueHandler()));
+		addRegion(NPCGenerator.makeSign(512, 384, 6, "Long Test Sign. Heh.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elit purus, ornare id facilisis sed, sodales id leo. Nam sit amet turpis vitae justo eleifend ornare ultricies eu est. Etiam enim eros, adipiscing quis congue id, malesuada vitae nisi. Mauris orci quam, posuere et adipiscing vulputate, adipiscing ac metus.Nullam odio nibh, consequat id porttitor vitae, sodales nec nisi. Fusce neque tellus, condimentum eu facilisis eu, dictum a eros. In nec est scelerisque arcu egestas sagittis. Etiam cursus justo at dui pellentesque quis molestie erat aliquam. Integer tincidunt urna at tellus luctus laoreet.", getDialogueHandler()));
+		addRegion(NPCGenerator.makeSign(670, 352, 3, "Test Sign", "Please Ignore", getDialogueHandler()));
+		addRegion(NPCGenerator.makeSign(800, 224, 6, "The truth is...", "Your mother is a very sultry individual with whom I have commited several acts of adultery.", getDialogueHandler()));
+		addRegion(NPCGenerator.makeSign(896, 224, 9, "And in case you were wondering", "She is very gifted at her trade and a true craftsman. I must commend the quality and mastership she demonstrates at such a fine art.", getDialogueHandler()));
+		addRegion(NPCGenerator.makeSign(2176, 320, 4, "STOP ASKING SO MANY QUESTIONS", "NO I DO NOT KNOW WHY THERE'S A RANDOM TUNNEL OPENING IN THE MIDDLE OF THE SKY.", getDialogueHandler()));
+		addRegion(NPCGenerator.makeSign(6720, 512, 5, " ", "FNORD", getDialogueHandler()));
 		
 		addRegion(new RoomWarp(6720, 512, 32, 32, "demo.DemoTwo"));
 		
