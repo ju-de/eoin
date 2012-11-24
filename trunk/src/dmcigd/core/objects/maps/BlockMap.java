@@ -2,6 +2,7 @@ package dmcigd.core.objects.maps;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class BlockMap extends BlockCollision {
 
@@ -66,6 +67,8 @@ public class BlockMap extends BlockCollision {
     }
 
     public void loadBlockMap(URL codeBase, String levelName, String roomName) {
+    	
+    	blockMap = new ArrayList<String>();
 
         //Create blockMap array
         try {
