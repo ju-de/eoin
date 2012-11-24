@@ -45,6 +45,8 @@ public class EnvironmentMap {
     }
 
     public void loadEnvironmentMap(URL codeBase, String levelName, String roomName) {
+    	
+    	environmentMap = new ArrayList<String>();
 
         //Create environment map array
         try {
