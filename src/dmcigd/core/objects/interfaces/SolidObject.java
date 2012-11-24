@@ -7,6 +7,6 @@ public interface SolidObject extends GameObject {
 	public boolean isDestroyed();
 	
 	public void onPush(Entity entity, int v);
-	public void onAttack(int damage, boolean flipped);
+	public boolean onAttack(int damage, boolean flipped);
 	
 }

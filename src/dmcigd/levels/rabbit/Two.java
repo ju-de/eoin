@@ -41,10 +41,13 @@ public class Two extends Room implements Runnable {
 		addRegion(new Sign(67 * 32, 15 * 32, 9, "SIGN", "Beware of thorns!", getDialogueHandler()));
 		addRegion(new Sign(216 * 32, 20 * 32, 3, "SIGN", "Property of the Wiggleton Family", getDialogueHandler()));
 		
+		addRegion(new Knight(112 * 32, 13 * 32, true, "I'll never understand why these rabbits chose to live in such thorny places!", getDialogueHandler()));
+		addRegion(new Knight(201 * 32, 24 * 32, false, "I hear the rabbits might be hiding something in these caves! They don't seem very interested in the affairs of the princess though.", getDialogueHandler()));
+
 		addRegion(new Switch(220 * 32 - 4, 22 * 32 + 16, false, switchBlock1));
 		addTextLabel(new TextLabel(219 * 32, 23 * 32 - 4, "Press"));
 		addTextLabel(new TextLabel(219 * 32 - 2, 23 * 32 + 10, "\"X\"", false));
-		
+				
 		addRegion(new RoomWarp(276 * 32+ 16, 0, 32, 640, "rabbit.Three"));
 		
 		addBackgroundObject(new HouseThree(218 * 32, 15 * 32 + 4, 0));

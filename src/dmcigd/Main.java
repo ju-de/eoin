@@ -17,7 +17,7 @@ public class Main implements Runnable, KeyListener {
 	//Initialize decayState variables
 	private boolean decayState = false;
 	private int killCount = 0;
-	private int maxKillCount = 250;
+	private int maxKillCount = 1000;
 	private int decayTimer = 0;
 	private int decayLimit = maxKillCount;
 	
@@ -108,11 +108,11 @@ public class Main implements Runnable, KeyListener {
 						if(decayTimer >= decayLimit) {
 							if(decayState) {
 								decayState = false;
-								decayLimit = 4 * (maxKillCount - curKillCount) +							//Base Timer
-											 4 * ((int)(Math.random() * (maxKillCount - curKillCount)));	//Random addition
+								decayLimit = (maxKillCount - curKillCount) +							//Base Timer
+											 ((int)(Math.random() * (maxKillCount - curKillCount)));	//Random addition
 							} else {
 								decayState = true;
-								decayLimit = 4 * ((int)(Math.random() * curKillCount));
+								decayLimit = ((int)(Math.random() * curKillCount));
 							}
 							decayTimer = 0;
 						}
