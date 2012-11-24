@@ -120,11 +120,14 @@ below. It is described in much greater detail in the object_superclasses section
 			The velocity integer allows for the object to determine speed-dependent collision
 			properties, and also infer direction
 		
-	->	public void onAttack(int damage, boolean flipped)
+	->	public boolean onAttack(int damage, boolean flipped)
 			Special collision property that deals with the Sword.java instance. Used for taking damage
 			on applicable objects, such as monsters.
 			Damage is dependent on current sword value, and flipped determines direction of attack (in
 			case of direction-sensitive damage)
+			This method must return a value in order to increment the killCount. By default this
+			method should return false, but if the attack should increment the killCount, it should
+			return true.
 
 (*)	)=================================================================================================
 

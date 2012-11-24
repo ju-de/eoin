@@ -63,10 +63,8 @@ public class Sword extends ObjectCollision {
 		//Loop through solid objects
 		for(SolidObject i : solidObjects) {
 			if(getBounds().intersects(i.getBounds())) {
-				i.onAttack(damage, flipped);
-				
 				//Increments the KillCount
-				if(i.isDestroyed()) {
+				if(i.onAttack(damage, flipped)) {
 					killCount++;
 				}
 			}

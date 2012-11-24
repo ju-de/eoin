@@ -179,7 +179,12 @@ public class PhysicsHandler {
 
         //Get bounding box of destination
         //v+1 is necessary to deal with resting objects (while being pushed up)
-        Rectangle boundingBox = entity.getBounds(0, v + 1);
+        Rectangle boundingBox;
+        if(entity.getRestingBlock() != null && entity.getRestingBlock().getDY() < 0) {
+            boundingBox = entity.getBounds(0, v + 1);
+        } else {
+        	boundingBox = entity.getBounds(0, v);
+    	}
 
         //Loop through all solid objects
         for (SolidObject i : solidObjects) {
@@ -195,6 +200,7 @@ public class PhysicsHandler {
                             //Hit ceiling
                         	entity.setY(i.getY() + i.getHeight());
                             obstructMovement = true;
+                            break;
                         default:
                             break;
                     }

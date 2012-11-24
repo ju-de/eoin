@@ -10,6 +10,7 @@ import dmcigd.core.objects.npc.*;
 import dmcigd.core.objects.regions.*;
 import dmcigd.levels.rabbit.houses.*;
 import dmcigd.levels.rabbit.npc.*;
+import dmcigd.levels.rabbit.mobs.*;
 
 public class One extends Room implements Runnable {
 	
@@ -19,6 +20,29 @@ public class One extends Room implements Runnable {
         
 	public void initializeSolidObjects() {
 		addSolidObject(new LockedDoor(184 * 32, 14 * 32, 1));
+		
+		addSolidObject(new SmallMob(38 * 32, 16 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(40 * 32, 16 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(42 * 32, 16 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new SmallMob(53 * 32, 15 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(56 * 32, 15 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new SmallMob(65 * 32, 14 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(67 * 32, 14 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(69 * 32, 14 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new SmallMob(135 * 32, 13 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(139 * 32, 13 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new SmallMob(71 * 32, 24 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new SmallMob(80 * 32, 25 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new SmallMob(163 * 32, 27 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(166 * 32, 27 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new SmallMob(174 * 32, 27 * 32, getPhysicsHandler()));
 	}
         
 	public void initializeNonsolidObjects() {

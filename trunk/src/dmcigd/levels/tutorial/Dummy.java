@@ -1,9 +1,9 @@
 package dmcigd.levels.tutorial;
 
-import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
+import dmcigd.core.objects.monsters.*;
 
-public class Dummy extends ObjectCollision implements SolidObject {
+public class Dummy extends LethalityHandler implements SolidObject {
 	
 	public boolean isDestroyed() { return false; }
 	
@@ -21,16 +21,18 @@ public class Dummy extends ObjectCollision implements SolidObject {
 
 		setFrameLimits(new int[] {2});
 		setAnimationLoops(new boolean [] {true});
-		setFrameSpeed(0.015f);
+		setFrameSpeed(0.02f);
+		
+		setMaxHitpoints(50);
+		setKnockback(true);
 		
 		setImagePath("objects/tutorial/dummy.gif");
 		
 	}
 	
 	public void step() {
-		
+		super.step();
 		animate();
-		
 	}
 	
 }

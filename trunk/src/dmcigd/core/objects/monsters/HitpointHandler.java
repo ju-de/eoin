@@ -1,12 +1,13 @@
 package dmcigd.core.objects.monsters;
 
+import dmcigd.core.enums.Direction;
 import dmcigd.core.objects.*;
 
 public class HitpointHandler extends Entity {
 	
 	private int maxHitpoints,hitpoints = 1;
 	
-	private boolean invincible,flicker,knockback = false;
+	private boolean invincible,flicker,knockback,knockedBack = false;
 	private int invincibilityCounter = 0;
 	private int invincibilityCounterReset = 30;
 	
@@ -24,6 +25,9 @@ public class HitpointHandler extends Entity {
 	}
 	public boolean isFlickering() {
 		return flicker;
+	}
+	public boolean isKnockedBack() {
+		return knockedBack;
 	}
 	
 	//Public Setters
@@ -48,43 +52,47 @@ public class HitpointHandler extends Entity {
 	}
 	
 	//Events
-	public void knockback(int damage, boolean flipped) {
+	public void knockback(int damage, boolean swordflipped) {
 		if(knockback) {
 			
 			float knockbackSpeed;
 			
 			//Knockback Speed = Coefficient * (Base Knockback - Monster Resistance)
-			knockbackSpeed = 0.4f * (damage - (maxHitpoints / damage));
+			knockbackSpeed = 0.5f * (damage - (maxHitpoints / damage));
 			
 			//Minimum Knockback Speed
 			if(knockbackSpeed < 0.2f) {
 				knockbackSpeed = 0.2f;
 			}
 			
-			if(flipped) {
+			if(swordflipped) {
 				setVX(-knockbackSpeed);
-				setAX(2 * knockbackSpeed/invincibilityCounterReset);
+				accelerate(2 * knockbackSpeed/invincibilityCounterReset, 0.0f, Direction.RIGHT);
 			}else{
 				setVX(knockbackSpeed);
-				setAX(-2 * knockbackSpeed/invincibilityCounterReset);
+				accelerate(2 * knockbackSpeed/invincibilityCounterReset, 0.0f, Direction.LEFT);
 			}
+			knockedBack = true;
 		}
 	}
 	
-	public void onAttack(int damage, boolean flipped) {
-		if(!invincible) {
+	public boolean onAttack(int damage, boolean swordflipped) {
+		if(!isDestroyed && !invincible) {
 			hitpoints = hitpoints - damage;
 			setInvincibility(true);
-			knockback(damage,flipped);
+			knockback(damage,swordflipped);
 		}
+		
+		if(!isDestroyed && hitpoints <= 0) {
+			isDestroyed = true;
+			return true;
+		}
+		
+		return false;
 	}
 	
 	//Step
 	public void step() {
-		
-		if(hitpoints <= 0) {
-			isDestroyed = true;
-		}
 		
 		if(invincible) {
 			
@@ -93,7 +101,7 @@ public class HitpointHandler extends Entity {
 			//Stop knockback halfway through invincibility
 			if(invincibilityCounter >= invincibilityCounterReset/2 && knockback) {
 				setVX(0);
-				setAX(0);
+				knockedBack = false;
 			}
 			
 			if(invincibilityCounter >= invincibilityCounterReset) {
@@ -101,7 +109,7 @@ public class HitpointHandler extends Entity {
 			}
 			
 			//Flicker every eight ticks
-			if(invincibilityCounter/8 % 2 == 0) {
+			if(invincibilityCounter/4 % 2 == 0) {
 				flicker = true;
 			}else{
 				flicker = false;
