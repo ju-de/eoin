@@ -4,6 +4,7 @@ import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.objects.maps.*;
+import dmcigd.core.objects.particles.Particle;
 import dmcigd.core.objects.player.*;
 
 import java.awt.event.*;
@@ -32,7 +33,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	private ArrayList<TextLabel> textLabels = new ArrayList<TextLabel>();
 	private ArrayList<VisibleObject> backgroundObjects = new ArrayList<VisibleObject>();
 	private ArrayList<VisibleObject> foregroundObjects = new ArrayList<VisibleObject>();
-	
+        
 	//Public Getters
 	
 	//Booleans
@@ -98,7 +99,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	public void addForegroundObject(VisibleObject foregroundObject) {
 		foregroundObjects.add(foregroundObject);
 	}
-	
+        
 	public Room(URL codeBase, String levelName, String roomName, String tileSet) {
 		this.codeBase = codeBase;
 		this.levelName = levelName;
@@ -153,6 +154,13 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		for (GameObject i : getProjectiles()) {
 			addVisibleObject(i);
 		}
+                
+                // add visible particles
+                for (Particle p: getParticles()){
+                    if(p.isVisible(player.getX(), player.getY())) {
+                        visibleObjects.add(p.getObjectImage(player.getX(), player.getY()));
+                    }
+                }
 		
 		//Add Foreground Objects
 		for (VisibleObject i : foregroundObjects) {

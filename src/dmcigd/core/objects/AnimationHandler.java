@@ -26,8 +26,8 @@ public abstract class AnimationHandler {
 	public void setSequence(int sequence) {
 		if(this.sequence != sequence) {
 			frame = 0;
+                        this.sequence = sequence; // moved inside if statement (efficiency)
 		}
-		this.sequence = sequence;
 	}
 	
 	public void setFrameLimits(int[] frameLimits) {
