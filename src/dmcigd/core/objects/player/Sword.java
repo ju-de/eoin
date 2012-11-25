@@ -37,9 +37,9 @@ public class Sword extends ObjectCollision {
 	public Sword(int x, int y, ArrayList<SolidObject> solidObjects) {
 		
 		baseX = x;
-		baseY = y;
+		baseY = y + 10;
 		
-		setX(baseX);
+		setX(baseX - 4);
 		setY(baseY);
 		setHeight(16);
 		setWidth(44);

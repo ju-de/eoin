@@ -41,7 +41,7 @@ public class Entity extends MovingObject {
 	public CollisionType backBlock;
 
 	public void onPush(Entity entity, int v) {
-		if(entity.getEntityType() == EntityType.MOVINGBLOCK) {
+		if(entity.getCollisionType() == CollisionType.SOLID) {
 			addX(v);
 		}
 	}

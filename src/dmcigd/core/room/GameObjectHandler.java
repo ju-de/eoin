@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.objects.particles.Particle;
-import java.util.LinkedList;
 
 abstract class GameObjectHandler {
 	

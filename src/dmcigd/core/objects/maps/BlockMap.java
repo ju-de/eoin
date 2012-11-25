@@ -98,11 +98,15 @@ public class BlockMap extends BlockCollision {
                 br.close();
 
             } catch (IOException e) {
+            	e.printStackTrace();
             }
 
         } catch (FileNotFoundException e) {
+        	e.printStackTrace();
         } catch (MalformedURLException e) {
+        	e.printStackTrace();
         } catch (IOException e) {
+        	e.printStackTrace();
         }
     }
 }
