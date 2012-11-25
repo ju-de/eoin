@@ -1,4 +1,4 @@
-#A list of optimizations, refactors, cleanup, features, documentation, etc yet to be started/finished.
+#summary A list of optimizations, refactors, cleanup, features, documentation, etc yet to be started/finished.
 
 = Introduction =
 
