@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import dmcigd.core.objects.interfaces.*;
+import dmcigd.core.objects.particles.Particle;
+import java.util.LinkedList;
 
 abstract class GameObjectHandler {
 	
@@ -13,10 +15,13 @@ abstract class GameObjectHandler {
 	private ArrayList<SolidObject> projectiles = new ArrayList<SolidObject>();
 	private ArrayList<Region> regions = new ArrayList<Region>();
 	
+        private ArrayList<Particle> particles = new ArrayList<Particle>();
+	
 	//Object List Iterators
 	private Iterator<SolidObject> solidObjectIt;
 	private Iterator<Item> itemIt;
 	private Iterator<SolidObject> projectileIt;
+        private Iterator<Particle> particleIt;
 	
 	//Public Getters
 	public ArrayList<SolidObject> getSolidObjects() {
@@ -31,6 +36,9 @@ abstract class GameObjectHandler {
 	public ArrayList<Region> getRegions() {
 		return regions;
 	}
+        public ArrayList<Particle> getParticles(){
+            return particles;
+        }
 	
 	//Public Setters
 	public void addSolidObject(SolidObject solidObject) {
@@ -45,6 +53,10 @@ abstract class GameObjectHandler {
 	public void addRegion(Region region) {
 		regions.add(region);
 	}
+        public void addParticle(Particle particle){
+            particles.add(particle);
+        }
+        
 	public abstract void initializeSolidObjects();
 	public abstract void initializeNonsolidObjects();
 	
@@ -53,6 +65,7 @@ abstract class GameObjectHandler {
 		solidObjectIt = solidObjects.iterator();
 		itemIt = items.iterator();
 		projectileIt = projectiles.iterator();
+                particleIt = particles.iterator();
 	}
 	
 	public void stepGameObjects() {
@@ -86,6 +99,16 @@ abstract class GameObjectHandler {
 				itemIt.remove();
 			} else {
 				i.step();
+			}
+		}
+                
+                // Step all particles
+                while(particleIt.hasNext()) {
+			Particle p = particleIt.next();
+			if(p.isDestroyed()) {
+				particleIt.remove();
+			} else {
+				p.step();
 			}
 		}
 		

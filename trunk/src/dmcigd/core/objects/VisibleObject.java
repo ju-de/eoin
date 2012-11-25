@@ -61,10 +61,10 @@ public abstract class VisibleObject extends AnimationHandler {
 		
 		if(relX + imageWidth >= 0 && relX <= 640 && relY + imageHeight >= 0 && relY <= 320) {
 			return true;
-		}else {
-			return false;
 		}
+		return false;
 	}
+	
 	public ObjectImage getObjectImage(int viewX, int viewY) {
 		return new ObjectImage(imagePath, relX(viewX, viewY), relY(viewX, viewY), x, y, width, height, imageWidth, imageHeight, getFrame(), getSequence(), flipped);
 	}
