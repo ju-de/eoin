@@ -7,6 +7,8 @@ import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
 import dmcigd.levels.rabbit.houses.*;
+import dmcigd.levels.rabbit.npc.*;
+import dmcigd.levels.rabbit.mobs.*;
 
 public class Three extends Room implements Runnable {
 	
@@ -28,6 +30,30 @@ public class Three extends Room implements Runnable {
 		addSolidObject(switchBlock1);
 		addSolidObject(switchBlock2);
 		
+		addSolidObject(new BigMob(32 * 32, 17 * 32, getPhysicsHandler()));
+		addSolidObject(new BigMob(34 * 32, 17 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new BigMob(60 * 32, 20 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(62 * 32, 21 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(64 * 32, 21 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new MediumMob(33 * 32, 39 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new MediumMob(95 * 32, 39 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new BigMob(42 * 32, 38 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(41 * 32, 39 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new BigMob(58 * 32, 38 * 32, getPhysicsHandler()));
+		addSolidObject(new BigMob(60 * 32, 38 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(58 * 32, 39 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(62 * 32, 39 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(63 * 32, 39 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new BigMob(84 * 32, 36 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(83 * 32, 37 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(82 * 32, 37 * 32, getPhysicsHandler()));
+		
 		//FLUFFINGHAM FAMILY
 		//MR. FRITZLEPUFF
 	}
@@ -39,8 +65,16 @@ public class Three extends Room implements Runnable {
 		
 		addItem(new DoorKey(112 * 32, 13 * 32, 4, getPhysicsHandler()));
 		
+		addRegion(new Knight(26 * 32, 16 * 32, false, "Creepy as they look, those giant rabbits are totally harmless! In fact, they're pretty helpful. They don't seem to mind the thorns at all, and they're too dumb to notice if you hitch a ride on their backs.", getDialogueHandler()));
+		
 		addRegion(new Knight(42 * 32, 16 * 32, true, "Mind the gaps! It's awfully thorny down there!", getDialogueHandler()));
 		addRegion(new Knight(36 * 32, 32 * 32, false, "These rabbits freak me out! How do rabbits even get so large?", getDialogueHandler()));
+		
+		addRegion(new Knight(95 * 32, 31 * 32, true, "Isn't it weird how some bunnies talk, wear clothes, and live in houses, while others just hop around naked all day?", getDialogueHandler()));
+		
+		addRegion(new Sign(93 * 32, 20 * 32, 6, "SIGN", "The Fluffingham House", getDialogueHandler()));
+		
+		addRegion(new MrFritzlepuff(81 * 32, 41 * 32, "Oh how I hate you king's men! Always unlocking doors and running amok like you own the place!", getDialogueHandler()));
 		
 		addRegion(new Switch(119 * 32 + 4, 23 * 32 + 16, true, switchBlock1));
 		addRegion(new Switch(130 * 32 + 4, 27 * 32 + 16, true, switchBlock2));

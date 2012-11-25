@@ -10,6 +10,8 @@ import dmcigd.core.objects.regions.RoomWarp;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
 import dmcigd.levels.rabbit.houses.*;
+import dmcigd.levels.rabbit.npc.*;
+import dmcigd.levels.rabbit.mobs.*;
 
 public class Two extends Room implements Runnable {
 	
@@ -21,6 +23,30 @@ public class Two extends Room implements Runnable {
 	}
 
 	public void initializeSolidObjects() {
+		addSolidObject(new MediumMob(36 * 32, 16 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(37 * 32, 16 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(39 * 32, 16 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new MediumMob(56 * 32, 15 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(57 * 32, 15 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(58 * 32, 15 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new MediumMob(120 * 32, 15 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(122 * 32, 15 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(123 * 32, 15 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new MediumMob(177 * 32, 17 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(179 * 32, 17 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(180 * 32, 17 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new MediumMob(192 * 32, 18 * 32, getPhysicsHandler()));
+		addSolidObject(new MediumMob(194 * 32, 18 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new MediumMob(254 * 32, 18 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new MediumMob(266 * 32, 17 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(268 * 32, 17 * 32, getPhysicsHandler()));
+		
 		addSolidObject(new MovingPlatform(69 * 32, 16 * 32, 0, 5, 1, 5));
 		
 		addSolidObject(new MovingPlatform(83 * 32, 17 * 32, 0, 5, 1, 5));
@@ -43,6 +69,9 @@ public class Two extends Room implements Runnable {
 		
 		addRegion(new Knight(112 * 32, 13 * 32, true, "I'll never understand why these rabbits chose to live in such thorny places!", getDialogueHandler()));
 		addRegion(new Knight(201 * 32, 24 * 32, false, "I hear the rabbits might be hiding something in these caves! They don't seem very interested in the affairs of the princess though.", getDialogueHandler()));
+		
+		addRegion(new OldManWiggleton(227 * 32, 19 * 32, "How do you know it was a kidnapper? These youngings are always trying to run off on me with their shenanigans!", getDialogueHandler()));
+		addRegion(new JulietWiggleton(230 * 32, 19 * 32, "How would I know about any kidnapping? Grandpa doesn't even let me go next door!", getDialogueHandler()));
 
 		addRegion(new Switch(220 * 32 - 4, 22 * 32 + 16, false, switchBlock1));
 		addTextLabel(new TextLabel(219 * 32, 23 * 32 - 4, "Press"));

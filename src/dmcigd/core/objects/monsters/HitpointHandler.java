@@ -102,6 +102,10 @@ public class HitpointHandler extends Entity {
 			if(invincibilityCounter >= invincibilityCounterReset/2 && knockback) {
 				setVX(0);
 				knockedBack = false;
+				
+				//Resets acceleration vectors
+				accelerate(0, 32, Direction.LEFT);
+				accelerate(0, 32, Direction.RIGHT);
 			}
 			
 			if(invincibilityCounter >= invincibilityCounterReset) {
