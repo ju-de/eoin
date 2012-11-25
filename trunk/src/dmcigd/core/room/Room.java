@@ -28,7 +28,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	private PhysicsHandler physicsHandler;
 	private EnvironmentMap environmentMap = new EnvironmentMap();
 	private DialogueHandler dialogueHandler = new DialogueHandler();
-	private ArrayList<ObjectImage> visibleObjects;
+	public ArrayList<ObjectImage> visibleObjects;
 	private ArrayList<TextLabel> textLabels = new ArrayList<TextLabel>();
 	private ArrayList<VisibleObject> backgroundObjects = new ArrayList<VisibleObject>();
 	private ArrayList<VisibleObject> foregroundObjects = new ArrayList<VisibleObject>();

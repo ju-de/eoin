@@ -43,6 +43,11 @@ public class One extends Room implements Runnable {
 		addSolidObject(new SmallMob(166 * 32, 27 * 32, getPhysicsHandler()));
 		
 		addSolidObject(new SmallMob(174 * 32, 27 * 32, getPhysicsHandler()));
+		
+		addSolidObject(new SmallMob(209 * 32, 17 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(211 * 32, 17 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(213 * 32, 17 * 32, getPhysicsHandler()));
+		addSolidObject(new SmallMob(215 * 32, 17 * 32, getPhysicsHandler()));
 	}
         
 	public void initializeNonsolidObjects() {
