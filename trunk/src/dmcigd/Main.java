@@ -64,13 +64,13 @@ public class Main implements Runnable, KeyListener {
 			
 			currentRoom = roomName;
 				
-		} catch (InstantiationException e) {} 
-		catch (IllegalAccessException e) {} 
-		catch (ClassNotFoundException e) {} 
-		catch (IllegalArgumentException e) {} 
-		catch (InvocationTargetException e) {} 
-		catch (NoSuchMethodException e) {} 
-		catch (SecurityException e) {}
+		} catch (InstantiationException e) {e.printStackTrace();} 
+		catch (IllegalAccessException e) {e.printStackTrace();} 
+		catch (ClassNotFoundException e) {e.printStackTrace();} 
+		catch (IllegalArgumentException e) {e.printStackTrace();} 
+		catch (InvocationTargetException e) {e.printStackTrace();} 
+		catch (NoSuchMethodException e) {e.printStackTrace();} 
+		catch (SecurityException e) {e.printStackTrace();}
 	}
 	
 	public void pause() {

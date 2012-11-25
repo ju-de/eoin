@@ -6,6 +6,7 @@ import dmcigd.core.room.Room;
 import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
+import dmcigd.core.objects.regions.RoomWarp;
 import dmcigd.levels.rabbit.houses.*;
 import dmcigd.levels.rabbit.npc.*;
 import dmcigd.levels.rabbit.mobs.*;
@@ -53,9 +54,6 @@ public class Three extends Room implements Runnable {
 		addSolidObject(new BigMob(84 * 32, 36 * 32, getPhysicsHandler()));
 		addSolidObject(new MediumMob(83 * 32, 37 * 32, getPhysicsHandler()));
 		addSolidObject(new MediumMob(82 * 32, 37 * 32, getPhysicsHandler()));
-		
-		//FLUFFINGHAM FAMILY
-		//MR. FRITZLEPUFF
 	}
 
 	public void initializeNonsolidObjects() {
@@ -71,6 +69,10 @@ public class Three extends Room implements Runnable {
 		addRegion(new Knight(36 * 32, 32 * 32, false, "These rabbits freak me out! How do rabbits even get so large?", getDialogueHandler()));
 		
 		addRegion(new Knight(95 * 32, 31 * 32, true, "Isn't it weird how some bunnies talk, wear clothes, and live in houses, while others just hop around naked all day?", getDialogueHandler()));
+		
+		addRegion(new Knight(185 * 32, 20 * 32, false, "HOW IS THIS EVEN POSSIBLE? STOP BREAKING THE GAME!", getDialogueHandler()));
+		
+		addRegion(new RoomWarp(182 * 32+ 16, 0, 32, 840, "rabbit.BossRoom"));
 		
 		addRegion(new Sign(93 * 32, 20 * 32, 6, "SIGN", "The Fluffingham House", getDialogueHandler()));
 		

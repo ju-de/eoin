@@ -85,12 +85,16 @@ public class DmciGD extends Applet implements Runnable {
         }
 
         //Create font
-        try {
-            f = Font.createFont(Font.PLAIN, new URL(getCodeBase(), "../share/gfx/04B_03__.TTF").openStream()).deriveFont(16f);
-            fSmall = f.deriveFont(8f);
-        } catch (FontFormatException e) {
-        } catch (IOException e) {
-        }
+            try {
+				f = Font.createFont(Font.PLAIN, new URL(getCodeBase(), "../share/gfx/04B_03__.TTF").openStream()).deriveFont(16f);
+	            fSmall = f.deriveFont(8f);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (FontFormatException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
     }
 
     public int preloadVisibleObject(MediaTracker mt, VisibleObject object, int i) {
@@ -194,6 +198,7 @@ public class DmciGD extends Applet implements Runnable {
                     try {
                         wait();
                     } catch (InterruptedException ex) {
+        				ex.printStackTrace();
                     }
                     break;
 
@@ -222,6 +227,7 @@ public class DmciGD extends Applet implements Runnable {
                     try {
                         wait();
                     } catch (InterruptedException ex) {
+        				ex.printStackTrace();
                     }
 
                 default:
@@ -244,6 +250,7 @@ public class DmciGD extends Applet implements Runnable {
                         wait();
                         Thread.sleep(50);
                     } catch (InterruptedException ex) {
+        				ex.printStackTrace();
                     }
 
                     break;

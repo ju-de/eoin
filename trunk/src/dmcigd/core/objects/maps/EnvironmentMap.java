@@ -68,11 +68,15 @@ public class EnvironmentMap {
                 br.close();
 
             } catch (IOException e) {
+            	e.printStackTrace();
             }
 
         } catch (FileNotFoundException e1) {
+        	e1.printStackTrace();
         } catch (MalformedURLException e2) {
+        	e2.printStackTrace();
         } catch (IOException e3) {
+        	e3.printStackTrace();
         }
     }
 }
