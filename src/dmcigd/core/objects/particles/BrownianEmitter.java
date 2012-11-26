@@ -12,10 +12,10 @@ public class BrownianEmitter extends ParticleEmitter {
 
     public int stepSize;
     public int maxWalk;
-    public String imagePath;
 
     @Override
     public Particle spawnParticle() {
-        return new BrownianParticle(x, y,stepSize, maxWalk, imagePath);
+        BrownianParticle p = new BrownianParticle(x, y,stepSize, maxWalk, imagePath);
+        return p;
     }
 }

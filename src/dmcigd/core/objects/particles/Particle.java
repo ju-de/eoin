@@ -16,6 +16,7 @@ public abstract class Particle  extends VisibleObject{
     protected boolean isDestroyed = false;
     protected static Random generator = new Random();
     
+    
     public final void step(){
         move();
         updateLifeSpan();

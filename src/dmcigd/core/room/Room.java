@@ -119,6 +119,14 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		for (GameObject i : getRegions()) {
 			addVisibleObject(i);
 		}
+                
+		 // add visible particles
+                for (Particle p: getParticles()){
+                    //System.out.println("trying to render particle" + p.getX() + " " + p.getY());
+                    if(p.isVisible(player.getX(), player.getY())) {
+                        visibleObjects.add(p.getObjectImage(player.getX(), player.getY()));
+                    }
+                }
 		
 		//Add Solid Objects
 		for (GameObject i : getSolidObjects()) {
@@ -141,13 +149,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 			addVisibleObject(i);
 		}
                 
-        //Add Visible Particles
-        for (Particle p: getParticles()){
-            if(p.isVisible(player.getX(), player.getY())) {
-                visibleObjects.add(p.getObjectImage(player.getX(), player.getY()));
-            }
-        }
-		
+               
 		//Add Foreground Objects
 		for (VisibleObject i : getForegroundObjects()) {
 			if(i.isVisible(player.getX(), player.getY())) {
@@ -174,6 +176,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		
 	}
 	
+        @Override
 	public void run() {
 		
 		blockMap.loadBlockMap(codeBase, levelName, roomName);

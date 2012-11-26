@@ -15,48 +15,52 @@ import java.util.*;
 public class DmciGD extends Applet implements Runnable {
 
     private URL codeBase;
-    
-    //Initializes and synchronizes Main thread (which handles game loops)
+    /** Synchronizes the applet (graphics) thread with the Main (game loop) thread. */
     private ThreadSync threadSync = new ThreadSync();
+    /** The game manager object (which handles game loops). */
     private Main main;
-    
-    //Initializing gameState variable - decides which screen to paint
+    /** Decides which screen to paint (loading, dialogue, etc). */
     GameState gameState;
-    
-    //Initialize decayOffset integer, determines which tilesheet to display
+    /** Determines which tilesheet to display (decayed or not decayed?). */
     private int decayOffset;
-    
-    //paintOnce attribute (for overlays)
+    /** True if there is an overlay (eg dialogue). */
     private boolean paintOnce = false;
-    
-    //Initialize visible objects list
+    /** Visible objects list*/
     private char[][] visibleBlocks = new char[12][22];
+    /** Visible environment list*/
     private char[][] visibleEnvironment = new char[12][22];
+    /** The list of visible text labels to draw (floating text)*/
     private ArrayList<TextLabel> textLabels = new ArrayList<TextLabel>();
+    /** The list of visible objects to draw*/
     private ArrayList<ObjectImage> visibleObjects = new ArrayList<ObjectImage>();
+    /** The current tilesheet*/
     private Image tileSheet;
+    /** the map of image names to images*/
     private Map<String, int[]> imageMap = new HashMap<String, int[]>();
     private Map<String, Image> objectImageMap = new HashMap<String, Image>();
+    /** the player's current location*/
     private int playerX, playerY;
-    
-    //Initialize Dialogue variables
+    /**Dialogue variables (speaker name, dialogue lines)*/
     private String name, line1, line2, line3;
     
     //Initialize the Double-buffering Variables
     private Image dbImage;
     private Graphics dbg;
     private Image bgImage;
-    
-    //Initialize font
-    Font f;
-    Font fSmall;
+    /**fonts*/
+    Font f, fSmall;
     
     //Initialize loading animation
     private Image loadingImage;
     private int loadingClock = 0;
 
-    //Initialize all objects and gets audio data
+    /**
+     * Initialize all objects and gets audio data
+     */
+    @Override
     public void init() {
+        setSize(640, 320);
+        resize(640, 320);
         codeBase = getCodeBase();
         main = new Main(threadSync, codeBase);
         gameState = main.getGameState();

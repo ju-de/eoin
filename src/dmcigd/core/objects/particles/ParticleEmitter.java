@@ -7,7 +7,7 @@ package dmcigd.core.objects.particles;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.enums.*;
-import dmcigd.core.room.Room;
+import dmcigd.core.room.GameObjectHandler;
 import java.util.Random;
 
 /**
@@ -18,24 +18,26 @@ public abstract class ParticleEmitter {
     
     private Entity lockedOn = null;
     protected int x,y;
+    public int xOffset, yOffset;
     
     public static Random generator = new Random();
     
-    public Room room;
+    public GameObjectHandler room;
     
     // The delay between successive particle emission attempts
-    private int delay = 3;
+    public int delay = 3;
     
-    private float lastFire = 0;
+    public float lastFire = 0;
     
     // between 0-1, the likelihood that it will emit a particle next attempt.
-    private float emissionChance = 1;
+    public float emissionChance = 1;
     
+    public String imagePath;
     
     public void step(){
         if (lockedOn != null){
-            x = lockedOn.getX();
-            y = lockedOn.getY();
+            x = lockedOn.getX() + xOffset;
+            y = lockedOn.getY() + yOffset;
         }
         if (lastFire <= 0 && generator.nextFloat() < emissionChance){
             room.addParticle(spawnParticle());
@@ -51,12 +53,20 @@ public abstract class ParticleEmitter {
     public void lockTo(Entity e){
         lockedOn = e;
     }
+    public boolean isDestroyed(){
+        if (lockedOn != null) return lockedOn.isDestroyed();
+        return false;
+    }
+    
     public void setX(int x){
         this.x = x;
     }
     public void setY(int y){
         this.y = y;
     }
+    public int getX(){ return x;}
+    public int getY(){ return y;}
+    
     
     /**
      * Spawns a new particle at the ParticleEmitter's location
