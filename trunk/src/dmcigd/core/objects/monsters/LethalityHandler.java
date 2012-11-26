@@ -16,7 +16,7 @@ public class LethalityHandler extends HitpointHandler {
 	}
 
 	//Lethality Actions
-	public void onPush(Entity entity, int v) {
+	public void onPush(Entity entity, float v) {
 		if(lethalOnPush && entity.getEntityType() == EntityType.PLAYER && !isDestroyed && !isInvincible()) {
 			entity.isDead = true;
 		}
