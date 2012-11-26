@@ -13,11 +13,11 @@ public class MovingObject extends ObjectCollision {
 	private float tRight = 32;
 	
 	//Public getters
-	public int getVX() {
-		return (int) vx;
+	public float getVX() {
+		return vx;
 	}
-	public int getVY() {
-		return (int) vy;
+	public float getVY() {
+		return vy;
 	}
 	public float getAX() {
 		return ax;
@@ -27,10 +27,10 @@ public class MovingObject extends ObjectCollision {
 	}
 	
 	//Public basic setters
-	public void addX(int dx) {
+	public void addX(float dx) {
 		setX(getX() + dx);
 	}
-	public void addY(int dy) {
+	public void addY(float dy) {
 		setY(getY() + dy);
 	}
 	

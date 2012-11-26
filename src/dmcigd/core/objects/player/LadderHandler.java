@@ -47,7 +47,7 @@ public class LadderHandler extends PhysicsHandler {
 	}
 	
 	//Checks downward collision for ladders
-	public void checkBlockMapCollisionDown(Entity entity, int v) {
+	public void checkBlockMapCollisionDown(Entity entity, float v) {
 		
 		ControlHandler e = (ControlHandler) entity;
 		
@@ -71,8 +71,8 @@ public class LadderHandler extends PhysicsHandler {
 			//Climb down
 			case NONSOLIDLADDER:
 			case SOLIDLADDER:
-				if(e.climbing == null || (e.isClimbing && e.climbing == Direction.DOWN)) {
-					checkSolidObjectCollisionDown(entity, v);
+				if(e.onLadder || (e.isClimbing && e.climbing == Direction.DOWN)) {
+					checkSolidObjectCollisionDown(entity, v - 0.4f);
 					e.setVY(0);
 					break;
 				}

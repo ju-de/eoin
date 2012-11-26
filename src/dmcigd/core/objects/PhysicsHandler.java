@@ -29,7 +29,7 @@ public class PhysicsHandler {
 //BLOCKMAP COLLISION
 	
 	//Returns collision type of tile of destination block
-	public CollisionType tileCollisionType(Entity entity, int v, Direction direction) {
+	public CollisionType tileCollisionType(Entity entity, float v, Direction direction) {
 		switch (direction) {
 			case DOWN:
 			case UP:
@@ -54,7 +54,7 @@ public class PhysicsHandler {
 	}
 	
 	//Checks downward collision (behaves differently from other three directions)
-	public void checkBlockMapCollisionDown(Entity entity, int v) {
+	public void checkBlockMapCollisionDown(Entity entity, float v) {
 		
 		//Move Down
 		switch(tileCollisionType(entity, v, Direction.DOWN)) {
@@ -83,7 +83,7 @@ public class PhysicsHandler {
 	}
 	
 	//Checks all other types of collision
-	public void checkBlockMapCollision(Entity entity, int v, Direction direction) {
+	public void checkBlockMapCollision(Entity entity, float v, Direction direction) {
 		
 		CollisionType collidingBlock = tileCollisionType(entity, v, direction);
 		
@@ -109,6 +109,8 @@ public class PhysicsHandler {
 			blockMapCollision(entity, direction);
 			if(direction != Direction.UP) {
 				entity.setVX(0);
+			}else if (entity.getRestingBlock() != null){
+				entity.unrestObject();
 			}
 		}
 	}
@@ -129,7 +131,7 @@ public class PhysicsHandler {
         }
     }
 
-    public void checkSolidObjectCollisionDown(Entity entity, int v) {
+    public void checkSolidObjectCollisionDown(Entity entity, float v) {
     	
     	RestableObject restingBlockCheck = null;
 
@@ -171,7 +173,7 @@ public class PhysicsHandler {
         }
     }
 
-    public void checkSolidObjectCollisionUp(Entity entity, int v) {
+    public void checkSolidObjectCollisionUp(Entity entity, float v) {
     	
     	RestableObject restingBlockCheck = null;
 
@@ -222,7 +224,7 @@ public class PhysicsHandler {
         }
     }
 
-    public void checkSolidObjectCollisionX(Entity entity, int v) {
+    public void checkSolidObjectCollisionX(Entity entity, float v) {
 
         boolean obstructMovement = false;
 
@@ -262,18 +264,18 @@ public class PhysicsHandler {
     }
 	
 //MOVEMENT
-    public void moveDown(Entity entity, int vy) {
+    public void moveDown(Entity entity, float vy) {
     	checkBlockMapCollisionDown(entity, vy);
 		if(entity.getRestingBlock() != null) {
 			rest(entity, entity.getRestingBlock().getCollisionType());
 		}
     }
     
-    public void moveUp(Entity entity, int vy) {
+    public void moveUp(Entity entity, float vy) {
     	checkBlockMapCollision(entity, vy, Direction.UP);
     }
     
-    public void moveX(Entity entity, int vx) {
+    public void moveX(Entity entity, float vx) {
     	if(vx >= 0) {
         	checkBlockMapCollision(entity, vx, Direction.RIGHT);
     	}else{
@@ -312,7 +314,7 @@ public class PhysicsHandler {
 
     }
     
-    public void pushObject(Entity entity, SolidObject object, int v) {
+    public void pushObject(Entity entity, SolidObject object, float v) {
         entity.pushObject(object, v);
     }
 	

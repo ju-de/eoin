@@ -17,16 +17,16 @@ public class StraightLineParticle extends Particle {
     protected double x;
     protected double y;
     
-    public int getX(){
+    public float getX(){
         return (int) x;
     }
-    public int getY(){
+    public float getY(){
         return (int) y;
     }
-    public void setX(int x){this.x = x;}
-    public void setY(int y){this.y = y;}
+    public void setX(float x){this.x = x;}
+    public void setY(float y){this.y = y;}
     
-    public StraightLineParticle(int x, int y, float vx, float vy, int lifeTime, String imagePath){
+    public StraightLineParticle(float x, float y, float vx, float vy, int lifeTime, String imagePath){
         this.vx = vx;
         this.vy = vy;
         this.lifeTime = lifeTime;

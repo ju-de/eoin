@@ -4,8 +4,8 @@ import dmcigd.core.objects.*;
 
 public interface RestableObject extends SolidObject {
 	
-	public int getDX();
-	public int getDY();
+	public float getDX();
+	public float getDY();
 	
 	public void onRest(Entity entity);
 	public void onUnrest(Entity entity);

@@ -8,13 +8,13 @@ import dmcigd.core.objects.ObjectImage;
 public interface GameObject {
 	
 	public CollisionType getCollisionType();
-	public Rectangle getBounds(int vx, int vy);
+	public Rectangle getBounds(float vx, float vy);
 	public Rectangle getBounds();
 	
 	public String getImagePath();
 	
-	public int getX();
-	public int getY();
+	public float getX();
+	public float getY();
 	public int getWidth();
 	public int getHeight();
 	public int getImageWidth();

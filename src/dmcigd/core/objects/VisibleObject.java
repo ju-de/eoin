@@ -3,13 +3,13 @@ package dmcigd.core.objects;
 public abstract class VisibleObject extends AnimationHandler {
 	
 	//Initialize displacement properties for resting objects
-	private int dx,dy = 0;
+	private float dx,dy = 0;
 	
 	//Image information
 	private String imagePath;
 	
 	//Object Positions
-	private int x,y = 0;
+	private float x,y = 0;
 	
 	//Object Dimensions
 	private int height,width = 0;
@@ -20,16 +20,16 @@ public abstract class VisibleObject extends AnimationHandler {
 		return imagePath;
 	}
 	
-	public int getX() {
+	public float getX() {
 		return x;
 	}
-	public int getY() {
+	public float getY() {
 		return y;
 	}
-	public int getDX() {
+	public float getDX() {
 		return dx;
 	}
-	public int getDY() {
+	public float getDY() {
 		return dy;
 	}
 	
@@ -47,11 +47,11 @@ public abstract class VisibleObject extends AnimationHandler {
 	}
 	
 	public int relX(int viewX, int viewY) {
-		return x - viewX + 310 - ((imageWidth - width) / 2);
+		return (int) x - viewX + 310 - ((imageWidth - width) / 2);
 	}
 	
 	public int relY(int viewX, int viewY) {
-		return y - viewY + 144 - ((imageHeight - height)  - 2);
+		return (int) y - viewY + 144 - ((imageHeight - height)  - 2);
 	}
 	
 	public boolean isVisible(int viewX, int viewY) {
@@ -66,7 +66,7 @@ public abstract class VisibleObject extends AnimationHandler {
 	}
 	
 	public ObjectImage getObjectImage(int viewX, int viewY) {
-		return new ObjectImage(imagePath, relX(viewX, viewY), relY(viewX, viewY), x, y, width, height, imageWidth, imageHeight, getFrame(), getSequence(), flipped);
+		return new ObjectImage(imagePath, relX(viewX, viewY), relY(viewX, viewY), (int) x, (int) y, width, height, imageWidth, imageHeight, getFrame(), getSequence(), flipped);
 	}
 	
 	//Public Setters
@@ -74,11 +74,11 @@ public abstract class VisibleObject extends AnimationHandler {
 		this.imagePath = imagePath;
 	}
 	
-	public void setX(int x) {
+	public void setX(float x) {
 		dx = x - this.x;
 		this.x = x;
 	}
-	public void setY(int y) {
+	public void setY(float y) {
 		dy = y - this.y;
 		this.y = y;
 	}

@@ -156,7 +156,7 @@ public abstract class GameObjectHandler {
         while (particleIt.hasNext()) {
             Particle p = particleIt.next();
             if (p.isDestroyed()) {
-                System.out.println("killing particle");
+                //System.out.println("killing particle");
                 particleIt.remove();
             } else {
                 p.step();
@@ -167,11 +167,11 @@ public abstract class GameObjectHandler {
         while (emitterIt.hasNext()) {
             ParticleEmitter pe = emitterIt.next();
             if (pe.isDestroyed()) {
-                System.out.println("kill");
+                //System.out.println("kill");
                 emitterIt.remove();
                 continue;
             }
-            System.out.println("emitter: " + pe.getX() + " " + pe.getY());
+            //System.out.println("emitter: " + pe.getX() + " " + pe.getY());
             pe.step();
 
         }

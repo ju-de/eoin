@@ -157,8 +157,8 @@ public class DmciGD extends Applet implements Runnable {
 
                     //Retrieve necessary objects
 
-                    playerX = main.room.getPlayer().getX();
-                    playerY = main.room.getPlayer().getY();
+                    playerX = (int) main.room.getPlayer().getX();
+                    playerY = (int) main.room.getPlayer().getY();
 
                     visibleBlocks = main.room.getBlockMap().getVisibleBlocks(playerX, playerY);
                     visibleEnvironment = main.room.getEnvironmentMap().getVisibleEnvironment(playerX, playerY);

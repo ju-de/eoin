@@ -14,7 +14,7 @@ public class BrownianParticle extends Particle{
     public int maxWalk = 100;
     private int walked = 0;
     
-    public BrownianParticle(int x, int y, int stepSize, int maxWalk, String imagePath){
+    public BrownianParticle(float x, float y, int stepSize, int maxWalk, String imagePath){
         this.stepSize = stepSize;
         this.maxWalk = maxWalk;
         this.setImagePath(imagePath);

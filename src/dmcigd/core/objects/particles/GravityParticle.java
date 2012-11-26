@@ -12,7 +12,7 @@ public class GravityParticle extends StraightLineParticle {
     
     public static float GRAVITY = 0.5f;
     
-    public GravityParticle(int x, int y, float vx, float vy, int lifeTime, String imagePath){
+    public GravityParticle(float x, float y, float vx, float vy, int lifeTime, String imagePath){
         super(x, y, vx, vy, lifeTime, imagePath);
     }
     

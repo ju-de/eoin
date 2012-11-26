@@ -9,8 +9,6 @@ import dmcigd.core.objects.platforms.*;
 import dmcigd.core.objects.regions.RoomWarp;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
-import dmcigd.levels.rabbit.houses.*;
-import dmcigd.levels.rabbit.npc.*;
 import dmcigd.levels.rabbit.mobs.*;
 
 public class Two extends Room implements Runnable {
@@ -68,8 +66,12 @@ public class Two extends Room implements Runnable {
 		addRegion(new Knight(112 * 32, 13 * 32, true, "I'll never understand why these rabbits chose to live in such thorny places!", getDialogueHandler()));
 		addRegion(new Knight(201 * 32, 24 * 32, false, "I hear the rabbits might be hiding something in these caves! They don't seem very interested in the affairs of the princess though.", getDialogueHandler()));
 		
-		addRegion(new OldManWiggleton(227 * 32, 19 * 32, "How do you know it was a kidnapper? These youngings are always trying to run off on me with their shenanigans!", getDialogueHandler()));
-		addRegion(new JulietWiggleton(230 * 32, 19 * 32, "How would I know about any kidnapping? Grandpa doesn't even let me go next door!", getDialogueHandler()));
+		addRegion(new GenericRabbit(227 * 32, 19 * 32, 
+				24, 34, 8, 0.03f, "oldmanwiggleton.gif", "Old Man Wiggleton",
+				"How do you know it was a kidnapper? These youngings are always trying to run off on me with their shenanigans!", getDialogueHandler()));
+		addRegion(new GenericRabbit(230 * 32, 19 * 32 + 6,
+				16, 28, 10, 0.03f, "julietwiggleton.gif", "Juliet Wiggleton",
+				"How would I know about any kidnapping? Grandpa doesn't even let me go next door!", getDialogueHandler()));
 
 		addRegion(new Switch(220 * 32 - 4, 22 * 32 + 16, false, switchBlock1));
 		addTextLabel(new TextLabel(219 * 32, 23 * 32 - 4, "Press"));
@@ -77,13 +79,18 @@ public class Two extends Room implements Runnable {
 				
 		addRegion(new RoomWarp(276 * 32+ 16, 0, 32, 640, "rabbit.Three"));
 		
-		addBackgroundObject(new HouseThree(218 * 32, 15 * 32 + 4, 0));
-		addForegroundObject(new HouseThree(218 * 32, 15 * 32 + 4, 1));
+		addBackgroundObject(new House(218 * 32, 15 * 32 + 4, 0,
+				180, 160, 3));
+		addForegroundObject(new House(218 * 32, 15 * 32 + 4, 1,
+				180, 160, 3));
 		
-		addBackgroundObject(new HouseFour(238 * 32 + 16, 13 * 32 + 4, 0));
-		addForegroundObject(new HouseFour(238 * 32 + 16, 13 * 32 + 4, 1));
+		addBackgroundObject(new House(238 * 32 + 16, 13 * 32 + 4, 0,
+				64, 96, 4));
+		addForegroundObject(new House(238 * 32 + 16, 13 * 32 + 4, 1,
+				64, 96, 4));
 		
-		addForegroundObject(new HouseFive(230 * 32, 9 * 32 + 4));
+		addForegroundObject(new House(230 * 32, 9 * 32 + 4, 0,
+				110, 96, 5));
 		
 		addBackgroundObject(new Furniture(226 * 32 + 24, 19 * 32, 1, 1, true));
 		addBackgroundObject(new Furniture(225 * 32 + 16, 19 * 32, 0, 2, false));

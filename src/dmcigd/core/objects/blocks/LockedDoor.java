@@ -10,7 +10,7 @@ public class LockedDoor extends ObjectCollision implements RestableObject {
 	
 	private boolean unlocked = false;
 
-	public void onPush(Entity entity, int v) {
+	public void onPush(Entity entity, float v) {
 		
 		//These values just so happen to work out to be the 4 respective keys
 		if(entity.getEntityType().getCode() == -type) {

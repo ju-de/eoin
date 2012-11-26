@@ -7,8 +7,6 @@ import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
 import dmcigd.core.objects.regions.RoomWarp;
-import dmcigd.levels.rabbit.houses.*;
-import dmcigd.levels.rabbit.npc.*;
 import dmcigd.levels.rabbit.mobs.*;
 
 public class Three extends Room implements Runnable {
@@ -74,16 +72,27 @@ public class Three extends Room implements Runnable {
 		
 		addRegion(new Sign(93 * 32, 20 * 32, 6, "SIGN", "The Fluffingham House", getDialogueHandler()));
 		
-		addRegion(new MrFritzlepuff(81 * 32, 41 * 32, "Oh how I hate you king's men! Always unlocking doors and running amok like you own the place!", getDialogueHandler()));
+		addRegion(new GenericRabbit(127 * 32 + 16, 24 * 32,
+				16, 34, 9, 0.03f, "romeofluffingham.gif", "Romeo Fluffingham",
+				"Why should I care about the princess when I'm not even allowed to go to the hill next door?", getDialogueHandler()));
+		
+		addRegion(new GenericRabbit(81 * 32, 41 * 32,
+				20, 32, 10, 0.03f, "mrfritzlepuff.gif", "Mr. Fritzlepuff",
+				"Oh how I hate you king's men! Always unlocking doors and running amok like you own the place!", getDialogueHandler()));
 		
 		addRegion(new Switch(119 * 32 + 4, 23 * 32 + 16, true, switchBlock1));
 		addRegion(new Switch(130 * 32 + 4, 27 * 32 + 16, true, switchBlock2));
 		
-		addBackgroundObject(new HouseSix(96 * 32 - 8, 16 * 32 + 4, 0));
-		addForegroundObject(new HouseSix(96 * 32 - 8, 16 * 32 + 4, 1));
+		addBackgroundObject(new House(96 * 32 - 8, 16 * 32 + 4, 0,
+				160, 160, 6));
+		addForegroundObject(new House(96 * 32 - 8, 16 * 32 + 4, 1,
+				160, 160, 6));
 		
-		addForegroundObject(new HouseSeven(133 * 32 - 2, 15 * 32 + 12));
-		addForegroundObject(new HouseEight(110 * 32 + 18, 11 * 32 + 4));
+		addForegroundObject(new House(133 * 32 - 2, 15 * 32 + 12, 0,
+				32, 96, 7));
+		
+		addForegroundObject(new House(110 * 32 + 18, 11 * 32 + 4, 0,
+				128, 96, 8));
 		
 		
 		//Fourth Floor

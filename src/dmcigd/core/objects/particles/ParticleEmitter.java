@@ -17,7 +17,7 @@ import java.util.Random;
 public abstract class ParticleEmitter {
     
     private Entity lockedOn = null;
-    protected int x,y;
+    protected float x,y;
     public int xOffset, yOffset;
     
     public static Random generator = new Random();
@@ -64,8 +64,8 @@ public abstract class ParticleEmitter {
     public void setY(int y){
         this.y = y;
     }
-    public int getX(){ return x;}
-    public int getY(){ return y;}
+    public float getX(){ return x;}
+    public float getY(){ return y;}
     
     
     /**

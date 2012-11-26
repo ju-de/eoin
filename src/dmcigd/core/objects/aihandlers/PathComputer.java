@@ -32,8 +32,9 @@ public class PathComputer {
         }
         
         Player player  = currentRoom.getPlayer();
-        int xMid = player.getX() / 32;
-        int yMid = player.getY() / 32;
+        //Please note that his can now use float values instead
+        int xMid = (int) player.getX() / 32;
+        int yMid = (int) player.getY() / 32;
         
         LinkedList<Point> queue = new LinkedList<Point>();
         
