@@ -13,6 +13,8 @@ public class Entity extends MovingObject {
 	public boolean hitGround,isFalling,isDead,isDestroyed,inWater = false;
 	
     private PhysicsHandler physicsHandler;
+    
+    private int fx,fy;
         
 	//Public getters
 	public EntityType getEntityType() {
@@ -36,13 +38,21 @@ public class Entity extends MovingObject {
     public void setPhysicsHandler(PhysicsHandler physicsHandler){
         this.physicsHandler = physicsHandler;
     }
+    
+    public void setFX(int fx) {
+    	this.fx = fx;
+    }
+    
+    public void setFY(int fy) {
+    	this.fy = fy;
+    }
         
 	//Checks for water
 	public CollisionType backBlock;
 
 	public void onPush(Entity entity, int v) {
 		if(entity.getCollisionType() == CollisionType.SOLID) {
-			addX(v);
+			fx = v;
 		}
 	}
 	
@@ -67,8 +77,8 @@ public class Entity extends MovingObject {
 		//Reset velocity
 		addAcceleration();
 		
-		int vx = getVX();
-		int vy = getVY();
+		int vx = getVX() + fx;
+		int vy = getVY() + fy;
 		
 		if(restingBlock != null) {
 			//Adds displacement to velocity
@@ -83,6 +93,8 @@ public class Entity extends MovingObject {
 		inWater = false;
 		hitGround = false;
 		isFalling = false;
+		fx = 0;
+		fy = 0;
 		
 		//Move Vertically
 		if(vy >= 0) {

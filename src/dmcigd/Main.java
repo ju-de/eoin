@@ -161,6 +161,7 @@ public class Main implements Runnable, KeyListener {
 			case KeyEvent.VK_Q:
 				//Quit Game
 				loadRoom("game.MainMenu");
+				killCount = 0;
 				break;
 		
 			case KeyEvent.VK_R:
