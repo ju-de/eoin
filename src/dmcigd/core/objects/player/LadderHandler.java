@@ -12,11 +12,6 @@ public class LadderHandler extends PhysicsHandler {
 	public LadderHandler(BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
 		super(blockMap, solidObjects);
 	}
-
-	public boolean onLadder,onLadderTop,isClimbing = false;
-	public Direction climbing;
-	
-	public int jumpState = 0;
 	
 	//Account for ladder top position
 	public void rest(Entity entity, CollisionType collisionType) {
