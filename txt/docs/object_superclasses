@@ -130,7 +130,7 @@ the objects externally.
 	
 	VisibleObject.java controls how an object is displayed, including image resources, position, and
 	visibility checks. This abstract class acts as nothing more than a bundle of properties, with a
-	couple of very basic calcuations to determine relative positions
+	couple of very basic calculations to determine relative positions
 	
 	PUBLIC GETTERS
 	
@@ -749,10 +749,8 @@ where it creates a bunch of wooden projectiles, then later loops through them an
 Please note that gravity can be applied to projectiles for curved motion, however it is not on by
 default, so to enable gravity, simply make a setGravity() call in your class' constructor
 
-Also note that, as explained in the VisibleObject section above, that a copy of the projectile's image
-must be loaded upon room initialization, whether this means making a mini room to store one copy of
-all of the projectiles, or just sharing a spritesheet with the parent object and assigning the
-appropriate sequence and frame.
+Also note that, as explained in the VisibleObject section above, a projectile's image resource must be
+loaded manually on room initialization.
 		
 (*)	)=================================================================================================
 
@@ -949,7 +947,7 @@ MONSTER SUPERCLASSES:
 	5.	If the invincibilityCounter is greater than or equal to the invincibilityCounterReset, call
 		setInvincibility(false)
 	
-	6.	Alternate flicker state every 8 ticks. This is done by dividing the counter by 8 and checking
+	6.	Alternate flicker state every 4 ticks. This is done by dividing the counter by 4 and checking
 		it's modulo of 2 (which would alternate between 0 and 1 due to integer flooring)
 
 		

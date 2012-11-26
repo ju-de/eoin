@@ -18,7 +18,7 @@ public class One extends Room implements Runnable {
 		super(codeBase, "rabbit", "One", "grassy");
 	}
         
-	public void initializeSolidObjects() {
+	public void initializeRoom() {
 		addSolidObject(new LockedDoor(184 * 32, 14 * 32, 1));
 		
 		addSolidObject(new SmallMob(38 * 32, 16 * 32, getPhysicsHandler()));
@@ -48,9 +48,7 @@ public class One extends Room implements Runnable {
 		addSolidObject(new SmallMob(211 * 32, 17 * 32, getPhysicsHandler()));
 		addSolidObject(new SmallMob(213 * 32, 17 * 32, getPhysicsHandler()));
 		addSolidObject(new SmallMob(215 * 32, 17 * 32, getPhysicsHandler()));
-	}
-        
-	public void initializeNonsolidObjects() {
+		
 		addItem(new DoorKey(186 * 32, 16 * 32, 1, getPhysicsHandler()));
 		
 		addRegion(new Sign(15 * 32, 13 * 32, 3, "SIGN", "Welcome to the Rabbit Hills.\nForest Ahead.", getDialogueHandler()));

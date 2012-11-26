@@ -31,8 +31,6 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	private DialogueHandler dialogueHandler = new DialogueHandler();
 	public ArrayList<ObjectImage> visibleObjects;
 	private ArrayList<TextLabel> textLabels = new ArrayList<TextLabel>();
-	private ArrayList<VisibleObject> backgroundObjects = new ArrayList<VisibleObject>();
-	private ArrayList<VisibleObject> foregroundObjects = new ArrayList<VisibleObject>();
         
 	//Public Getters
 	
@@ -82,22 +80,10 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	public ArrayList<TextLabel> getTextLabels() {
 		return textLabels;
 	}
-	public ArrayList<VisibleObject> getBackgroundObjects() {
-		return backgroundObjects;
-	}
-	public ArrayList<VisibleObject> getForegroundObjects() {
-		return foregroundObjects;
-	}
 	
 	//Public Setters
 	public void addTextLabel(TextLabel textLabel) {
 		textLabels.add(textLabel);
-	}
-	public void addBackgroundObject(VisibleObject backgroundObject) {
-		backgroundObjects.add(backgroundObject);
-	}
-	public void addForegroundObject(VisibleObject foregroundObject) {
-		foregroundObjects.add(foregroundObject);
 	}
         
 	public Room(URL codeBase, String levelName, String roomName, String tileSet) {
@@ -123,7 +109,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		visibleObjects = new ArrayList<ObjectImage>();
 
 		//Add Background Objects
-		for (VisibleObject i : backgroundObjects) {
+		for (VisibleObject i : getBackgroundObjects()) {
 			if(i.isVisible(player.getX(), player.getY())) {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
 			}
@@ -155,15 +141,15 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 			addVisibleObject(i);
 		}
                 
-                // add visible particles
-                for (Particle p: getParticles()){
-                    if(p.isVisible(player.getX(), player.getY())) {
-                        visibleObjects.add(p.getObjectImage(player.getX(), player.getY()));
-                    }
-                }
+        //Add Visible Particles
+        for (Particle p: getParticles()){
+            if(p.isVisible(player.getX(), player.getY())) {
+                visibleObjects.add(p.getObjectImage(player.getX(), player.getY()));
+            }
+        }
 		
 		//Add Foreground Objects
-		for (VisibleObject i : foregroundObjects) {
+		for (VisibleObject i : getForegroundObjects()) {
 			if(i.isVisible(player.getX(), player.getY())) {
 				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
 			}
@@ -197,11 +183,9 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		
 		player = new Player(blockMap.getSpawnX() * 32 + 6, blockMap.getSpawnY() * 32, physicsHandler, getItems(), getRegions());
 		
-		initializeSolidObjects();
+		initializeRoom();
 		
 		addSolidObject(player);
-		
-		initializeNonsolidObjects();
 
 		fetchVisibleObjects();
 		

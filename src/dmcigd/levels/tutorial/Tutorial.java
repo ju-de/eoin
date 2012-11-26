@@ -16,7 +16,7 @@ public class Tutorial extends Room implements Runnable {
 		super(codeBase, "tutorial", "Tutorial", "castle");
 	}
 	
-	public void initializeSolidObjects() {
+	public void initializeRoom() {
 		
 		addSolidObject(new MovingPlatform(105 * 32, 16 * 32, 1, 6, 1, 11));
 		
@@ -34,9 +34,7 @@ public class Tutorial extends Room implements Runnable {
 		addSolidObject(new Dummy(198 * 32, 19 * 32 + 24));
 		addSolidObject(new Dummy(201 * 32, 19 * 32 + 24));
 		addSolidObject(new Dummy(204 * 32, 19 * 32 + 24));
-	}
-
-	public void initializeNonsolidObjects() {
+		
 		addTextLabel(new TextLabel(10 * 32, 23 * 32, "Use your Arrow Keys", false));
 		addTextLabel(new TextLabel(10 * 32, 23 * 32 + 20, "to move Left and Right", false));
 		

@@ -31,11 +31,7 @@ public class CutsceneRoom extends Room {
 		
 	}
 
-	public void initializeSolidObjects() {
-		
-	}
-
-	public void initializeNonsolidObjects() {
+	public void initializeRoom() {
 		addRegion(cutsceneRegion);
 		addTextLabel(new TextLabel(470, 350, "Press \"X\" to continue", false));
 	}

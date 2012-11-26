@@ -12,9 +12,7 @@ public class MainMenu extends Room implements Runnable {
 		super(codeBase, "game", "MainMenu", "grassy");
 	}
 	
-	public void initializeSolidObjects() {}
-
-	public void initializeNonsolidObjects() {
+	public void initializeRoom() {
 		
 		addRegion(new RoomPassage(16 * 32, 10 * 32, "tutorial.Tutorial"));
 		addTextLabel(new TextLabel(16 * 32 - 7, 11 * 32 + 16, "Start Game"));

@@ -21,7 +21,7 @@ public class Three extends Room implements Runnable {
 		super(codeBase, "rabbit", "Three", "grassy");
 	}
 
-	public void initializeSolidObjects() {
+	public void initializeRoom() {
 		addSolidObject(new LockedDoor(126 * 32, 20 * 32, 1));
 		addSolidObject(new LockedDoor(129 * 32, 16 * 32, 2));
 		addSolidObject(new LockedDoor(113 * 32, 24 * 32, 3));
@@ -54,9 +54,7 @@ public class Three extends Room implements Runnable {
 		addSolidObject(new BigMob(84 * 32, 36 * 32, getPhysicsHandler()));
 		addSolidObject(new MediumMob(83 * 32, 37 * 32, getPhysicsHandler()));
 		addSolidObject(new MediumMob(82 * 32, 37 * 32, getPhysicsHandler()));
-	}
-
-	public void initializeNonsolidObjects() {
+		
 		addItem(new DoorKey(126 * 32, 23 * 32, 3, getPhysicsHandler()));
 		addItem(new DoorKey(117 * 32, 22 * 32, 2, getPhysicsHandler()));
 		addItem(new DoorKey(131 * 32, 15 * 32, 1, getPhysicsHandler()));
