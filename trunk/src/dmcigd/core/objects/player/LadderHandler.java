@@ -12,7 +12,7 @@ public class LadderHandler extends PhysicsHandler {
 	public LadderHandler(BlockMap blockMap, ArrayList<SolidObject> solidObjects) {
 		super(blockMap, solidObjects);
 	}
-	
+
 	//Account for ladder top position
 	public void rest(Entity entity, CollisionType collisionType) {
 		
@@ -71,7 +71,7 @@ public class LadderHandler extends PhysicsHandler {
 			//Climb down
 			case NONSOLIDLADDER:
 			case SOLIDLADDER:
-				if(e.onLadder || (e.isClimbing && e.climbing == Direction.DOWN)) {
+				if(e.climbing == null || (e.isClimbing && e.climbing == Direction.DOWN)) {
 					checkSolidObjectCollisionDown(entity, v);
 					e.setVY(0);
 					break;
