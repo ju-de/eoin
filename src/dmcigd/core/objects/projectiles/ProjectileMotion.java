@@ -4,7 +4,7 @@ import dmcigd.core.objects.*;
 
 public class ProjectileMotion extends Entity {
 	
-	public void setProjectileMotion(int speed, int angle, boolean flipped) {
+	public void setProjectileMotion(float speed, int angle, boolean flipped) {
 		
 		//Flips angle if necessary, default facing right
 		if(flipped) {
@@ -23,7 +23,7 @@ public class ProjectileMotion extends Entity {
 		
 	}
 	//Overloads method with flipped defaulted to false
-	public void setProjectileMotion(int speed, int angle) {
+	public void setProjectileMotion(float speed, int angle) {
 		setProjectileMotion(speed, angle, false);
 	}
 }
