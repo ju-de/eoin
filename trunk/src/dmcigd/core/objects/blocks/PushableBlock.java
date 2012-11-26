@@ -6,12 +6,12 @@ import dmcigd.core.objects.interfaces.*;
 
 public class PushableBlock extends Entity implements RestableObject {
 	
-	public void onPush(Entity entity, int v) {
+	public void onPush(Entity entity, float v) {
 		if(entity.getEntityType() == EntityType.PLAYER) {
 			if(getRestingBlock() != null) {
-				setVX((v - getRestingBlock().getDX())/2);
+				setFX((v - getRestingBlock().getDX())/2);
 			} else {
-				setVX(v/2);
+				setFX(v/2);
 			}
 		}
 	}
@@ -43,7 +43,6 @@ public class PushableBlock extends Entity implements RestableObject {
 	
 	public void step() {
 		move();
-		setVX(0);
 	}
 	
 }

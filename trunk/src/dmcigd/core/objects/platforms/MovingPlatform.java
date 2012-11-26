@@ -17,7 +17,7 @@ public class MovingPlatform extends MovingObject implements RestableObject {
 	
 	public boolean isDestroyed() { return false; }
 	
-	public MovingPlatform(int x, int y, int type, int width, int speed, int travelDistance) {
+	public MovingPlatform(int x, int y, int type, int width, float speed, int travelDistance) {
 		
 		setX(x);
 		setY(y);
@@ -39,7 +39,7 @@ public class MovingPlatform extends MovingObject implements RestableObject {
 		
 		setImagePath("objects.gif");
 		
-		clockReset = travelDistance * 16 / speed;
+		clockReset = (int) (travelDistance * 16 / speed);
 	}
 	
 	public void step() {

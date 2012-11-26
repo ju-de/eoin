@@ -15,14 +15,14 @@ public class BigMob extends RabbitAI implements RestableObject {
 
 	public void moveLeft() {
 		flipped = true;
-		setVX(-1);
+		setVX(-0.5f);
 		setSequence(1);
 		setFrameSpeed(0.06f);
 	}
 
 	public void moveRight() {
 		flipped = false;
-		setVX(1);
+		setVX(0.5f);
 		setSequence(1);
 		setFrameSpeed(0.06f);
 	}

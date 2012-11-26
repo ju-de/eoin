@@ -99,8 +99,8 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 	}
 	
 	public void addVisibleObject(GameObject i) {
-		if(i.isVisible(player.getX(), player.getY())) {
-			visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
+		if(i.isVisible((int) player.getX(), (int) player.getY())) {
+			visibleObjects.add(i.getObjectImage((int) player.getX(), (int) player.getY()));
 		}
 	}
 	
@@ -110,8 +110,8 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 
 		//Add Background Objects
 		for (VisibleObject i : getBackgroundObjects()) {
-			if(i.isVisible(player.getX(), player.getY())) {
-				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
+			if(i.isVisible((int) player.getX(), (int) player.getY())) {
+				visibleObjects.add(i.getObjectImage((int) player.getX(), (int) player.getY()));
 			}
 		}
 		
@@ -123,8 +123,8 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		 // add visible particles
                 for (Particle p: getParticles()){
                     //System.out.println("trying to render particle" + p.getX() + " " + p.getY());
-                    if(p.isVisible(player.getX(), player.getY())) {
-                        visibleObjects.add(p.getObjectImage(player.getX(), player.getY()));
+                    if(p.isVisible((int) player.getX(), (int) player.getY())) {
+                        visibleObjects.add(p.getObjectImage((int) player.getX(), (int) player.getY()));
                     }
                 }
 		
@@ -136,7 +136,7 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		//Draw sword only if player is not holding an object
 		if(player.heldItem == null) {
 			//Add Sword
-			visibleObjects.add(player.sword.getObjectImage(player.getX(), player.getY()));
+			visibleObjects.add(player.sword.getObjectImage((int) player.getX(), (int) player.getY()));
 		}
 		
 		//Add Items
@@ -152,8 +152,8 @@ public abstract class Room extends GameObjectHandler implements Runnable {
                
 		//Add Foreground Objects
 		for (VisibleObject i : getForegroundObjects()) {
-			if(i.isVisible(player.getX(), player.getY())) {
-				visibleObjects.add(i.getObjectImage(player.getX(), player.getY()));
+			if(i.isVisible((int) player.getX(), (int) player.getY())) {
+				visibleObjects.add(i.getObjectImage((int) player.getX(), (int) player.getY()));
 			}
 		}
 	}

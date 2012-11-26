@@ -18,7 +18,7 @@ abstract class BlockCollision {
 	public List<Character> nonsolid = Arrays.asList(' ','1');
 	
 	//Collision checks
-	public CollisionType collidesX(int x, int y, int vx, int width, int height, Direction direction) {
+	public CollisionType collidesX(float x, float y, float vx, int width, int height, Direction direction) {
 
 		CollisionType returnType = CollisionType.NONSOLID;
 		CollisionType curType;
@@ -44,7 +44,7 @@ abstract class BlockCollision {
 		return returnType;
 		
 	}
-	public CollisionType collidesY(int x, int y, int vy, int width, int height, Direction direction) {
+	public CollisionType collidesY(float x, float y, float vy, int width, int height, Direction direction) {
 
 		CollisionType returnType = CollisionType.NONSOLID;
 		CollisionType curType;
@@ -77,7 +77,7 @@ abstract class BlockCollision {
 		return returnType;
 	}
 	
-	public CollisionType backBlock(int x, int y, int width, int height) {
+	public CollisionType backBlock(float x, float y, int width, int height) {
 		
 		CollisionType returnType = CollisionType.NONSOLID;
 		CollisionType curType;
@@ -126,33 +126,33 @@ abstract class BlockCollision {
 	}
 	
 	//Tile math
-	public int tileRow(int y, int height, Direction direction) {
+	public int tileRow(float y, int height, Direction direction) {
 		if(direction == Direction.DOWN) {
-			return (y + height) / 32;
+			return (int) (y + height) / 32;
 		} else {
-			return y / 32;
+			return (int) y / 32;
 		}
 	}
-	public int tileCol(int x, int width, Direction direction) {
+	public int tileCol(float x, int width, Direction direction) {
 		if(direction == Direction.RIGHT) {
-			return (x + width - 1) / 32;
+			return (int) (x + width - 1) / 32;
 		} else {
-			return x / 32;
+			return (int) x / 32;
 		}
 	}
 
-	public int rowEdge(int y, int height, Direction direction) {
+	public int rowEdge(float y, int height, Direction direction) {
 		if(direction == Direction.DOWN) {
-			return (y + height - 1) - ((y + height - 1) % 32) + (32 - height);
+			return (int) ((y + height - 1) - ((y + height - 1) % 32) + (32 - height));
 		} else {
-			return y - (y % 32);
+			return (int) (y - (y % 32));
 		}
 	}
-	public int colEdge(int x, int width, Direction direction) {
+	public int colEdge(float x, int width, Direction direction) {
 		if(direction == Direction.RIGHT) {
-			return (x + width - 1) - ((x + width - 1) % 32) + (32 - width);
+			return (int) ((x + width - 1) - ((x + width - 1) % 32) + (32 - width));
 		} else {
-			return x - (x % 32);
+			return (int) (x - (x % 32));
 		}
 	}
 	

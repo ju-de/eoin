@@ -13,14 +13,14 @@ public class MediumMob extends RabbitAI implements SolidObject {
 
 	public void moveLeft() {
 		flipped = true;
-		setVX(-1);
+		setVX(-0.75f);
 		setSequence(1);
 		setFrameSpeed(0.12f);
 	}
 
 	public void moveRight() {
 		flipped = false;
-		setVX(1);
+		setVX(0.75f);
 		setSequence(1);
 		setFrameSpeed(0.12f);
 	}

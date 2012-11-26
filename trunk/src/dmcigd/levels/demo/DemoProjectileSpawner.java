@@ -50,7 +50,7 @@ public class DemoProjectileSpawner extends ObjectCollision implements Region {
 				angleClock = 0;
 			}
 			objectClock = 0;
-			projectiles.add(new DemoProjectileOne(getX(),getY(),3,angleClock * 45,blockMap,solidObjects));
+			projectiles.add(new DemoProjectileOne((int) getX(),(int) getY(),3,angleClock * 45,blockMap,solidObjects));
 		}
 		
 	}

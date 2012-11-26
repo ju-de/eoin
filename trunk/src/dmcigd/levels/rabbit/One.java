@@ -8,8 +8,6 @@ import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
 import dmcigd.core.objects.regions.*;
-import dmcigd.levels.rabbit.houses.*;
-import dmcigd.levels.rabbit.npc.*;
 import dmcigd.levels.rabbit.mobs.*;
 
 public class One extends Room implements Runnable {
@@ -74,12 +72,21 @@ public class One extends Room implements Runnable {
 		addRegion(new Knight(135 * 32, 28 * 32, false, "I really wouldn't be down here if I were you...", getDialogueHandler()));
 		addRegion(new Knight(138 * 32, 28 * 32, true, "W-what?! You shouldn't be down here! Get back on track!", getDialogueHandler()));
 		
-		addRegion(new MrScrufflebottom(180 * 32 - 4, 13 * 32 + 18, "Kidnapping? I've never heard of any kidnapping!\nNow where did I put my key again?", getDialogueHandler()));
+		addRegion(new GenericRabbit(180 * 32 - 4, 13 * 32 + 18,
+				48, 48, 2, 0.01f, "mrscrufflebottom.gif", "Mr. Scrufflebottom",
+				"Kidnapping? I've never heard of any kidnapping!\nNow where did I put my key again?", getDialogueHandler()));
 		
 		addRegion(new RoomWarp(229 * 32+ 16, 0, 32, 640, "rabbit.Two"));
+
+		addBackgroundObject(new House(170 * 32 - 8, 10 * 32 + 4, 0,
+				200, 160, 1));
+		addForegroundObject(new House(170 * 32 - 8, 10 * 32 + 4, 1,
+				200, 160, 1));
 		
-		addBackgroundObject(new HouseOne(170 * 32 - 8, 10 * 32 + 4, 0));
-		addForegroundObject(new HouseOne(170 * 32 - 8, 10 * 32 + 4, 1));
+		addBackgroundObject(new House(193 * 32, 12 * 32 + 4, 0,
+				96, 96, 2));
+		addForegroundObject(new House(193 * 32, 12 * 32 + 4, 1,
+				96, 96, 2));
 
 		addBackgroundObject(new Furniture(177 * 32 + 12, 14 * 32, 1, 0, false));
 		addBackgroundObject(new Furniture(178 * 32 + 16, 14 * 32, 0, 2, false));
@@ -108,9 +115,6 @@ public class One extends Room implements Runnable {
 
 		addBackgroundObject(new Furniture(186 * 32 + 4, 14 * 32, 1, 1, false));
 		addBackgroundObject(new Furniture(187 * 32 + 24, 14 * 32, 1, 0, true));
-		
-		addBackgroundObject(new HouseTwo(193 * 32, 12 * 32 + 4, 0));
-		addForegroundObject(new HouseTwo(193 * 32, 12 * 32 + 4, 1));
 		
 	}
 }

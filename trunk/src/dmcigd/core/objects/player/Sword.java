@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Sword extends ObjectCollision {
 	
-	private int baseX,baseY;
+	private float baseX,baseY;
 	private boolean attacking,onLadder = false;
 	private int damage = 10;
 	private ArrayList<SolidObject> solidObjects;
@@ -19,7 +19,7 @@ public class Sword extends ObjectCollision {
 	}
 	
 	//Public setters
-	public void setPosition(int x, int y) {
+	public void setPosition(float x, float y) {
 		baseX = x;
 		baseY = y + 10;
 	}

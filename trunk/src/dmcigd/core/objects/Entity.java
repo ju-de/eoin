@@ -14,7 +14,7 @@ public class Entity extends MovingObject {
 	
     private PhysicsHandler physicsHandler;
     
-    private int fx,fy;
+    private float fx,fy;
         
 	//Public getters
 	public EntityType getEntityType() {
@@ -39,25 +39,25 @@ public class Entity extends MovingObject {
         this.physicsHandler = physicsHandler;
     }
     
-    public void setFX(int fx) {
+    public void setFX(float fx) {
     	this.fx = fx;
     }
     
-    public void setFY(int fy) {
+    public void setFY(float fy) {
     	this.fy = fy;
     }
         
 	//Checks for water
 	public CollisionType backBlock;
 
-	public void onPush(Entity entity, int v) {
+	public void onPush(Entity entity, float v) {
 		if(entity.getCollisionType() == CollisionType.SOLID) {
 			fx = v;
 		}
 	}
 	
     //Actions
-    public void pushObject(SolidObject object, int v) {
+    public void pushObject(SolidObject object, float v) {
         object.onPush(this, v);
     }
     public void restObject(RestableObject restingBlockCheck) {
@@ -77,16 +77,18 @@ public class Entity extends MovingObject {
 		//Reset velocity
 		addAcceleration();
 		
-		int vx = getVX() + fx;
-		int vy = getVY() + fy;
+		float vx = getVX() + fx;
+		float vy = getVY() + fy;
 		
 		if(restingBlock != null) {
+			//Applies normal force (gravity screws things up)
+			setVY(getVY() - 0.4f);
 			//Adds displacement to velocity
 			vx = vx + restingBlock.getDX();
-			vy = vy + restingBlock.getDY();
+			vy = vy + restingBlock.getDY() - 0.4f;
 		}else if(inWater) {
 			//If in water, divides falling or jumping speed by factor of 2.2
-			vy = (int) (vy / 2.2f);
+			vy = vy / 2.2f;
 		}
 		
 		//Reset entity status

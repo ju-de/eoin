@@ -58,7 +58,7 @@ abstract class ControlHandler extends Entity {
 				if(!isWalking && isClimbing && climbing == Direction.DOWN) {
 					setVY(-4);
 				} else {
-					setVY(-8);
+					setVY(-7.5f);
 				}
 				jumpState++;
 				jumpDelay = 5;
@@ -95,7 +95,7 @@ abstract class ControlHandler extends Entity {
 					heldItem.setVX(4);
 				}
 				//Release item into air
-				heldItem.setVY(-4);
+				heldItem.setVY(-3.5f);
 				heldItem.setHeld(false);
 				heldItem = null;
 			}

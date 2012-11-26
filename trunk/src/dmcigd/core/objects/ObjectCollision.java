@@ -9,8 +9,8 @@ public abstract class ObjectCollision extends VisibleObject {
 	CollisionType collisionType = CollisionType.NONSOLID;
 	
 	//Collision Checks
-	public Rectangle getBounds(int vx, int vy) {
-		return new Rectangle(getX() + vx, getY() + vy, getWidth(), getHeight());
+	public Rectangle getBounds(float vx, float vy) {
+		return new Rectangle((int) (getX() + vx), (int) (getY() + vy), getWidth(), getHeight());
 	}
 	//Overrides getBounds with default of no velocity
 	public Rectangle getBounds() {
@@ -30,7 +30,7 @@ public abstract class ObjectCollision extends VisibleObject {
 	
 	public void onUnrest(Entity entity) {}
 	
-	public void onPush(Entity entity, int v) {}
+	public void onPush(Entity entity, float v) {}
 	
 	public boolean onAttack(int damage, boolean flipped) { return false; }
 
