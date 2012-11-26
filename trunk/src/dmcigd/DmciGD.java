@@ -3,7 +3,6 @@ package dmcigd;
 import dmcigd.core.*;
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
-import dmcigd.core.objects.interfaces.*;
 
 import java.applet.*;
 import java.awt.*;
@@ -16,15 +15,20 @@ import java.util.*;
 public class DmciGD extends Applet implements Runnable {
 
     private URL codeBase;
+    
     //Initializes and synchronizes Main thread (which handles game loops)
     private ThreadSync threadSync = new ThreadSync();
     private Main main;
+    
     //Initializing gameState variable - decides which screen to paint
     GameState gameState;
+    
     //Initialize decayOffset integer, determines which tilesheet to display
     private int decayOffset;
+    
     //paintOnce attribute (for overlays)
     private boolean paintOnce = false;
+    
     //Initialize visible objects list
     private char[][] visibleBlocks = new char[12][22];
     private char[][] visibleEnvironment = new char[12][22];
@@ -34,15 +38,19 @@ public class DmciGD extends Applet implements Runnable {
     private Map<String, int[]> imageMap = new HashMap<String, int[]>();
     private Map<String, Image> objectImageMap = new HashMap<String, Image>();
     private int playerX, playerY;
+    
     //Initialize Dialogue variables
     private String name, line1, line2, line3;
+    
     //Initialize the Double-buffering Variables
     private Image dbImage;
     private Graphics dbg;
     private Image bgImage;
+    
     //Initialize font
     Font f;
     Font fSmall;
+    
     //Initialize loading animation
     private Image loadingImage;
     private int loadingClock = 0;
@@ -97,20 +105,6 @@ public class DmciGD extends Applet implements Runnable {
 			}
     }
 
-    public int preloadVisibleObject(MediaTracker mt, VisibleObject object, int i) {
-
-        if (!objectImageMap.containsKey(object.getImagePath())) {
-
-            objectImageMap.put(object.getImagePath(), getImageFromPath(object.getImagePath()));
-
-            mt.addImage(objectImageMap.get(object.getImagePath()), i);
-
-            return i++;
-        }
-
-        return i;
-    }
-
     //Repaints screen
     @Override
     public synchronized void run() {
@@ -138,28 +132,15 @@ public class DmciGD extends Applet implements Runnable {
                         int i = 2;
 
                         //Load all images
-                        for (VisibleObject object : main.room.getBackgroundObjects()) {
-                            i = preloadVisibleObject(mt, object, i);
-                        }
+                        for (String imagePath : main.room.getImageResources()) {
+                            if (!objectImageMap.containsKey(imagePath)) {
 
-                        for (SolidObject object : main.room.getSolidObjects()) {
-                            i = preloadVisibleObject(mt, (VisibleObject) object, i);
-                        }
+                                objectImageMap.put(imagePath, getImageFromPath(imagePath));
 
-                        for (Item object : main.room.getItems()) {
-                            i = preloadVisibleObject(mt, (VisibleObject) object, i);
-                        }
+                                mt.addImage(objectImageMap.get(imagePath), i);
 
-                        for (Region object : main.room.getRegions()) {
-                            i = preloadVisibleObject(mt, (VisibleObject) object, i);
-                        }
-
-                        for (SolidObject object : main.room.getProjectiles()) {
-                            i = preloadVisibleObject(mt, (VisibleObject) object, i);
-                        }
-
-                        for (VisibleObject object : main.room.getForegroundObjects()) {
-                            i = preloadVisibleObject(mt, object, i);
+                                i++;
+                            }
                         }
 
                         try {

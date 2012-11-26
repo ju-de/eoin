@@ -11,9 +11,7 @@ public class DemoTwo extends Room implements Runnable {
 		super(codeBase, "demo", "DemoTwo", "grassy");
 	}
 	
-	public void initializeSolidObjects() {}
-	
-	public void initializeNonsolidObjects() {
+	public void initializeRoom() {
 		
 		addRegion(new RoomPassage(34 * 32, 12 * 32, "demo.Demo"));
 		

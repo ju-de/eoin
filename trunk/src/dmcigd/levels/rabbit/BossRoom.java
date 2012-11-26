@@ -17,11 +17,8 @@ public class BossRoom extends Room implements Runnable {
 		super(codeBase, "rabbit", "BossRoom", "grassy");
 	}
 
-	public void initializeSolidObjects() {
+	public void initializeRoom() {
 		addSolidObject(new Boss(24 * 32, 11 * 32 + 26, getPhysicsHandler(), getDialogueHandler()));
-	}
-
-	public void initializeNonsolidObjects() {
 		
 		addRegion(new Knight(20 * 32, 13 * 32, false, "Don't worry about him! He's just as harmless as the rest of the rabbits. You can just jump right over him if you want.", getDialogueHandler()));
 		

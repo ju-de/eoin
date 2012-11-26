@@ -15,7 +15,7 @@ public class Demo extends Room implements Runnable {
 		super(codeBase, "demo", "Demo", "grassy");
 	}
 	
-	public void initializeSolidObjects() {
+	public void initializeRoom() {
 				
 		addSolidObject(new PushableBlock(832, 480, getPhysicsHandler()));
 
@@ -68,10 +68,6 @@ public class Demo extends Room implements Runnable {
 		addSolidObject(new TimedBlock(195 * 32, 704, 1, 2 * 16, 32, 288));
 		addSolidObject(new TimedBlock(196 * 32, 704, 1, 16, 32, 288));
 		addSolidObject(new TimedBlock(197 * 32, 704, 1, 0, 32, 288));
-		
-	}
-	
-	public void initializeNonsolidObjects() {
 		
 		addItem(new DoorKey(416, 416, 1, getPhysicsHandler()));
 		addItem(new DoorKey(736, 416, 2, getPhysicsHandler()));
