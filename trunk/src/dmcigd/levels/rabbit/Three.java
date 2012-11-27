@@ -72,6 +72,13 @@ public class Three extends Room implements Runnable {
 		
 		addRegion(new Sign(93 * 32, 20 * 32, 6, "SIGN", "The Fluffingham House", getDialogueHandler()));
 		
+		addRegion(new Fluffinghams(113 * 32, 20 * 32 - 2, new String[][] {
+				{"Mrs. Fluffingham","Come here sweetie!"},
+				{"Mr. Fluffingham","Stop it!"},
+				{"Mrs. Fluffingham","Don't be shy!"},
+				{"Mr. Fluffingham","NO MEANS NO!"}
+				}, getDialogueHandler()));
+		
 		addRegion(new GenericRabbit(127 * 32 + 16, 24 * 32,
 				16, 34, 9, 0.03f, "romeofluffingham.gif", "Romeo Fluffingham",
 				"Why should I care about the princess when I'm not even allowed to go to the hill next door?", getDialogueHandler()));
