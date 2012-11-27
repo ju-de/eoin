@@ -1,24 +1,22 @@
 package dmcigd.core.objects.player;
 
 import dmcigd.core.enums.*;
+import dmcigd.core.room.Room;
 import dmcigd.core.objects.Entity;
-import dmcigd.core.objects.PhysicsHandler;
 import dmcigd.core.objects.interfaces.*;
-
-import java.util.*;
 
 public class Player extends ControlHandler implements SolidObject {
 	
-	private String room;
+	private String targetRoom;
 	
 	public Sword sword;
 	
 	public String getRoom() {
-		return room;
+		return targetRoom;
 	}
 	
 	public void setRoom(String room) {
-		this.room = room;
+		this.targetRoom = room;
 	}
 	
 	public void handleRegionInteraction (Region region) {
@@ -36,7 +34,7 @@ public class Player extends ControlHandler implements SolidObject {
 		}
 	}
 	
-	public Player(int x, int  y, PhysicsHandler physicsHandler, ArrayList<Item> items, ArrayList<Region> regions) {
+	public Player(int x, int  y, Room room) {
 		
 		setX(x);
 		setY(y);
@@ -46,10 +44,11 @@ public class Player extends ControlHandler implements SolidObject {
 		setImageWidth(24);
 		
 		setGravity();
-		setPhysicsHandler(new LadderHandler(physicsHandler.getBlockMap(), physicsHandler.getSolidObjects()));
+		setPhysicsHandler(new LadderHandler(room.getBlockMap(), room.getSolidObjects()));
 		
-		this.items = items;
-		this.regions = regions;
+		this.room = room;
+		items = room.getItems();
+		regions = room.getRegions();
 		
 		setImagePath("player.gif");
 		
@@ -106,9 +105,12 @@ public class Player extends ControlHandler implements SolidObject {
 		//Set movement vectors
 		if(isWalking) {
 			if(!sprint) {
-				accelerate(1.0f, 2.0f, walking);
+				accelerate(0.3f, 2.0f, walking);
 			} else {
-				accelerate(1.0f, 4.0f, walking);
+				accelerate(0.3f, 4.0f, walking);
+				if(hitGround && !inWater && Math.random() < 0.2f) {
+					room.addParticle(new RunParticle(getX(), getY(), flipped));
+				}
 			}
 		}else{
 			accelerate(0, 0, Direction.RIGHT);
