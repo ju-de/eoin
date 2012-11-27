@@ -69,6 +69,13 @@ public class Two extends Room implements Runnable {
 		addRegion(new GenericRabbit(227 * 32, 19 * 32, 
 				24, 34, 8, 0.03f, "oldmanwiggleton.gif", "Old Man Wiggleton",
 				"How do you know it was a kidnapper? These youngings are always trying to run off on me with their shenanigans!", getDialogueHandler()));
+
+		
+		addRegion(new Wiggletons(225 * 32, 23 * 32, new String[][] {
+				{"Tommy Wiggleton","I wonder what that lever does..."},
+				{"Tina Wiggleton","Grandpa told us not to touch it!"}
+				}, getDialogueHandler()));
+		
 		addRegion(new GenericRabbit(230 * 32, 19 * 32 + 6,
 				16, 28, 10, 0.03f, "julietwiggleton.gif", "Juliet Wiggleton",
 				"How would I know about any kidnapping? Grandpa doesn't even let me go next door!", getDialogueHandler()));
