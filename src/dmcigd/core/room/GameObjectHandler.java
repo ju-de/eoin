@@ -108,19 +108,9 @@ public abstract class GameObjectHandler {
 
     public abstract void initializeRoom();
 
-    //Iterators
-    public void resetIterators() {
-        solidObjectIt = solidObjects.iterator();
-        itemIt = items.iterator();
-        projectileIt = projectiles.iterator();
-        particleIt = particles.iterator();
-        emitterIt = emitters.iterator();
-    }
-
     public void stepGameObjects() {
 
-        resetIterators();
-
+        projectileIt = projectiles.iterator();
         //Step all projectiles
         while (projectileIt.hasNext()) {
             SolidObject i = projectileIt.next();
@@ -131,6 +121,7 @@ public abstract class GameObjectHandler {
             }
         }
 
+        solidObjectIt = solidObjects.iterator();
         //Step all solid objects and player
         while (solidObjectIt.hasNext()) {
             SolidObject i = solidObjectIt.next();
@@ -141,6 +132,7 @@ public abstract class GameObjectHandler {
             }
         }
 
+        itemIt = items.iterator();
         //Step all items
         while (itemIt.hasNext()) {
             Item i = itemIt.next();
@@ -152,6 +144,7 @@ public abstract class GameObjectHandler {
         }
 
 
+        particleIt = particles.iterator();
         // Step all particles
         while (particleIt.hasNext()) {
             Particle p = particleIt.next();
@@ -163,6 +156,7 @@ public abstract class GameObjectHandler {
             }
         }
 
+        emitterIt = emitters.iterator();
         // step all particle emitters
         while (emitterIt.hasNext()) {
             ParticleEmitter pe = emitterIt.next();

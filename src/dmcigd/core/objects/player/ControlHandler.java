@@ -6,6 +6,7 @@ import dmcigd.core.enums.CollisionType;
 import dmcigd.core.enums.Direction;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
+import dmcigd.core.room.Room;
 
 abstract class ControlHandler extends Entity {
 
@@ -18,7 +19,8 @@ abstract class ControlHandler extends Entity {
 	public Direction climbing;
 	
 	public int jumpState = 0;
-	
+
+	public Room room;
 	public ArrayList<Item> items = new ArrayList<Item>();
 	public Item heldItem;
 	public ArrayList<Region> regions = new ArrayList<Region>();
@@ -63,6 +65,9 @@ abstract class ControlHandler extends Entity {
 				jumpState++;
 				jumpDelay = 5;
 				setFrame(0);
+				if(!inWater) {
+					room.addParticle(new JumpParticle(getX(), getY(), flipped));
+				}
 			}
 		}else{
 			if(getVY() < 0) {

@@ -184,7 +184,10 @@ public abstract class Room extends GameObjectHandler implements Runnable {
 		
 		physicsHandler = new PhysicsHandler(blockMap, getSolidObjects());
 		
-		player = new Player(blockMap.getSpawnX() * 32 + 6, blockMap.getSpawnY() * 32, physicsHandler, getItems(), getRegions());
+		player = new Player(blockMap.getSpawnX() * 32 + 6, blockMap.getSpawnY() * 32, this);
+
+		addImageResource("playerrun.gif");
+		addImageResource("playerjump.gif");
 		
 		initializeRoom();
 		
