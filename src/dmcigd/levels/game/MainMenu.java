@@ -14,7 +14,7 @@ public class MainMenu extends Room implements Runnable {
 	
 	public void initializeRoom() {
 		
-		addRegion(new RoomPassage(16 * 32, 10 * 32, "tutorial.Tutorial"));
+		addRegion(new RoomPassage(16 * 32, 10 * 32, "icecave.IceRoom1"));
 		addTextLabel(new TextLabel(16 * 32 - 7, 11 * 32 + 16, "Start Game"));
 		
 		addRegion(new RoomPassage(12 * 32, 10 * 32, "rabbit.One"));
