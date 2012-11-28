@@ -14,13 +14,13 @@ public class MainMenu extends Room implements Runnable {
 	
 	public void initializeRoom() {
 		
-		addRegion(new RoomPassage(16 * 32, 10 * 32, "icecave.IceRoom1"));
+		addRegion(new RoomPassage(16 * 32, 10 * 32, "icecave.IceRoom1")); // sooner or later this'll have to point to teh tutorial level
 		addTextLabel(new TextLabel(16 * 32 - 7, 11 * 32 + 16, "Start Game"));
 		
-		addRegion(new RoomPassage(12 * 32, 10 * 32, "rabbit.One"));
+		addRegion(new RoomPassage(12 * 32, 10 * 32, "rabbit.One")); // when are going to make an actual level select screen? we need one now...
 		addTextLabel(new TextLabel(12 * 32 - 10, 11 * 32 + 16, "Level Select"));
 		
-		addRegion(new RoomPassage(20 * 32, 10 * 32, "rabbit.BossRoom"));
+		addRegion(new RoomPassage(20 * 32, 10 * 32, "rabbit.BossRoom")); // a credits screen woudn't be too far out
 		addTextLabel(new TextLabel(20 * 32 + 3, 11 * 32 + 16, "Credits"));
 		
 		addTextLabel(new TextLabel(15 * 32 - 11, 8 * 32, "UNTITLED GAME", false));
@@ -28,7 +28,7 @@ public class MainMenu extends Room implements Runnable {
 		addTextLabel(new TextLabel(14 * 32, 13 * 32, "PRESS \"X\" TO BEGIN", false));
 		
 		addTextLabel(new TextLabel(13 * 32 - 3, 14 * 32 + 5, "(C) 2012 - Don Mills C.I. Video Game Development Club"));
-		addTextLabel(new TextLabel(12 * 32 - 13, 15 * 32 - 16, "This game is lisensed under GNU GPL v3 and Creative Commons 3.0 BY-SA"));
+		addTextLabel(new TextLabel(12 * 32 - 13, 15 * 32 - 16, "This game is licensed under GNU GPL v3 and Creative Commons 3.0 BY-SA"));
 	}
 	
 }
