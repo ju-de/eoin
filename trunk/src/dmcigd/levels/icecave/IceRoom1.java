@@ -12,6 +12,6 @@ public class IceRoom1 extends Room implements Runnable{
 		super(codeBase, "icecave", "IceRoom1", "icy");
 	}
 	public void initializeRoom(){
-		addRegion(new Sign(66 * 32, 37 * 32, 6, "Placeholder:", "Door Goes Here.", getDialogueHandler()));
+		addRegion(new Sign(66 * 32, 33 * 32, 6, "Placeholder:", "Door Goes Here.", getDialogueHandler()));
 	}
 }
