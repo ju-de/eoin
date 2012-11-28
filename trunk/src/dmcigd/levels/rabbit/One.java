@@ -60,7 +60,7 @@ public class One extends Room implements Runnable {
 		addTextLabel(new TextLabel(12 * 32 - 2, 14 * 32 - 6, "\"X\"", false));
 
 		addBackgroundObject(new Flag(17 * 32 + 16, 10 * 32 + 2 ,1));
-		addRegion(new Knight(17 * 32 + 4, 12 * 32, true, "We have already begun to spread out. Time of the essence, so you best be leaving immediately! Onwards!", getDialogueHandler()));
+		addRegion(new Knight(17 * 32 + 4, 12 * 32, true, "We have already begun to spread out. Time is of the essence, so you'd best be leaving immediately! Onwards!", getDialogueHandler()));
 		addTextLabel(new TextLabel(17 * 32 + 8, 14 * 32 - 20, "Press"));
 		addTextLabel(new TextLabel(17 * 32 + 6, 14 * 32 - 6, "\"X\"", false));
 		
