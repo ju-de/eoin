@@ -14,7 +14,7 @@ public class MainMenu extends Room implements Runnable {
 	
 	public void initializeRoom() {
 		
-		addRegion(new RoomPassage(16 * 32, 10 * 32, "icecave.IceRoom1")); // sooner or later this'll have to point to teh tutorial level
+		addRegion(new RoomPassage(16 * 32, 10 * 32, "tutorial.Tutorial"));
 		addTextLabel(new TextLabel(16 * 32 - 7, 11 * 32 + 16, "Start Game"));
 		
 		addRegion(new RoomPassage(12 * 32, 10 * 32, "rabbit.One")); // when are going to make an actual level select screen? we need one now...
