@@ -62,7 +62,7 @@ public class Three extends Room implements Runnable {
 		addRegion(new Knight(26 * 32, 16 * 32, false, "Creepy as they look, those giant rabbits are totally harmless! In fact, they're pretty helpful. They don't seem to mind the thorns at all, and they're too dumb to notice if you hitch a ride on their backs.", getDialogueHandler()));
 		
 		addRegion(new Knight(42 * 32, 16 * 32, true, "Mind the gaps! It's awfully thorny down there!", getDialogueHandler()));
-		addRegion(new Knight(36 * 32, 32 * 32, false, "These rabbits freak me out! How do rabbits even get so large?", getDialogueHandler()));
+		addRegion(new Knight(36 * 32, 32 * 32, false, "Yeah, I’m just going to stay right here. Those guys freak me out! How do rabbits even get so large?", getDialogueHandler()));
 		
 		addRegion(new Knight(95 * 32, 31 * 32, true, "Isn't it weird how some bunnies talk, wear clothes, and live in houses, while others just hop around naked all day?", getDialogueHandler()));
 		
@@ -81,7 +81,7 @@ public class Three extends Room implements Runnable {
 		
 		addRegion(new GenericRabbit(127 * 32 + 16, 24 * 32,
 				16, 34, 9, 0.03f, "romeofluffingham.gif", "Romeo Fluffingham",
-				"Why should I care about the princess when I'm not even allowed to go to the hill next door?", getDialogueHandler()));
+				"Why should I care about some princess when I'm not even allowed to see the girl next door?", getDialogueHandler()));
 		
 		addRegion(new GenericRabbit(81 * 32, 41 * 32,
 				20, 32, 10, 0.03f, "mrfritzlepuff.gif", "Mr. Fritzlepuff",
