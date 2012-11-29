@@ -41,6 +41,10 @@ public class Main implements Runnable, KeyListener {
 		return room;
 	}
 	
+	public int getKillCount() {
+		return killCount;
+	}
+	
 	public Main(ThreadSync threadSync, URL codeBase) {
 		
 		this.codeBase = codeBase;
