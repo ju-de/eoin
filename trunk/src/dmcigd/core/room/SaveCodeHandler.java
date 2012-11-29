@@ -38,12 +38,15 @@ public class SaveCodeHandler {
 		//Ogre camp			BR
 		put("BRBB","ogre.One");
 		//Deer village		GB
+		put("GBBB","deer.One");
 		//Cave				GG
 		//Ice rift			GY
 		put("GYBB","icecave.IceRoom1");
 		//Lake				GR
 		put("GRBB","lake.One");
-		put("GRBY","lake.Two");
+		put("GRBG","lake.Two");
+		put("GRBY","lake.Three");
+		put("GRGB","lake.Bonus");
 		//Faerie forest		YB
 	}};
 	
