@@ -62,7 +62,7 @@ public class Three extends Room implements Runnable {
 		addRegion(new Knight(26 * 32, 16 * 32, false, "Creepy as they look, those giant rabbits are totally harmless! In fact, they're pretty helpful. They don't seem to mind the thorns at all, and they're too dumb to notice if you hitch a ride on their backs.", getDialogueHandler()));
 		
 		addRegion(new Knight(42 * 32, 16 * 32, true, "Mind the gaps! It's awfully thorny down there!", getDialogueHandler()));
-		addRegion(new Knight(36 * 32, 32 * 32, false, "Yeah, I’m just going to stay right here. Those guys freak me out! How do rabbits even get so large?", getDialogueHandler()));
+		addRegion(new Knight(36 * 32, 32 * 32, false, "Yeah, I'm just going to stay right here. Those guys freak me out! How do rabbits even get so large?", getDialogueHandler()));
 		
 		addRegion(new Knight(95 * 32, 31 * 32, true, "Isn't it weird how some bunnies talk, wear clothes, and live in houses, while others just hop around naked all day?", getDialogueHandler()));
 		
