@@ -13,7 +13,7 @@ public class One extends Room implements Runnable{
 	}
 	
 	public void initializeRoom() {
-		addRegion(new Sign(13 * 32, 11 * 32, 3, "SIGN", "Deer Village Ahead.\nBEWARE THE WOLVES!", getDialogueHandler()));
+		addRegion(new Sign(24 * 32, 12 * 32, 9, "SIGN", "Deer Village Ahead.\nBEWARE THE WOLVES!", getDialogueHandler()));
 	}
 	
 }
