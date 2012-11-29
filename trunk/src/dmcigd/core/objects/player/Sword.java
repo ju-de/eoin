@@ -19,6 +19,9 @@ public class Sword extends ObjectCollision {
 	}
 	
 	//Public setters
+	public void addKillCount(int killCount) {
+		this.killCount += killCount;
+	}
 	public void setPosition(float x, float y) {
 		baseX = x;
 		baseY = y + 10;

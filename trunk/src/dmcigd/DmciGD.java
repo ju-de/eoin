@@ -3,6 +3,7 @@ package dmcigd;
 import dmcigd.core.*;
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
+import dmcigd.core.room.*;
 
 import java.applet.*;
 import java.awt.*;
@@ -34,7 +35,7 @@ public class DmciGD extends Applet implements Runnable {
     /** The list of visible objects to draw*/
     private ArrayList<ObjectImage> visibleObjects = new ArrayList<ObjectImage>();
     /** The current tilesheet*/
-    private Image tileSheet;
+    private Image tileSheet, bgImage;
     /** the map of image names to images*/
     private Map<String, int[]> imageMap = new HashMap<String, int[]>();
     private Map<String, Image> objectImageMap = new HashMap<String, Image>();
@@ -46,7 +47,6 @@ public class DmciGD extends Applet implements Runnable {
     //Initialize the Double-buffering Variables
     private Image dbImage;
     private Graphics dbg;
-    private Image bgImage;
     /**fonts*/
     Font f, fSmall;
     
@@ -87,9 +87,14 @@ public class DmciGD extends Applet implements Runnable {
         MediaTracker mt = new MediaTracker(this);
         mt.addImage(loadingImage, 0);
 
-        //Preload sword sprite
+        //Preload constant sprites
+        //	Player, Sword, Level Codes
         objectImageMap.put("sword.gif", getImageFromPath("sword.gif"));
         mt.addImage(objectImageMap.get("sword.gif"), 1);
+        objectImageMap.put("player.gif", getImageFromPath("player.gif"));
+        mt.addImage(objectImageMap.get("player.gif"), 2);
+        objectImageMap.put("levelcode.gif", getImageFromPath("levelcode.gif"));
+        mt.addImage(objectImageMap.get("levelcode.gif"), 3);
 
         try {
             mt.waitForAll();
@@ -368,9 +373,63 @@ public class DmciGD extends Applet implements Runnable {
 
                     dbg.setFont(f);
                     dbg.setColor(Color.BLACK);
-                    dbg.drawString("[ PAUSED ]", 280, 162);
+                    dbg.drawString("[ PAUSED ]", 280, 142);
                     dbg.setColor(Color.WHITE);
-                    dbg.drawString("[ PAUSED ]", 280, 160);
+                    dbg.drawString("[ PAUSED ]", 280, 140);
+
+                    dbg.setFont(fSmall);
+                    dbg.setColor(Color.BLACK);
+                    dbg.drawString("Current Save Code:", 283, 161);
+                    dbg.setColor(Color.WHITE);
+                    dbg.drawString("Current Save Code:", 283, 160);
+                    
+                    //Draw 9-digit save code:
+                    int curChar;
+                    
+                    //KillCount
+                    int killCount = main.getKillCount();
+                    
+                    //Digit 1:
+                    curChar = killCount / 256;
+                    dbg.drawImage(objectImageMap.get("levelcode.gif"), 182, 170, 218, 190, (3 - curChar) * 18, 0, (4 - curChar) * 18, 10, this);
+                    killCount -= curChar * 256;
+                    
+                    //Digit 2:
+                    curChar = killCount / 64;
+                    dbg.drawImage(objectImageMap.get("levelcode.gif"), 212, 170, 248, 190, (3 - curChar) * 18, 0, (4 - curChar) * 18, 10, this);
+                    killCount -= curChar * 64;
+                    
+                    //Digit 3:
+                    curChar = killCount / 16;
+                    dbg.drawImage(objectImageMap.get("levelcode.gif"), 242, 170, 278, 190, (3 - curChar) * 18, 0, (4 - curChar) * 18, 10, this);
+                    killCount -= curChar * 16;
+                    
+                    //Digit 4:
+                    curChar = killCount / 4;
+                    dbg.drawImage(objectImageMap.get("levelcode.gif"), 272, 170, 308, 190, (3 - curChar) * 18, 0, (4 - curChar) * 18, 10, this);
+                    killCount -= curChar * 4;
+                    
+                    //Digit 5:
+                    curChar = killCount;
+                    dbg.drawImage(objectImageMap.get("levelcode.gif"), 302, 170, 338, 190, (3 - curChar) * 18, 0, (4 - curChar) * 18, 10, this);
+                    
+                    String levelCode = SaveCodeHandler.getLevelCode(main.getRoom().getLevelName()+"."+main.getRoom().getRoomName());
+                    
+                    //Digit 6:
+                    curChar = SaveCodeHandler.digitValue(levelCode.charAt(0));
+                    dbg.drawImage(objectImageMap.get("levelcode.gif"), 332, 170, 368, 190, (3 - curChar) * 18, 0, (4 - curChar) * 18, 10, this);
+                    
+                    //Digit 7:
+                    curChar = SaveCodeHandler.digitValue(levelCode.charAt(1));
+                    dbg.drawImage(objectImageMap.get("levelcode.gif"), 362, 170, 398, 190, (3 - curChar) * 18, 0, (4 - curChar) * 18, 10, this);
+                    
+                    //Digit 8:
+                    curChar = SaveCodeHandler.digitValue(levelCode.charAt(2));
+                    dbg.drawImage(objectImageMap.get("levelcode.gif"), 392, 170, 428, 190, (3 - curChar) * 18, 0, (4 - curChar) * 18, 10, this);
+                    
+                    //Digit 9:
+                    curChar = SaveCodeHandler.digitValue(levelCode.charAt(3));
+                    dbg.drawImage(objectImageMap.get("levelcode.gif"), 422, 170, 458, 190, (3 - curChar) * 18, 0, (4 - curChar) * 18, 10, this);
 
                     paintOnce = false;
                 }

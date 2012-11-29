@@ -17,7 +17,7 @@ public class MainMenu extends Room implements Runnable {
 		addRegion(new RoomPassage(16 * 32, 10 * 32, "tutorial.Tutorial"));
 		addTextLabel(new TextLabel(16 * 32 - 7, 11 * 32 + 16, "Start Game"));
 		
-		addRegion(new RoomPassage(12 * 32, 10 * 32, "rabbit.One")); // when are going to make an actual level select screen? we need one now...
+		addRegion(new RoomPassage(12 * 32, 10 * 32, "game.LevelSelect")); // when are going to make an actual level select screen? we need one now...
 		addTextLabel(new TextLabel(12 * 32 - 10, 11 * 32 + 16, "Level Select"));
 		
 		addRegion(new RoomPassage(20 * 32, 10 * 32, "rabbit.BossRoom")); // a credits screen woudn't be too far out

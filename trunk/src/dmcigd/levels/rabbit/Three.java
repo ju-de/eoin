@@ -76,7 +76,8 @@ public class Three extends Room implements Runnable {
 				{"Mrs. Fluffingham","Come here sweetie!"},
 				{"Mr. Fluffingham","Stop it!"},
 				{"Mrs. Fluffingham","Don't be shy!"},
-				{"Mr. Fluffingham","NO MEANS NO!"}
+				{"Mr. Fluffingham","NO MEANS NO!"},
+				{"Mrs. Fluffingham","Except for when it means yes!"}
 				}, getDialogueHandler()));
 		
 		addRegion(new GenericRabbit(127 * 32 + 16, 24 * 32,
