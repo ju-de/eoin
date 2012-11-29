@@ -36,6 +36,7 @@ public class SaveCodeHandler {
 		put("BYBY","rabbit.Three");
 		put("BYBR","rabbit.BossRoom");
 		//Ogre camp			BR
+		put("BRBB","ogre.One");
 		//Deer village		GB
 		//Cave				GG
 		//Ice rift			GY
