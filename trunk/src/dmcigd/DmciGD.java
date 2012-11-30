@@ -275,7 +275,7 @@ public class DmciGD extends Applet implements Runnable {
                 //Draw Background Image
                 int offsetX = playerX / 128;
                 int offsetY = playerY / 128;
-                dbg.drawImage(bgImage, 0, 0, 640, 320, 0, 0, 240 + offsetX, 120 + offsetY, this);
+                dbg.drawImage(bgImage, 0, 0, 640, 320, offsetX, offsetY, 240 + offsetX, 120 + offsetY, this);
 
                 //Draw blocks
                 int[] tileLocation;
