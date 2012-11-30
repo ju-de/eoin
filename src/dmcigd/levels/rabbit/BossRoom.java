@@ -35,7 +35,7 @@ public class BossRoom extends Room implements Runnable {
 		
 		addRegion(new Knight(20 * 32, 13 * 32, false, "Don't worry about him! He's just as harmless as the rest of the rabbits. You can just jump right over him if you want.", getDialogueHandler()));
 		
-		addRegion(new RoomWarp(47 * 32+ 16, 0, 32, 640, "game.MainMenu"));
+		addRegion(new RoomWarp(47 * 32+ 16, 0, 32, 640, "ogre.One"));
 
 	}
 }
