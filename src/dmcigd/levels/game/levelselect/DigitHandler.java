@@ -30,7 +30,6 @@ public class DigitHandler {
 						));
 				player.setRoom(targetRoom);
 			} else {
-				System.out.println("does not exist!");
 				room.addTextLabel(new TextLabel(15 * 32, 13 * 32, "INCORRECT SAVE CODE", false));
 				clearValues();
 			}
