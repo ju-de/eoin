@@ -50,6 +50,10 @@ public class SaveCodeHandler {
 		put("GRBY","lake.Three");
 		put("GRGB","lake.Bonus");
 		//Faerie forest		YB
+		//Swamp				YG
+		put("YGBB","swamp.One");
+		put("YGBG","swamp.Two");
+		put("YGBY","swamp.Three");
 	}};
 	
 	public static String getLevelCode(String levelName) {
