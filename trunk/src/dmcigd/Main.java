@@ -130,6 +130,8 @@ public class Main implements Runnable, KeyListener {
 					//Change gameState when level element is done loading
 					if(room != null && room.isReady()) {
 						gameState = GameState.GAMEPLAY;
+						MidiPlayer.endSong();
+						MidiPlayer.startSong(room.getLevelName()+".mid", codeBase);
 					}
 					
 					break;
