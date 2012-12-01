@@ -18,6 +18,7 @@ public class Cave1 extends Room {
 		//locked doors
 		addSolidObject(new LockedDoor(45*32, 34*32, 1));
 		addSolidObject(new LockedDoor(75*32, 34*32, 1));
+		addSolidObject(new LockedDoor(112*32, 4*32, 2));
 		
 		//keys
 		addItem(new DoorKey(56*32, 35*32, 1, getPhysicsHandler()));
@@ -26,6 +27,11 @@ public class Cave1 extends Room {
 		
 		//signs
 		addRegion(new Sign(13* 32, 7* 32, 9 , "SIGN", "Bat's Cave", getDialogueHandler()));
+		addRegion(new Sign(110* 32, 4* 32, 6 , "SIGN", "Giant Vampire Bat", getDialogueHandler()));
+		
+		//knockback bats
+		
+		//
 		
 		addRegion(new RoomWarp (114*32, 4*32, 2*32, 1*32, "game.MainMenu"));
 	}
