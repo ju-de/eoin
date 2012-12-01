@@ -1,5 +1,6 @@
 package dmcigd.levels.ogre;
 
+import dmcigd.core.objects.npc.Sign;
 import dmcigd.core.room.Room;
 
 import java.net.URL;
@@ -11,6 +12,6 @@ public class One extends Room implements Runnable{
 	}
 	
 	public void initializeRoom() {
-		
+		addRegion(new Sign(47 * 15, 47 * 15, 4, "SIGN", "Entering Ogre Territory.\nWATCH YOUR STEP!", getDialogueHandler()));
 	}
 }
