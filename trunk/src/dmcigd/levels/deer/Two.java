@@ -31,17 +31,17 @@ public class Two extends Room implements Runnable{
 		addSolidObject(new CrumblingBlock(83 * 32, 34 * 32, (float)0.1, 500));
 		addSolidObject(new CrumblingBlock(84 * 32, 34 * 32, (float)0.1, 500));
 		
-		addSolidObject(new PushableBlock(109 * 32, 3 * 32, getPhysicsHandler()));
+		addSolidObject(new PushableBlock(109 * 32, 14 * 32, getPhysicsHandler()));
 		
 		addItem(new DoorKey(92 * 32, 44 * 32, 1, getPhysicsHandler()));
-		addSolidObject(new LockedDoor(117 * 32, 10 * 32, 1));
+		addSolidObject(new LockedDoor(126 * 32, 10 * 32, 1));
 		
-		addItem(new DoorKey(119 * 32, 10 * 32, 2, getPhysicsHandler()));
+		addItem(new DoorKey(128 * 32, 10 * 32, 2, getPhysicsHandler()));
 		addSolidObject(new LockedDoor(130 * 32, 36 * 32, 2));
 		
 		addRegion(new Sign(148 * 32, 38 * 32, 5, "SIGN", "Deer Village", getDialogueHandler()));
 		
-		addRegion(new Knight(53 * 32, 35 * 32, false, "These wolves travel in such large packs, don't they?", getDialogueHandler()));
+		addRegion(new Knight(20 * 32, 35 * 32, false, "These wolves travel in such large packs, don't they?", getDialogueHandler()));
 		addRegion(new Knight(102 * 32, 36 * 32, true, "Strange... it felt like a rock just fell on my head...", getDialogueHandler()));
 		addRegion(new Knight(125 * 32, 36 * 32, false, "Hmm... I thought I might've seen a flash of metal on the side of this cliff. Could it have been the key?", getDialogueHandler()));
 		addRegion(new Knight(138 * 32, 37 * 32, true, "The deer village is just ahead. Remember your mission and try not to get too involved with their affairs... the deer people can be quite strange at times.", getDialogueHandler()));
