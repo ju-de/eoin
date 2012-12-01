@@ -8,7 +8,7 @@ import dmcigd.core.room.Room;
 public class Two extends Room implements Runnable {
 	
 	public Two(URL codeBase) {
-		super(codeBase, "faerie", "Two", "grassy");
+		super(codeBase, "faerie", "Two", "foresty");
 	}
 
 	public void initializeRoom() {
