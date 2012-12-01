@@ -32,9 +32,9 @@
          ;                                                                                                       a,=-.=,-=.-,=-.=,-=.-,=.=,-.,=,=,=.-c ;      
          ;                                                                                                       z,.xX=xXx,.=-.=,.=-,=.-,=.-=,.xXx=xc  ;      
          ;                                                 O  O                                                   zc  v   zxXx,=-.=,-.=-,=.-xXc   v    ;      
-         ;                                              O        O                                                            z=,-.-=,xXxXxc           ;      
+         ;  1                                           O        O                                                            z=,-.-=,xXxXxc           ;      
          ;                         qwWwWwgwe                                                                                   zxXxXxc                 ;      
-wWwWwWwWwWwWwwwWwWwWwe       qwWwWw.=,-.=n,.wWwWwWwWwWwe          qwWwWwWwWwe         qWwWwWwWe                                        1               ;      
+wWwWwWwWwWwWwwwWwWwWwe       qwWwWw.=,-.=n,.wWwWwWwWwWwe          qwWwWwWwWwe         qWwWwWwWe                                                        ;      
 ,=.-=,-.-,=,.=,-=,.=,-wWwWwWw,=.-,=.=,-.=n-.=.-,=.-,-=.=wWwWwWwWwW,=.-,=-.=,-wWwWwWwWw=.-,=.-,=WwWwWwWwWwWe         qwWwWwWwWwWwWwWe                   ;      
 .-=,-.=,-.-,=-.-,=.--.-.=,-.,.-,=-.,,-=.=n-..=,-.=,-=.-,=.=,-.=,.=,=-.=,-.=,,.=-,=.-,=.-,=.-=,.-=,-.=,.=,-.wWwWwWwWw,=.-,=..=-,=.-,.wWwWwWe            ;      
 ,=-.-,=.--,=.-,=.-=,-,.-.=,=.-.=,-.-=.=,-n=,.=,-.=,=.-,=.-,=.-,=.-.=-,=-.=,.-,=.-=,-.=,-.=,-.=,-.=,-.=,-.-=,.-=,-.=,.-=,.-,=-,-.=-,=.-,=.-,wWwWwWwWwWwWwWwWwWw
