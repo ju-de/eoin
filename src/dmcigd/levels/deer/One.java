@@ -20,7 +20,7 @@ public class One extends Room implements Runnable{
 		addRegion(new Knight(50 * 32, 24 * 32, false, "Careful! These wolves may look cute but they're far from harmless!", getDialogueHandler()));
 		addRegion(new Knight(113 * 32, 23 * 32, false, "Somedays, I like to run and jump through the air...\nIt's almost like I'm flying...", getDialogueHandler()));
 		
-		addRegion(new RoomWarp(180 * 32, 0, 32, 640, "deer.Two"));
+		addRegion(new RoomWarp(180 * 32, 0, 32, 42 * 32, "deer.Two"));
 	}
 	
 }
