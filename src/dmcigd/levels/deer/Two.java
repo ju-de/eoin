@@ -46,7 +46,7 @@ public class Two extends Room implements Runnable{
 		addRegion(new Knight(125 * 32, 36 * 32, false, "Hmm... I thought I might've seen a flash of metal on the side of this cliff. Could it have been the key?", getDialogueHandler()));
 		addRegion(new Knight(138 * 32, 37 * 32, true, "The deer village is just ahead. Remember your mission and try not to get too involved with their affairs... the deer people can be quite strange at times.", getDialogueHandler()));
 		
-		addRegion(new RoomWarp(151 * 32, 0, 32, 40 * 32, "deer.Three"));
+		addRegion(new RoomWarp(150 * 32, 0, 32, 41 * 32, "deer.Three"));
 	}
 	
 }
