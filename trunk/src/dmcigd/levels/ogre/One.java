@@ -12,6 +12,6 @@ public class One extends Room implements Runnable{
 	}
 	
 	public void initializeRoom() {
-		addRegion(new Sign(47 * 15, 47 * 15, 4, "SIGN", "Entering Ogre Territory.\nWATCH YOUR STEP!", getDialogueHandler()));
+		addRegion(new Sign(35 * 15, 35 * 15, 3, "SIGN", "Entering Ogre Territory.\nWATCH YOUR STEP!", getDialogueHandler()));
 	}
 }
