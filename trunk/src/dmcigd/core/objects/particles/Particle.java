@@ -11,7 +11,7 @@ import java.util.Random;
  *
  * @author filip
  */
-public abstract class Particle  extends VisibleObject{
+public abstract class Particle  extends MovingObject{
     
     protected boolean isDestroyed = false;
     protected static Random generator = new Random();
