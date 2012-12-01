@@ -52,7 +52,7 @@ public class Entity extends MovingObject {
 
 	public void onPush(Entity entity, float v) {
 		if(entity.getCollisionType() == CollisionType.SOLID) {
-			fx = v;
+			physicsHandler.moveX(this, v);
 		}
 	}
 	
