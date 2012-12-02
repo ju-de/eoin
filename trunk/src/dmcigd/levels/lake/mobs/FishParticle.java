@@ -110,11 +110,10 @@ public class FishParticle extends Particle {
 		setSequence(type + 4);
 		setFrameSpeed(0.04f);
 		
-		//Stop
-		accelerate(32,0,Direction.RIGHT);
-		accelerate(32,0,Direction.DOWN);
-		setVX(0);
+		//Float up
 		setVY(0);
+		accelerate(32,0,Direction.RIGHT);
+		accelerate(0.03f,0.1f,Direction.UP);
 	}
 
 	public void move() {

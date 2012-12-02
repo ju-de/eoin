@@ -78,7 +78,7 @@ public class Two extends Room implements Runnable {
 		
 		addRegion(new GenericRabbit(230 * 32, 19 * 32 + 6,
 				16, 28, 10, 0.03f, "julietwiggleton.gif", "Juliet Wiggleton",
-				"How would I know about any kidnapping? Grandpa doesn’t even let me see my own neighbours!", getDialogueHandler()));
+				"How would I know about any kidnapping? Grandpa doesn't even let me see my own neighbours!", getDialogueHandler()));
 
 		addRegion(new Switch(220 * 32 - 4, 22 * 32 + 16, false, switchBlock1));
 		addTextLabel(new TextLabel(219 * 32, 23 * 32 - 4, "Press"));
