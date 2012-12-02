@@ -10,6 +10,6 @@ public class IceRoom1 extends Room implements Runnable{
 		super(codeBase, "icecave", "IceRoom1", "icy");
 	}
 	public void initializeRoom(){
-		addRegion(new RoomPassage(66 * 32, 33 * 32, "game.MainMenu"));
+		addRegion(new RoomPassage(66 * 32, 33 * 32, "icecave.IceRoom2"));
 	}
 }
