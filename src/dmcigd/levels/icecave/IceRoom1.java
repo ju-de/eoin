@@ -10,6 +10,9 @@ public class IceRoom1 extends Room implements Runnable{
 		super(codeBase, "icecave", "IceRoom1", "icy");
 	}
 	public void initializeRoom(){
+		addRegion(new WendigoNpc(18 * 32 + 6, 31 * 32, "Mysterious Figure",
+				"FNORD", getDialogueHandler()));
+		
 		addRegion(new RoomPassage(66 * 32, 33 * 32, "icecave.IceRoom2"));
 	}
 }
