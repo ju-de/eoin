@@ -44,6 +44,7 @@ public class SaveCodeHandler {
 		put("GGBB","cave.Cave1");
 		//Ice rift			GY
 		put("GYBB","icecave.IceRoom1");
+		put("GYBG","icecave.IceRoom2"); 
 		//Lake				GR
 		put("GRBB","lake.One");
 		put("GRBG","lake.Two");
