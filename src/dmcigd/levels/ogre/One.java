@@ -3,6 +3,7 @@ package dmcigd.levels.ogre;
 import dmcigd.core.objects.blocks.CrumblingBlock;
 import dmcigd.core.objects.npc.Knight;
 import dmcigd.core.objects.npc.Sign;
+import dmcigd.core.objects.regions.RoomWarp;
 import dmcigd.core.room.Room;
 import dmcigd.levels.rabbit.Flag;
 
@@ -61,5 +62,7 @@ public class One extends Room implements Runnable {
 				false,
 				"If you're having trouble getting over these traps, it may help to get a running start.",
 				getDialogueHandler()));
+		
+		addRegion(new RoomWarp(174 * 32+ 16, 0, 32, 640, "ogre.Two"));
 	}
 }
