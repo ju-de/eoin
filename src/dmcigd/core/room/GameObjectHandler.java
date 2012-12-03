@@ -1,7 +1,6 @@
 package dmcigd.core.room;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import dmcigd.core.objects.VisibleObject;
@@ -21,12 +20,6 @@ public abstract class GameObjectHandler {
     private ArrayList<VisibleObject> backgroundObjects = new ArrayList<VisibleObject>();
     private ArrayList<VisibleObject> foregroundObjects = new ArrayList<VisibleObject>();
     private ArrayList<ParticleEmitter> emitters = new ArrayList<ParticleEmitter>();
-    //Object List Iterators
-    private Iterator<SolidObject> solidObjectIt;
-    private Iterator<Item> itemIt;
-    private Iterator<SolidObject> projectileIt;
-    private Iterator<Particle> particleIt;
-    private Iterator<ParticleEmitter> emitterIt;
 
     //Public Getters
     public ArrayList<SolidObject> getSolidObjects() {
@@ -110,64 +103,50 @@ public abstract class GameObjectHandler {
 
     public void stepGameObjects() {
 
-        projectileIt = projectiles.iterator();
         //Step all projectiles
-        while (projectileIt.hasNext()) {
-            SolidObject i = projectileIt.next();
-            if (i.isDestroyed()) {
-                projectileIt.remove();
+        for(int i = 0; i < projectiles.size(); i++) {
+            if (projectiles.get(i).isDestroyed()) {
+            	projectiles.remove(i);
             } else {
-                i.step();
+            	projectiles.get(i).step();
             }
         }
 
-        solidObjectIt = solidObjects.iterator();
-        //Step all solid objects and player
-        while (solidObjectIt.hasNext()) {
-            SolidObject i = solidObjectIt.next();
-            if (i.isDestroyed()) {
-                solidObjectIt.remove();
+        //Step all solid objects
+        for(int i = 0; i < solidObjects.size(); i++) {
+            if (solidObjects.get(i).isDestroyed()) {
+                solidObjects.remove(i);
             } else {
-                i.step();
+            	solidObjects.get(i).step();
             }
         }
 
-        itemIt = items.iterator();
         //Step all items
-        while (itemIt.hasNext()) {
-            Item i = itemIt.next();
-            if (i.isDestroyed()) {
-                itemIt.remove();
+        for(int i = 0; i < items.size(); i++) {
+            if (items.get(i).isDestroyed()) {
+                items.remove(i);
             } else {
-                i.step();
+            	items.get(i).step();
             }
         }
 
 
-        particleIt = particles.iterator();
         // Step all particles
-        while (particleIt.hasNext()) {
-            Particle p = particleIt.next();
-            if (p.isDestroyed()) {
-                //System.out.println("killing particle");
-                particleIt.remove();
+        for(int i = 0; i < particles.size(); i++) {
+            if (particles.get(i).isDestroyed()) {
+                particles.remove(i);
             } else {
-                p.step();
+            	particles.get(i).step();
             }
         }
 
-        emitterIt = emitters.iterator();
         // step all particle emitters
-        while (emitterIt.hasNext()) {
-            ParticleEmitter pe = emitterIt.next();
-            if (pe.isDestroyed()) {
-                //System.out.println("kill");
-                emitterIt.remove();
-                continue;
+        for(int i = 0; i < emitters.size(); i++) {
+            if (emitters.get(i).isDestroyed()) {
+                emitters.remove(i);
+            } else {
+            	emitters.get(i).step();
             }
-            //System.out.println("emitter: " + pe.getX() + " " + pe.getY());
-            pe.step();
-
         }
 
         //Step all regions

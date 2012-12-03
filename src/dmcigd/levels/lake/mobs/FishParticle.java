@@ -113,7 +113,7 @@ public class FishParticle extends Particle {
 		//Float up
 		setVY(0);
 		accelerate(32,0,Direction.RIGHT);
-		accelerate(0.03f,0.1f,Direction.UP);
+		accelerate(0.01f,1f,Direction.UP);
 	}
 
 	public void move() {
