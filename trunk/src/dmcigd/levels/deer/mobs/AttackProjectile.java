@@ -17,7 +17,7 @@ public class AttackProjectile extends ProjectileMotion implements SolidObject {
 	public AttackProjectile(int x, int y, int height, Room room, int objectClockReset) {
 
 		setX(x);
-		setY(y);
+		setY(y+1);
 		setWidth(4);
 		setHeight(height-2);
 		setImageWidth(0);
