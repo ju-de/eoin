@@ -27,7 +27,7 @@ public class Player extends ControlHandler implements SolidObject {
 		sword.attack();
 	}
 	
-	public void onPush(Entity entity, int v) {
+	public void onPush(Entity entity, float v) {
 		super.onPush(entity, v);
 		if(entity.getEntityType().getCode() >= EntityType.LETHALMONSTER.getCode()) {
 			isDead = true;

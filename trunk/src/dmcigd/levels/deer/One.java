@@ -7,6 +7,7 @@ import dmcigd.core.objects.npc.Knight;
 import dmcigd.core.objects.npc.Sign;
 import dmcigd.core.objects.regions.RoomWarp;
 
+import dmcigd.levels.deer.mobs.*;
 
 public class One extends Room implements Runnable{
 	
@@ -16,7 +17,8 @@ public class One extends Room implements Runnable{
 	
 	public void initializeRoom() {
 		addRegion(new Sign(24 * 32 + 8, 12 * 32, 6, "SIGN", "Deer Village Ahead.\nBEWARE THE WOLVES!", getDialogueHandler()));
-		
+
+		addSolidObject(new SmallWolf(50 * 32, 24 * 32, this));
 		addRegion(new Knight(50 * 32, 24 * 32, false, "Careful! These wolves may look cute but they're far from harmless!", getDialogueHandler()));
 		addRegion(new Knight(113 * 32, 23 * 32, false, "Somedays, I like to run and jump through the air...\nIt's almost like I'm flying...", getDialogueHandler()));
 		
