@@ -8,6 +8,7 @@ import dmcigd.core.objects.interfaces.*;
 public class Player extends ControlHandler implements SolidObject {
 	
 	private String targetRoom;
+	private int knockbackTimer;
 	
 	public Sword sword;
 	
@@ -31,6 +32,16 @@ public class Player extends ControlHandler implements SolidObject {
 		super.onPush(entity, v);
 		if(entity.getEntityType().getCode() >= EntityType.LETHALMONSTER.getCode()) {
 			isDead = true;
+		}
+	}
+	
+	public void knockback(float speed1, float speed2, float rate, Direction direction, int time) {
+		if(knockbackTimer <= 0) {
+			
+			accelerateFrom(speed1, speed2, rate, direction);
+			
+			knockbackTimer = time;
+			
 		}
 	}
 	
@@ -101,33 +112,56 @@ public class Player extends ControlHandler implements SolidObject {
 	}
 	
 	public void step() {
+
+		//Create jump particle
+		if(jumpDelay == 5 && !inWater) {
+			room.addParticle(new JumpParticle(getX(), getY(), flipped));
+		}
 		
-		//Set movement vectors
-		if(isWalking) {
-			if(!sprint) {
-				accelerate(0.3f, 2.0f, walking);
-			} else {
-				accelerate(0.3f, 4.0f, walking);
-				if(hitGround && !inWater && Math.random() < 0.2f) {
-					room.addParticle(new RunParticle(getX(), getY(), flipped));
+		if(knockbackTimer > 0) {
+			
+			knockbackTimer--;
+			
+			//Step
+			move();
+			
+			//Flicker
+			setSequence(0);
+			setFrame(1+(knockbackTimer/4) % 2);
+			
+		} else {
+		
+			//Set movement vectors
+			if(isWalking) {
+				if(!sprint) {
+					accelerate(0.3f, 2.0f, walking);
+				} else {
+					accelerate(0.3f, 4.0f, walking);
+					//Create sprint particles randomly
+					if(hitGround && !inWater && Math.random() < 0.2f) {
+						room.addParticle(new RunParticle(getX(), getY(), flipped));
+					}
+				}
+			}else{
+				accelerate(0, 0, Direction.RIGHT);
+				setVX(0);
+			}
+			
+			//Set movement vectors for climbing
+			if(isClimbing && (onLadder || climbing == Direction.DOWN && onLadderTop)) {
+				if(climbing == Direction.UP) {
+					setVY(-2.0f);
+				}else {
+					setVY(2.0f);
 				}
 			}
-		}else{
-			accelerate(0, 0, Direction.RIGHT);
-			setVX(0);
+			
+			//Step
+			move();
+			
+			animate();
+			
 		}
-		
-		//Set movement vectors for climbing
-		if(isClimbing && (onLadder || climbing == Direction.DOWN && onLadderTop)) {
-			if(climbing == Direction.UP) {
-				setVY(-2.0f);
-			}else {
-				setVY(2.0f);
-			}
-		}
-		
-		//Step
-		move();
 		
 		//Activate hover status of nearby regions
 		for (Region i : regions) {
@@ -135,8 +169,6 @@ public class Player extends ControlHandler implements SolidObject {
 				i.onHover(this);
 			}
 		}
-		
-		animate();
 		
 		//Reset jump count
 		if(hitGround || onLadder) {

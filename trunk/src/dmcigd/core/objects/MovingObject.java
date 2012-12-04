@@ -62,6 +62,70 @@ public class MovingObject extends ObjectCollision {
 	}
 	
 	//Create Acceleration Vector
+	public void accelerateFrom(float speed1, float speed2, float rate, Direction direction) {
+		
+		if(speed1 > speed2) {
+			//Deccelerate
+			switch(direction) {
+				case UP:
+					setVY(-speed1);
+					
+					setTUp(speed1);
+					setTDown(speed2);
+					
+					ay = rate;
+					break;
+				case DOWN:
+					setVY(speed1);
+					
+					setTDown(speed1);
+					setTUp(speed2);
+					
+					ay = -rate;
+					break;
+				case LEFT:
+					setVX(-speed1);
+					
+					setTLeft(speed1);
+					setTRight(speed2);
+					
+					ax = rate;
+					break;
+				case RIGHT:
+					setVX(speed1);
+					
+					setTRight(speed1);
+					setTLeft(speed2);
+					
+					ax = -rate;
+					break;
+			}
+			
+		} else {
+			//Accelerate
+			switch(direction) {
+				case UP:
+					setTDown(speed1);
+					setVY(-speed1);
+					break;
+				case DOWN:
+					setTUp(speed1);
+					setVY(speed1);
+					break;
+				case LEFT:
+					setTRight(speed1);
+					setVX(-speed1);
+					break;
+				case RIGHT:
+					setTLeft(speed1);
+					setVX(speed1);
+					break;
+			}
+			
+			accelerate(rate, speed2, direction);
+			
+		}
+	}
 	public void accelerate(float rate, float terminal, Direction direction) {
 		switch(direction) {
 			case UP:

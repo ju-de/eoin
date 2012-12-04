@@ -1,6 +1,7 @@
 package dmcigd.levels.lake.mobs;
 
 import dmcigd.core.enums.*;
+import dmcigd.core.objects.monsters.BasicSwarmThink;
 import dmcigd.core.objects.particles.*;
 
 public class FishParticle extends Particle {
@@ -60,46 +61,8 @@ public class FishParticle extends Particle {
 	}
 	
 	public void swarmThink(int x, int y, boolean isInvincible, boolean isFlickering) {
-		//Determine distance from center
-		double distance = Math.sqrt(Math.pow((getX() - x), 2) + Math.pow((getY() - y), 2));
 		
-		if(distance < centerRange) {
-			//Repel from center
-			//Probability of changing direction increases the closer the particle is to center
-			if(generator.nextFloat() > distance / centerRange) {
-				
-				//Move in random direction
-				int xMultiplier = Math.round(generator.nextFloat());
-				int yMultiplier = Math.round(generator.nextFloat());
-				
-				moveRandomAngle(xMultiplier, yMultiplier, (centerRange+3-distance)/2);
-			}
-		}else {
-			//Move back to center
-			//Probability of changing direction increases the further particle is to center
-			if(generator.nextFloat() < distance / outerRange) {
-				
-				int xMultiplier;
-				int yMultiplier;
-				
-				//Determine direction of motion
-				if(getX() > x) {
-					xMultiplier = -1;
-				}else{
-					xMultiplier = 1;
-				}
-				
-				if(getY() > y) {
-					yMultiplier = -1;
-				} else {
-					yMultiplier = 1;
-				}
-				
-				moveRandomAngle(xMultiplier, yMultiplier, distance/4);
-				
-			}
-			
-		}
+		BasicSwarmThink.swarmThink(this, x, y, centerRange, outerRange, 0.15f, 0.3f, 3, 2, 4);
 		
 		this.isInvincible = isInvincible;
 		this.isFlickering = isFlickering;
