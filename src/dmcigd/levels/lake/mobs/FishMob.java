@@ -4,11 +4,9 @@ import dmcigd.core.enums.CollisionType;
 import dmcigd.core.enums.Direction;
 import dmcigd.core.enums.EntityType;
 import dmcigd.core.objects.interfaces.*;
-import dmcigd.core.objects.monsters.LethalityHandler;
+import dmcigd.core.objects.monsters.*;
 import dmcigd.core.objects.PhysicsHandler;
 import dmcigd.core.objects.projectiles.BasicProjectileHandler;
-
-import java.util.Random;
 
 public class FishMob extends LethalityHandler implements SolidObject {
 	
@@ -20,8 +18,6 @@ public class FishMob extends LethalityHandler implements SolidObject {
 	
 	private int objectClockLimit = 30;
 	private int deathClockLimit = 70;
-	
-	private static Random generator = new Random();
 
 	public FishMob(int x, int y, PhysicsHandler physicsHandler) {
 		
@@ -30,8 +26,6 @@ public class FishMob extends LethalityHandler implements SolidObject {
 		
 		setX(x);
 		setY(y);
-		setDX(0);
-		setDY(0);
 		setWidth(20);
 		setHeight(24);
 		setImageWidth(28);
@@ -87,7 +81,7 @@ public class FishMob extends LethalityHandler implements SolidObject {
 			objectClock++;
 			if(objectClock >= objectClockLimit) {
 		    	
-		    	swarmThink(spawnX, spawnY);
+				BasicSwarmThink.swarmThink(this, spawnX, spawnY, centerRange, outerRange, 0.05f, 0.01f, 1.5);
 		    	
 		    	if(getVX() <= 0) {
 		    		flipped = true;
@@ -101,81 +95,6 @@ public class FishMob extends LethalityHandler implements SolidObject {
 	    	animate();
 	    	
 		}
-	}
-	
-	//Fish mob move as 1 monster swarms (randomly orbiting around their spawn point)
-	
-	public void moveRandomAngle(int xMultiplier, int yMultiplier) {
-		
-		//Generates angle in radians
-		double angle = generator.nextGaussian() * 1.57;
-		
-		//Determines component vectors
-		double compX = Math.abs(speed * Math.cos(angle));
-		double compY = Math.abs(speed * Math.sin(angle));
-		
-		//Creates acceleration vectors
-		Direction directionX;
-		Direction directionY;
-		
-		if(xMultiplier >= 0) {
-			directionX = Direction.RIGHT;
-		} else {
-			directionX = Direction.LEFT;
-		}
-		if(yMultiplier >= 0) {
-			directionY = Direction.DOWN;
-		} else {
-			directionY = Direction.UP;
-		}
-		
-		accelerate(0.05f, (float) compX, directionX);
-		accelerate(0.01f, (float) compY, directionY);
-		
-	}
-	
-	public void swarmThink(int x, int y) {
-		//Determine distance from center
-		double distance = Math.sqrt(Math.pow((getX() - x), 2) + Math.pow((getY() - y), 2));
-		
-		if(distance < centerRange) {
-			//Repel from center
-			//Probability of changing direction increases the closer the particle is to center
-			if(generator.nextFloat() > distance / centerRange) {
-				
-				//Move in random direction
-				int xMultiplier = Math.round(generator.nextFloat());
-				int yMultiplier = Math.round(generator.nextFloat());
-				
-				moveRandomAngle(xMultiplier, yMultiplier);
-			}
-		}else {
-			//Move back to center
-			//Probability of changing direction increases the further particle is to center
-			if(generator.nextFloat() < distance / outerRange) {
-				
-				int xMultiplier;
-				int yMultiplier;
-				
-				//Determine direction of motion
-				if(getX() > x) {
-					xMultiplier = -1;
-				}else{
-					xMultiplier = 1;
-				}
-				
-				if(getY() > y) {
-					yMultiplier = -1;
-				} else {
-					yMultiplier = 1;
-				}
-				
-				moveRandomAngle(xMultiplier, yMultiplier);
-				
-			}
-			
-		}
-		
 	}
 	
 }

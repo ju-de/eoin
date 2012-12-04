@@ -66,11 +66,9 @@ public class HitpointHandler extends Entity {
 			}
 			
 			if(swordflipped) {
-				setVX(-knockbackSpeed);
-				accelerate(2 * knockbackSpeed/invincibilityCounterReset, 0.0f, Direction.RIGHT);
+				accelerateFrom(knockbackSpeed, 0.0f, 2 * knockbackSpeed/invincibilityCounterReset, Direction.LEFT);
 			}else{
-				setVX(knockbackSpeed);
-				accelerate(2 * knockbackSpeed/invincibilityCounterReset, 0.0f, Direction.LEFT);
+				accelerateFrom(knockbackSpeed, 0.0f, 2 * knockbackSpeed/invincibilityCounterReset, Direction.RIGHT);
 			}
 			knockedBack = true;
 		}

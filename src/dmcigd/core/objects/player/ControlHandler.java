@@ -65,9 +65,6 @@ abstract class ControlHandler extends Entity {
 				jumpState++;
 				jumpDelay = 5;
 				setFrame(0);
-				if(!inWater) {
-					room.addParticle(new JumpParticle(getX(), getY(), flipped));
-				}
 			}
 		}else{
 			if(getVY() < 0) {
