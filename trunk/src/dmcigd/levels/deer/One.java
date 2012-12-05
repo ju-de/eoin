@@ -3,8 +3,8 @@ package dmcigd.levels.deer;
 import java.net.URL;
 
 import dmcigd.core.room.*;
-import dmcigd.core.objects.npc.Knight;
-import dmcigd.core.objects.npc.Sign;
+import dmcigd.core.objects.npc.*;
+import dmcigd.core.objects.blocks.TimedBlock;
 import dmcigd.core.objects.regions.RoomWarp;
 import dmcigd.core.objects.platforms.MovingPlatform;
 
@@ -39,6 +39,10 @@ public class One extends Room implements Runnable{
 		
 		addSolidObject(new SmallWolf(126 * 32, 13 * 32, this));
 		addSolidObject(new SmallWolf(130 * 32, 13 * 32, this));
+		
+		addSolidObject(new TimedBlock(87 * 32, 25 * 32, 1, 0, 150, 150));
+		addSolidObject(new TimedBlock(82 * 32, 25 * 32, 1, 150, 150, 150));
+		addSolidObject(new TimedBlock(77 * 32, 25 * 32, 1, 0, 150, 150));
 		
 		addSolidObject(new MovingPlatform(68 * 32, 21 * 32, 1, 2, -1.5f, -5));
 		addSolidObject(new MovingPlatform(73 * 32, 18 * 32, 1, 2, 1.5f, 5));

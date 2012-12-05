@@ -41,6 +41,7 @@ public class SaveCodeHandler {
 		//Deer village		GB
 		put("GBBB","deer.One");
 		put("GBBG","deer.Two");
+		put("GBBY","deer.Village");
 		//Cave				GG
 		put("GGBB","cave.Cave1");
 		//Ice rift			GY

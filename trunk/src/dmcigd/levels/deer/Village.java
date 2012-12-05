@@ -5,10 +5,10 @@ import java.net.URL;
 import dmcigd.core.room.*;
 
 
-public class Three extends Room implements Runnable{
+public class Village extends Room implements Runnable{
 	
-	public Three(URL codebase) {
-		super(codebase, "deer", "Three", "grassy");
+	public Village(URL codebase) {
+		super(codebase, "deer", "Village", "grassy");
 	}
 	
 	public void initializeRoom() {
