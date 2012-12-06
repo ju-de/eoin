@@ -4,58 +4,62 @@ import dmcigd.core.enums.*;
 import dmcigd.core.room.Room;
 import dmcigd.core.objects.interfaces.*;
 
-public class SmallWolf extends WolfAI implements RestableObject {
+public class BigWolf extends WolfAI implements RestableObject {
 
 	public void die() {
-		setSequence(3);
-		setFrameSpeed(0.2f);
+		setSequence(2);
+		setFrameSpeed(0.1f);
 		setCollisionType(CollisionType.NONSOLID);
 	}
 
 	public void moveLeft() {
 		flipped = true;
-		accelerate(0.5f, 3f, Direction.LEFT);
+		accelerate(0.3f, 1f, Direction.LEFT);
 		setSequence(1);
 		setFrameSpeed(0.12f);
 	}
 
 	public void moveRight() {
 		flipped = false;
-		accelerate(0.5f, 3f, Direction.RIGHT);
+		accelerate(0.3f, 1f, Direction.RIGHT);
 		setSequence(1);
 		setFrameSpeed(0.12f);
 	}
 	
-	public SmallWolf(int x, int y, Room room) {
+	public void attack() {
+		//Overrides attack with idling (big wolf has no attack)
+		idle();
+	}
+	public BigWolf(int x, int y, Room room) {
 
 		setX(x);
 		setY(y);
-		setWidth(36);
-		setHeight(26);
-		setImageWidth(48);
-		setImageHeight(36);
+		setWidth(52);
+		setHeight(74);
+		setImageWidth(72);
+		setImageHeight(84);
 		
 		setSequence(0);
 		setFrame(0);
 
-		setFrameLimits(new int[] {2, 4, 5, 4});
-		setAnimationLoops(new boolean [] {true, true, false, false});
+		setFrameLimits(new int[] {2, 4, 5});
+		setAnimationLoops(new boolean [] {true, true, false});
 		setFrameSpeed(0.02f);
 		
 		setMaxHitpoints(70);
 		setKnockback(true);
 		
-		setDeathClockLimit(70);
+		setDeathClockLimit(100);
 		setAIClockReset(40);
 		setRoom(room);
 		
 		setGravity();
 		
 		setPhysicsHandler(room.getPhysicsHandler());
-		setCollisionType(CollisionType.SOLID);
+		setCollisionType(CollisionType.PLATFORM);
 		setEntityType(EntityType.NONLETHALMONSTER);
 		
-		setImagePath("objects/deer/smallwolf.gif");
+		setImagePath("objects/deer/bigwolf.gif");
 	}
 	public void step() {
 		
