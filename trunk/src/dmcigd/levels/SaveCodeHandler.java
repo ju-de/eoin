@@ -1,4 +1,4 @@
-package dmcigd.core.room;
+package dmcigd.levels;
 
 import java.util.*;
 import java.util.Map.Entry;

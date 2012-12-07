@@ -28,7 +28,10 @@ public class Main implements Runnable, KeyListener {
 	private ThreadSync threadSync;
 	private URL codeBase;
 	
-	private String currentRoom;
+	private String currentRoom = " . "; //Prevents null pointer exception on initialization
+	
+	//Used to determine whether or not to load new background music
+	private boolean changedLevel;
 	
 	//Public Getters
 	public GameState getGameState() {
@@ -62,6 +65,9 @@ public class Main implements Runnable, KeyListener {
 	
 	public void loadRoom(String roomName) {
 		try {
+			
+			changedLevel = !currentRoom.substring(0, currentRoom.lastIndexOf('.')).equals(roomName.substring(0, roomName.lastIndexOf('.')));
+			
 			room = (Room) Class.forName("dmcigd.levels."+roomName).getConstructor(URL.class).newInstance(codeBase);
 
 			gameState = GameState.LOADINGROOM;
@@ -130,8 +136,13 @@ public class Main implements Runnable, KeyListener {
 					//Change gameState when level element is done loading
 					if(room != null && room.isReady()) {
 						gameState = GameState.GAMEPLAY;
-						MidiPlayer.endSong();
-						MidiPlayer.startSong(room.getLevelName()+".mid", codeBase);
+						
+						//Background music is dependent on the level, so do not load a new song
+						//if either reloading or moving between same-level rooms
+						if(changedLevel) {
+							MidiPlayer.endSong();
+							MidiPlayer.startSong(room.getLevelName()+".mid", codeBase);
+						}
 					}
 					
 					break;

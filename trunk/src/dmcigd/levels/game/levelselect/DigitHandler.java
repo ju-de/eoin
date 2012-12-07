@@ -3,6 +3,7 @@ package dmcigd.levels.game.levelselect;
 import dmcigd.core.objects.TextLabel;
 import dmcigd.core.objects.player.*;
 import dmcigd.core.room.*;
+import dmcigd.levels.SaveCodeHandler;
 
 public class DigitHandler {
 
