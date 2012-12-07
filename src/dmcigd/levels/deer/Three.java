@@ -6,6 +6,7 @@ import dmcigd.core.objects.blocks.LockedDoor;
 import dmcigd.core.objects.blocks.PushableBlock;
 import dmcigd.core.objects.items.DoorKey;
 import dmcigd.core.objects.platforms.MovingPlatform;
+import dmcigd.core.objects.regions.RoomWarp;
 import dmcigd.core.room.*;
 import dmcigd.levels.deer.mobs.*;
 
@@ -58,6 +59,8 @@ public class Three extends Room implements Runnable{
 		
 		addSolidObject(new LockedDoor(41 * 32, 32 * 32, 2));
 		addSolidObject(new LockedDoor(41 * 32, 38 * 32, 2));
+		
+		addRegion(new RoomWarp(195 * 32 + 16, 0, 32, 20 * 32, "deer.BossRoom"));
 	}
 	
 }
