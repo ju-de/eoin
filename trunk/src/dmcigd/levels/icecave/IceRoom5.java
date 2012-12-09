@@ -6,13 +6,22 @@ import dmcigd.core.objects.blocks.LockedDoor;
 import dmcigd.core.objects.items.DoorKey;
 import dmcigd.core.objects.regions.*;
 import dmcigd.core.room.*;
+import dmcigd.levels.demo.DemoProjectileSpawner;
+import dmcigd.levels.rabbit.Switch;
+import dmcigd.levels.rabbit.SwitchBlock;
 
 public class IceRoom5 extends Room implements Runnable{
+	
+	IcicleProjectile icicle1 = new IcicleProjectile(67, 37, getBlockMap(), getSolidObjects());
+	
 	public IceRoom5(URL codeBase) {
 		super(codeBase, "icecave", "IceRoom5", "icy");
 	}
 	public void initializeRoom(){
-			
+		
+		addSolidObject(icicle1);
+		addRegion(new IcicleTrigger(70 * 32, 39 * 32, 1, 1, icicle1));
+		
 		addSolidObject(new LockedDoor(90*32, 28*32, 1));
 		addItem(new DoorKey(55*32, 39*32, 1, getPhysicsHandler()));
 		
