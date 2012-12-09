@@ -15,5 +15,6 @@ public class Two extends Room implements Runnable {
 	}
 	
 	public void initializeRoom() {
+		addRegion(new RoomWarp(119 * 32, 0, 2 * 32, 101 * 32, "lake.Two2"));
 	}
 }
