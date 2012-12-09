@@ -22,5 +22,7 @@ public class One extends Room implements Runnable {
 		addSolidObject(new FishMob(18 * 32, 12 * 32, getPhysicsHandler()));
 		addSolidObject(new Turtle(18 * 32, 18 * 32, this));
 		addSolidObject(new Turtle(16 * 32, 18 * 32, this)); */
+		
+		addRegion(new RoomWarp(0, 49 * 32, 216 * 32, 2 * 32, "lake.Two"));
 	}
 }
