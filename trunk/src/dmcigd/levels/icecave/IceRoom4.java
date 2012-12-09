@@ -14,15 +14,15 @@ import dmcigd.levels.rabbit.SwitchBlock;
 
 public class IceRoom4 extends Room implements Runnable{
 	
-	SwitchBlock switchBlock1 = new SwitchBlock(82 * 32, 35 * 32, 8);
-	SwitchBlock switchBlock2 = new SwitchBlock(92 * 32, 18 * 32, 1);
-	SwitchBlock switchBlock3 = new SwitchBlock(86 * 32, 15 * 32, 4);
-	
 	public IceRoom4(URL codeBase) {
 		super(codeBase, "icecave", "IceRoom4", "icy");
 	}	
 	
 	public void initializeRoom(){
+		// block ini
+		SwitchBlock switchBlock1 = new SwitchBlock(82 * 32, 35 * 32, 8);
+		SwitchBlock switchBlock2 = new SwitchBlock(92 * 32, 18 * 32, 1);
+		SwitchBlock switchBlock3 = new SwitchBlock(86 * 32, 15 * 32, 4);
 		
 		addSolidObject(switchBlock1);
 		addRegion(new Switch(90 * 32, 40 * 32, true, switchBlock1));
