@@ -9,10 +9,10 @@ import dmcigd.core.objects.npc.*;
 import dmcigd.core.objects.regions.*;
 import dmcigd.levels.lake.mobs.*;
 
-public class One extends Room implements Runnable {
+public class One2 extends Room implements Runnable {
 	
-	public One(URL codeBase) {
-		super(codeBase, "lake", "One", "rocky");
+	public One2(URL codeBase) {
+		super(codeBase, "lake", "One2", "rocky");
 	}
 	
 	public void initializeRoom() {
