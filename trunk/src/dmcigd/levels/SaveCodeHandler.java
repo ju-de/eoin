@@ -38,6 +38,8 @@ public class SaveCodeHandler {
 		//Ogre camp			BR
 		put("BRBB","ogre.One");
 		put("BRRB","ogre.Two");
+		put("BRBR","ogre.Three");
+		put("BRRR","ogre.BossRoom");
 		//Deer village		GB
 		put("GBBB","deer.One");
 		put("GBBG","deer.Two");
