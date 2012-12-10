@@ -72,8 +72,8 @@ public class One extends Room implements Runnable {
 		addRegion(new Knight(135 * 32, 28 * 32, false, "I really wouldn't be down here if I were you...", getDialogueHandler()));
 		addRegion(new Knight(138 * 32, 28 * 32, true, "W-what?! You shouldn't be down here! Get back on track!", getDialogueHandler()));
 		
-		addRegion(new GenericRabbit(180 * 32 - 4, 13 * 32 + 18,
-				48, 48, 2, 0.01f, "mrscrufflebottom.gif", "Mr. Scrufflebottom",
+		addRegion(new GenericNpc(180 * 32 - 4, 13 * 32 + 18,
+				48, 48, 2, 0.01f, "rabbit/mrscrufflebottom.gif", "Mr. Scrufflebottom",
 				"Kidnapping? I've never heard of any kidnapping!\nNow where did I put my key again?", getDialogueHandler()));
 		
 		addRegion(new RoomWarp(229 * 32+ 16, 0, 32, 640, "rabbit.Two"));

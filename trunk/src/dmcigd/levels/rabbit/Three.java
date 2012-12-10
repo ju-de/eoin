@@ -11,10 +11,6 @@ import dmcigd.levels.rabbit.mobs.*;
 
 public class Three extends Room implements Runnable {
 	
-	//Initializes SwitchBlock to be passed on to the appropriate switch
-	SwitchBlock switchBlock1 = new SwitchBlock(116 * 32, 23 * 32, 3);
-	SwitchBlock switchBlock2 = new SwitchBlock(121 * 32, 25 * 32, 3);
-	
 	public Three(URL codeBase) {
 		super(codeBase, "rabbit", "Three", "grassy");
 	}
@@ -26,8 +22,15 @@ public class Three extends Room implements Runnable {
 		
 		addSolidObject(new LockedDoor(76 * 32, 35 * 32, 4));
 		
+		//Initializes SwitchBlock to be passed on to the appropriate switch
+		SwitchBlock switchBlock1 = new SwitchBlock(116 * 32, 23 * 32, 3);
+		SwitchBlock switchBlock2 = new SwitchBlock(121 * 32, 25 * 32, 3);
+		
 		addSolidObject(switchBlock1);
 		addSolidObject(switchBlock2);
+		
+		addRegion(new Switch(119 * 32 + 4, 23 * 32 + 16, true, switchBlock1));
+		addRegion(new Switch(130 * 32 + 4, 27 * 32 + 16, true, switchBlock2));
 		
 		addSolidObject(new BigMob(32 * 32, 17 * 32, getPhysicsHandler()));
 		addSolidObject(new BigMob(34 * 32, 17 * 32, getPhysicsHandler()));
@@ -80,16 +83,13 @@ public class Three extends Room implements Runnable {
 				{"Mrs. Fluffingham","Except for when it means yes!"}
 				}, getDialogueHandler()));
 		
-		addRegion(new GenericRabbit(127 * 32 + 16, 24 * 32,
-				16, 34, 9, 0.03f, "romeofluffingham.gif", "Romeo Fluffingham",
+		addRegion(new GenericNpc(127 * 32 + 16, 24 * 32,
+				16, 34, 9, 0.03f, "rabbit/romeofluffingham.gif", "Romeo Fluffingham",
 				"Why should I care about some princess when I'm not even allowed to see the girl next door?", getDialogueHandler()));
 		
-		addRegion(new GenericRabbit(81 * 32, 41 * 32,
-				20, 32, 10, 0.03f, "mrfritzlepuff.gif", "Mr. Fritzlepuff",
+		addRegion(new GenericNpc(81 * 32, 41 * 32,
+				20, 32, 10, 0.03f, "rabbit/mrfritzlepuff.gif", "Mr. Fritzlepuff",
 				"Oh how I hate you king's men! Always unlocking doors and running amok like you own the place!", getDialogueHandler()));
-		
-		addRegion(new Switch(119 * 32 + 4, 23 * 32 + 16, true, switchBlock1));
-		addRegion(new Switch(130 * 32 + 4, 27 * 32 + 16, true, switchBlock2));
 		
 		addBackgroundObject(new House(96 * 32 - 8, 16 * 32 + 4, 0,
 				160, 160, 6));

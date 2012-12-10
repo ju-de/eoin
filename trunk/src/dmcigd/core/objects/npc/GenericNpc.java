@@ -1,12 +1,11 @@
-package dmcigd.levels.rabbit;
+package dmcigd.core.objects.npc;
 
 import dmcigd.core.objects.interfaces.Region;
-import dmcigd.core.objects.npc.SimpleNpc;
 import dmcigd.core.room.DialogueHandler;
 
-public class GenericRabbit extends SimpleNpc implements Region {
+public class GenericNpc extends SimpleNpc implements Region {
     
-	public GenericRabbit (int x, int y, int width, int height, int frameLimit, float frameSpeed, String fileName, String name, String message, DialogueHandler dialogueHandler) {
+	public GenericNpc (int x, int y, int width, int height, int frameLimit, float frameSpeed, String fileName, String name, String message, DialogueHandler dialogueHandler) {
 		
 		super(x, y, name, message, dialogueHandler);
 		
@@ -22,7 +21,7 @@ public class GenericRabbit extends SimpleNpc implements Region {
 		setAnimationLoops(new boolean[] {true});
 		setFrameSpeed(frameSpeed);
 		
-		setImagePath("objects/rabbit/"+fileName);
+		setImagePath("objects/"+fileName);
 		
 	}
 	

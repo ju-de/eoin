@@ -13,9 +13,6 @@ import dmcigd.levels.rabbit.mobs.*;
 
 public class Two extends Room implements Runnable {
 	
-	//Initializes SwitchBlock to be passed on to the appropriate switch
-	SwitchBlock switchBlock1 = new SwitchBlock(235 * 32, 20 * 32, 3);
-	
 	public Two(URL codeBase) {
 		super(codeBase, "rabbit", "Two", "grassy");
 	}
@@ -55,8 +52,13 @@ public class Two extends Room implements Runnable {
 		addSolidObject(new MovingPlatform(163 * 32, 18 * 32, 0, 5, 1, 5));
 		
 		addSolidObject(new LockedDoor(232 * 32, 15 * 32, 1));
+
+		
+		//Initializes SwitchBlock to be passed on to the appropriate switch
+		SwitchBlock switchBlock1 = new SwitchBlock(235 * 32, 20 * 32, 3);
 		
 		addSolidObject(switchBlock1);
+		addRegion(new Switch(220 * 32 - 4, 22 * 32 + 16, false, switchBlock1));
 		
 		addItem(new DoorKey(231 * 32, 17 * 32, 1, getPhysicsHandler()));
 		
@@ -66,8 +68,8 @@ public class Two extends Room implements Runnable {
 		addRegion(new Knight(112 * 32, 13 * 32, true, "I'll never understand why these rabbits chose to live in such thorny places!", getDialogueHandler()));
 		addRegion(new Knight(201 * 32, 24 * 32, false, "I hear the rabbits might be hiding something in these caves! They don't seem very interested in the affairs of the princess though.", getDialogueHandler()));
 		
-		addRegion(new GenericRabbit(227 * 32, 19 * 32, 
-				24, 34, 8, 0.03f, "oldmanwiggleton.gif", "Old Man Wiggleton",
+		addRegion(new GenericNpc(227 * 32, 19 * 32, 
+				24, 34, 8, 0.03f, "rabbit/oldmanwiggleton.gif", "Old Man Wiggleton",
 				"How do you know it was a kidnapper? These youngings are always trying to run off on me with their shenanigans!", getDialogueHandler()));
 
 		
@@ -76,11 +78,10 @@ public class Two extends Room implements Runnable {
 				{"Tina Wiggleton","Grandpa told us not to touch it!"}
 				}, getDialogueHandler()));
 		
-		addRegion(new GenericRabbit(230 * 32, 19 * 32 + 6,
-				16, 28, 10, 0.03f, "julietwiggleton.gif", "Juliet Wiggleton",
+		addRegion(new GenericNpc(230 * 32, 19 * 32 + 6,
+				16, 28, 10, 0.03f, "rabbit/julietwiggleton.gif", "Juliet Wiggleton",
 				"How would I know about any kidnapping? Grandpa doesn't even let me see my own neighbours!", getDialogueHandler()));
-
-		addRegion(new Switch(220 * 32 - 4, 22 * 32 + 16, false, switchBlock1));
+		
 		addTextLabel(new TextLabel(219 * 32, 23 * 32 - 4, "Press"));
 		addTextLabel(new TextLabel(219 * 32 - 2, 23 * 32 + 10, "\"X\"", false));
 				
