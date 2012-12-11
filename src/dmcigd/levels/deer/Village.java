@@ -24,7 +24,7 @@ public class Village extends Room implements Runnable{
 				"Something about the terrors of the night (cave)", getDialogueHandler()));
 		addRegion(new GenericNpc(38 * 32 - 4, 13 * 32 + 22,
 				22, 44, 2, 0.005f, "deer/lumberjackwife.gif", "Lumberjack's Wife",
-				"Something about the terrors of the night (cave)", getDialogueHandler()));
+				"Something about the guardian", getDialogueHandler()));
 		addRegion(new GenericNpc(42 * 32 - 14, 14 * 32 + 8,
 				16, 26, 2, 0.009f, "deer/lumberjackson.gif", "Lumberjack's Son",
 				"When will my antlers grow?", getDialogueHandler()));
