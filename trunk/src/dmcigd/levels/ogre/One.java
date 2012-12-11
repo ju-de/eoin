@@ -22,7 +22,7 @@ public class One extends Room implements Runnable {
 		addSolidObject(new OgreMob(24 * 32, 12 * 32, getPhysicsHandler()));
 		
 		addRegion(new Sign(26 * 32, 13 * 32, 9, "SIGN",
-				"Entering Ogre Territory.\nWATCH YOUR STEP!",
+				"Lots of Ogres Ahead.\nWATCH YOUR STEP!",
 				getDialogueHandler()));
 
 		addBackgroundObject(new Flag(53 * 32 + 16, 19 * 32 + 2, 0));
