@@ -33,6 +33,8 @@ public class Main implements Runnable, KeyListener {
 	//Used to determine whether or not to load new background music
 	private boolean changedLevel;
 	
+	private long startTime;
+	
 	//Public Getters
 	public GameState getGameState() {
 		return gameState;
@@ -93,6 +95,8 @@ public class Main implements Runnable, KeyListener {
 	}
 	
 	public void run() {
+		startTime = System.currentTimeMillis();
+		
 		while(true) {
 			
 			//Listens to DmciGD thread and waits until it finishes receiving variables
@@ -159,7 +163,9 @@ public class Main implements Runnable, KeyListener {
 			}
 			
 			try {
-				Thread.sleep(12);
+				startTime += 12;
+				Thread.sleep(Math.max(0, startTime-System.currentTimeMillis()));
+				startTime = System.currentTimeMillis();
 			} catch (InterruptedException e) {}
 			
 			//Tells DmciGD thread that there are new variables to grab
