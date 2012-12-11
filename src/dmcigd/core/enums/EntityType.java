@@ -1,6 +1,8 @@
 package dmcigd.core.enums;
 
 public enum EntityType {
+	//Quest Items
+	QUESTITEM2(-6), QUESTITEM1(-5),
 	
 	//Items
 	KEY4(-4), KEY3(-3), KEY2(-2), KEY1(-1),
