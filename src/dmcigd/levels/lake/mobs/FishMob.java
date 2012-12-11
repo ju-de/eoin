@@ -5,10 +5,10 @@ import dmcigd.core.enums.Direction;
 import dmcigd.core.enums.EntityType;
 import dmcigd.core.objects.interfaces.*;
 import dmcigd.core.objects.monsters.*;
+import dmcigd.core.objects.player.*;
 import dmcigd.core.objects.PhysicsHandler;
-import dmcigd.core.objects.projectiles.BasicProjectileHandler;
 
-public class FishMob extends LethalityHandler implements SolidObject {
+public class FishMob extends HitpointHandler implements SolidObject {
 	
 	private int spawnX, spawnY, objectClock, deathClock;
 	
@@ -18,8 +18,10 @@ public class FishMob extends LethalityHandler implements SolidObject {
 	
 	private int objectClockLimit = 30;
 	private int deathClockLimit = 70;
+	
+	private Player player;
 
-	public FishMob(int x, int y, PhysicsHandler physicsHandler) {
+	public FishMob(int x, int y, PhysicsHandler physicsHandler, Player player) {
 		
 		spawnX = x;
 		spawnY = y;
@@ -40,10 +42,10 @@ public class FishMob extends LethalityHandler implements SolidObject {
 		
 		setMaxHitpoints(30);
 		setKnockback(true);
-		setLethalOnPush(true);
-		setLethalOnRest(true);
 		
-		setPhysicsHandler(new BasicProjectileHandler(physicsHandler.getBlockMap(), physicsHandler.getSolidObjects()));
+		this.player = player;
+		
+		setPhysicsHandler(physicsHandler);
 		setCollisionType(CollisionType.NONSOLID);
 		setEntityType(EntityType.LETHALMONSTER);
 		
@@ -93,6 +95,11 @@ public class FishMob extends LethalityHandler implements SolidObject {
 			}
 			
 	    	animate();
+			
+	    	//Fucking. Why do I have to do this for you?
+			if(getBounds().intersects(player.getBounds())) {
+				player.isDead = true;
+			}
 	    	
 		}
 	}

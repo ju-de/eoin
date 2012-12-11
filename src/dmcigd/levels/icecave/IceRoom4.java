@@ -36,8 +36,8 @@ public class IceRoom4 extends Room implements Runnable{
 		addSolidObject(new LockedDoor(84 * 32, 18 * 32, 1));
 		addItem(new DoorKey(100 * 32, 16 * 32, 1, getPhysicsHandler()));
 		
-		addSolidObject(new FishMob(53 * 32, 35 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(61 * 32, 38 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(53 * 32, 35 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(61 * 32, 38 * 32, getPhysicsHandler(), getPlayer()));
 		addSolidObject(new FishSchool(69 * 32, 40 * 32, this));
 		addSolidObject(new FishSchool(85 * 32, 39 * 32, this));
 		addSolidObject(new FishSchool(76 * 32, 40 * 32, this));

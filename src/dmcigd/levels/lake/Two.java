@@ -28,8 +28,8 @@ public class Two extends Room implements Runnable {
 		addSolidObject(new FishSchool(26 * 32, 27 * 32, this));
 		
 		//room1 upper area for key
-		addSolidObject(new FishMob(17 * 32, 41 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(19 * 32, 43 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(17 * 32, 41 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(19 * 32, 43 * 32, getPhysicsHandler(), getPlayer()));
 		addSolidObject(new FishSchool(42 * 32, 20 * 32, this));
 		addSolidObject(new FishSchool(42 * 32, 22 * 32, this));
 		addSolidObject(new FishSchool(43 * 32, 21 * 32, this));
@@ -48,9 +48,9 @@ public class Two extends Room implements Runnable {
 		//fall
 		addSolidObject(new FishSchool(39 * 32, 40 * 32, this));
 		addSolidObject(new FishSchool(38 * 32, 39 * 32, this));
-		addSolidObject(new FishMob(36 * 32, 32 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(38 * 32, 38 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(37 * 32, 37 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(36 * 32, 32 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(38 * 32, 38 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(37 * 32, 37 * 32, getPhysicsHandler(), getPlayer()));
 
 		//spiketop room
 		addSolidObject(new FishSchool(28 * 32, 48 * 32, this));
@@ -58,16 +58,16 @@ public class Two extends Room implements Runnable {
 		addSolidObject(new FishSchool(31 * 32, 49 * 32, this));
 		addSolidObject(new FishSchool(29 * 32, 48 * 32, this));
 		
-		addSolidObject(new FishMob(34 * 32, 48 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(34 * 32, 48 * 32, getPhysicsHandler(), getPlayer()));
 		
 		//spikeleft room
 		addSolidObject(new FishSchool(17 * 32, 51 * 32, this));
 		addSolidObject(new FishSchool(18 * 32, 52 * 32, this));
-		addSolidObject(new FishMob(20 * 32, 52 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(20 * 32, 52 * 32, getPhysicsHandler(), getPlayer()));
 		
 		addSolidObject(new FishSchool(17 * 32, 57 * 32, this));
 		addSolidObject(new FishSchool(19 * 32, 58 * 32, this));
-		addSolidObject(new FishMob(13 * 32, 59 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(13 * 32, 59 * 32, getPhysicsHandler(), getPlayer()));
 		
 		addSolidObject(new FishSchool(35 * 32, 63 * 32, this));
 		addSolidObject(new FishSchool(36 * 32, 64 * 32, this));
@@ -86,7 +86,7 @@ public class Two extends Room implements Runnable {
 		addSolidObject(new FishSchool(28 * 32, 79 * 32, this));
 		addSolidObject(new FishSchool(29 * 32, 80 * 32, this));
 		
-		addSolidObject(new FishMob(26 * 32, 86 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(26 * 32, 86 * 32, getPhysicsHandler(), getPlayer()));
 		addSolidObject(new FishSchool(27 * 32, 87 * 32, this));
 		addSolidObject(new FishSchool(26 * 32, 88 * 32, this));
 		addSolidObject(new FishSchool(21 * 32, 88 * 32, this));
@@ -108,7 +108,7 @@ public class Two extends Room implements Runnable {
 		addSolidObject(new FishSchool(68 * 32, 78 * 32, this));
 		
 	//going up
-		addSolidObject(new FishMob(46 * 32, 46 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(46 * 32, 46 * 32, getPhysicsHandler(), getPlayer()));
 		
 		addSolidObject(new FishSchool(43 * 32, 48 * 32, this));
 		addSolidObject(new FishSchool(44 * 32, 49 * 32, this));
