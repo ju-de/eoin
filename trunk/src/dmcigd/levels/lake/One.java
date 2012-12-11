@@ -41,26 +41,26 @@ public class One extends Room implements Runnable {
 		addSolidObject(new FishSchool(97 * 32, 20 * 32, this));
 		addSolidObject(new Turtle(95 * 32, 17 * 32, this));
 		addSolidObject(new Turtle(86 * 32, 22 * 32, this));
-		addSolidObject(new FishMob(91 * 32, 20 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(97 * 32, 22 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(102 * 32, 21 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(91 * 32, 20 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(97 * 32, 22 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(102 * 32, 21 * 32, getPhysicsHandler(), getPlayer()));
 		
 		//spike guards
 		addSolidObject(new FishSchool(119 * 32, 17 * 32, this));
 		addSolidObject(new FishSchool(122 * 32, 17 * 32, this));
-		addSolidObject(new FishMob(115 * 32, 19 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(132 * 32, 19 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(115 * 32, 19 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(132 * 32, 19 * 32, getPhysicsHandler(), getPlayer()));
 		
 		//battle area
 		addSolidObject(new FishSchool(151 * 32, 21 * 32, this));
 		addSolidObject(new FishSchool(143 * 32, 17 * 32, this));
-		addSolidObject(new FishMob(147 * 32, 19 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(162 * 32, 21 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(150 * 32, 21 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(142 * 32, 21 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(97 * 32, 20 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(153* 32, 20 * 32, getPhysicsHandler()));
-		addSolidObject(new FishMob(149 * 32, 16 * 32, getPhysicsHandler()));
+		addSolidObject(new FishMob(147 * 32, 19 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(162 * 32, 21 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(150 * 32, 21 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(142 * 32, 21 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(97 * 32, 20 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(153* 32, 20 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(149 * 32, 16 * 32, getPhysicsHandler(), getPlayer()));
 		
 		//falling
 		addSolidObject(new FishSchool(181 * 32, 36 * 32, this));

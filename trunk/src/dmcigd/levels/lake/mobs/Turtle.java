@@ -13,6 +13,7 @@ public class Turtle extends BigMob implements RestableObject {
 	
 	public void die() {
 		super.die();
+		setCollisionType(CollisionType.SOLID);
 		setImageWidth(40);
 	}
 	

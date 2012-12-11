@@ -26,7 +26,7 @@ public class FishSchool extends HitpointHandler implements RestableObject {
 		setSequence(0);
 		setFrame(0);
 		
-		setMaxHitpoints(70);
+		setMaxHitpoints(50);
 		setKnockback(true);
 		
 		setGravity();
@@ -88,7 +88,7 @@ public class FishSchool extends HitpointHandler implements RestableObject {
 		
 		move();
 		
-		setVX((float) Math.random() * 15 * (0.5f - (float) Math.random()));
+		//setVX((float) Math.random() * 15 * (0.5f - (float) Math.random()));
 		setVY((float) Math.random() * 15 * (0.5f - (float) Math.random()));
 		
 		for(FishParticle i: fishParticles) {
