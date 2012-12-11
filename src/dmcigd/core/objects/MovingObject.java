@@ -167,8 +167,10 @@ public class MovingObject extends ObjectCollision {
 		}
 		if(vx > tRight) {
 			vx = tRight;
+			ax = 0;
 		}else if(vx < -tLeft) {
 			vx = -tLeft;
+			ax = 0;
 		}
 	}
 }

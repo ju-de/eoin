@@ -239,10 +239,10 @@ public class DmciGD extends Applet implements Runnable {
                     //If not in a state of update, wait and keep checking gameState
                     try {
                         wait();
-                        Thread.sleep(50);
                     } catch (InterruptedException ex) {
         				ex.printStackTrace();
                     }
+                    
 
                     break;
             }

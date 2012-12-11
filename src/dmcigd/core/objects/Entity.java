@@ -52,7 +52,7 @@ public class Entity extends MovingObject {
 
 	public void onPush(Entity entity, float v) {
 		if(entity.getCollisionType() == CollisionType.SOLID) {
-			physicsHandler.moveX(this, v + entity.getAX());
+			fx = v * 2 + entity.getAX() - getVX() - getAX();
 		}
 	}
 	
@@ -88,7 +88,11 @@ public class Entity extends MovingObject {
 			vy = vy + restingBlock.getDY() - 0.4f;
 		}else if(inWater) {
 			//If in water, divides falling or jumping speed by factor of 2.2
-			vy = vy / 2.2f;
+			if(vy > 0) {
+				vy = vy / 2.2f;
+			} else {
+				vy = vy / 1.6f;
+			}
 		}
 		
 		//Reset entity status
