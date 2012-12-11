@@ -4,15 +4,9 @@ import dmcigd.core.enums.EntityType;
 import dmcigd.core.objects.*;
 import dmcigd.core.objects.interfaces.*;
 
-public class DoorKey extends Entity implements Item {
+public class DoorKey extends ItemHandler implements Item {
 	
 	int type;
-	
-	private boolean held = false;
-	
-	public void setHeld(boolean held) {
-		this.held = held;
-	}
 	
 	public DoorKey(int x, int y, int type, PhysicsHandler physicsHandler) {
 		
@@ -48,14 +42,5 @@ public class DoorKey extends Entity implements Item {
 		
 		this.type = type;
 		
-	}
-	
-	public void step() {
-		if(!held) {
-			move();
-			if(hitGround) {
-				setVX(0);
-			}
-		}
 	}
 }
