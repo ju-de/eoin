@@ -40,7 +40,7 @@ public class FishMob extends HitpointHandler implements SolidObject {
 		setFrameLimits(new int[] {2,3});
 		setAnimationLoops(new boolean[] {true, false});
 		
-		setMaxHitpoints(30);
+		setMaxHitpoints(10);
 		setKnockback(true);
 		
 		this.player = player;

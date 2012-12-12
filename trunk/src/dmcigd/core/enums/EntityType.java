@@ -8,7 +8,7 @@ public enum EntityType {
 	KEY4(-4), KEY3(-3), KEY2(-2), KEY1(-1),
 	
 	//Solid Objects
-	PLAYER(0), MOVINGBLOCK(1),
+	PLAYER(0), MOVINGBLOCK(1), DESTROYANIMATION(1),
 	
 	//Nonlethal Monsters
 	NONLETHALMONSTER(10),

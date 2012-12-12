@@ -10,7 +10,7 @@ public class SwitchBlock extends ObjectCollision implements RestableObject {
 	
 	public void on() {
 		setCollisionType(CollisionType.SOLID);
-		setSequence(2);
+		setSequence(1);
 	}
 	
 	public void off() {
@@ -24,14 +24,14 @@ public class SwitchBlock extends ObjectCollision implements RestableObject {
 		setY(y);
 		setDX(0);
 		setDY(0);
-		setHeight(30);
+		setHeight(14);
 		setWidth(32 * width);
-		setImageHeight(32);
+		setImageHeight(16);
 		setImageWidth(32 * width);
 		
 		setFrame(0);
 		
-		setImagePath("objects.gif");
+		setImagePath("objects/icecave/switchblock.gif");
 		
 		on();
 	}

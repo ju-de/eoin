@@ -3,7 +3,6 @@ package dmcigd.levels.icecave;
 import java.net.URL;
 
 import dmcigd.levels.deer.mobs.*;
-import dmcigd.core.objects.blocks.CrumblingBlock;
 import dmcigd.core.objects.blocks.LockedDoor;
 import dmcigd.core.objects.items.DoorKey;
 import dmcigd.core.objects.npc.Sign;
@@ -34,14 +33,13 @@ public class IceRoom3 extends Room implements Runnable{
 		addSolidObject(new BigWolf(125 * 32, 40 * 32, this));
 		
 		//blocks
-		addSolidObject(new BreakBlock(86 * 32, 26 * 32, 0.15f, 500));
-		addSolidObject(new BreakBlock(87 * 32, 26 * 32, 0.15f, 500));
+		addSolidObject(new BreakBlock(86 * 32, 26 * 32));
 		
-		addSolidObject(new BreakBlock(124 * 32, 24 * 32, 0.15f, 500));
-		addSolidObject(new BreakBlock(124 * 32, 25 * 32, 0.15f, 500));
+		addSolidObject(new BreakBlock(124 * 32, 24 * 32));
+		addSolidObject(new BreakBlock(124 * 32, 25 * 32));
 		
-		addSolidObject(new BreakBlock(134 * 32, 34 * 32, 0.15f, 500));
-		addSolidObject(new BreakBlock(134 * 32, 35 * 32, 0.15f, 500));
+		addSolidObject(new BreakBlock(134 * 32, 34 * 32));
+		addSolidObject(new BreakBlock(134 * 32, 35 * 32));
 		
 		addSolidObject(new LockedDoor(143*32, 35*32, 1));
 		addSolidObject(new LockedDoor(151*32, 35*32, 2));

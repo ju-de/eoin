@@ -6,18 +6,21 @@ import dmcigd.core.objects.interfaces.*;
 
 public class BreakBlock extends ObjectCollision implements RestableObject {
 	
-	private int objectClock,clockReset = -1;
-	private float crumbleSpeed;
+	private int objectClock = -3;
+	private int invincibilityClock;
 	
 	public boolean onAttack(int damage, boolean flipped) {
-		objectClock = 0;
-		setFrameSpeed(crumbleSpeed);
+		if(invincibilityClock == 0) {
+			objectClock++;
+			setFrame(getFrame()+1);
+			invincibilityClock = 15;
+		}
 		return false;
 	}
 	
 	public boolean isDestroyed() { return false; }
 	
-	public BreakBlock(int x, int y, float crumbleSpeed, int clockReset) {
+	public BreakBlock(int x, int y) {
 		
 		setX(x);
 		setY(y);
@@ -28,19 +31,14 @@ public class BreakBlock extends ObjectCollision implements RestableObject {
 		setImageHeight(32);
 		setImageWidth(32);
 		
-		setSequence(3);
+		setSequence(0);
 		setFrame(0);
 		
-		//Initiates an 7 frame one-shot animation for crumbling blocks at index 3
-		//The animation itself is only 6 frames, but one blank frame is needed at the end
-		setFrameLimits(new int[] {0,0,0,7});
-		setAnimationLoops(new boolean[] {false,false,false,false});
-		setFrameSpeed(0);
+		setFrameLimits(new int[] {8});
+		setAnimationLoops(new boolean[] {false});
+		setFrameSpeed(0.15f);
 		
-		setImagePath("objects.gif");
-		
-		this.clockReset = clockReset;
-		this.crumbleSpeed = crumbleSpeed;
+		setImagePath("objects/icecave/icecube.gif");
 		
 		setCollisionType(CollisionType.SOLID);
 		
@@ -49,17 +47,11 @@ public class BreakBlock extends ObjectCollision implements RestableObject {
 	public void step() {
 		if(objectClock > -1) {
 			animate();
-			//Object becomes non-solid when block starts to crumble, not when animation ends
-			if(getFrame() == 4) {
+			if(getFrame() == 3) {
 				setCollisionType(CollisionType.NONSOLID);
 			}
-			objectClock++;
-			if(objectClock > clockReset) {
-				objectClock = -1;
-				setFrameSpeed(0);
-				setFrame(0);
-				setCollisionType(CollisionType.SOLID);
-			}
+		} else  if(invincibilityClock > 0) {
+			invincibilityClock--;
 		}
 	}
 }
