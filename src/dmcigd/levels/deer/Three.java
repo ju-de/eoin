@@ -69,12 +69,12 @@ public class Three extends Room implements Runnable{
 				+ "frog asks, \"How do I know you won't sting me?\" The scorpion "
 				+ "says, \"Because if I do, I will die too.\""
 				+ "\n\n"
-				+ "The frog is satisfied, and they set out, but in midstream,"
+				+ "The frog is satisfied, and they set out, but in midstream, "
 				+ "the scorpion stings the frog. The frog feels the onset of "
-				+ "paralysis and starts to sink, knowing they both will drown,"
+				+ "paralysis and starts to sink, knowing they both will drown, "
 				+ "but has just enough time to gasp \"Why?\" "
 				+ "\n\n"
-				+ "Replies the scorpion \"Its my nature...\" ", getDialogueHandler()));
+				+ "Replies the scorpion \"It's my nature...\" ", getDialogueHandler()));
 		
 		addRegion(new RoomWarp(195 * 32 + 16, 0, 32, 20 * 32, "deer.BossRoom"));
 	}
