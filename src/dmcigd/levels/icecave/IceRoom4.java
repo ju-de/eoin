@@ -4,13 +4,9 @@ import java.net.URL;
 
 import dmcigd.core.objects.regions.*;
 import dmcigd.core.room.*;
-import dmcigd.core.objects.*;
 import dmcigd.core.objects.blocks.*;
-import dmcigd.core.objects.platforms.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.levels.lake.mobs.*;
-import dmcigd.levels.rabbit.Switch;
-import dmcigd.levels.rabbit.SwitchBlock;
 
 public class IceRoom4 extends Room implements Runnable{
 	
@@ -21,7 +17,7 @@ public class IceRoom4 extends Room implements Runnable{
 	public void initializeRoom(){
 		// block ini
 		SwitchBlock switchBlock1 = new SwitchBlock(82 * 32, 35 * 32, 8);
-		SwitchBlock switchBlock2 = new SwitchBlock(92 * 32, 18 * 32, 1);
+		SwitchWall switchBlock2 = new SwitchWall(92 * 32, 18 * 32);
 		SwitchBlock switchBlock3 = new SwitchBlock(86 * 32, 15 * 32, 4);
 		
 		addSolidObject(switchBlock1);

@@ -15,7 +15,6 @@ public class IceRoom2 extends Room implements Runnable{
 	}
 	public void initializeRoom(){
 		addRegion(new Sign(30 * 32, 24 * 32, 5, "DANGER", "Beware of pitfalls and falling icicles!", getDialogueHandler()));
-		addRegion(new Sign(102 * 32, 17 * 32, 2, "placeholder", "meltable ice wall goes here to ceiling", getDialogueHandler()));
 		addRegion(new Sign(55 * 32, 25 * 32, 9, "BEWARE", "Wolves below!", getDialogueHandler()));
 		
 		addItem(new DoorKey(96 * 32, 16 * 32, 1, getPhysicsHandler()));

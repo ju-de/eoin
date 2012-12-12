@@ -21,18 +21,16 @@ public class IceRoom5 extends Room implements Runnable{
 		addSolidObject(new LockedDoor(90*32, 28*32, 1));
 		addItem(new DoorKey(55*32, 39*32, 1, getPhysicsHandler()));
 		
-		addSolidObject(new BreakBlock(124 * 32, 23 * 32, 0.15f, 500));
-		addSolidObject(new BreakBlock(125 * 32, 23 * 32, 0.15f, 500));
+		addSolidObject(new BreakBlock(124 * 32, 23 * 32));
 		
-		addSolidObject(new BreakBlock(133 * 32, 20 * 32, 0.15f, 500));
-		addSolidObject(new BreakBlock(134 * 32, 20 * 32, 0.15f, 500));
+		addSolidObject(new BreakBlock(133 * 32, 20 * 32));
 		
 		addSolidObject(new LockedDoor(92*32, 10*32, 2));
 		addItem(new DoorKey(108*32, 13*32, 2, getPhysicsHandler()));
 		addSolidObject(new LockedDoor(93*32, 10*32, 3));
 		addItem(new DoorKey(111*32, 13*32, 3, getPhysicsHandler()));
 		
-		addSolidObject(new BreakBlock(54 * 32, 10 * 32, 0.15f, 500));
+		addSolidObject(new BreakBlock(54 * 32, 10 * 32));
 		
 		addSolidObject(new LockedDoor(20*32, 15*32, 1));
 		addItem(new DoorKey(52*32, 10*32, 1, getPhysicsHandler()));
