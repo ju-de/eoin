@@ -21,13 +21,13 @@ public class Village extends Room implements Runnable{
 				304, 132, 1));
 		addRegion(new GenericNpc(36 * 32 - 4, 13 * 32 + 12,
 				30, 54, 2, 0.007f, "deer/lumberjack.gif", "Lumberjack",
-				"Something about the terrors of the night (cave)", getDialogueHandler()));
+				"Deeper into the murk lies the abyss that is home to the terrors of the night.", getDialogueHandler()));
 		addRegion(new GenericNpc(38 * 32 - 4, 13 * 32 + 22,
 				22, 44, 2, 0.005f, "deer/lumberjackwife.gif", "Lumberjack's Wife",
-				"Something about the guardian", getDialogueHandler()));
+				"The guardian will always protect us from the horrors! So long as we... maintain our covenant.", getDialogueHandler()));
 		addRegion(new GenericNpc(42 * 32 - 14, 14 * 32 + 8,
 				16, 26, 2, 0.009f, "deer/lumberjackson.gif", "Lumberjack's Son",
-				"When will my antlers grow?", getDialogueHandler()));
+				"*sigh* \n When will my antlers grow?", getDialogueHandler()));
 		
 		
 		addBackgroundObject(new House(57 * 32, 8 * 32 + 10, 0,
@@ -47,7 +47,7 @@ public class Village extends Room implements Runnable{
 		
 		addRegion(new GenericNpc(86 * 32 + 20, 13 * 32 + 6,
 				24, 28, 2, 0.01f, "deer/cryingdeer.gif", "Crying Deer",
-				"Sob. Weep. Gib medicine plis", getDialogueHandler()));
+				"It's so horrible! M-my husband's fallen ill! There's a herb nearby that can cure him, but... oh, I can't leave his side! And what of the terrors of the night? Please, young one, won't you find the herb for me?", getDialogueHandler()));
 		
 		addRegion(new RoomWarp(114 * 32 + 16, 0, 32, 14 * 32, "deer.Three"));
 	}
