@@ -11,7 +11,7 @@ import dmcigd.core.objects.regions.*;
 public class Bonus extends Room implements Runnable {
 	
 	public Bonus(URL codeBase) {
-		super(codeBase, "lake", "Bonus", "rocky");
+		super(codeBase, "lake", "Bonus", "fleshy");
 	}
 	
 	public void initializeRoom() {
