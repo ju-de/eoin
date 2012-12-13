@@ -17,10 +17,11 @@ public class One extends Room implements Runnable{
 	}
 	
 	public void initializeRoom() {
-		addRegion(new Sign(22 * 32 + 8, 33 * 32, 9, "SIGN", "Deer Village Ahead.\nBeware of Wolves!", getDialogueHandler()));
+		addRegion(new Sign(125 * 32, 36 * 32, 5, "SIGN", "Beware the terrors of the night", getDialogueHandler()));
 		
-		//addRegion(new Knight(50 * 32, 24 * 32, false, "Careful! These wolves may look cute but they're far from harmless!", getDialogueHandler()));
-		//addRegion(new Knight(113 * 32, 23 * 32, false, "Somedays, I like to run and jump through the air...\nIt's almost like I'm flying...", getDialogueHandler()));
+		addRegion(new Knight(14 * 32, 31 * 32, false, "These parts are wild and primal. Be mindful of your footing.", getDialogueHandler()));
+		addRegion(new Knight(19 * 32 - 12, 32 * 32, true, "A deer village lies ahead. They're a very spiritual people, and pay great attention to their traditional rituals and medicine.", getDialogueHandler()));
+		addRegion(new Knight(22 * 32, 33 * 32, false, "If you run into any of those deer, pay them no attention. They'll probably try to warn you of their superstitions, but it's all baloney.", getDialogueHandler()));
 
 		addSolidObject(new SmallWolf(28 * 32, 44 * 32, this));
 		addSolidObject(new SmallWolf(31 * 32, 44 * 32, this));

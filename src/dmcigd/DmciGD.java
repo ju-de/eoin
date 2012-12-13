@@ -3,7 +3,6 @@ package dmcigd;
 import dmcigd.core.*;
 import dmcigd.core.enums.*;
 import dmcigd.core.objects.*;
-import dmcigd.core.room.*;
 import dmcigd.levels.SaveCodeHandler;
 
 import java.applet.*;

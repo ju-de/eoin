@@ -5,8 +5,6 @@
 package dmcigd.core.objects.particles;
 
 import dmcigd.core.objects.*;
-import dmcigd.core.objects.interfaces.*;
-import dmcigd.core.enums.*;
 import dmcigd.core.room.GameObjectHandler;
 import java.util.Random;
 
@@ -58,10 +56,10 @@ public abstract class ParticleEmitter {
         return false;
     }
     
-    public void setX(int x){
+    public void setX(float x){
         this.x = x;
     }
-    public void setY(int y){
+    public void setY(float y){
         this.y = y;
     }
     public float getX(){ return x;}

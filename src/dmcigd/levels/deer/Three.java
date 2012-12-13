@@ -18,6 +18,9 @@ public class Three extends Room implements Runnable{
 	}
 	
 	public void initializeRoom() {
+
+		addRegion(new Knight(41 * 32, 14 * 32, true, "Hurry it up! Don't tell me you got distracted by those damn deer. Let them solve their own problems!", getDialogueHandler()));
+		addRegion(new Knight(45 * 32 + 16, 15 * 32, false, "We've been scouting for a while now. It seems that the princess has been led into the cave beyond here. The problem is, the darn entrance is guarded by some monstrosity the deer worship. If you kill it quickly, we can leave before they revolt.", getDialogueHandler()));
 		
 		//Platform 1
 		addSolidObject(new MovingPlatform(59 * 32, 18 * 32, 0, 4, -1.5f, -9));
@@ -54,7 +57,11 @@ public class Three extends Room implements Runnable{
 		addSolidObject(new BigWolf(164 * 32, 18 * 32, this));
 		addSolidObject(new BigWolf(169 * 32, 18 * 32, this));
 		
+		addRegion(new Knight(171 * 32 + 16, 14 * 32, true, "I-I saw it! These people's \"guardian\"! It’s a giant hunk of fur, teeth, and claw. Don't let their ramblings get to you though - the princess' life is far more important than their spirituality.", getDialogueHandler()));
+		
 		//Hidden area (Lion's Mouth)
+		
+		addRegion(new Sign(56 * 32 + 16, 38 * 32, 4, "SIGN", "The Lion's Jaw. Temple of the Ancestors", getDialogueHandler()));
 		
 		addItem(new DoorKey(47 * 32, 35 * 32, 2, getPhysicsHandler()));
 		
