@@ -18,17 +18,17 @@ public class IceRoom3 extends Room implements Runnable{
 		addSolidObject(new BigWolf(23 * 32, 21 * 32, this));
 		
 		
-		addSolidObject(new SmallWolf(81 * 32, 41 * 32, this));
+		addSolidObject(new IceWolf(81 * 32, 41 * 32, this));
 		addSolidObject(new BigWolf(82 * 32, 39 * 32, this));
 		
-		addSolidObject(new SmallWolf(87 * 32, 40 * 32, this));
+		addSolidObject(new IceWolf(87 * 32, 40 * 32, this));
 				
-		addSolidObject(new SmallWolf(94 * 32, 39 * 32, this));
+		addSolidObject(new IceWolf(94 * 32, 39 * 32, this));
 		
 		addSolidObject(new BigWolf(105 * 32, 38 * 32, this));
 		
-		addSolidObject(new SmallWolf(119 * 32, 41 * 32, this));
-		addSolidObject(new SmallWolf(118 * 32, 40 * 32, this));
+		addSolidObject(new IceWolf(119 * 32, 41 * 32, this));
+		addSolidObject(new IceWolf(118 * 32, 40 * 32, this));
 		
 		addSolidObject(new BigWolf(125 * 32, 40 * 32, this));
 		
