@@ -7,6 +7,7 @@ import dmcigd.core.objects.*;
 public class IcicleTrigger extends ObjectCollision implements Region {
 	
 	private IcicleProjectile icicle;
+	private boolean triggered = false;
 
 	public IcicleTrigger(int x, int y, int width, int height,  IcicleProjectile icicle) {
 		setX(x);
@@ -14,13 +15,20 @@ public class IcicleTrigger extends ObjectCollision implements Region {
 		setHeight(32*height);
 		setWidth(32*width);
 		
+		setImageHeight(0);
+		setImageWidth(0);
+		setImagePath("objects.gif");
+		
 		this.icicle = icicle;
 	}
 	
 	public void step() { }
 
 	public void onHover(Player player) { 
-		icicle.fall();
+		if(!triggered) {
+			icicle.fall();
+			triggered = true;
+		}
 	}
 
 	public void interact(Player player) { }
