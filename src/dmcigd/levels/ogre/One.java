@@ -17,10 +17,6 @@ public class One extends Room implements Runnable {
 
 	public void initializeRoom() {
 		
-		//Sample implementation only, remember to remove these monsters
-		addSolidObject(new OgreMob(22 * 32, 12 * 32, getPhysicsHandler()));
-		addSolidObject(new OgreMob(24 * 32, 12 * 32, getPhysicsHandler()));
-		
 		addRegion(new Sign(26 * 32, 13 * 32, 9, "SIGN",
 				"Lots of Ogres Ahead.\nWATCH YOUR STEP!",
 				getDialogueHandler()));
