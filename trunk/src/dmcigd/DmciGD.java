@@ -326,10 +326,10 @@ public class DmciGD extends Applet implements Runnable {
 
             case LOADINGROOM:
 
-                dbg.drawImage(loadingImage, 425, 230, 600, 300, 0, loadingClock / 4 * 70, 175, loadingClock / 4 * 70 + 70, this);
+                dbg.drawImage(loadingImage, 425, 230, 600, 300, 0, loadingClock / 16 * 70, 175, loadingClock / 16 * 70 + 70, this);
                 loadingClock++;
 
-                if (loadingClock == 24) {
+                if (loadingClock == 96) {
                     loadingClock = 0;
                 }
 
