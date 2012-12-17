@@ -1,6 +1,5 @@
 package dmcigd.levels.ogre;
 
-import dmcigd.core.objects.blocks.CrumblingBlock;
 import dmcigd.core.objects.npc.Knight;
 import dmcigd.core.objects.npc.Sign;
 import dmcigd.core.objects.regions.RoomWarp;
@@ -51,13 +50,39 @@ public class One extends Room implements Runnable {
 				"You must be very careful around these parts, for their traps are fairly wide - they were made for prey even larger than us! They're often much longer than a single bound",
 				getDialogueHandler()));
 
-		addSolidObject(new CrumblingBlock(132 * 32, 25 * 32, 0.2f, 500));
 		addRegion(new Knight(
 				126 * 32,
 				23 * 32,
 				false,
 				"If you're having trouble getting over these traps, it may help to get a running start.",
 				getDialogueHandler()));
+		
+		//Trap Foliage
+		addForegroundObject(new Foliage(84 * 32 - 16, 22 * 32, 0));
+		addForegroundObject(new Foliage(85 * 32 - 16, 22 * 32, 2));
+		addForegroundObject(new Foliage(86 * 32 - 16, 22 * 32, 1));
+		
+		addForegroundObject(new Foliage(112 * 32 - 16, 19 * 32 - 30, 1));
+		addForegroundObject(new Foliage(113 * 32 - 16, 19 * 32 - 24, 0));
+		addForegroundObject(new Foliage(114 * 32 - 16, 19 * 32 - 16, 2));
+		addForegroundObject(new Foliage(115 * 32 - 16, 19 * 32 - 8, 0));
+		addForegroundObject(new Foliage(116 * 32 - 16, 19 * 32, 1));
+
+		addForegroundObject(new Foliage(129 * 32 - 16, 24 * 32, 2));
+		addForegroundObject(new Foliage(130 * 32 - 16, 24 * 32, 1));
+		addForegroundObject(new Foliage(131 * 32 - 16, 24 * 32, 0));
+		addForegroundObject(new Foliage(132 * 32 - 16, 24 * 32, 2));
+		addForegroundObject(new Foliage(133 * 32 - 16, 24 * 32, 0));
+		addForegroundObject(new Foliage(134 * 32 - 16, 24 * 32, 1));
+		addForegroundObject(new Foliage(135 * 32 - 16, 24 * 32, 2));
+		
+		addForegroundObject(new Foliage(150 * 32 - 16, 19 * 32, 0));
+		addForegroundObject(new Foliage(151 * 32 - 16, 19 * 32, 2));
+		addForegroundObject(new Foliage(152 * 32 - 16, 19 * 32, 1));
+		addForegroundObject(new Foliage(153 * 32 - 16, 19 * 32, 0));
+		addForegroundObject(new Foliage(154 * 32 - 16, 19 * 32, 1));
+		addForegroundObject(new Foliage(155 * 32 - 16, 19 * 32, 0));
+		addForegroundObject(new Foliage(156 * 32 - 16, 19 * 32, 2));
 		
 		addRegion(new RoomWarp(174 * 32+ 16, 0, 32, 640, "ogre.Two"));
 	}
