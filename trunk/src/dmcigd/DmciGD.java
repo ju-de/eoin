@@ -113,6 +113,11 @@ public class DmciGD extends Applet implements Runnable {
 				e.printStackTrace();
 			}
     }
+    
+    //Stops background music from running after tab is closed.
+    public void destroy() {
+    	MidiPlayer.endSong();
+    }
 
     //Repaints screen
     @Override
