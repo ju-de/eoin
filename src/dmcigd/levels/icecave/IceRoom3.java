@@ -33,13 +33,13 @@ public class IceRoom3 extends Room implements Runnable{
 		addSolidObject(new BigWolf(125 * 32, 40 * 32, this));
 		
 		//blocks
-		addSolidObject(new BreakBlock(86 * 32, 26 * 32));
+		addSolidObject(new BreakBlock(86 * 32, 26 * 32, getPhysicsHandler()));
 		
-		addSolidObject(new BreakBlock(124 * 32, 24 * 32));
-		addSolidObject(new BreakBlock(124 * 32, 25 * 32));
+		addSolidObject(new BreakBlock(124 * 32, 24 * 32, getPhysicsHandler()));
+		addSolidObject(new BreakBlock(124 * 32, 25 * 32, getPhysicsHandler()));
 		
-		addSolidObject(new BreakBlock(134 * 32, 34 * 32));
-		addSolidObject(new BreakBlock(134 * 32, 35 * 32));
+		addSolidObject(new BreakBlock(134 * 32, 34 * 32, getPhysicsHandler()));
+		addSolidObject(new BreakBlock(134 * 32, 35 * 32, getPhysicsHandler()));
 		
 		addSolidObject(new LockedDoor(143*32, 35*32, 1));
 		addSolidObject(new LockedDoor(151*32, 35*32, 2));
