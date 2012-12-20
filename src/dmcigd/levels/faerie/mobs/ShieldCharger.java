@@ -8,7 +8,7 @@ public class ShieldCharger extends Entity implements RestableObject {
 	
 	private boolean walking = false;
 	private int initInvincibilityCounter = 0;
-	private int initInvincibilityLimit = 128;
+	private int initInvincibilityLimit = 110;
 	private float walkingSpeed = 2.5f;
 	
 	public ShieldCharger(int x, int y, boolean flipped, PhysicsHandler physicsHandler) {
@@ -120,15 +120,15 @@ public class ShieldCharger extends Entity implements RestableObject {
 	public void pushPlayer(Entity entity, float v) {
 		if(!isDead && entity.getEntityType() == EntityType.PLAYER) {
 			if(flipped) {
-				if(entity.getX() + 12 <= getX()) entity.setX(getX() - 21 + v + getAX() - entity.getVX() - entity.getAX());
+				if(entity.getX() + 20 <= getX()) entity.setX(getX() - 21 + v + getAX() - entity.getVX() - entity.getAX());
 			} else {
-				if(entity.getX() - 20 >= getX()) entity.setX(getX() + 29 + v + getAX() - entity.getVX() - entity.getAX());
+				if(entity.getX() - 28 >= getX()) entity.setX(getX() + 29 + v + getAX() - entity.getVX() - entity.getAX());
 			}
 		}
 	}
 	
 	public void onPush(Entity entity, float v) {
-		pushPlayer(entity, v);
+		pushPlayer(entity, 0);
 	}
 	
 	public void pushObject(SolidObject object, float v) {
@@ -136,6 +136,10 @@ public class ShieldCharger extends Entity implements RestableObject {
 			pushPlayer((Entity) object, v);
 		} catch(Exception e) {
 			// Do nothing
+		}
+		super.pushObject(object, v);
+		if(object.getWidth() == 11 * 32) {
+			setY(object.getY() - getHeight());
 		}
 	}
 }
