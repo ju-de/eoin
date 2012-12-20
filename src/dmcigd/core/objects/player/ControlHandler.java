@@ -60,7 +60,11 @@ abstract class ControlHandler extends Entity {
 				if(!isWalking && isClimbing && climbing == Direction.DOWN) {
 					setVY(-4);
 				} else {
-					setVY(-7.5f);
+					if(getRestingBlock() != null && getRestingBlock().getDY() < 0) { 
+						setVY(-7.5f + getRestingBlock().getDY());
+					} else {
+						setVY(-7.5f);
+					}
 				}
 				jumpState++;
 				jumpDelay = 5;
