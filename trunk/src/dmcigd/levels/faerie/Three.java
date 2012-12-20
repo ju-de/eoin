@@ -14,12 +14,13 @@ public class Three extends Room implements Runnable {
 	}
 
 	public void initializeRoom() {
+		
 		RisingPlatform risingPlatform = new RisingPlatform(getSolidObjects());
 		addSolidObject(risingPlatform);
 		addSolidObject(new DestroyRegion(risingPlatform, getSolidObjects()));
 		
 		//Wave 15
-		addRegion(new ShieldChargerWaveTrigger(40 * 32, new String[] {
+		addRegion(new ShieldChargerWaveTrigger(30 * 32, new String[] {
 				"    m     m",
 				"   mm    mm",
 				"  mmm   mmm",
@@ -28,7 +29,7 @@ public class Three extends Room implements Runnable {
 		}, this));
 		
 		//Wave 14
-		addRegion(new ShieldChargerWaveTrigger(60 * 32, new String[] {
+		addRegion(new ShieldChargerWaveTrigger(50 * 32, new String[] {
 				"       m m ",
 				"       m m ",
 				"  m    m m ",
@@ -37,7 +38,7 @@ public class Three extends Room implements Runnable {
 		}, this));
 		
 		//Wave 13
-		addRegion(new ShieldChargerWaveTrigger(80 * 32, new String[] {
+		addRegion(new ShieldChargerWaveTrigger(70 * 32, new String[] {
 				"         m ",
 				"        mm ",
 				"        mm ",
@@ -46,32 +47,31 @@ public class Three extends Room implements Runnable {
 		}, this));
 		
 		//Wave 12
-		addRegion(new ShieldChargerWaveTrigger(100 * 32, new String[] {
-				"       m  m",
-				"       m  m",
-				"m      m  m",
-				"m      m  m",
-				"m___mc_m__m"
+		addRegion(new ShieldChargerWaveTrigger(90 * 32, new String[] {
+				"        m m",
+				"        m m",
+				"m       m m",
+				"m       m m",
+				"m___mc__m_m"
 		}, this));
 		
 		//Wave 11
-		addRegion(new ShieldChargerWaveTrigger(120 * 32, new String[] {
+		addRegion(new ShieldChargerWaveTrigger(110 * 32, new String[] {
 				"          m",
 				" m        m",
-				" m  m     m",
 				" m  m     m",
 				"_mm_mc____m"
 		}, this));
 		
 		//Wave 10
-		addRegion(new ShieldChargerWaveTrigger(140 * 32, new String[] {
+		addRegion(new ShieldChargerWaveTrigger(130 * 32, new String[] {
 				" m m   m m ",
 				" m m   m m ",
 				"_m_m_c_m_m_"
 		}, this));
 		
 		//Wave 9
-		addRegion(new ShieldChargerWaveTrigger(160 * 32, new String[] {
+		addRegion(new ShieldChargerWaveTrigger(150 * 32, new String[] {
 				"         m ",
 				" m       m ",
 				" m     m m ",
@@ -79,7 +79,7 @@ public class Three extends Room implements Runnable {
 		}, this));
 		
 		//Wave 8
-		addRegion(new ShieldChargerWaveTrigger(180 * 32, new String[] {
+		addRegion(new ShieldChargerWaveTrigger(170 * 32, new String[] {
 				"m          ",
 				"mm         ",
 				"mmm        ",
@@ -87,34 +87,32 @@ public class Three extends Room implements Runnable {
 		}, this));
 		
 		//Wave 7
-		addRegion(new ShieldChargerWaveTrigger(200 * 32, new String[] {
-				"         m ",
+		addRegion(new ShieldChargerWaveTrigger(190 * 32, new String[] {
 				"         m ",
 				"         m ",
 				"_m___c___m_"
 		}, this));
 		
 		//Wave 6
-		addRegion(new ShieldChargerWaveTrigger(220 * 32, new String[] {
-				" m         ",
+		addRegion(new ShieldChargerWaveTrigger(210 * 32, new String[] {
 				" m         ",
 				"_m___c_m___"
 		}, this));
 		
 		//Wave 5
-		addRegion(new ShieldChargerWaveTrigger(239 * 32, new String[] {
+		addRegion(new ShieldChargerWaveTrigger(230 * 32, new String[] {
 				"        m  ",
 				"_m___c__m__"
 		}, this));
 		
 		//Wave 4
-		addRegion(new ShieldChargerWaveTrigger(254 * 32, new String[] {
+		addRegion(new ShieldChargerWaveTrigger(250 * 32, new String[] {
 				" m         ",
 				"_m___c_____"
 		}, this));
 		
 		//Wave 3
-		addRegion(new ShieldChargerWaveTrigger(269 * 32, new String[] {
+		addRegion(new ShieldChargerWaveTrigger(265 * 32, new String[] {
 				"_m___c__m__"
 		}, this));
 		
