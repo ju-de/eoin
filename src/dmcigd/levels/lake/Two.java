@@ -7,7 +7,6 @@ import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
 import dmcigd.core.objects.regions.*;
-import dmcigd.levels.lake.mobs.FishSchool;
 import dmcigd.levels.lake.mobs.*;
 
 public class Two extends Room implements Runnable {
@@ -19,17 +18,13 @@ public class Two extends Room implements Runnable {
 	public void initializeRoom() {
 		
 		//top useless
-		addSolidObject(new FishSchool(13 * 32, 1 * 32, this));
-		addSolidObject(new FishSchool(15 * 32, 1 * 32, this));
-		addSolidObject(new FishSchool(14 * 32, 2 * 32, this));
-		addSolidObject(new FishSchool(15 * 32, 2 * 32, this));
+		addSolidObject(new FishSchool(15 * 32, 4 * 32, this));
 		
-		addRegion(new Sign(30 * 32, 29 * 32 , 3, "Welcome.", "It's gonna be like a maze from here. This way.", getDialogueHandler()));
+		addRegion(new Sign(30 * 32, 29 * 32 , 3, "Tip", "It's gonna be like a maze from here, follow the signs", getDialogueHandler()));
 		addSolidObject(new FishSchool(26 * 32, 27 * 32, this));
 		
 		//room1 upper area for key
-		addSolidObject(new FishMob(17 * 32, 41 * 32, getPhysicsHandler(), getPlayer()));
-		addSolidObject(new FishMob(19 * 32, 43 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(21 * 32, 45 * 32, getPhysicsHandler(), getPlayer()));
 		addSolidObject(new FishSchool(42 * 32, 20 * 32, this));
 		addSolidObject(new FishSchool(42 * 32, 22 * 32, this));
 		addSolidObject(new FishSchool(43 * 32, 21 * 32, this));
@@ -41,9 +36,13 @@ public class Two extends Room implements Runnable {
 		addSolidObject(new Turtle(42 * 32, 27 * 32, this));
 		addItem(new DoorKey(44 * 32, 15 * 32, 1, getPhysicsHandler()));
 		addSolidObject(new LockedDoor(22 * 32, 43 * 32, 1));
-		addRegion(new Sign(55 * 32, 11 * 32, 5, "Tip", "Use your intuition! You don't need to go to all the rooms.", getDialogueHandler()));
+		addItem(new DoorKey(41 * 32, 46 * 32, 1, getPhysicsHandler()));
+		addSolidObject(new LockedDoor(20 * 32, 49 * 32, 1));
+		addRegion(new Sign(29 * 32, 62 * 32, 5, "Tip", "Use your intuition! You don't need to go to all the rooms.", getDialogueHandler()));
 		
 		addSolidObject(new Turtle(32 * 32, 43 * 32, this));
+		addRegion(new Sign(36 * 32, 54 * 32, 6, "Path", "Diver's Nightmare", getDialogueHandler()));
+		addRegion(new Sign(33 * 32, 64 * 32, 9, "Path", "Beginner's Descent", getDialogueHandler()));
 		
 		//fall
 		addSolidObject(new FishSchool(39 * 32, 40 * 32, this));
@@ -152,6 +151,6 @@ public class Two extends Room implements Runnable {
 		
 		//meet area
 		
-		addRegion(new RoomWarp(119 * 32, 0, 2 * 32, 101 * 32, "lake.Two2"));
+		addRegion(new RoomWarp(57 * 32, 0, 2 * 32, 101 * 32, "lake.TwoB"));
 	}
 }
