@@ -18,12 +18,12 @@ public class Two extends Room implements Runnable{
 	
 	public void initializeRoom() {
 		
-		addRegion(new Sign(89 * 32, 19 * 32, 3, "SIGN", "The guardian's domain lies ahead.", getDialogueHandler()));
+		addRegion(new Sign(87 * 32, 19 * 32, 3, "SIGN", "The guardian's domain lies ahead.", getDialogueHandler()));
 		
-		addSolidObject(new MovingPlatform(111 * 32, 22 * 32, 1, 4, 1.5f, 8));
-		addSolidObject(new MovingPlatform(119 * 32, 26 * 32, 0, 4, -1.5f, -9));
-		addSolidObject(new MovingPlatform(119 * 32, 28 * 32, 0, 4, 1.5f, 9));
-		addSolidObject(new MovingPlatform(129 * 32, 30 * 32, 0, 4, -1.5f, -9));
+		addSolidObject(new MovingPlatform(111 * 32, 22 * 32, 1, 4, 1, 8));
+		addSolidObject(new MovingPlatform(119 * 32, 26 * 32, 0, 4, -1, -9));
+		addSolidObject(new MovingPlatform(119 * 32, 28 * 32, 0, 4, 1, 9));
+		addSolidObject(new MovingPlatform(129 * 32, 30 * 32, 0, 4, -1, -9));
 		
 		
 		addSolidObject(new TimedBlock(153 * 32, 34 * 32, 2, 0, 150, 150));
