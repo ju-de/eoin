@@ -92,7 +92,7 @@ public class IceWolf extends HitpointHandler implements RestableObject {
 		setAnimationLoops(new boolean [] {true, true, false, false});
 		setFrameSpeed(0.02f);
 		
-		setMaxHitpoints(70);
+		setMaxHitpoints(40);
 		setKnockback(true);
 		
 		this.room = room;

@@ -228,6 +228,7 @@ public class PhysicsHandler {
     public void checkSolidObjectCollisionX(Entity entity, float v) {
 
         boolean obstructMovement = false;
+        float furthestEdge = -1;
 
         //Get bounding box of destination
         Rectangle boundingBox = entity.getBounds(v, 0);
@@ -238,29 +239,33 @@ public class PhysicsHandler {
             //Check for collision
             if (objectsCollide(entity, boundingBox, i)) {
 
-                pushObject(entity, i, v);
-
                 //Determine collision type
                 switch (i.getCollisionType()) {
                     case SOLID:
                         if (v > 0) {
                             //Push against left edge (if moving right)
-                        	entity.setX(i.getX() - entity.getWidth());
+                        	float leftEdge = i.getX() - entity.getWidth();
+                        	if(furthestEdge < 0 || leftEdge < furthestEdge) furthestEdge = leftEdge;
                         } else {
                             //Push against right edge (if moving left)
-                        	entity.setX(i.getX() + i.getWidth());
+                        	float rightEdge = i.getX() + i.getWidth();
+                        	if(furthestEdge < 0 || rightEdge > furthestEdge) furthestEdge = rightEdge;
                         }
                         obstructMovement = true;
                         break;
                     default:
                         break;
                 }
+
+                pushObject(entity, i, v);
             }
         }
 
         if (!obstructMovement) {
             //Advance normally
         	entity.addX(v);
+        } else {
+        	entity.setX(furthestEdge);
         }
     }
 	

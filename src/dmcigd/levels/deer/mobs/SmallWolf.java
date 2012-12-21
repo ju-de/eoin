@@ -42,7 +42,7 @@ public class SmallWolf extends WolfAI implements RestableObject {
 		setAnimationLoops(new boolean [] {true, true, false, false});
 		setFrameSpeed(0.02f);
 		
-		setMaxHitpoints(70);
+		setMaxHitpoints(50);
 		setKnockback(true);
 		
 		setDeathClockLimit(70);
