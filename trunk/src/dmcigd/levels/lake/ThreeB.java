@@ -7,13 +7,16 @@ import dmcigd.core.objects.blocks.*;
 import dmcigd.core.objects.items.*;
 import dmcigd.core.objects.npc.*;
 import dmcigd.core.objects.regions.*;
+import dmcigd.levels.lake.mobs.*;
 
-public class Three2 extends Room implements Runnable {
+public class ThreeB extends Room implements Runnable {
 	
-	public Three2(URL codeBase) {
-		super(codeBase, "lake", "Three2", "rocky");
+	public ThreeB(URL codeBase) {
+		super(codeBase, "lake", "ThreeB", "rocky");
 	}
 	
 	public void initializeRoom() {
+	
 	}
+	
 }
