@@ -71,6 +71,20 @@ public class Two extends Room implements Runnable {
 			
 		addRegion(new Sign(77 * 32, 24 * 32, 5, "SIGN", "FNORD", getDialogueHandler()));
 		addRegion(new Sign(91 * 32, 36 * 32, 5, "SIGN", "FNORD", getDialogueHandler()));
+		
+		addBackgroundObject(new Decoration(121 * 32 + 8, 10 * 32 - 2,0,
+				244, 238, "treeentrance.gif"));
+		addForegroundObject(new Decoration(121 * 32 + 8, 10 * 32 - 2,1,
+				244, 238, "teeentrance.gif"));
+		
+		addForegroundObject(new Decoration(117 * 32 + 16, 16 * 32 - 8,0,
+				116, 42, "root1.gif"));
+		
+		addBackgroundObject(new Decoration(115 * 32, 16 * 32 + 12,0,
+				74, 22, "root2.gif"));
+		
+		addBackgroundObject(new Decoration(111 * 32, 17 * 32 + 10,0,
+				48, 24, "root3.gif"));
 				
 		addRegion(new RoomWarp(127* 32, 0, 32, 95 * 32, "faerie.Three"));
 		

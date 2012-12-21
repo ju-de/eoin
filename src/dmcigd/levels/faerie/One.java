@@ -35,7 +35,7 @@ public class One extends Room implements Runnable {
 		addSolidObject(new CrumblingBlock(117 * 32, 12 * 32, 0.25f, 350));
 		addSolidObject(new CrumblingBlock(122 * 32, 12 * 32, 0.25f, 350));
 		addSolidObject(new CrumblingBlock(122 * 32, 13 * 32, 0.25f, 350));
-		addSolidObject(new CrumblingBlock(127 * 32, 12 * 32, 0.25f, 350));
+		addSolidObject(new CrumblingBlock(127 * 32, 11 * 32, 0.25f, 350));
 		
 		addSolidObject(new CrumblingBlock(145 * 32, 9 * 32, 0.25f, 350));
 		addSolidObject(new CrumblingBlock(148 * 32, 10 * 32, 0.25f, 350));
@@ -54,17 +54,6 @@ public class One extends Room implements Runnable {
 		addSolidObject(new CrumblingBlock(185 * 32, 17 * 32, 0.18f, 500));
 		addSolidObject(new CrumblingBlock(185 * 32, 16 * 32, 0.18f, 500));
 		addSolidObject(new CrumblingBlock(185 * 32, 15 * 32, 0.18f, 500));
-
-		addSolidObject(new CrumblingBlock(188 * 32, 16 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(189 * 32, 16 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(190 * 32, 16 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(189 * 32, 15 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(190 * 32, 15 * 32, 0.18f, 500));	
-		addSolidObject(new CrumblingBlock(190 * 32, 14 * 32, 0.18f, 500));	
-		addSolidObject(new CrumblingBlock(188 * 32, 13 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(189 * 32, 13 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(190 * 32, 13 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(191 * 32, 13 * 32, 0.18f, 500));
 		
 		addSolidObject(new CrumblingBlock(193 * 32, 16 * 32, 0.18f, 500));
 		addSolidObject(new CrumblingBlock(194 * 32, 16 * 32, 0.18f, 500));
@@ -80,13 +69,6 @@ public class One extends Room implements Runnable {
 		addSolidObject(new CrumblingBlock(205 * 32, 20 * 32, 0.18f, 500));
 		addSolidObject(new CrumblingBlock(205 * 32, 19 * 32, 0.18f, 500));
 		addSolidObject(new CrumblingBlock(206 * 32, 20 * 32, 0.18f, 500));
-		
-		addSolidObject(new CrumblingBlock(211 * 32, 20 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(212 * 32, 29 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(213 * 32, 19 * 32, 0.18f, 500));
-		
-		addSolidObject(new CrumblingBlock(217 * 32, 17 * 32, 0.18f, 1000000000));
-		addSolidObject(new CrumblingBlock(217 * 32, 18 * 32, 0.18f, 1000000000));
 		
 		addSolidObject(new CrumblingBlock(223 * 32, 15 * 32, 0.25f, 1000000000));
 		addSolidObject(new CrumblingBlock(224 * 32, 15 * 32, 0.25f, 1000000000));
@@ -106,6 +88,21 @@ public class One extends Room implements Runnable {
 		
 		addSolidObject(new CrumblingBlock(225 * 32, 21 * 32, 0.35f, 1000000000));
 		addSolidObject(new CrumblingBlock(239 * 32, 29 * 32, 0.35f, 350));
+		
+		addBackgroundObject(new Decoration(189 * 32, 15 * 32 - 8,0,
+				100, 74, "ruin2.gif"));
+		addForegroundObject(new Decoration(189 * 32, 15 * 32 - 8,1,
+				100, 74, "ruin2.gif"));
+		
+		addBackgroundObject(new Decoration(207 * 32, 15 * 32 + 8,0,
+				156, 186, "ruin3.gif"));
+		addForegroundObject(new Decoration(207 * 32, 15 * 32 + 8,1,
+				156, 186, "ruin3.gif"));
+		
+		addBackgroundObject(new Decoration(215 * 32 + 4, 17 * 32 - 22,0,
+				88, 88, "ruin1.gif"));
+		addForegroundObject(new Decoration(215 * 32 + 4, 17 * 32 - 22,1,
+				88, 88, "ruin1.gif"));
 		
 		addRegion(new Knight(50 * 32, 7 * 32, true, "FNORD", getDialogueHandler()));
 		addRegion(new Knight(79 * 32, 11 * 32, false, "I'm free! Let's get out before I get stuck again.", getDialogueHandler()));

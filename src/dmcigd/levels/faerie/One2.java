@@ -16,12 +16,15 @@ public class One2 extends Room implements Runnable {
         
 	public void initializeRoom() {
 		
-		addSolidObject(new CrumblingBlock(1 * 32, 20 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(2 * 32, 19 * 32, 0.18f, 500));
-		addSolidObject(new CrumblingBlock(3 * 32, 19 * 32, 0.18f, 500));
+		addBackgroundObject(new Decoration(-3 * 32, 15 * 32 + 8,0,
+				156, 186, "ruin3.gif"));
+		addForegroundObject(new Decoration(-3 * 32, 15 * 32 + 8,1,
+				156, 186, "ruin3.gif"));
 		
-		addSolidObject(new CrumblingBlock(7 * 32, 17 * 32, 0.18f, 1000000000));
-		addSolidObject(new CrumblingBlock(7 * 32, 18 * 32, 0.18f, 1000000000));
+		addBackgroundObject(new Decoration(5 * 32 + 4, 17 * 32 - 22,0,
+				88, 88, "ruin1.gif"));
+		addForegroundObject(new Decoration(5 * 32 + 4, 17 * 32 - 22,1,
+				88, 88, "ruin1.gif"));
 		
 		addSolidObject(new CrumblingBlock(13 * 32, 15 * 32, 0.25f, 1000000000));
 		addSolidObject(new CrumblingBlock(14 * 32, 15 * 32, 0.25f, 1000000000));
