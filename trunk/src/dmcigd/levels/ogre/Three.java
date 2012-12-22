@@ -65,6 +65,12 @@ public class Three extends Room implements Runnable {
 		
 		addSolidObject(new PushableBlock(212 * 32, 12 * 32, getPhysicsHandler()));
 		
+		//Hidden NPC
+		addRegion(new DeadOgre(158 * 32, 23 * 32, new String[][] {
+				{"Beavis", "Heh..."},
+				{"Butthead", "Heh heh..."},
+				{"Butthead", "Heh..."}
+			},getDialogueHandler()));
 
 		//Trap Foliage
 		addForegroundObject(new Foliage(29 * 32 - 16, 16 * 32 - 34, 2));
