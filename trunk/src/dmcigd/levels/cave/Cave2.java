@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import dmcigd.core.room.*;
 import dmcigd.core.objects.blocks.LockedDoor;
 import dmcigd.core.objects.items.DoorKey;
-import dmcigd.core.objects.npc.Sign;
 import dmcigd.core.objects.regions.RoomWarp;
 import dmcigd.levels.cave.mobs.*;
 
@@ -69,6 +68,6 @@ public class Cave2 extends Room {
 		batList5.setBatList(bats5);
 		
 		//Room Warp
-		addRegion(new RoomWarp (127*32 + 16, 8*32, 2*32, 2*32, "game.MainMenu"));
+		addRegion(new RoomWarp (127*32 + 16, 8*32, 2*32, 2*32, "cave.Cave3"));
 	}
 }
