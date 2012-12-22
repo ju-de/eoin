@@ -1,14 +1,17 @@
 package dmcigd.levels.cave;
 
-import java.net.URL;
+import dmcigd.core.objects.blocks.PushableBlock;
+import dmcigd.core.objects.regions.RoomWarp;
+import dmcigd.core.room.*;
+
 import java.util.LinkedList;
 
 import dmcigd.core.room.*;
-import dmcigd.core.objects.blocks.LockedDoor;
-import dmcigd.core.objects.items.DoorKey;
-import dmcigd.core.objects.npc.Sign;
-import dmcigd.core.objects.regions.RoomWarp;
 import dmcigd.levels.cave.mobs.*;
+import dmcigd.levels.lake.mobs.FishMob;
+import dmcigd.levels.lake.mobs.FishSchool;
+
+import java.net.URL;
 
 public class Cave1 extends Room {
 
@@ -17,31 +20,15 @@ public class Cave1 extends Room {
 	}
 
 	public void initializeRoom(){
-		//locked doors
-		addSolidObject(new LockedDoor(44*32, 37*32, 1));
-		addSolidObject(new LockedDoor(82*32, 38*32, 1));
-		addSolidObject(new LockedDoor(57*32, 11*32, 2));
-		
-		//keys
-		addItem(new DoorKey(45*32, 37*32, 1, getPhysicsHandler()));
-		addItem(new DoorKey(69*32, 40*32, 2, getPhysicsHandler()));
-		addItem(new DoorKey(81*32, 38*32, 1, getPhysicsHandler()));
-		
-		//signs
-		addRegion(new Sign(20* 32, 11* 32, 9 , "SIGN", "Bat's Cave", getDialogueHandler()));
 		
 		//knockback bats
-		BatList batList1 = new BatList(102 * 32, 30 * 32, 300, 600);
-		BatList batList2 = new BatList(97 * 32, 19 * 32, 300, 600);
-		BatList batList3 = new BatList(72 * 32, 11 * 32, 300, 600);
-		BatList batList4 = new BatList(26 * 32, 20 * 32, 100, 300);
-		BatList batList5 = new BatList(26 * 32, 30 * 32, 100, 300);
+		BatList batList1 = new BatList(28 * 32, 8 * 32, 100, 200);
+		BatList batList2 = new BatList(24 * 32, 16 * 32, 100, 200);
+		BatList batList3 = new BatList(78 * 32, 17 * 32, 100, 200);
 		
 		LinkedList<Bat> bats1 = new LinkedList<Bat>();
 		LinkedList<Bat> bats2 = new LinkedList<Bat>();
 		LinkedList<Bat> bats3 = new LinkedList<Bat>();
-		LinkedList<Bat> bats4 = new LinkedList<Bat>();
-		LinkedList<Bat> bats5 = new LinkedList<Bat>();
 		
 		for(int i = 0; i < 6; i++) {
 			Bat bat = new Bat(batList1, getPhysicsHandler());
@@ -55,24 +42,28 @@ public class Cave1 extends Room {
 			bat = new Bat(batList3, getPhysicsHandler());
 			bats3.push(bat);
 			addSolidObject(bat);
-			
-			bat = new Bat(batList4, getPhysicsHandler());
-			bats4.push(bat);
-			addSolidObject(bat);
-			
-			bat = new Bat(batList5, getPhysicsHandler());
-			bats5.push(bat);
-			addSolidObject(bat);
 		}
 		
 		batList1.setBatList(bats1);
 		batList2.setBatList(bats2);
 		batList3.setBatList(bats3);
-		batList4.setBatList(bats4);
-		batList5.setBatList(bats5);
 		
-		//
+		//Boulders
+		addSolidObject(new PushableBlock(22 * 32, 22 * 32, getPhysicsHandler()));
+		addSolidObject(new PushableBlock(27 * 32, 22 * 32, getPhysicsHandler()));
+
+		addSolidObject(new PushableBlock(52 * 32 + 16, 15 * 32, getPhysicsHandler()));
+
+		addSolidObject(new PushableBlock(64 * 32 + 16, 13 * 32, getPhysicsHandler()));
+		addSolidObject(new PushableBlock(65 * 32, 16 * 32, getPhysicsHandler()));
+		addSolidObject(new PushableBlock(70 * 32, 17 * 32, getPhysicsHandler()));
 		
-		addRegion(new RoomWarp (127*32 + 16, 8*32, 2*32, 1*32, "game.MainMenu"));
+		//Fish
+		addSolidObject(new FishMob(40 * 32, 26 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishMob(46 * 32, 26 * 32, getPhysicsHandler(), getPlayer()));
+		addSolidObject(new FishSchool(42 * 32, 27 * 32 - 16, this));
+
+		//Room Warp
+		addRegion(new RoomWarp (107*32 + 16, 0, 1*32, 640, "cave.Cave2"));
 	}
 }

@@ -69,9 +69,9 @@ public class ShieldCharger extends Entity implements RestableObject {
 				setFrame(0);
 				if(getRestingBlock() != null && getRestingBlock().getCollisionType() != CollisionType.PLATFORM) {
 					if(flipped) {
-						accelerate(0.3f,walkingSpeed,Direction.LEFT);
+						setVX(-walkingSpeed);
 					} else {
-						accelerate(0.3f,walkingSpeed,Direction.RIGHT);
+						setVX(walkingSpeed);
 					}
 				}
 			}
@@ -137,7 +137,6 @@ public class ShieldCharger extends Entity implements RestableObject {
 		} catch(Exception e) {
 			// Do nothing
 		}
-		super.pushObject(object, v);
 		if(object.getWidth() == 11 * 32) {
 			setY(object.getY() - getHeight());
 		}

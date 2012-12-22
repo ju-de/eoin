@@ -4,6 +4,7 @@ import java.net.URL;
 
 import dmcigd.core.objects.npc.Knight;
 import dmcigd.core.objects.npc.Sign;
+import dmcigd.core.objects.regions.RoomPassage;
 import dmcigd.core.room.*;
 
 import dmcigd.levels.deer.mobs.*;
@@ -60,6 +61,8 @@ public class BossRoom extends Room implements Runnable{
         bem.delay = 4;
         bem.emissionChance = 0.4f;
         addParticleEmitter(bem);
+        
+		addRegion(new RoomPassage(152 * 32 + 16, 16 * 32, "cave.Cave1"));
 
 	}
 	
