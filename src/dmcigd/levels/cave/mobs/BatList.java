@@ -62,7 +62,6 @@ public class BatList extends ObjectCollision implements Region {
 		
 		averageX = sumX/bats.size();
 		averageY = sumY/bats.size();
-		
 	}
 
 	public void onHover(Player player) {}

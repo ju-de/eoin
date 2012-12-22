@@ -56,7 +56,7 @@ abstract class ControlHandler extends Entity {
 	
 	public void jump(boolean jumping) {
 		if(jumping) {
-			if(jumpState < 2 && jumpDelay == 0 && !onLadder) {
+			if(jumpState < 2 && jumpDelay == 0 && (!onLadder || isWalking)) {
 				if(!isWalking && isClimbing && climbing == Direction.DOWN) {
 					setVY(-4);
 				} else {
