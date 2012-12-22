@@ -4,9 +4,11 @@ import java.net.URL;
 import java.util.LinkedList;
 
 import dmcigd.core.room.*;
+import dmcigd.core.objects.TextLabel;
 import dmcigd.core.objects.blocks.LockedDoor;
 import dmcigd.core.objects.items.DoorKey;
 import dmcigd.core.objects.regions.RoomWarp;
+import dmcigd.core.objects.npc.*;
 import dmcigd.levels.cave.mobs.*;
 
 public class Cave2 extends Room {
@@ -66,6 +68,15 @@ public class Cave2 extends Room {
 		batList3.setBatList(bats3);
 		batList4.setBatList(bats4);
 		batList5.setBatList(bats5);
+		
+		//Hidden Area
+		addForegroundObject(new SecretRoom(40 * 32 + 4, 9 * 32 + 20));
+		addRegion(new GenericNpc(45 * 32, 13 * 32 + 8,
+				74, 24, 1, 0, "cave/cauldron.gif", "Cauldron Inscription",
+				"FNORD", getDialogueHandler()));
+		
+		addTextLabel(new TextLabel(45 * 32 + 16, 15 * 32 - 20, "Press"));
+		addTextLabel(new TextLabel(45 * 32 + 14, 15 * 32 - 6, "\"X\"", false));
 		
 		//Room Warp
 		addRegion(new RoomWarp (127*32 + 16, 8*32, 2*32, 2*32, "cave.Cave3"));
