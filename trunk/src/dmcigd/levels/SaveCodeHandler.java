@@ -48,6 +48,7 @@ public class SaveCodeHandler {
 		put("GBGB","deer.BossRoom");
 		//Cave				GG
 		put("GGBB","cave.Cave1");
+		put("GGBG","cave.Cave2");
 		//Ice rift			GY
 		put("GYBB","icecave.IceRoom1");
 		put("GYBG","icecave.IceRoom2");
