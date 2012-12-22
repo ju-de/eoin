@@ -57,6 +57,7 @@ public class SaveCodeHandler {
 		put("GYBY","icecave.IceRoom3");
 		put("GYBR","icecave.IceRoom4");
 		put("GYGB","icecave.IceRoom5");
+		put("GYGG","icecave.IceRoomBoss");
 		//Lake				GR
 		put("GRBB","lake.One");
 		put("GRBG","lake.Two");
