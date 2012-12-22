@@ -35,12 +35,14 @@ public class Three extends Room implements Runnable {
 		addSolidObject(new Turtle(77 * 32, 26 * 32, this));
 		addSolidObject(new Turtle(78 * 32, 26 * 32, this));
 		addSolidObject(new Turtle(79 * 32, 26 * 32, this));
-		addItem(new DoorKey(102 * 32, 22 * 32, 1, getPhysicsHandler()));
-		addSolidObject(new LockedDoor(57 * 32, 28 * 32, 1));
+		addSolidObject(new FishMob(97 * 32, 28 * 32, getPhysicsHandler(),  getPlayer()));
+		addSolidObject(new FishMob(101 * 32, 24 * 32, getPhysicsHandler(), getPlayer()));
+		addItem(new DoorKey(98 * 32, 23 * 32, 1, getPhysicsHandler()));
+		addSolidObject(new LockedDoor(91 * 32, 32 * 32, 1));
 		
 		//second door
 		addItem(new DoorKey(41 * 32, 19 * 32, 2, getPhysicsHandler()));
-		addSolidObject(new LockedDoor(59 * 32, 30 * 32, 2));
+		addSolidObject(new LockedDoor(57 * 32, 22 * 32, 2));
 		
 		//third bit
 		addSolidObject(new FishMob(76 * 32, 34 * 32, getPhysicsHandler(), getPlayer()));
