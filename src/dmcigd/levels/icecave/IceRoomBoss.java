@@ -2,8 +2,6 @@ package dmcigd.levels.icecave;
 
 import java.net.URL;
 
-import dmcigd.core.objects.blocks.LockedDoor;
-import dmcigd.core.objects.items.DoorKey;
 import dmcigd.core.objects.regions.*;
 import dmcigd.core.room.*;
 
