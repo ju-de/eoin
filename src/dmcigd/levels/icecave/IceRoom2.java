@@ -28,7 +28,7 @@ public class IceRoom2 extends Room implements Runnable{
 		
 		IcicleProjectile icicle4 = new IcicleProjectile(20 * 32, 23 * 32, getBlockMap(), getSolidObjects());
 		addSolidObject(icicle4);
-		addRegion(new IcicleTrigger(19 * 32, 24 * 32, 1, 2, icicle4));
+		addRegion(new IcicleTrigger(18 * 32, 24 * 32, 1, 2, icicle4));
 		
 		addRegion(new Sign(30 * 32, 24 * 32, 5, "DANGER", "Beware of pitfalls and falling icicles!", getDialogueHandler()));
 		addRegion(new Sign(55 * 32, 25 * 32, 9, "BEWARE", "Wolves below!", getDialogueHandler()));

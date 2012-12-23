@@ -69,6 +69,6 @@ public class Cave3 extends Room {
 		addSolidObject(new PushableBlock(81 * 32 , 17 * 32, getPhysicsHandler()));
 
 		//Room Warp
-		addRegion(new RoomWarp (110*32 + 16, 128, 1*32, 640, "cave.Cave3"));
+		addRegion(new RoomWarp (110*32 + 16, 128, 1*32, 640, "cave.BossRoom"));
 	}
 }
