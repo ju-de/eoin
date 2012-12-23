@@ -25,6 +25,26 @@ public class IceRoomBoss extends Room implements Runnable{
 		addSolidObject(icicle3);
 		addRegion(new IcicleTrigger(87 * 32, 22 * 32, 1, 1, icicle3));
 		
+		IcicleProjectile icicle4 = new IcicleProjectile(97 * 32, 15 * 32, getBlockMap(), getSolidObjects());
+		addSolidObject(icicle4);
+		addRegion(new IcicleTrigger(94 * 32, 22 * 32, 1, 1, icicle4));
+		
+		IcicleProjectile icicle5 = new IcicleProjectile(113 * 32, 16 * 32, getBlockMap(), getSolidObjects());
+		addSolidObject(icicle5);
+		addRegion(new IcicleTrigger(113 * 32, 20 * 32, 1, 3, icicle5));
+		
+		IcicleProjectile icicle6 = new IcicleProjectile(152 * 32, 17 * 32, getBlockMap(), getSolidObjects());
+		addSolidObject(icicle6);
+		addRegion(new IcicleTrigger(150 * 32, 20 * 32, 1, 3, icicle6));
+		
+		IcicleProjectile icicle7 = new IcicleProjectile(279 * 32, 18 * 32, getBlockMap(), getSolidObjects());
+		addSolidObject(icicle7);
+		addRegion(new IcicleTrigger(279 * 32, 20 * 32, 1, 5, icicle7));
+		
+		IcicleProjectile icicle8 = new IcicleProjectile(290 * 32, 17 * 32, getBlockMap(), getSolidObjects());
+		addSolidObject(icicle8);
+		addRegion(new IcicleTrigger(290 * 32, 19 * 32, 1, 5, icicle8));
+		
 		addRegion(new RoomWarp(388 * 32, 11 * 32, 1 * 32, 1 * 32, "game.MainMenu"));
 	}
 }
