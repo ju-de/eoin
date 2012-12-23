@@ -9,6 +9,8 @@ import dmcigd.core.room.Room;
 import java.util.LinkedList;
 
 public class FishSchool extends HitpointHandler implements RestableObject {
+	
+	private int objectClock = 0;
 
 	LinkedList<FishParticle> fishParticles = new LinkedList<FishParticle>();
 	
@@ -18,8 +20,8 @@ public class FishSchool extends HitpointHandler implements RestableObject {
 		setY(y);
 		setDX(0);
 		setDY(0);
-		setWidth(40);
-		setHeight(40);
+		setWidth(50);
+		setHeight(50);
 		setImageWidth(0);
 		setImageHeight(0);
 		
@@ -29,8 +31,6 @@ public class FishSchool extends HitpointHandler implements RestableObject {
 		setMaxHitpoints(50);
 		setKnockback(true);
 		
-		setGravity();
-		
 		setPhysicsHandler(room.getPhysicsHandler());
 		setCollisionType(CollisionType.SOLID);
 		setEntityType(EntityType.NONLETHALMONSTER);
@@ -38,27 +38,27 @@ public class FishSchool extends HitpointHandler implements RestableObject {
 		setImagePath("objects/lake/fishparticle.gif");
 		
 		//Add fish particles
-		fishParticles.add(new FishParticle(x + 20, y + 20, 3));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 2));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 3));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 2));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 3));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 2));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 2));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 3));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 1));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 0));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 0));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 1));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 0));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 1));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 0));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 1));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 0));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 1));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 0));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 1));
-		fishParticles.add(new FishParticle(x + 20, y + 20, 0));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 3));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 2));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 3));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 2));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 3));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 2));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 2));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 3));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 1));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 0));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 0));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 1));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 0));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 1));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 0));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 1));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 0));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 1));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 0));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 1));
+		fishParticles.add(new FishParticle(x + 25, y + 25, 0));
 		
 		//Add particles to room
 		for(FishParticle i: fishParticles) {
@@ -88,11 +88,16 @@ public class FishSchool extends HitpointHandler implements RestableObject {
 		
 		move();
 		
-		//setVX((float) Math.random() * 15 * (0.5f - (float) Math.random()));
-		setVY((float) Math.random() * 15 * (0.5f - (float) Math.random()));
+		objectClock++;
+		if(objectClock == 6) {
+		
+			setVX((float) Math.random() * 15 * (0.5f - (float) Math.random()));
+			setVY((float) Math.random() * 15 * (0.55f - (float) Math.random()));
+			objectClock = 0;
+		}
 		
 		for(FishParticle i: fishParticles) {
-			i.swarmThink((int) getX() + 20, (int) getY() + 20, isInvincible(), isFlickering());
+			i.swarmThink((int) getX() + 25, (int) getY() + 25, isInvincible(), isFlickering());
 		}
 	}
 }
