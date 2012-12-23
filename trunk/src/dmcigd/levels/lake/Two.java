@@ -42,7 +42,6 @@ public class Two extends Room implements Runnable {
 		
 		addSolidObject(new Turtle(32 * 32, 43 * 32, this));
 		addRegion(new Sign(36 * 32, 54 * 32, 6, "Path", "Diver's Nightmare", getDialogueHandler()));
-		addRegion(new Sign(33 * 32, 64 * 32, 9, "Path", "Beginner's Descent", getDialogueHandler()));
 		
 		//fall
 		addSolidObject(new FishSchool(39 * 32, 40 * 32, this));
