@@ -70,15 +70,6 @@ public class Boss extends HitpointHandler implements RestableObject {
 		isAttacking = true;
 	}
 	
-	public void flicker(boolean flicker) {
-		setSequence(0);
-		if(flicker) {
-			setFrame(0);
-		}else{
-			setFrame(2);
-		}
-	}
-	
 	public void idle() {
 		setSequence(0);
 		setFrameSpeed(0.03f);
@@ -135,7 +126,7 @@ public class Boss extends HitpointHandler implements RestableObject {
 				aiClock = 0;
 				
 				if (getX() <= 120 * 32) {
-						moveRight();
+					moveRight();
 				} else if(getX() - room.getPlayer().getX() <= 24) {
 					attack();
 				} else {
@@ -166,13 +157,9 @@ public class Boss extends HitpointHandler implements RestableObject {
 			think();
 			
 			move();
-			
-			if(!isKnockedBack()) {
-				animate();
-			}
-		} else {
-			animate();
 		}
+		
+		animate();
 	}
 	
 	public void onPush(Entity entity, float v) {

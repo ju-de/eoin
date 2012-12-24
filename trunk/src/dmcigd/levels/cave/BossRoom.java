@@ -6,8 +6,7 @@ import java.util.LinkedList;
 import dmcigd.core.objects.blocks.TimedBlock;
 import dmcigd.core.objects.regions.RoomWarp;
 import dmcigd.core.room.*;
-import dmcigd.levels.cave.mobs.Bat;
-import dmcigd.levels.cave.mobs.BatList;
+import dmcigd.levels.cave.mobs.*;
 
 public class BossRoom extends Room {
 
@@ -56,6 +55,14 @@ public class BossRoom extends Room {
 		batList3.setBatList(bats3);
 		batList4.setBatList(bats4);
 		batList5.setBatList(bats5);
+		
+		//Bosses
+		addImageResource("objects/cave/bossprojectile.gif");
+		addImageResource("objects/cave/bossprojectileparticle.gif");
+		addSolidObject(new BossBat(60 * 32, 10 * 32, this));
+		addSolidObject(new BossBat(101 * 32, 10 * 32, this));
+		addSolidObject(new BossBat(142 * 32, 9 * 32, this));
+		addSolidObject(new BossBat(174 * 32, 10 * 32, this));
 		
 		//Bridge
 		
