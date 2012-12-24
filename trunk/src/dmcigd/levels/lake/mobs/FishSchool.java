@@ -91,8 +91,8 @@ public class FishSchool extends HitpointHandler implements RestableObject {
 		objectClock++;
 		if(objectClock == 6) {
 		
-			setVX((float) Math.random() * 15 * (0.5f - (float) Math.random()));
-			setVY((float) Math.random() * 15 * (0.55f - (float) Math.random()));
+			setVX((float) Math.random() * 8 * (0.5f - (float) Math.random()));
+			setVY((float) Math.random() * 8 * (0.55f - (float) Math.random()));
 			objectClock = 0;
 		}
 		

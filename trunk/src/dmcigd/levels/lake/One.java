@@ -13,7 +13,6 @@ public class One extends Room implements Runnable {
 	}
 	
 	public void initializeRoom() {
-		//addSolidObject(new FishMob(91 * 32, 21 * 32, getPhysicsHandler(), getPlayer()));
 		
 		addSolidObject(new TurtleShell(64 * 32, 14 * 32, getPhysicsHandler(), false));
 		
@@ -46,6 +45,6 @@ public class One extends Room implements Runnable {
 		addSolidObject(new FishMob(156 * 32, 15 * 32, getPhysicsHandler(), getPlayer()));
 		addSolidObject(new FishMob(167 * 32, 13 * 32, getPhysicsHandler(), getPlayer()));
 		
-		addRegion(new RoomWarp(208 * 32 + 16, 19 * 32 + 16, 5 * 32, 1 * 32, "game.MainMenu"));
+		addRegion(new RoomWarp(208 * 32 + 16, 19 * 32 + 16, 5 * 32, 1 * 32, "lake.Two"));
 	}
 }

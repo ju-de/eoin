@@ -95,8 +95,7 @@ public class FishMob extends HitpointHandler implements SolidObject {
 			}
 			
 	    	animate();
-			
-	    	//Fucking. Why do I have to do this for you?
+	    	
 			if(getBounds().intersects(player.getBounds())) {
 				player.isDead = true;
 			}

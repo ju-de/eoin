@@ -61,11 +61,7 @@ public class SaveCodeHandler {
 		//Lake				GR
 		put("GRBB","lake.One");
 		put("GRBG","lake.Two");
-		put("GRBY","lake.TwoB");
-		put("GRBR","lake.Three");
-		put("GRGB","lake.ThreeB");
-		put("GRGG","lake.Bonus");
-		put("GRGY","lake.Bonus2");
+		put("GRBY","lake.Three");
 		//Faerie forest		YB
 		put("YBBB","faerie.One");
 		put("YBBG","faerie.One2");
