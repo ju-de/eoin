@@ -13,5 +13,7 @@ public class One extends Room {
 	public void initializeRoom(){
 		
 		
+		
+		
 	}
 }

@@ -7,7 +7,7 @@ import java.net.URL;
 public class Three extends Room {
 
 	public Three(URL codeBase) {
-		super(codeBase, "swamp", "One", "foresty");
+		super(codeBase, "swamp", "Three", "foresty");
 	}
 
 	public void initializeRoom(){
