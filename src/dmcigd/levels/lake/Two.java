@@ -56,6 +56,6 @@ public class Two extends Room implements Runnable {
 		addItem(new DoorKey(61*32, 17*32, 1, getPhysicsHandler()));
 		addSolidObject(new LockedDoor(103*32, 19*32, 1));
 		
-		addRegion(new RoomWarp(95 * 32 + 16, 8 * 32 + 16, 6 * 32, 1 * 32, "game.MainMenu"));
+		addRegion(new RoomWarp(95 * 32 + 16, 8 * 32 + 16, 6 * 32, 1 * 32, "lake.Three"));
 	}
 }

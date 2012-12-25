@@ -87,6 +87,7 @@ public class LadderHandler extends PhysicsHandler {
 				blockMapCollision(entity, Direction.DOWN);
 				entity.setVY(0);
 				rest(entity, tileCollisionType(entity, v, Direction.DOWN));
+				if(entity.getRestingBlock() != null) entity.unrestObject();
 				break;
 		}
 	}
