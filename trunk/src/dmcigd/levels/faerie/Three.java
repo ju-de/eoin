@@ -128,6 +128,6 @@ public class Three extends Room implements Runnable {
 				"_m___c_____"
 		}, this));
 		
-		addRegion(new RoomWarp(40 * 32, 8 * 32, 20 * 32, 32, "game.MainMenu"));
+		addRegion(new RoomWarp(40 * 32, 6 * 32, 20 * 32, 32, "game.MainMenu"));
 	}
 }

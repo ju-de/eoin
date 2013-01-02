@@ -13,6 +13,9 @@ public enum EntityType {
 	//Nonlethal Monsters
 	NONLETHALMONSTER(10),
 	
+	//Knockback Entities
+	KNOCKBACK(15),
+	
 	//Lethal Monsters
 	LETHALMONSTER(20),
 	

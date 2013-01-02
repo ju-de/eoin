@@ -17,7 +17,7 @@ public class MidiPlayer {
 	static void startSong(String fileName, URL codeBase) {
 		currentMusic = loadSound(fileName, codeBase);
 		if(currentMusic != null) {
-			currentMusic.loop();
+//			currentMusic.loop();
 		}
 	}
 	

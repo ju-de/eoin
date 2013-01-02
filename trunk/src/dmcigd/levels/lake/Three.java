@@ -87,6 +87,6 @@ public class Three extends Room implements Runnable {
 		addSolidObject(new PushableBlock(138 * 32, 12 * 32, getPhysicsHandler()));
 		addSolidObject(new PushableBlock(139 * 32, 12 * 32, getPhysicsHandler()));
 		
-		addRegion(new RoomWarp(146 * 32, 18 * 32, 32, 32, "game.MainMenu"));
+		addRegion(new RoomWarp(147 * 32, 18 * 32, 32, 32, "lake.BossRoom"));
 	}
 }
