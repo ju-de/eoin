@@ -32,6 +32,12 @@ public class Player extends ControlHandler implements SolidObject {
 		super.onPush(entity, v);
 		if(entity.getEntityType().getCode() >= EntityType.LETHALMONSTER.getCode()) {
 			isDead = true;
+		} else if(entity.getEntityType().getCode() >= EntityType.KNOCKBACK.getCode()) {
+			if(v >= 0) {
+				knockback(v * 3, 0, v * 0.3f, Direction.RIGHT,15);
+			} else {
+				knockback(-v * 3, 0, -v * 0.3f, Direction.LEFT,15);
+			}
 		}
 	}
 	
