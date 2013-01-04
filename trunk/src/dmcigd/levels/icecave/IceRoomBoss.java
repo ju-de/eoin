@@ -45,6 +45,6 @@ public class IceRoomBoss extends Room implements Runnable{
 		addSolidObject(icicle8);
 		addRegion(new IcicleTrigger(290 * 32, 19 * 32, 1, 5, icicle8));
 		
-		addRegion(new RoomWarp(388 * 32, 11 * 32, 1 * 32, 1 * 32, "game.MainMenu"));
+		addRegion(new RoomWarp(388 * 32, 11 * 32, 1 * 32, 1 * 32, "cave.SegueRoom"));
 	}
 }
