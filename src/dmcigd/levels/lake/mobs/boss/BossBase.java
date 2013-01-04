@@ -34,7 +34,7 @@ public class BossBase extends ObjectCollision implements SolidObject {
 		bossEye = new BossEye(getX() + 226, getY() + 98);
 		room.addForegroundObject(bossEye);
 		
-		bonusWarp = new BonusWarp((int) getX() + 192, (int) getY(), (int) getWidth(), (int) getHeight(), "game.MainMenu");
+		bonusWarp = new BonusWarp((int) getX() + 192, (int) getY(), (int) getWidth(), (int) getHeight(), "lake.BonusRoom");
 		room.addRegion(bonusWarp);
 		
 		bossJaw = new BossJaw(getX() + 64, getY() + 28);

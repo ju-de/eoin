@@ -58,11 +58,13 @@ public class SaveCodeHandler {
 		put("GYBR","icecave.IceRoom4");
 		put("GYGB","icecave.IceRoom5");
 		put("GYGG","icecave.IceRoomBoss");
+		put("GYGY","cave.SegueRoom");
 		//Lake				GR
 		put("GRBB","lake.One");
 		put("GRBG","lake.Two");
 		put("GRBY","lake.Three");
 		put("GRBR","lake.BossRoom");
+		put("GRGB","lake.BonusRoom");
 		//Faerie forest		YB
 		put("YBBB","faerie.One");
 		put("YBBG","faerie.One2");
