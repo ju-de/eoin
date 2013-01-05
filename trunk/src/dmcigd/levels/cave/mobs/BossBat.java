@@ -1,9 +1,7 @@
 package dmcigd.levels.cave.mobs;
 
 import dmcigd.core.enums.*;
-import dmcigd.core.objects.Entity;
 import dmcigd.core.objects.monsters.*;
-import dmcigd.core.objects.player.*;
 import dmcigd.core.objects.interfaces.SolidObject;
 import dmcigd.core.room.*;
 

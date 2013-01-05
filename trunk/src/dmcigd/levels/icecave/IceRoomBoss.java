@@ -12,6 +12,10 @@ public class IceRoomBoss extends Room implements Runnable{
 		super(codeBase, "icecave", "IceRoomBoss", "icy");
 	}
 	public void initializeRoom(){
+		
+		addSolidObject(new Boss(13 * 32, 18 * 32, this));
+		addImageResource("objects/icecave/bossshards.gif");
+		
 		//INI game objects
 		IcicleProjectile icicle1 = new IcicleProjectile(76 * 32, 16 * 32, getBlockMap(), getSolidObjects());
 		addSolidObject(icicle1);
